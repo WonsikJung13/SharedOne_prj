@@ -5,4 +5,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'sharadeOne_prj'
+rootProject.name = 'sharedOne_prj'

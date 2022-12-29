@@ -1,4 +1,4 @@
-package com.soprj.sharadeone_prj.domain;
+package com.soprj.sharedone_prj.domain;
 
 import lombok.Data;
 

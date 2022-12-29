@@ -1,8 +1,7 @@
-package com.soprj.sharadeone_prj.service;
+package com.soprj.sharedone_prj.service;
 
-import com.soprj.sharadeone_prj.domain.SampleDTO;
-import com.soprj.sharadeone_prj.mapper.SampleMapper;
-import lombok.Setter;
+import com.soprj.sharedone_prj.domain.SampleDTO;
+import com.soprj.sharedone_prj.mapper.SampleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

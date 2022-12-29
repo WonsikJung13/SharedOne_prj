@@ -1,10 +1,10 @@
-package com.soprj.sharadeone_prj;
+package com.soprj.sharedone_prj;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SharadeOnePrjApplicationTests {
+class SharedOnePrjApplicationTests {
 
     @Test
     void contextLoads() {
