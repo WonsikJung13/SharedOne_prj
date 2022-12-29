@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soprj.sharadeone_prj.mapper.SampleMapper">
+
+    <insert id="register">
+        INSERT INTO m_item (m_item_name, m_item_unit, m_item_group, m_item_manufacturer)
+        VALUES (#{itemName}, #{itemUnit}, #{itemGroup}, #{itemManufacturer});
+    </insert>
+
+</mapper>
