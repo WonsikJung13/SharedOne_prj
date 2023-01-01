@@ -5,5 +5,91 @@
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.buyer.BuyerMapper">
 
+    <select id="list" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
+        SELECT
+        m_buyer_id,
+        m_buyer_name,
+        m_buyer_region,
+        m_buyer_address,
+        m_buyer_number
+        FROM
+        m_buyer
+        ORDER BY m_buyer_id DESC
+
+    </select>
+
+    <select id="selectDuo" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
+        SELECT
+        m_buyer_id,
+        m_buyer_name,
+        m_buyer_region,
+        m_buyer_address,
+        m_buyer_number
+        FROM
+        m_buyer
+        WHERE
+        m_buyer_id = #{m_buyer_id}
+    </select>
+
+    <select id="select" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
+        SELECT
+        m_buyer_id,
+        m_buyer_name,
+        m_buyer_region,
+        m_buyer_address,
+        m_buyer_number
+        FROM
+        m_buyer
+        ORDER BY m_buyer_id DESC
+    </select>
+
+    <insert id="addBuyer">
+        INSERT INTO m_buyer (
+        m_buyer_name,
+        m_buyer_region,
+        m_buyer_address,
+        m_buyer_number
+        )
+        VALUES (
+        #{m_buyer_name},
+        #{m_buyer_region},
+        #{m_buyer_address},
+        #{m_buyer_number}
+        )
+    </insert>
+
+    <insert id="insert">
+        INSERT INTO m_buyer (
+        m_buyer_name,
+        m_buyer_region,
+        m_buyer_address,
+        m_buyer_number
+        )
+        VALUES (
+        #{m_buyer_name},
+        #{m_buyer_region},
+        #{m_buyer_address},
+        #{m_buyer_number}
+        )
+    </insert>
+
+    <update id="updateBuyer">
+        UPDATE
+        m_buyer
+        SET
+        m_buyer_name = #{m_buyer_name},
+        m_buyer_region = #{m_buyer_region},
+        m_buyer_address = #{m_buyer_address},
+        m_buyer_number = #{m_buyer_number}
+        WHERE
+        m_buyer_id = #{m_buyer_id}
+    </update>
+
+    <delete id="removeById">
+        DELETE FROM
+        m_buyer
+        WHERE
+        m_buyer_id = #{m_buyer_id}
+    </delete>
 
 </mapper>

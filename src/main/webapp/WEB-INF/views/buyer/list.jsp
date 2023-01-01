@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: hyeonjong
   Date: 2022/12/30
-  Time: 9:12
+  Time: 9:37
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -19,16 +19,40 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-<h1>register</h1>
+<h1>list</h1>
 
-<form action="" method="post" enctype="multipart/form-data">
-    거래처 명<input class="form-control" type="text" name="m_buyer_name">
-    거래처 국가<input class="form-control" type="text" name="m_buyer_region">
-    거래처 주소<input type="text" class="form-control" name="m_buyer_address">
-    사업자번호<input type="text" class="form-control" name="m_buyer_number">
-
-    <input style="font-family: LINESeedKR-Bd" class="btn btn-ico" type="submit" value="등록">
-</form>
+<table class="table">
+    <tbody>
+    <tr style="font-family: 'LINESeedKR-Bd'">
+        <th>거래처 번호</th>
+        <th>거래처명</th>
+        <th>거래처 국일</th>
+        <th>거래처 주소</th>
+        <th>사업자 번호</th>
+    </tr>
+    <c:forEach items="${buyerList }" var="buyer">
+        <tr >
+            <td id="id">
+                <c:url value="/buyer/get" var="infoLink">
+                    <c:param value="${buyer.m_buyer_id }" name="m_buyer_id"/>
+                </c:url>
+                <a href="${infoLink }" class="listHref">
+                        ${buyer.m_buyer_id  }
+                </a>
+            </td>
+            <td>${buyer.m_buyer_name }</td>
+            <td>${buyer.m_buyer_region }</td>
+            <td>${buyer.m_buyer_address }</td>
+            <td>${buyer.m_buyer_number }</td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
+<c:url value="/buyer/register" var="registerLink">
+</c:url>
+<a href="${registerLink }" class="listHref">
+    <i class="fa-sharp fa-solid fa-pen"></i>
+</a>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
