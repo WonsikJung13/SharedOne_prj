@@ -29,6 +29,7 @@
         <th>거래처 국일</th>
         <th>거래처 주소</th>
         <th>사업자 번호</th>
+        <th></th>
     </tr>
     <c:forEach items="${buyerList }" var="buyer">
         <tr >
@@ -44,16 +45,60 @@
             <td>${buyer.m_buyer_region }</td>
             <td>${buyer.m_buyer_address }</td>
             <td>${buyer.m_buyer_number }</td>
+            <td>
+                <c:url value="/buyer/modify" var="modifyLink">
+                    <c:param value="${buyer.m_buyer_id }" name="m_buyer_id"/>
+                </c:url>
+                <a class="btn btn-primary " href="${modifyLink}">수정하기</a>
+
+                <c:url value="/buyer/remove" var="removeLink">
+                    <c:param value="${buyer.m_buyer_id }" name="m_buyer_id"/>
+                </c:url>
+                <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
+                       data-bs-target="#removeModal">
+            </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+
+<form id="removeForm" action="${removeLink }" method="post">
+    <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
+</form>
+<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                삭제하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">취소
+                </button>
+                <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton" type="button"
+                        class="btn btn-danger">확인
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <c:url value="/buyer/register" var="registerLink">
 </c:url>
 <a href="${registerLink }" class="listHref">
     <i class="fa-sharp fa-solid fa-pen"></i>
 </a>
 
+<script>
+    document.querySelector("#removeConfirmButton").addEventListener("click", function () {
+        document.querySelector("#removeForm").submit();
+    })
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
