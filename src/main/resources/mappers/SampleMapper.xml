@@ -6,7 +6,7 @@
 <mapper namespace="com.soprj.sharedone_prj.mapper.SampleMapper">
 
     <insert id="register">
-        INSERT INTO m_item (m_item_name, m_item_unit, m_item_group, m_item_manufacturer)
+        INSERT INTO test (m_item_name, m_item_unit, m_item_group, m_item_manufacturer)
         VALUES (#{itemName}, #{itemUnit}, #{itemGroup}, #{itemManufacturer});
     </insert>
 
