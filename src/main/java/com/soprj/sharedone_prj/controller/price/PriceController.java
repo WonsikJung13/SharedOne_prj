@@ -27,7 +27,6 @@ public class PriceController {
     public void getPriceList(Model model) {
         List<PriceDto> priceList = priceService.getPriceList();
         model.addAttribute("priceList", priceList);
-        System.out.println("다 나와?" + priceList);
     }
 
     @GetMapping("register")
