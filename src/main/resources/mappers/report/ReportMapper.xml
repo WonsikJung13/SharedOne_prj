@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soprj.sharedone_prj.mapper.report.ReportMapper">
+
+    <select id="getOrderHeader">
+        SELECT * FROM m_order_header
+    </select>
+    <select id="getOrderItem">
+        SELECT * FROM m_order_item
+    </select>
+
+</mapper>
