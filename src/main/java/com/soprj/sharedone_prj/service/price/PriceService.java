@@ -17,6 +17,7 @@ public class PriceService {
         return priceMapper.getPriceList();
     }
 
+
     public int register(PriceDto price) {
         return priceMapper.insertRegister(price);
     }
