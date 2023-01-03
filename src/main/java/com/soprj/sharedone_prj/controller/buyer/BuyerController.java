@@ -43,6 +43,7 @@ public class BuyerController {
                            RedirectAttributes rttr) {
         int cnt = buyerService.register(buyer);
         if (cnt == 1) {
+
             rttr.addFlashAttribute("message", "새 게시물이 등록되었습니다.");
         } else {
             rttr.addFlashAttribute("message", "새 게시물이 등록되지 않았습니다.");
