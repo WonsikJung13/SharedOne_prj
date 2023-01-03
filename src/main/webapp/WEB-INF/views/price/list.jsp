@@ -17,15 +17,19 @@
         <div class="container-md">
             <div class="row mt-5">
                 <div class="col">
-                    <table class="table">
-                        <h1>판매가 관리</h1>
+                    <h1>판매가 관리</h1>
+                    <div>
+                        <c:url value="/price/register" var="registerLink"></c:url>
+                        <a href="${registerLink}">판매가 등록</a>
+                    </div>
+                        <table class="table">
                         <thead>
                         <tr>
                             <th>번호</th>
                             <th>고객코드</th>
-                            <%--                            <th>고객명</th>--%>
+                            <th>고객명</th>
                             <th>상품코드</th>
-                            <%--                            <th>상품명</th>--%>
+                            <th>상품명</th>
                             <th>판매가</th>
                             <th>시작일</th>
                             <th>종료일</th>
@@ -41,20 +45,19 @@
                                     <tr>
                                         <td>${priceList.m_price_id}</td>
                                         <td>${priceList.m_buyer_id }</td>
-                                            <%--                                <td>${priceList.m_buyer_name }</td>--%>
+                                        <td>${priceList.m_buyer_name }</td>
                                         <td>${priceList.m_item_id }</td>
-                                            <%--                                <td>${priceList.m_item_name }</td>--%>
+                                        <td>${priceList.m_item_name }</td>
                                         <td>${priceList.m_price_price }</td>
                                         <td>${priceList.m_price_startPeriod }</td>
                                         <td>${priceList.m_price_lastPeriod }</td>
                                         <td>${priceList.m_price_discount }</td>
                                         <td>${priceList.m_price_lastPrice }</td>
-                                        <td>${priceList.m_price_unit }</td>
+                                        <td>${priceList.m_price_currency }</td>
                                         <td>${priceList.m_price_inserted }</td>
                                     </tr>
                                 </div>
                             </c:forEach>
-
                         </tbody>
                     </table>
                 </div>

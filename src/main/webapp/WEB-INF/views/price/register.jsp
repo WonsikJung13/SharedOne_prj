@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% request.setCharacterEncoding("utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,7 +71,7 @@
                     <label class="form-label">
                         통화
                     </label>
-                    <input class="form-control" type="text" name="m_price_unit">
+                    <input class="form-control" type="text" name="m_price_currency">
                 </div>
 
                 <div class="mb-3">
@@ -96,9 +97,12 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 <script>
-    document.querySelector("#priceSubmitButton").addEventListener("click", function () {
-        document.getElementById('formId').submit();
-    })
+    // document.querySelector("#priceSubmitButton").addEventListener("click", function () {
+    //     document.getElementById('formId').submit();
+    // })
+
+
+
 </script>
 </body>
 </html>
