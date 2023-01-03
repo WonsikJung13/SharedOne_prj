@@ -5,5 +5,30 @@
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.price.PriceMapper">
 
+    <select id="getPriceList" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
+        SELECT * FROM m_price;
+    </select>
 
+    <insert id="insertRegister" useGeneratedKeys="true" keyProperty="m_price_id">
+        INSERT INTO m_price (
+        m_price_startPeriod,
+        m_price_lastPeriod,
+        m_price_unit,
+        m_price_discount,
+        m_price_lastPrice,
+        m_price_inserted,
+        m_buyer_id,
+        m_item_id
+        )
+        VALUES (
+        #{m_price_startPeriod},
+        #{m_price_lastPeriod},
+        #{m_price_unit},
+        #{m_price_discount},
+        #{m_price_lastPrice},
+        NOW(),
+        #{m_buyer_id},
+        #{m_item_id}
+        )
+    </insert>
 </mapper>
