@@ -5,5 +5,58 @@
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.item.ItemMapper">
 
+    <insert id="register">
+        INSERT INTO m_item (
+            m_item_name,
+            m_item_group,
+            m_item_manufacturer,
+            m_item_unit
+        )
+        VALUES (
+            #{m_item_name},
+            #{m_item_group},
+            #{m_item_manufacturer},
+            #{m_item_unit}
+        )
+    </insert>
 
+    <select id="selectItemList" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
+        SELECT
+            m_item_id,
+            m_item_name,
+            m_item_group,
+            m_item_manufacturer,
+            m_item_unit
+        FROM m_item
+        ORDER BY m_item_id DESC
+    </select>
+
+    <select id="select" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
+        SELECT
+            m_item_id,
+            m_item_name,
+            m_item_group,
+            m_item_manufacturer,
+            m_item_unit
+        FROM
+            m_item
+        WHERE
+            m_item_id = ${m_item_id}
+    </select>
+
+    <update id="update">
+        UPDATE m_item
+        SET
+            m_item_name = #{m_item_name},
+            m_item_group = #{m_item_group},
+            m_item_manufacturer = #{m_item_manufacturer},
+            m_item_unit = #{m_item_unit}
+        WHERE
+            m_item_id = #{m_item_id}
+    </update>
+
+    <delete id="remove">
+        DELETE FROM m_item
+        WHERE m_item_id = ${m_item_id}
+    </delete>
 </mapper>
