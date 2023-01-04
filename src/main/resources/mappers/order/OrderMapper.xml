@@ -5,5 +5,17 @@
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.order.OrderMapper">
 
+    <select id="buyerSelect" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
+        SELECT m_buyer_id,
+              m_buyer_name
+        FROM m_buyer
+    </select>
+    <select id="buyerList" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
+        SELECT m_buyer_region,
+                m_buyer_address,
+                m_buyer_number
+        FROM m_buyer
+        WHERE m_buyer_id = #{m_Buyer_Id}
+    </select>
 
 </mapper>
