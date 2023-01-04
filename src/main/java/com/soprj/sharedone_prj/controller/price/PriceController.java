@@ -1,5 +1,6 @@
 package com.soprj.sharedone_prj.controller.price;
 
+import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.domain.price.PriceDto;
 import com.soprj.sharedone_prj.service.item.ItemService;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -37,6 +39,18 @@ public class PriceController {
     public String register(PriceDto price){
         priceService.register(price);
 
+        return "redirect:/price/list";
+    }
+
+    @GetMapping("modify")
+    public void modify(int m_price_id, Model model) {
+        model.addAttribute("price", priceService.getById(m_price_id));
+    }
+
+    @PostMapping("modify")
+    public String modify(PriceDto priceDto) {
+
+        priceService.getByIdModify(priceDto);
         return "redirect:/price/list";
     }
 }

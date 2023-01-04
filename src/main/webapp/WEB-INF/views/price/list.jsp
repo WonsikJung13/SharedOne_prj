@@ -20,7 +20,7 @@
                     <h1>판매가 관리</h1>
                     <div>
                         <c:url value="/price/register" var="registerLink"></c:url>
-                        <a href="${registerLink}">판매가 등록</a>
+                        <a class="btn" href="${registerLink}">판매가 등록</a>
                     </div>
                         <table class="table">
                         <thead>
@@ -55,6 +55,12 @@
                                         <td>${priceList.m_price_lastPrice }</td>
                                         <td>${priceList.m_price_currency }</td>
                                         <td>${priceList.m_price_inserted }</td>
+                                        <td>
+                                            <c:url value="/price/modify" var="modifyLink">
+                                                <c:param value="${priceList.m_price_id }" name="m_price_id"/>
+                                            </c:url>
+                                            <a class="btn" href="${modifyLink}">수정하기</a>
+                                        </td>
                                     </tr>
                                 </div>
                             </c:forEach>
