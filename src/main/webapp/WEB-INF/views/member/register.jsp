@@ -19,6 +19,14 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
+<h1>register</h1>
+
+<form action="" method="post" enctype="multipart/form-data">
+    이름<input class="form-control" type="text" name="m_member_id">
+    <input class="form-control" type="hidden" name="m_member_password" value="1111">
+    이메일<input class="form-control" type="text" name="m_member_email">
+    <input style="font-family: LINESeedKR-Bd" class="btn btn-ico" type="submit" value="등록">
+</form>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
