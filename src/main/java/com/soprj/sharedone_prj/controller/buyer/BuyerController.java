@@ -3,6 +3,7 @@ package com.soprj.sharedone_prj.controller.buyer;
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.service.buyer.BuyerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class BuyerController {
         model.addAttribute("Buyer", buyer);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping("register")
     public void register() {
 

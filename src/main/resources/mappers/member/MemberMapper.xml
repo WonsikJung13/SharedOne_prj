@@ -5,5 +5,135 @@
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.member.MemberMapper">
 
+    <select id="list" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
+        SELECT
+        m.m_member_id,
+        m.m_member_password,
+        m.m_member_email,
+        m.m_authority_id,
+        ma.m_authority_grade
+        FROM
+        m_member m
+        LEFT JOIN
+        m_authority ma ON ma.m_authority_id = m.m_authority_id
+        ORDER BY m_member_id DESC
+
+    </select>
+
+    <select id="getMember" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
+        SELECT
+        m.m_member_id,
+        m.m_member_password,
+        m.m_member_email,
+        m.m_authority_id
+        FROM
+        m_member m LEFT JOIN m_authority ma ON m.m_authority_id = ma.m_authority_id
+        WHERE
+        m_member_id = #{m_member_id}
+    </select>
+
+    <select id="getMemberLogin" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
+        SELECT
+        m.m_member_id,
+        m.m_member_password,
+        m.m_member_email,
+        m.m_authority_id
+        FROM
+        m_member m LEFT JOIN m_authority ma ON m.m_authority_id = ma.m_authority_id
+        WHERE
+        m_member_id = #{m_member_id}
+    </select>
+
+    <select id="select" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
+        SELECT
+        m.m_member_id,
+        m.m_member_password,
+        m.m_member_email,
+        m.m_authority_id,
+        ma.m_authority_grade
+        FROM
+        m_member m LEFT JOIN m_authority ma ON m.m_authority_id = ma.m_authority_id
+        WHERE
+        m_member_id = #{m_member_id}
+    </select>
+    <select id="selectAuthority" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
+        SELECT
+        m_authority_id,
+        m_authority_grade
+        FROM
+        m_authority
+    </select>
+
+    <insert id="addMember">
+        INSERT INTO m_member (
+        m_member_id,
+        m_member_password,
+        m_member_email,
+        m_authority_id
+        )
+        VALUES (
+        #{m_member_id},
+        #{m_member_password},
+        #{m_member_email},
+        1
+        )
+    </insert>
+
+    <insert id="insert">
+        INSERT INTO m_member (
+        m_member_id,
+        m_member_password,
+        m_member_email,
+        m_authority_id
+        )
+        VALUES (
+        #{m_member_id},
+        #{m_member_password},
+        #{m_member_email},
+        1
+        )
+    </insert>
+
+    <update id="updateMemberEmail">
+        UPDATE
+        m_member
+        SET
+        m_member_email = #{m_member_email}
+        WHERE
+        m_member_id = #{m_member_id}
+    </update>
+
+    <update id="updateMemberPassword">
+        UPDATE
+        m_member
+        SET
+        m_member_password = #{m_member_password}
+        WHERE
+        m_member_id = #{m_member_id}
+    </update>
+    <update id="updatePasswordd">
+        UPDATE
+        m_member
+        SET
+        m_member_password = #{m_member_password}
+        WHERE
+        m_member_id = #{m_member_id}
+    </update>
+    <update id="updateGrade">
+        UPDATE
+        m_member
+        SET
+        m_authority_id = #{m_authority_id}
+        WHERE
+        m_member_id = #{m_member_id}
+    </update>
+
+    <delete id="removeById">
+        DELETE FROM
+        m_member
+        WHERE
+        m_member_id = #{m_member_id}
+    </delete>
+
 
 </mapper>
