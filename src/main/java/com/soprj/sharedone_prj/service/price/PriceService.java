@@ -21,4 +21,12 @@ public class PriceService {
     public int register(PriceDto price) {
         return priceMapper.insertRegister(price);
     }
+
+    public PriceDto getById(int m_price_id) {
+        return priceMapper.selectById(m_price_id);
+    }
+
+    public int getByIdModify(PriceDto priceDto) {
+        return priceMapper.updateById(priceDto);
+    }
 }

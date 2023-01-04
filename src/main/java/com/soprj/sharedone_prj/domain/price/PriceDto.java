@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class PriceDto {
     private int m_buyer_id;
     private String m_buyer_name;
-    private int m_item_id;
+    private String m_item_id;
     private String m_item_name;
 
     private int m_price_id;
