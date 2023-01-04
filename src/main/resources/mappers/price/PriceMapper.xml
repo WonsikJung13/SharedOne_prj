@@ -5,5 +5,48 @@
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.price.PriceMapper">
 
+    <select id="getPriceList" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
+        SELECT
+            b.m_buyer_id,
+            b.m_buyer_name,
+            i.m_item_id,
+            i.m_item_name,
+            p.m_price_id,
+            p.m_price_price,
+            p.m_price_currency,
+            p.m_price_discount,
+            p.m_price_startPeriod,
+            p.m_price_lastPeriod,
+            p.m_price_lastPrice,
+            p.m_price_inserted
+        FROM
+            m_price p LEFT JOIN m_buyer b ON p.m_buyer_id = b.m_buyer_id
+                      LEFT JOIN m_item i ON p.m_item_id = i.m_item_id
+        ORDER BY m_price_id DESC;
+    </select>
 
+    <insert id="insertRegister" useGeneratedKeys="true" keyProperty="m_price_id">
+        INSERT INTO m_price (
+        m_price_startPeriod,
+        m_price_lastPeriod,
+        m_price_currency,
+        m_price_discount,
+        m_price_lastPrice,
+        m_price_price,
+        m_price_inserted,
+        m_buyer_id,
+        m_item_id
+        )
+        VALUES (
+        #{m_price_startPeriod},
+        #{m_price_lastPeriod},
+        #{m_price_currency},
+        #{m_price_discount},
+        #{m_price_lastPrice},
+        #{m_price_price},
+        NOW(),
+        #{m_buyer_id},
+        #{m_item_id}
+        )
+    </insert>
 </mapper>

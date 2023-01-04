@@ -19,7 +19,16 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
+<h1>register</h1>
 
+<form action="" method="post" enctype="multipart/form-data">
+    거래처 명<input class="form-control" type="text" name="m_buyer_name">
+    거래처 국가<input class="form-control" type="text" name="m_buyer_region">
+    거래처 주소<input type="text" class="form-control" name="m_buyer_address">
+    사업자번호<input type="text" class="form-control" name="m_buyer_number">
+
+    <input style="font-family: LINESeedKR-Bd" class="btn btn-ico" type="submit" value="등록">
+</form>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
