@@ -15,7 +15,7 @@ public class PriceDto {
 
     private int m_price_id;
     private int m_price_price;
-    private String m_price_unit;
+    private String m_price_currency;
     private int m_price_discount;
     private Date m_price_startPeriod;
     private Date m_price_lastPeriod;

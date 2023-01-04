@@ -18,8 +18,12 @@
             <div class="row mt-5">
                 <div class="col">
                     <h1>판매가 관리</h1>
-                    <table class="table">
-                        <tbody>
+                    <div>
+                        <c:url value="/price/register" var="registerLink"></c:url>
+                        <a href="${registerLink}">판매가 등록</a>
+                    </div>
+                        <table class="table">
+                        <thead>
                         <tr>
                             <th>번호</th>
                             <th>고객코드</th>
@@ -34,25 +38,26 @@
                             <th>통화</th>
                             <th>등록일</th>
                         </tr>
-                        <c:forEach items="${pirceList }" var="priceList">
-                            <tr>
-                                <c:url value="/price/register" var="getLink">
-                                    <c:param name="m_price_id" value="${priceList.m_price_id}"></c:param>
-                                </c:url>
-                                <td>${priceList.m_price_id}</td>
-                                <td>${priceList.m_buyer_id }</td>
-                                <td>${priceList.m_buyer_name }</td>
-                                <td>${priceList.m_item_id }</td>
-                                <td>${priceList.m_item_name }</td>
-                                <td>${priceList.m_price_price }</td>
-                                <td>${priceList.m_price_startPeriod }</td>
-                                <td>${priceList.m_price_lastPeriod }</td>
-                                <td>${priceList.m_price_discount }</td>
-                                <td>${priceList.m_price_lastPrice }</td>
-                                <td>${priceList.m_price_unit }</td>
-                                <td>${priceList.m_price_inserted }</td>
-                            </tr>
-                        </c:forEach>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${priceList }" var="priceList">
+                                <div>
+                                    <tr>
+                                        <td>${priceList.m_price_id}</td>
+                                        <td>${priceList.m_buyer_id }</td>
+                                        <td>${priceList.m_buyer_name }</td>
+                                        <td>${priceList.m_item_id }</td>
+                                        <td>${priceList.m_item_name }</td>
+                                        <td>${priceList.m_price_price }</td>
+                                        <td>${priceList.m_price_startPeriod }</td>
+                                        <td>${priceList.m_price_lastPeriod }</td>
+                                        <td>${priceList.m_price_discount }</td>
+                                        <td>${priceList.m_price_lastPrice }</td>
+                                        <td>${priceList.m_price_currency }</td>
+                                        <td>${priceList.m_price_inserted }</td>
+                                    </tr>
+                                </div>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>

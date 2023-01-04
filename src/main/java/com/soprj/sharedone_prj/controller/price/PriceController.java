@@ -10,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -28,7 +26,6 @@ public class PriceController {
     @GetMapping("list")
     public void getPriceList(Model model) {
         List<PriceDto> priceList = priceService.getPriceList();
-
         model.addAttribute("priceList", priceList);
     }
 
