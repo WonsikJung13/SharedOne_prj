@@ -9,6 +9,8 @@
 <% request.setCharacterEncoding("utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,104 +20,144 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <style>
+        .table{
+            width: 900px;
+        }
+        tr{
+            height: 55px;
+        }
+    </style>
 </head>
 <body>
-<div class="container-md">
-    <div class="row">
+<div class="row">
+    <div class="col-3">
+        <my:header></my:header>
+    </div>
         <div class="col">
-            <h3>판매가격 작성</h3>
+            <h1>판매가격 작성</h1>
             <form action="" method="post" enctype="multipart/form-data" id="formId">
-                <div class="mb-3">
-                    <label class="form-label">
-                        거래처코드
-                    </label>
-                    <input class="form-control" type="text" name="m_buyer_id">
-                </div>
+            <table class="table table-bordered">
 
-                <div class="mb-3">
-                    <label class="form-label">
-                        거래처명
-                    </label>
-                    <input class="form-control" type="text" name="m_buyer_name" value="">
-                </div>
-                <hr>
-                <div class="mb-3">
-                    <label class="form-label">
-                        제품코드
-                    </label>
-                    <input class="form-control" type="text" name="m_item_id" value="">
-                </div>
+                <tbody>
+                    <tr>
+                        <td class="table-active">거래처 코드</td>
+                        <td>
+                            <input class="form-select" id="buyerId" type="text" name="m_buyer_id" list="buyerList"
+                                   placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()">
+                                <datalist id="buyerList">
+                                    <c:forEach items="${buyerList}" var="buyerList" >
+                                        <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
+                                    </c:forEach>
+                                </datalist>
+                            </input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">거래처명</td>
+                        <td>
+                            <input class="form-control" id="buyerName" readonly></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">통화</td>
+                        <td>
+                            <input class="form-control" id="buyerCurrency" name="m_price_currency" readonly></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">제품코드</td>
+                        <td>
+                            <input class="form-select" id="itemId" type="text" name="m_item_id" list="itemList"
+                                    placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()">
+                                <datalist id="itemList">
+                                    <c:forEach items="${itemList}" var="itemList">
+                                        <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>
+                                    </c:forEach>
+                                </datalist>
+                            </input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">제품명</td>
+                        <td>
+                            <input class="form-control" id="itemName" readonly></input>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td class="table-active">시작일</td>
+                    <td>
+                        <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-active">종료일</td>
+                    <td>
+                        <input class="form-control" autocomplete="off" type="date" name="m_price_lastPeriod"></input>
+                    </td>
+                </tr>
 
-                <div class="mb-3">
-                    <label class="form-label">
-                        제품명
-                    </label>
-                    <input class="form-control" type="text" name="m_item_name" value="">
-                </div>
-                <hr>
-                <div class="mb-3">
-                    <label class="form-label">
-                        시작일
-                    </label>
-                    <input class="form-control" type="date" name="m_price_startPeriod">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">
-                        종료일
-                    </label>
-                    <input class="form-control" type="date" name="m_price_lastPeriod">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">
-                        통화
-                    </label>
-                    <input class="form-control" type="text" name="m_price_currency">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">
-                        할인율
-                    </label>
-                    <input id="discountInput" class="form-control" type="text" name="m_price_discount">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">
-                        판매가격(단가)
-                    </label>
-                    <input id="priceInput" class="form-control" type="text" name="m_price_price">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">
-                        최종 단가
-                    </label>
-                    <input id="lastPrice" class="form-control" type="text" name="m_price_lastPrice" readonly>
-                </div>
-
-                <input type="submit" value="추가" id="priceSubmitButton">
+                <tr>
+                    <td class="table-active">할인율</td>
+                    <td>
+                        <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-active">판매가격(단가)</td>
+                    <td>
+                        <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-active">최종 단가</td>
+                    <td>
+                        <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+                <input class="btn btn-secondary" type="submit" value="추가" id="priceSubmitButton">
             </form>
         </div>
     </div>
 </div>
 <hr>
-<div class="container-md">
-    <div class="row">
-      <div class="col">
-          <h3>추가된 가격</h3>
+<h2>추가된 가격</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">제품코드</th>
+        <th scope="col">제품명</th>
+        <th scope="col">거래처코드</th>
+        <th scope="col">거래처명</th>
+        <th scope="col">시작일</th>
+        <th scope="col">종료일</th>
+        <th scope="col">통화</th>
+        <th scope="col">할인율</th>
+        <th scope="col">판매가격(단가)</th>
+        <th scope="col">최종단가</th>
+        <th scope="col">등록일</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
-      </div>
-    </div>
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 <script>
+    const ctx = "${pageContext.request.contextPath}";
 
     const discountInput = document.querySelector("#discountInput");
     const priceInput = document.querySelector("#priceInput");
+
     const lastPrice = document.querySelector("#lastPrice");
 
     document.querySelector("#priceInput").addEventListener("keyup", function () {
@@ -130,7 +172,37 @@
         lastPrice.value = " ";
     })
 
+    // buyer 이름, 통화 가져오기
+    function buyerView() {
+        const buyerId = document.querySelector('#buyerId')
+        const selected = buyerId.value;
 
+        fetch(ctx + "/price/buyerList/" + selected)
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector("#buyerName").value = data.m_buyer_name;
+                document.querySelector("#buyerCurrency").value = data.m_buyer_currency;
+            })
+    }
+
+    // item 이름 가져오기
+    function itemView() {
+        const itemId = document.querySelector('#itemId')
+        const selected = itemId.value;
+
+        fetch(ctx + "/price/itemList/" + selected)
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector("#itemName").value = data.m_item_name;
+            })
+    }
+
+    var now_utc = Date.now() // 지금 날짜를 밀리초로
+    // getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+    var timeOff = new Date().getTimezoneOffset() * 60000; // 분단위를 밀리초로 변환
+    // new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
+    var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
+    document.getElementById("m_price_startPeriod").setAttribute("min", today);
 
 
 </script>
