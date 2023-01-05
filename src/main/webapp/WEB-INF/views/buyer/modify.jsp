@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+            integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <h1>get</h1>
@@ -29,14 +32,20 @@
     <input class="form-control" type="text" name="m_buyer_name" value="${Buyer.m_buyer_name}">
     <input class="form-control" type="text" name="m_buyer_region" value="${Buyer.m_buyer_region}">
     <input class="form-control" type="text" name="m_buyer_address" value="${Buyer.m_buyer_address}">
-    <input class="form-control" type="text" name="m_buyer_number" value="${Buyer.m_buyer_number}">
     <input class="form-control" type="text" name="m_buyer_currency" value="${Buyer.m_buyer_currency}">
+    <input class="form-control" type="text" name="m_buyer_number" value="${Buyer.m_buyer_number}">
+    <input type="text" class="form-control form300" name="m_buyer_number" id="buyerIdInput" value="${Buyer.m_buyer_number}"><p id="inputText"></p></th>
+    <th>
+        <button style="border-color: #0cc; font-family: LINESeedKR-Bd" id="buyerIdButton" class="btn"
+                type="button">중복확인
+        </button>
+        <input type="submit" class="btn btn-primary" value="수정하기" disabled id="register">
 </form>
 
-<button style="font-family: 'LINESeedKR-Bd'" type="submit" class="btn btn-ico" data-bs-toggle="modal"
-        data-bs-target="#modifyModal">
-    수정하기
-</button>
+<%--<button style="font-family: 'LINESeedKR-Bd'" type="submit" class="btn btn-ico" data-bs-toggle="modal"--%>
+<%--        data-bs-target="#modifyModal">--%>
+<%--    수정하기--%>
+<%--</button>--%>
 
 <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -70,6 +79,29 @@
     document.querySelector("#modifyConfirmButton").addEventListener("click", function () {
         document.querySelector("#modifyForm").submit();
     });
+
+    const ctx = "${pageContext.request.contextPath}";
+
+    document.querySelector("#buyerIdButton").addEventListener("click", function () {
+        checkedDoubleId = false;
+        const insertBuyerNum = document.querySelector("#buyerIdInput").value;
+
+        fetch(ctx + "/buyer/checkNum/" + insertBuyerNum)
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector("#inputText").innerText = data.message;
+                $(function (){
+                    $('#inputText').css("color", "red");
+                })
+
+                if (data.statusNum === 'not exist') {
+                    $(function (){
+                        $('#inputText').css("color", "black");
+                    })
+                    document.querySelector("#register").removeAttribute("disabled");
+                }
+            })
+    })
 </script>
 
 </body>

@@ -14,7 +14,7 @@ public interface MemberMapper {
 
     int addMember(MemberDto member);
 
-    int updateMemberEmail(MemberDto member);
+    int updateMemberEmail(String  m_member_id, String m_member_email);
 
     int updateMemberPassword(MemberDto member);
 
@@ -33,4 +33,6 @@ public interface MemberMapper {
     int resetPassword(String m_member_id, String m_member_password);
 
     String getEmail(String m_member_id);
+
+    String getPassword(String m_member_id);
 }

@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+            integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .form300 {
             width: 60%;
@@ -42,8 +45,12 @@
             <th><input type="text" class="form-control form300" name="m_buyer_address"></th>
         </tr>
         <tr>
+            <th>통화</th>
+            <th><input type="text" class="form-control form300" name="m_buyer_currency"></th>
+        </tr>
+        <tr>
             <th>사업자번호</th>
-            <th><input type="text" class="form-control form300" name="m_buyer_number" id="buyerIdInput"></th>
+            <th><input type="text" class="form-control form300" name="m_buyer_number" id="buyerIdInput"><p id="inputText"></p></th>
             <th>
                 <button style="border-color: #0cc; font-family: LINESeedKR-Bd" id="buyerIdButton" class="btn"
                         type="button">중복확인
@@ -51,32 +58,33 @@
             </th>
         </tr>
         <tr>
-            <th>통화</th>
-            <th><input type="text" class="form-control form300" name="m_buyer_currency"></th>
+        <input type="submit" class="btn btn-primary" value="등록" disabled id="register">
         </tr>
     </form>
     </tbody>
 </table>
-<button class="btn btn-primary" id="register" disabled>등록</button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 
 <script>
+    const ctx = "${pageContext.request.contextPath}";
+
     document.querySelector("#buyerIdButton").addEventListener("click", function () {
-        debugger;
         checkedDoubleId = false;
         const insertBuyerNum = document.querySelector("#buyerIdInput").value;
 
         fetch(ctx + "/buyer/checkNum/" + insertBuyerNum)
             .then(res => res.json())
             .then(data => {
-                document.querySelector("#buyerIdInput").innerText = "";
-                document.querySelector("#buyerIdInput").focus().style("background",'red');
+                document.querySelector("#inputText").innerText = data.message;
+                    $(function (){
+                        $('#inputText').css("color", "red");
+                    })
 
-                if (data.statusId == "not exist") {
-                    buyerIdInput.removeAttribute("style");
-                    document.querySelector("#register").enable();
+                if (data.statusNum === 'not exist') {
+                    inputText.removeAttribute("style");
+                    document.querySelector("#register").removeAttribute("disabled");
                 }
             })
     })
