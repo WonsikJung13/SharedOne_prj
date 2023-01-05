@@ -13,5 +13,5 @@ public interface OrderMapper {
 
     List<ItemDto> itemSelect();
 
-    ItemDto priceByitem(String m_item_id);
+    ItemDto itemList(String m_item_id);
 }

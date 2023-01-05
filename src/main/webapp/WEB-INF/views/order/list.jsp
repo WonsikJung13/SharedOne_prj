@@ -42,89 +42,66 @@
     </style>
 </head>
 <body>
+
 <div class="row">
     <div class="col-3">
         <my:header></my:header>
     </div>
     <div class="col">
-        <h1>제품 선택</h1>
-        <table class="table table-bordered">
-            <tbody>
-            <tr>
-                <td class="table-active">제품코드</td>
-                <td>
-                    <div>
-                        <input onchange="itemView()" class="form-select" aria-label="Default select example" type="text" list="lists" id="orderItems" placeholder="제품를 선택해주세요"/>
-                        <datalist id ="lists">
-                            <c:forEach items="${itemList}" var="items" >
-                                <option value="${items.m_item_id}_${items.m_item_name}" class="itemSelect"></option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="table-active">통화</td>
-                <td id="itemCurrency">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-active">할인율</td>
-                <td id="itemDiscount"></td>
-            </tr>
-            <tr>
-                <td class="table-active">판매가격</td>
-                <td>
-                    <input id="itemPrice" class="form-control" type="text" placeholder="Default input" aria-label="default input example">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-active">오더수량</td>
-                <td>
-                    <input class="form-control" type="text" placeholder="Default input" aria-label="default input example">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-active">총 금액</td>
-                <td>
-                    11
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-secondary">제품추가</button>
+<h1>오더관리</h1>
+<input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
+       data-bs-target="#removeModal">
 
-        <h2>추가된 제품</h2>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">제품코드</th>
-                <th scope="col">제품명</th>
-                <th scope="col">판매가격</th>
-                <th scope="col">오더수량</th>
-                <th scope="col">총 금액</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <%--    <c:forEach items="" var="">--%>
-            <%--        <tr>--%>
-            <%--            <th scope="row">1</th>--%>
-            <%--            <td>Mark</td>--%>
-            <%--            <td>Otto</td>--%>
-            <%--            <td>@mdo</td>--%>
-            <%--            <td>@mdo</td>--%>
-            <%--            <td><button></button></td>--%>
-            <%--        </tr>--%>
-            <%--    </c:forEach>--%>
+<table class="table">
+    <tbody>
+    <tr style="font-family: 'LINESeedKR-Bd'">
+        <th>오더코드</th>
+        <th>바이어코드</th>
+        <th>바이어명</th>
+        <th>전체금액</th>
+        <th>발주상태</th>
+        <th></th>
+    </tr>
+    <c:forEach items="${buyerList }" var="buyer">
+        <tr>
+            <td>001001</td>
+            <td>001001</td>
+            <td>바이어명</td>
+            <td>전체금액</td>
+            <td>발주상태</td>
+            <td>
+                <a class="btn btn-primary" href="">수정하기</a>
+            </td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 
-
-            </tbody>
-        </table>
+<form id="removeForm" action="${removeLink }" method="post">
+    <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
+</form>
+<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                삭제하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">취소
+                </button>
+                <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton" type="button"
+                        class="btn btn-danger">확인
+                </button>
+            </div>
+        </div>
     </div>
-
 </div>
-
+    </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
