@@ -20,4 +20,5 @@ public interface BuyerMapper {
 
     BuyerDto select(int m_buyer_id);
 
+    BuyerDto getBuyerNum(String m_buyer_number);
 }

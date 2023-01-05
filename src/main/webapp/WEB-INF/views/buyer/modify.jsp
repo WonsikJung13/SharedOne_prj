@@ -25,14 +25,16 @@
     ${Buyer.m_buyer_id}
 </h3>
 <form method="post" id="modifyForm" style="margin-top: 30px">
-<input class="form-control" type="text" value="${Buyer.m_buyer_id}" readonly>
-<input class="form-control" type="text" name="m_buyer_name" value="${Buyer.m_buyer_name}">
-<input class="form-control" type="text" name="m_buyer_region" value="${Buyer.m_buyer_region}">
-<input class="form-control" type="text" name="m_buyer_address" value="${Buyer.m_buyer_address}">
-<input class="form-control" type="text" name="m_buyer_number" value="${Buyer.m_buyer_number}">
+    <input class="form-control" type="text" value="${Buyer.m_buyer_id}" readonly>
+    <input class="form-control" type="text" name="m_buyer_name" value="${Buyer.m_buyer_name}">
+    <input class="form-control" type="text" name="m_buyer_region" value="${Buyer.m_buyer_region}">
+    <input class="form-control" type="text" name="m_buyer_address" value="${Buyer.m_buyer_address}">
+    <input class="form-control" type="text" name="m_buyer_number" value="${Buyer.m_buyer_number}">
+    <input class="form-control" type="text" name="m_buyer_currency" value="${Buyer.m_buyer_currency}">
 </form>
 
-<button style="font-family: 'LINESeedKR-Bd'" type="submit" class="btn btn-ico" data-bs-toggle="modal" data-bs-target="#modifyModal">
+<button style="font-family: 'LINESeedKR-Bd'" type="submit" class="btn btn-ico" data-bs-toggle="modal"
+        data-bs-target="#modifyModal">
     수정하기
 </button>
 
@@ -48,8 +50,12 @@
                 수정하시겠습니까?
             </div>
             <div class="modal-footer">
-                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button style="font-family: 'LINESeedKR-Bd'" id="modifyConfirmButton" type="button" class="btn btn-ico">확인</button>
+                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">취소
+                </button>
+                <button style="font-family: 'LINESeedKR-Bd'" id="modifyConfirmButton" type="button" class="btn btn-ico">
+                    확인
+                </button>
             </div>
         </div>
     </div>
