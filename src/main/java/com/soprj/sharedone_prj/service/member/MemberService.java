@@ -30,8 +30,8 @@ public class MemberService {
     }
 
 
-    public int updateEmail(MemberDto member) {
-        return memberMapper.updateMemberEmail(member);
+    public int updateEmail(String m_member_id, String m_member_email) {
+        return memberMapper.updateMemberEmail(m_member_id, m_member_email);
     }
 
     public int updatePassword(MemberDto member) {
@@ -44,9 +44,6 @@ public class MemberService {
 
 
     public int register(MemberDto member) {
-        String pw = member.getM_member_password();
-        member.setM_member_password(passwordEncoder.encode(pw));
-
         int cnt = memberMapper.insert(member);
         return cnt;
     }
@@ -59,9 +56,8 @@ public class MemberService {
         return memberMapper.select(m_member_id);
     }
 
-    public int updatePasswordd(String m_member_id, String m_member_password) {
-        String pw = emailService.ePw;
-        m_member_password = passwordEncoder.encode(pw);
+    public int updatePasswordd(String m_member_id, String password) {
+        String m_member_password = passwordEncoder.encode(password);
         return memberMapper.updatePasswordd(m_member_id, m_member_password);
     }
 
@@ -82,5 +78,9 @@ public class MemberService {
 
     public String getEmail(String m_member_id) {
         return memberMapper.getEmail(m_member_id);
+    }
+
+    public String getPassword(String m_member_id) {
+        return memberMapper.getPassword(m_member_id);
     }
 }
