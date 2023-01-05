@@ -24,6 +24,6 @@ public class OrderService {
     public List<ItemDto> itemList() { return mapper.itemSelect(); }
 
     public ItemDto itemView(String m_item_id) {
-        return mapper.priceByitem(m_item_id);
+        return mapper.itemList(m_item_id);
     }
 }

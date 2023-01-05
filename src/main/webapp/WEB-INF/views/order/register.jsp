@@ -86,7 +86,6 @@
 <h1>오더 작성</h1>
 
     <h2>거래처 선택</h2>
-
 <table class="table table-bordered">
     <tbody>
         <tr>
@@ -110,6 +109,14 @@
             <td class="table-active">사업자등록번호</td>
             <td id="buyerNumber"></td>
         </tr>
+        <tr>
+            <td class="table-active">통화</td>
+            <td id="buyerCurrency"></td>
+            <td class="table-active">납품요청일</td>
+            <td colspan="3">
+                <input id="itemPrice" class="form-control" type="date" placeholder="Default input" aria-label="default input example">
+            </td>
+        </tr>
     </tbody>
 </table>
 
@@ -129,58 +136,41 @@
             </div>
         </td>
         <td class="table-active">제품이름</td>
-        <td id="itemCurrency">
+        <td class="itemName">
         </td>
     </tr>
     <tr>
         <td class="table-active">제품품목</td>
-        <td id="itemDiscount"></td>
+        <td class="itemGroup"></td>
         <td class="table-active">제조사</td>
-        <td>
-            <input id="itemPrice" class="form-control" type="text" placeholder="Default input" aria-label="default input example">
-        </td>
-    </tr>
-    <tr>
-        <td class="table-active">납품기간</td>
-        <td colspan="3">
-            <input id="itemPrice" class="form-control" type="text" placeholder="Default input" aria-label="default input example">
-        </td>
+        <td class="manufacturer"></td>
     </tr>
     </tbody>
 </table>
 
     <h2>오더정보</h2>
-
-
     <table class="table table-bordered">
         <tbody>
-        <tr>
-            <td class="table-active">납품기간</td>
-            <td colspan="3">
-                <input id="itemPrice" class="form-control" type="text" placeholder="Default input" aria-label="default input example">
-            </td>
-        </tr>
-        <tr>
-            <td class="table-active">통화</td>
-            <td id="itemCurrency"></td>
-
-            <td class="table-active">할인율</td>
-            <td id="itemDiscount"></td>
-        </tr>
     <tr>
+        <td class="table-active">판매가격</td>
+        <td>
+            <input class="form-control listPrice" type="text" placeholder="Default input" aria-label="default input example">
+        </td>
         <td class="table-active">오더수량</td>
         <td>
             <input class="form-control" type="text" placeholder="Default input" aria-label="default input example">
-        </td>
-        <td class="table-active">판매가격</td>
-        <td>
-            <input id="itemPrice" class="form-control" type="text" placeholder="Default input" aria-label="default input example">
         </td>
     </tr>
     <tr>
         <td class="table-active">총 금액</td>
         <td colspan="3">
             11
+        </td>
+    </tr>
+    <tr>
+        <td class="table-active">메모</td>
+        <td colspan="3">
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </td>
     </tr>
         </tbody>
@@ -191,6 +181,7 @@
 <table class="table addList">
     <thead>
     <tr>
+        <th scope="col">납품요청일</th>
         <th scope="col">제품코드</th>
         <th scope="col">제품명</th>
         <th scope="col">판매가격</th>
@@ -238,20 +229,21 @@
                 document.querySelector("#buyerAddress").innerHTML = data.m_buyer_address;
                 document.querySelector("#buyerRegion").innerHTML = data.m_buyer_region;
                 document.querySelector("#buyerNumber").innerHTML = data.m_buyer_number;
+                document.querySelector("#buyerCurrency").innerHTML = data.m_buyer_currency;
                 })
     }
 
+    // item 데이터 가져오기
     function itemView() {
         const item = document.querySelector('#orderItems')
-        console.log(item)
         const selected = item.value.split('_').at(0);
-        console.log(selected);
         fetch(ctx + "/order/itemList/" + selected)
            .then(res => res.json())
            .then(data => {
-               document.querySelector("#itemCurrency").innerHTML = data.m_price_currency;
-               document.querySelector("#itemDiscount").innerHTML = data.m_price_discount;
-               document.querySelector("#itemPrice").innerHTML = data.m_price_lastPrice;
+               document.querySelector(".itemName").innerHTML = data.m_item_name;
+               document.querySelector(".itemGroup").innerHTML = data.m_item_group;
+               document.querySelector(".manufacturer").innerHTML = data.m_item_manufacturer;
+               document.querySelector(".listPrice").value = data.m_price_lastPrice;
            })
     }
 
