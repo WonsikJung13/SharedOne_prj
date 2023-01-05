@@ -32,7 +32,7 @@
         m_member_id = #{m_member_id}
     </select>
 
-    <select id="getMemberLogin" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
+    <select id="getMemberLogin" resultType="com.soprj.sharedone_prj.domain.member.MemberLoginDto">
         SELECT
         m.m_member_id,
         m.m_member_password,
@@ -62,6 +62,14 @@
         m_authority_grade
         FROM
         m_authority
+    </select>
+    <select id="getEmail" resultType="java.lang.String">
+        SELECT
+        m_member_email
+        FROM
+        m_member
+        WHERE
+        m_member_id = #{m_member_id}
     </select>
 
     <insert id="addMember">
@@ -124,6 +132,14 @@
         m_member
         SET
         m_authority_id = #{m_authority_id}
+        WHERE
+        m_member_id = #{m_member_id}
+    </update>
+    <update id="resetPassword">
+        UPDATE
+        m_member
+        SET
+        m_member_password = #{m_member_password}
         WHERE
         m_member_id = #{m_member_id}
     </update>

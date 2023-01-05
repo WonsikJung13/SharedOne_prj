@@ -29,4 +29,8 @@ public interface MemberMapper {
     List<MemberDto> selectAuthority();
 
     int updateGrade(MemberDto member);
+
+    int resetPassword(String m_member_id, String m_member_password);
+
+    String getEmail(String m_member_id);
 }

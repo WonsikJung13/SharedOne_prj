@@ -2,6 +2,7 @@ package com.soprj.sharedone_prj.controller.member;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.member.MemberDto;
+import com.soprj.sharedone_prj.service.member.EmailServiceImpl;
 import com.soprj.sharedone_prj.service.member.MemberService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @GetMapping("list")
     public void list(Model model) {
@@ -116,17 +120,23 @@ public class MemberController {
     @PostMapping("manage")
     public String manageModify(MemberDto member, RedirectAttributes rttr) {
 
-        if (member.getM_member_email() != null) {
-            int cnt = memberService.updateEmail(member);
-        }
-        if (member.getM_member_password() != null) {
-            int cntt = memberService.updatePassword(member);
-        }
 
         int cnt = memberService.updateGrade(member);
 
+        return "redirect:/member/manage";
+    }
 
+    @GetMapping("resetPassword")
+    public String resetPassword(@RequestParam(name = "m_member_id") String m_member_id, RedirectAttributes rttr) throws Exception {
+
+        System.out.println("id : " + m_member_id);
+        int cnt = memberService.resetPassword(m_member_id);
+        String email = memberService.getEmail(m_member_id);
+        System.out.println("email : " + email);
+        String cnttt = emailService.sendSimpleMessage(email);
 
         return "redirect:/member/manage";
     }
+
+
 }
