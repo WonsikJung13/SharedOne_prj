@@ -17,5 +17,16 @@
         FROM m_buyer
         WHERE m_buyer_id = #{m_Buyer_Id}
     </select>
-
+    <select id="itemSelect" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
+        SELECT m_item_id,
+                m_item_name
+        FROM m_item
+    </select>
+    <select id="priceByitem" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
+        SELECT m_price_currency
+                m_price_discount
+                m_price_lastPrice
+        FROM m_item join m_price ON m_item_id = m_price_id
+        WHERE m_item_id = #{m_item_id}
+    </select>
 </mapper>

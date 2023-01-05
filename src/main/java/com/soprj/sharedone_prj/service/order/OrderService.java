@@ -1,6 +1,7 @@
 package com.soprj.sharedone_prj.service.order;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
+import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.mapper.order.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,11 @@ public class OrderService {
 
     public BuyerDto buyerView(String m_Buyer_Id) {
         return mapper.buyerList(m_Buyer_Id);
+    }
+
+    public List<ItemDto> itemList() { return mapper.itemSelect(); }
+
+    public ItemDto itemView(String m_item_id) {
+        return mapper.priceByitem(m_item_id);
     }
 }

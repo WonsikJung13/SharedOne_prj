@@ -1,16 +1,15 @@
 package com.soprj.sharedone_prj.controller.order;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
+import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+
 
 @Controller
 @RequestMapping("order")
@@ -24,6 +23,9 @@ public class OrderController {
 //    셀렉트 이름 가져오기
         List<BuyerDto> list = orderService.buyerList();
         model.addAttribute("buyerList", list);
+
+        List<ItemDto> itemList = orderService.itemList();
+        model.addAttribute("itemList", itemList);
     }
     @GetMapping ("buyerList/{selected}")
     @ResponseBody
@@ -32,8 +34,14 @@ public class OrderController {
         return list;
     };
 
+    @GetMapping("itemList/{selected}")
+    @ResponseBody
+    public ItemDto itemList(@PathVariable String selected) {
+        ItemDto list = orderService.itemView(selected);
+        return list;
+    }
     @GetMapping("list")
-    private void orderList(){
+    private void itemList(){
 
     }
 }
