@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% request.setCharacterEncoding("utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="path" value="${pageContext.request.contextPath}" />
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <html>
 <head>
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
 </head>
 <body>
@@ -27,43 +27,51 @@
     <div id="itemTitle">
         <h1 id="header">제품 등록</h1>
     </div>
+
     <div>
         <form id="itemRegisterForm" method="post">
 
             <div>
                 <label>제품명</label>
-                <input type="text" name="m_item_name" value="${getItem.m_item_name}">
+                <input type="text" name="m_item_name" value="${getItem.m_item_name}" autocomplete='off'>
             </div>
 
             <div>
                 <label>제품그룹</label>
-                <input type="text" name="m_item_group" value="${getItem.m_item_group}">
+                <input type="text" name="m_item_group" value="${getItem.m_item_group}" list="InputGroupList" autocomplete='off'>
+                <datalist id="InputGroupList">
+                    <c:forEach items="${groupList}" var="groupList">
+                        <option value="${groupList.m_item_group}">
+                                ${groupList.m_item_group}
+                        </option>
+                    </c:forEach>
+                </datalist>
             </div>
 
             <div>
                 <label>제조사</label>
-                <input type="text" name="m_item_manufacturer" value="${getItem.m_item_manufacturer}">
+                <input type="text" name="m_item_manufacturer" value="${getItem.m_item_manufacturer}" autocomplete='off'>
             </div>
 
             <div>
                 <label>단위</label>
-                <input type="text" name="m_item_unit" value="${getItem.m_item_unit}">
+                <input type="text" name="m_item_unit" value="${getItem.m_item_unit}" autocomplete='off'>
             </div>
             <div id="inputItemId">
                 <label>제품코드</label>
-                <input type="text" name="m_item_id" value="${getItem.m_item_id}" disabled>
+                <input type="text" name="" value="${getItem.m_item_id}" disabled>
             </div>
 
             <div class="input group">
-                <input class="btn" type="submit" id="submitButton1" value="제품 등록">
-
-                <c:url value="/item/remove" var="removeLink"/>
-                <form id="removeForm" action="${removeLink }" method="post">
-                    <input type="hidden" name="m_item_id" value="${getItem.m_item_id }">
-                </form>
-                <input id="InputRemoveButton" class="btn btn-danger" type="submit" value="제품 삭제" data-bs-toggle="modal" data-bs-target="#removeModal">
+                <input class="btn" type="submit" id="submitButton1" value="제품 등록" style="background-color: antiquewhite">
             </div>
         </form>
+
+        <c:url value="/item/remove" var="removeLink"/>
+        <form id="removeForm" action="${removeLink }" method="post">
+            <input type="hidden" name="m_item_id" value="${getItem.m_item_id }">
+        </form>
+        <input id="InputRemoveButton" class="btn btn-danger" type="submit" value="제품 삭제" data-bs-toggle="modal" data-bs-target="#removeModal">
 
     </div>
 
@@ -88,19 +96,17 @@
 </div>
 </body>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const itemId = document.querySelector("input[name='m_item_id']").value;
         if (itemId != 0) {
             document.getElementById("inputItemId").style.display = "block";
-            document.getElementById("submitButton1").value="제품 수정";
+            document.getElementById("submitButton1").value = "제품 수정";
             document.getElementById("header").innerHTML = "제품 수정"
-        }
-        else {
+        } else {
             document.getElementById("inputItemId").style.display = "none";
             document.getElementById("InputRemoveButton").style.display = "none";
         }
     });
-
 
 </script>
 
@@ -109,10 +115,16 @@
     document.querySelector("#removeConfirmButton").addEventListener("click", function () {
         document.querySelector("#removeForm").submit();
     });
+    $.ajax({
+
+    })
 </script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </html>
