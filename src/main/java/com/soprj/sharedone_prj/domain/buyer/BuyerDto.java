@@ -15,4 +15,5 @@ public class BuyerDto {
 
     private int m_buyer_number;
 
+    private String m_buyer_currency;
 }

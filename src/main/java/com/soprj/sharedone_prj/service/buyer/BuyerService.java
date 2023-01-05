@@ -44,6 +44,9 @@ public class BuyerService {
         return buyerMapper.select(m_buyer_id);
     }
 
+    public BuyerDto getBuyerNum(String m_buyer_number) {
+        return buyerMapper.getBuyerNum(m_buyer_number);
+    }
 }
 
 

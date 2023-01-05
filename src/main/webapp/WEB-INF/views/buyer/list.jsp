@@ -33,9 +33,10 @@
     <tr style="font-family: 'LINESeedKR-Bd'">
         <th>거래처 번호</th>
         <th>거래처명</th>
-        <th>거래처 국일</th>
+        <th>거래처 나라</th>
         <th>거래처 주소</th>
         <th>사업자 번호</th>
+        <th>통화</th>
         <th></th>
     </tr>
     <c:forEach items="${buyerList }" var="buyer">
@@ -52,6 +53,7 @@
             <td>${buyer.m_buyer_region }</td>
             <td>${buyer.m_buyer_address }</td>
             <td>${buyer.m_buyer_number }</td>
+            <td>${buyer.m_buyer_currency}</td>
             <td>
                 <c:url value="/buyer/modify" var="modifyLink">
                     <c:param value="${buyer.m_buyer_id }" name="m_buyer_id"/>

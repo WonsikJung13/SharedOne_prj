@@ -17,21 +17,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <style>
+        .form300 {
+            width: 60%;
+        }
+    </style>
 </head>
 <body>
 <h1>register</h1>
 
-<form action="" method="post" enctype="multipart/form-data">
-    거래처 명<input class="form-control" type="text" name="m_buyer_name">
-    거래처 국가<input class="form-control" type="text" name="m_buyer_region">
-    거래처 주소<input type="text" class="form-control" name="m_buyer_address">
-    사업자번호<input type="text" class="form-control" name="m_buyer_number">
-
-    <input style="font-family: LINESeedKR-Bd" class="btn btn-ico" type="submit" value="등록">
-</form>
-
+<table class="table">
+    <tbody>
+    <form action="" method="post" enctype="multipart/form-data">
+        <tr>
+            <th>거래처 명</th>
+            <th><input class="form-control form300" type="text" name="m_buyer_name"></th>
+        </tr>
+        <tr>
+            <th>거래처 국가</th>
+            <th><input class="form-control form300" type="text" name="m_buyer_region"></th>
+        </tr>
+        <tr>
+            <th>거래처 주소</th>
+            <th><input type="text" class="form-control form300" name="m_buyer_address"></th>
+        </tr>
+        <tr>
+            <th>사업자번호</th>
+            <th><input type="text" class="form-control form300" name="m_buyer_number" id="buyerIdInput"></th>
+            <th>
+                <button style="border-color: #0cc; font-family: LINESeedKR-Bd" id="buyerIdButton" class="btn"
+                        type="button">중복확인
+                </button>
+            </th>
+        </tr>
+        <tr>
+            <th>통화</th>
+            <th><input type="text" class="form-control form300" name="m_buyer_currency"></th>
+        </tr>
+    </form>
+    </tbody>
+</table>
+<button class="btn btn-primary" id="register" disabled>등록</button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
+
+<script>
+    document.querySelector("#buyerIdButton").addEventListener("click", function () {
+        debugger;
+        checkedDoubleId = false;
+        const insertBuyerNum = document.querySelector("#buyerIdInput").value;
+
+        fetch(ctx + "/buyer/checkNum/" + insertBuyerNum)
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector("#buyerIdInput").innerText = "";
+                document.querySelector("#buyerIdInput").focus().style("background",'red');
+
+                if (data.statusId == "not exist") {
+                    buyerIdInput.removeAttribute("style");
+                    document.querySelector("#register").enable();
+                }
+            })
+    })
+</script>
 </body>
 </html>
