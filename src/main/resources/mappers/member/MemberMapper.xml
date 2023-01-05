@@ -16,8 +16,6 @@
         m_member m
         LEFT JOIN
         m_authority ma ON ma.m_authority_id = m.m_authority_id
-        ORDER BY m_member_id DESC
-
     </select>
 
     <select id="getMember" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
@@ -66,6 +64,14 @@
     <select id="getEmail" resultType="java.lang.String">
         SELECT
         m_member_email
+        FROM
+        m_member
+        WHERE
+        m_member_id = #{m_member_id}
+    </select>
+    <select id="getPassword" resultType="java.lang.String">
+        SELECT
+        m_member_password
         FROM
         m_member
         WHERE

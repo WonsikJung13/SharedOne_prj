@@ -28,12 +28,9 @@ public class EmailServiceImpl implements EmailService{
 
         String msgg="";
         msgg+= "<div style='margin:20px;'>";
-        msgg+= "<h1> 안녕하세요 임시 비밀번호 입니다. </h1>";
+        msgg+= "<h1> 임시 비밀번호  </h1>";
         msgg+= "<br>";
-        msgg+= "<p>임시 비밀번호 입니다<p>";
         msgg+= "<p>발급후 반드시 비밀번호를 변경해주세요<p>";
-        msgg+= "<br>";
-        msgg+= "<p>감사합니다.<p>";
         msgg+= "<br>";
         msgg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
         msgg+= "<h3 style='color:blue;'>임시 비밀번호</h3>";
@@ -42,7 +39,7 @@ public class EmailServiceImpl implements EmailService{
         msgg+= ePw+"</strong><div><br/> ";
         msgg+= "</div>";
         message.setText(msgg, "utf-8", "html");//내용
-        message.setFrom(new InternetAddress("ha971206@gmail.com","ART"));//보내는 사람
+        message.setFrom(new InternetAddress("ha971206@gmail.com","ㅁㅁ"));//보내는 사람
 
         return message;
     }
