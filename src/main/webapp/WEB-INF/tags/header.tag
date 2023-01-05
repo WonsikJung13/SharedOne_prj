@@ -11,14 +11,6 @@
     a{
         color: white;
     }
-    .btn
-    {
-        color:#fff;
-    }
-    body {
-        min-height: 100vh;
-        color: white;
-    }
 
 
     main {
@@ -32,7 +24,7 @@
 
         font-weight: 600;
         font-size: 18px;
-        background-color: transparent;
+        background-color: #353535;
         color: white;
         width:248px;
     }
@@ -57,7 +49,13 @@
         background-color: #000;
         color: white;
     }
+    .navbg{
+        background-color: #353535;
+    }
 
+    li{
+        background-color: #353535;
+    }
 
 </style>
 
@@ -66,40 +64,41 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<div class="flex-shrink-0 p-3 bg-dark" style="width: 280px; height: 100%;">
-    <a href="${reportLink}" class="d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
-        <span class="fs-5 fw-semibold">로고</span>
+<div class="flex-shrink-0 p-3 navbg" style="width: 280px; height: 100%;">
+    <a href="${reportLink}" class=" navbg d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
+        <span class="navbg fs-5 fw-semibold">SharedOne</span>
     </a>
-    <ul class="list-unstyled ps-0">
-        <li class="mb-1 main-nav">
+    <ul class="list-unstyled ps-0 navbg">
+        <li class="mb-1 main-nav navbg">
             <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
                 마스터
             </button>
-            <div class="collapse" id="dashboard-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="${itemList}" class=" d-inline-flex text-decoration-none rounded">제품 등록 관리</a></li>
-                    <li><a href="${buyerList}" class=" d-inline-flex text-decoration-none rounded">바이어 등록 관리</a></li>
-                    <li><a href="${priceList}" class=" d-inline-flex text-decoration-none rounded">판매가 등록 관리</a></li>
-                    <li><a href="#" class=" d-inline-flex text-decoration-none rounded">회원 관리</a></li>
+            <div class="collapse navbg " id="dashboard-collapse">
+                <ul class="btn-toggle-nav pb-1 small navbg">
+                    <li><a href="${itemList}" class="navbg d-inline-flex text-decoration-none rounded">제품 등록 관리</a></li>
+                    <li><a href="${buyerList}" class="navbg d-inline-flex text-decoration-none rounded">바이어 등록 관리</a></li>
+                    <li><a href="${priceList}" class="navbg d-inline-flex text-decoration-none rounded">판매가 등록 관리</a></li>
+                    <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">회원 관리</a></li>
                 </ul>
             </div>
         </li>
-        <li class="mb-1 main-nav">
+        <li class="mb-1 main-nav navbg">
             <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
                 오더
             </button>
-            <div class="collapse" id="orders-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="${orderLink}" class=" d-inline-flex text-decoration-none rounded">오더작성</a></li>
-                    <li><a href="${orderList}" class=" d-inline-flex text-decoration-none rounded">오더관리</a></li>
-                    <li><a href="#" class=" d-inline-flex text-decoration-none rounded">승인관리</a></li>
+            <div class="collapse navbg" id="orders-collapse">
+                <ul class="navbg btn-toggle-nav  pb-1 small">
+                    <li><a href="${orderLink}" class="navbg d-inline-flex text-decoration-none rounded">오더작성</a></li>
+                    <li><a href="${orderList}" class="navbg d-inline-flex text-decoration-none rounded">오더관리</a></li>
+                    <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">승인관리</a></li>
                 </ul>
             </div>
         </li>
         <li class="mb-1 main-nav">
                 <a href="${reportLink}" class="btn btn-toggle d-inline-flex align-items-center border-0"  >리포터</a>
         </li>
-        <li class="border-top my-3"></li>
+
+
 
     </ul>
 </div>
