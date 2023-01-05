@@ -2,6 +2,7 @@ package com.soprj.sharedone_prj.controller.member;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.member.MemberDto;
+import com.soprj.sharedone_prj.service.member.EmailServiceImpl;
 import com.soprj.sharedone_prj.service.member.MemberService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private EmailServiceImpl emailService;
+
     @GetMapping("list")
     public void list(Model model) {
         List<MemberDto> list = memberService.listMember();
@@ -34,7 +38,6 @@ public class MemberController {
     @PostMapping("list")
     public String modifyy(MemberDto member, RedirectAttributes rttr) {
 
-        System.out.println(member);
         if (member.getM_member_email() != null) {
             int cnt = memberService.updateEmail(member);
         } else if (member.getM_member_password() != null) {
@@ -47,13 +50,11 @@ public class MemberController {
     @GetMapping("get")
     public void get(@RequestParam(name = "m_member_id") String m_member_id, Model model) {
         MemberDto member = memberService.get(m_member_id);
-        System.out.println(member);
         model.addAttribute("member", member);
     }
 
     @PostMapping("get")
     public String getto(MemberDto member, RedirectAttributes rttr) {
-        System.out.println(member);
         int cnt = memberService.updateEmail(member);
 
         return "redirect:/member/list";
@@ -75,9 +76,7 @@ public class MemberController {
     @PostMapping("modify")
     public String modify(MemberDto member, String m_member_id, String m_member_password, RedirectAttributes rttr) {
 
-//        int cntt = memberService.updatePassword(member);
         int cnt = memberService.updatePasswordd(m_member_id, m_member_password);
-        System.out.println(member);
 
 
         return "redirect:/member/list";
@@ -86,7 +85,6 @@ public class MemberController {
     @GetMapping("modify")
     public void modify(String m_member_id, Model model) {
         MemberDto memberDto = memberService.getMember(m_member_id);
-        System.out.println(memberDto);
 
         model.addAttribute("member", memberDto);
     }
@@ -94,7 +92,6 @@ public class MemberController {
     @PostMapping("remove")
     public String remove(String m_member_id, RedirectAttributes rttr) {
 
-        System.out.println(m_member_id);
         int cnt = memberService.remove(m_member_id);
 
         return "redirect:/member/list";
@@ -123,18 +120,23 @@ public class MemberController {
     @PostMapping("manage")
     public String manageModify(MemberDto member, RedirectAttributes rttr) {
 
-        System.out.println(member);
-        if (member.getM_member_email() != null) {
-            int cnt = memberService.updateEmail(member);
-        }
-        if (member.getM_member_password() != null) {
-            int cntt = memberService.updatePassword(member);
-        }
 
         int cnt = memberService.updateGrade(member);
 
+        return "redirect:/member/manage";
+    }
 
+    @GetMapping("resetPassword")
+    public String resetPassword(@RequestParam(name = "m_member_id") String m_member_id, RedirectAttributes rttr) throws Exception {
+
+        System.out.println("id : " + m_member_id);
+        int cnt = memberService.resetPassword(m_member_id);
+        String email = memberService.getEmail(m_member_id);
+        System.out.println("email : " + email);
+        String cnttt = emailService.sendSimpleMessage(email);
 
         return "redirect:/member/manage";
     }
+
+
 }

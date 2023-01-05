@@ -16,6 +16,9 @@ public class MemberService {
     private MemberMapper memberMapper;
 
     @Autowired
+    private EmailServiceImpl emailService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public List<MemberDto> listMember() {
@@ -57,6 +60,8 @@ public class MemberService {
     }
 
     public int updatePasswordd(String m_member_id, String m_member_password) {
+        String pw = emailService.ePw;
+        m_member_password = passwordEncoder.encode(pw);
         return memberMapper.updatePasswordd(m_member_id, m_member_password);
     }
 
@@ -66,5 +71,16 @@ public class MemberService {
 
     public int updateGrade(MemberDto member) {
         return memberMapper.updateGrade(member);
+    }
+
+    public int resetPassword(String m_member_id) {
+        String pw = emailService.ePw;
+        String m_member_password = passwordEncoder.encode(pw);
+        System.out.println(m_member_password);
+        return memberMapper.resetPassword(m_member_id, m_member_password);
+    }
+
+    public String getEmail(String m_member_id) {
+        return memberMapper.getEmail(m_member_id);
     }
 }
