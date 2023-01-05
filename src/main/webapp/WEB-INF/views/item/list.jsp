@@ -58,23 +58,21 @@
         </div>
         <div>
           <label>제품그룹</label>
-          <select id="groupSelect">
+          <input type="text" list="groupList" />
+          <datalist id ="groupList">
             <c:forEach items="${groupList}" var="groupList">
               <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>
             </c:forEach>
-            <option class="GroupEditable" value="입력">입력</option>
-          </select>
-          <input class="groupEditOption" style="display:none;" autocomplete='off'>
+          </datalist>
         </div>
         <div>
           <label>제조사</label>
-          <select id="manufacturerSelect">
+          <input type="text" list="manufacturerList" />
+          <datalist id ="manufacturerList">
             <c:forEach items="${manufacturerList}" var="manufacturerList">
               <option class="non" value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>
             </c:forEach>
-            <option class="manufacturerEditable" value="입력">입력</option>
-          </select>
-          <input class="ManufacturerEditOption" style="display:none;" autocomplete='off'>
+          </datalist>
         </div>
         <div>
           <input type="submit" value="검색">
@@ -98,10 +96,10 @@
             <div>
               <tr>
                 <td>
-                  <c:url value="/item/register" var="getLink">
+                  <c:url value="/item/register" var="registerLink">
                     <c:param name="m_item_id" value="${itemList.m_item_id}"></c:param>
                   </c:url>
-                  <a href="${getLink}">
+                  <a href="${registerLink}">
                     ${itemList.m_item_id}
                   </a>
                 </td>
@@ -152,7 +150,7 @@
               </li>
             </c:if>
 
-            <c:forEach begin="${itemDto.leftPageNumber}" end="${itemDto.lastPageNumber}" var="pageNumber">
+            <c:forEach begin="${itemDto.leftPageNumber}" end="${itemDto.rightPageNumber}" var="pageNumber">
               <c:url value="/item/list" var="listLink">
                 <c:param name="page" value="${pageNumber }"/>
               </c:url>
@@ -165,24 +163,23 @@
                 </li>
             </c:forEach>
 
-            <c:if test="${itemDto.currentPageNumber ne itemDto.lastPageNumber }">
-              <c:url value="/item/list" var="listLink">
-                <c:param value="${itemDto.lastPageNumber }" name="page" />
-              </c:url>
-              <li class="page-item">
-                <a href="${listLink }" class="page-link">
-                  <i class="fa-solid fa-angle-right"></i>
-                </a>
-              </li>
-            </c:if>
+              <%-- 다음 버튼 --%>
+              <c:if test="${itemDto.hasNextButton }">
+                <c:url value="/item/list" var="listLink">
+                  <c:param name="page" value="${itemDto.jumpNextPageNumber }"></c:param>
+                </c:url>
+                <li class="page-item">
+                  <a href="${listLink }" class="page-link">
+                    <i class="fa-solid fa-angle-right"></i>
+                  </a>
+                </li>
+              </c:if>
 
+              <%-- 맨뒤 버튼 --%>
             <c:if test="${itemDto.currentPageNumber ne itemDto.lastPageNumber }">
               <c:url value="/item/list" var="listLink">
                 <c:param value="${itemDto.lastPageNumber }" name="page" />
-                <c:param name="q" value="${param.q }" />
-                <c:param name="t" value="${param.t }" />
               </c:url>
-              <!-- li.page-item>a.page-link{맨뒤버튼} -->
               <li class="page-item">
                 <a href="${listLink }" class="page-link">
                   <i class="fa-solid fa-angles-right"></i>

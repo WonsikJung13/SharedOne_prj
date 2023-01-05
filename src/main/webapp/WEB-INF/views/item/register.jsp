@@ -20,6 +20,22 @@
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <style>
+        /*제품그룹 박스*/
+        #groupSelect, #manufacturerSelect{
+            height: 30px;
+        }
+        option {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .groupEditOption, .manufacturerEditable{
+            position: relative;
+        }
+    </style>
 
 </head>
 <body>
@@ -38,24 +54,29 @@
 
             <div>
                 <label>제품그룹</label>
-                <input type="text" name="m_item_group" value="${getItem.m_item_group}" list="InputGroupList" autocomplete='off'>
-                <datalist id="InputGroupList">
+                <select id="groupSelect" name="m_item_group">
                     <c:forEach items="${groupList}" var="groupList">
-                        <option value="${groupList.m_item_group}">
-                                ${groupList.m_item_group}
-                        </option>
+                        <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>
                     </c:forEach>
-                </datalist>
+                    <option class="GroupEditable" value="입력">입력</option>
+                </select>
+                <input class="groupEditOption" value="${getItem.m_item_group}" autocomplete='off' style="display:none;" >
             </div>
 
             <div>
                 <label>제조사</label>
-                <input type="text" name="m_item_manufacturer" value="${getItem.m_item_manufacturer}" autocomplete='off'>
+                <select id="manufacturerSelect" name="m_item_manufacturer">
+                    <c:forEach items="${manufacturerList}" var="manufacturerList">
+                        <option class="non" value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>
+                    </c:forEach>
+                    <option class="manufacturerEditable" value="입력">입력</option>
+                </select>
+                <input class="ManufacturerEditOption" value="${getItem.m_item_manufacturer}" autocomplete='off' style="display:none;" >
             </div>
 
             <div>
                 <label>단위</label>
-                <input type="text" name="m_item_unit" value="${getItem.m_item_unit}" autocomplete='off'>
+                <input type="text" name="m_item_unit" value="ea" autocomplete='off'>
             </div>
             <div id="inputItemId">
                 <label>제품코드</label>
@@ -118,6 +139,55 @@
     $.ajax({
 
     })
+</script>
+
+<script>
+    // 제품그룹 select
+    var initialText = $('.GroupEditable').val();    // 입력 옵션 value
+
+    $('#groupSelect').change(function(){                            // groupSelect가 change될 때 실행
+        var selected = $('option:selected', this).attr('class');    // 선택된 클래스값 non
+        var optionText = $('.GroupEditable').text();                // 입력 인풋 텍스트값
+
+        if(selected == "GroupEditable"){    // 입력 인풋이 선택되면
+            $('.groupEditOption').show();   // 숨겨진 인풋 보이기
+
+
+            $('.groupEditOption').keyup(function(){             // 숨겨진 인풋 키업일 때
+                var editText = $('.groupEditOption').val();     // editText = 숨겨진 인풋 value
+                $('.GroupEditable').val(editText);              // 입력 인풋 값을 edirtText로
+                console.log($('.GroupEditable').val(editText))
+                $('.GroupEditable').html(editText);             // 입력 인풋 html을 editText로
+            });
+
+        }
+        else{
+            $('.groupEditOption').hide();
+        }
+    });
+
+    // 제품 제조사 select
+    var initialText = $('.manufacturerEditable').val();
+    $('.ManufacturerEditOption').val(initialText);
+
+    $('#manufacturerSelect').change(function(){
+        var selected = $('option:selected', this).attr('class');
+        var optionText = $('.manufacturerEditable').text();
+
+        if(selected == "manufacturerEditable"){
+            $('.ManufacturerEditOption').show();
+
+
+            $('.ManufacturerEditOption').keyup(function(){
+                var editText = $('.ManufacturerEditOption').val();
+                $('.manufacturerEditable').val(editText);
+                $('.manufacturerEditable').html(editText);
+            });
+
+        }else{
+            $('.ManufacturerEditOption').hide();
+        }
+    });
 </script>
 
 
