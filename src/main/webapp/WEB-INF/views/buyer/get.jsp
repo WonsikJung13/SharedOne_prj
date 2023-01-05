@@ -29,6 +29,7 @@
 <input class="form-control" type="text" value="${Buyer.m_buyer_region}" readonly>
 <input class="form-control" type="text" value="${Buyer.m_buyer_address}" readonly>
 <input class="form-control" type="text" value="${Buyer.m_buyer_number}" readonly>
+<input class="form-control" type="text" value="${Buyer.m_buyer_currency}" readonly>
 <br>
 
 <c:url value="/buyer/modify" var="modifyLink">

@@ -1,18 +1,18 @@
 package com.soprj.sharedone_prj.controller.buyer;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
+import com.soprj.sharedone_prj.domain.member.MemberDto;
 import com.soprj.sharedone_prj.service.buyer.BuyerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("buyer")
@@ -59,12 +59,6 @@ public class BuyerController {
 
         int cnt = buyerService.update(buyerDto);
 
-//        if (cnt == 1) {
-//            rttr.addFlashAttribute("message", buyerService.getBuyerId() + "번 게시물을 수정하였습니다.");
-//        } else {
-//            rttr.addFlashAttribute("message", buyerService.getBuyerId() + "번 게시물을 수정하지 못했습니다.");
-//        }
-
         return "redirect:/buyer/list";
     }
 
@@ -84,6 +78,24 @@ public class BuyerController {
             rttr.addFlashAttribute("message", m_buyer_id + "번 게시물이 삭제되지 않았습니다.");
         }
         return "redirect:/buyer/list";
+    }
+
+    @GetMapping("checkNum/{m_buyer_number}")
+    @ResponseBody
+    public Map<String, Object> checkId(@PathVariable String m_buyer_number) {
+        Map<String, Object> map = new HashMap<>();
+
+        BuyerDto buyer = buyerService.getBuyerNum(m_buyer_number);
+
+        if (buyer == null) {
+            map.put("statusId", "not exist");
+            map.put("message", "사용 가능합니다");
+        } else {
+            map.put("statusId", "exist");
+            map.put("message", "중복합니다");
+        }
+
+        return map;
     }
 
 }
