@@ -75,6 +75,11 @@
         UPDATE
             m_item
         SET
+            m_item_id = CONCAT (
+                LEFT(#{m_item_group},2),
+                LEFT(#{m_item_manufacturer},2),
+                LPAD(#{m_item_id},4,'0')
+                ),
             m_item_name = #{m_item_name},
             m_item_group = #{m_item_group},
             m_item_manufacturer = #{m_item_manufacturer},
@@ -88,7 +93,7 @@
         FROM
             m_item
         WHERE
-            m_item_id = ${m_item_id}
+            m_item_id = #{m_item_id}
     </delete>
 
     <select id="selectGroup" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
