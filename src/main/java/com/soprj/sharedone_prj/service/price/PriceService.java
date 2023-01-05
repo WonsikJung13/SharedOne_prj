@@ -29,4 +29,20 @@ public class PriceService {
     public int getByIdModify(PriceDto priceDto) {
         return priceMapper.updateById(priceDto);
     }
+
+    public PriceDto buyerList(String m_buyer_id) {
+        return priceMapper.buyerList(m_buyer_id);
+    }
+
+    public PriceDto itemList(String m_item_id) {
+        return priceMapper.itemList(m_item_id);
+    }
+
+    public List<PriceDto> getBuyerList() {
+        return priceMapper.getBuyerList();
+    }
+
+    public List<PriceDto> getItemList() {
+        return priceMapper.getItemList();
+    }
 }
