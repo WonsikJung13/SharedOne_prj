@@ -22,15 +22,62 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
+<table class="table">
+    <thead>
+    <tr>
+        <td>이름</td>
+        <td>${member.m_member_id}</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>이메일</td>
+        <td>
+            <form method="post" id="modifyForm">
+                <input type="text" value="${member.m_member_email }" name="m_member_email">
+            </form>
+            <button style="font-family: 'LINESeedKR-Bd'" type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#modifyModal">
+                수정하기
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td>직급</td>
+        <td>${member.m_authority_grade}</td>
+    </tr>
+    </tbody>
+</table>
+<div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">수정 확인</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                수정하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">취소
+                </button>
+                <button style="font-family: 'LINESeedKR-Bd'" id="modifyConfirmButton" type="button"
+                        class="btn btn-primary">
+                    확인
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-기존비번<input type="text" id="oldPassword">
-<div style="color: red" id="oldPasswordText"></div>
-새비번<input type="text" id="newPassword1">
-<div style="color: red" id="newPassword1Text"></div>
 <form method="post" enctype="multipart/form-data" action="" id="changePassword">
+    기존비번<input type="text" id="oldPassword" name="oldPassword">
+    새비번<input type="text" id="newPassword1">
     새비번확인<input type="text" id="newPassword2" name="m_member_password">
     <div style="color: red" id="newPassword2Text"></div>
-    <button type="submit" id="submitBtn">전송</button>
+    <input type="submit" class="btn btn-primary" value="전송" disabled id="submitBtn">
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -38,29 +85,38 @@
         crossorigin="anonymous"></script>
 
 <script>
-    var oldPassword = document.getElementById("oldPassword").value;
-    var newPassword1 = document.getElementById("newPassword1").value;
-    var newPassword2 = document.getElementById("newPassword2").value;
+    document.querySelector("#modifyConfirmButton").addEventListener("click", function () {
+        document.querySelector("#modifyForm").submit();
+    });
+
+    const customerPasswordInput1 = document.querySelector("#newPassword1");
+    const customerPasswordInput2 = document.querySelector("#newPassword2");
+
+    function matchPassword() {
+        checkedPassword = false;
+
+        const samePassword1 = customerPasswordInput1.value;
+        const samePassword2 = customerPasswordInput2.value;
+
+        if (samePassword1 == samePassword2) {
+            newPassword2Text.innerText = "비밀번호가 일치합니다"
+            newPassword2Text.removeAttribute("style");
+            checkedPassword = true;
+            document.querySelector("#submitBtn").removeAttribute("disabled");
+        } else {
+            newPassword2Text.innerText = "비밀번호가 일치하지 않습니다"
+            newPassword2Text.setAttribute("style", "color:red");
+        }
+    }
+
+    document.querySelector("#newPassword1").addEventListener("keyup", matchPassword);
+    document.querySelector("#newPassword2").addEventListener("keyup", matchPassword);
 
     document.querySelector("#submitBtn").addEventListener("click", function () {
-
-        if (oldPassword == ${member.m_member_password}) {
-            if (newPassword1 != newPassword2) {
-                $(function () {
-                    newPassword2Text.innerText = "비밀번호가 일치하지 않습니다"
-                    document.querySelector('#newPassword2').focus();
-                })
-            } else {
-                document.querySelector("#changePassword").submit;
-            }
-        } else {
-            $(function () {
-                oldPasswordText.innerText = "비밀번호가 일치하지 않습니다."
-                document.querySelector("#oldPassword").focus();
-            })
+        if (checkedPassword) {
+            document.querySelector("#changePassword").submit;
         }
     })
-
 </script>
 
 </body>

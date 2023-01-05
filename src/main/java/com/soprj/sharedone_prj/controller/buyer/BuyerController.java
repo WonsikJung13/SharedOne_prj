@@ -88,13 +88,12 @@ public class BuyerController {
         BuyerDto buyer = buyerService.getBuyerNum(m_buyer_number);
 
         if (buyer == null) {
-            map.put("statusId", "not exist");
+            map.put("statusNum", "not exist");
             map.put("message", "사용 가능합니다");
         } else {
-            map.put("statusId", "exist");
+            map.put("statusNum", "exist");
             map.put("message", "중복합니다");
         }
-
         return map;
     }
 
