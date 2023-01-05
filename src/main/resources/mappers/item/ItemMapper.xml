@@ -6,18 +6,38 @@
 <mapper namespace="com.soprj.sharedone_prj.mapper.item.ItemMapper">
 
     <insert id="register">
+        <selectKey keyProperty="m_item_id" order="BEFORE" resultType="String">
+            SELECT id FROM m_item_seq ORDER BY id DESC LIMIT 1
+        </selectKey>
         INSERT INTO m_item (
+            m_item_id,
             m_item_name,
             m_item_group,
             m_item_manufacturer,
             m_item_unit
         )
         VALUES (
+            CONCAT (
+                LEFT(#{m_item_group},2),
+                LEFT(#{m_item_manufacturer},2),
+                LPAD(#{m_item_id},4,'0')
+            ),
             #{m_item_name},
             #{m_item_group},
             #{m_item_manufacturer},
             #{m_item_unit}
         )
+    </insert>
+
+    <insert id="registerId">
+        INSERT INTO m_item (
+            m_item_id,
+        )
+        SELECT CONCAT (
+            m_item_id,
+            MAX(m_item_number+1)
+        FROM
+            m_item
     </insert>
 
     <select id="selectItemList" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
@@ -28,7 +48,14 @@
             m_item_manufacturer,
             m_item_unit
         FROM m_item
+        WHERE
+            m_item_id LIKE #{itemIdParam}
         ORDER BY m_item_id DESC
+        LIMIT #{offset}, #{records}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM m_item
     </select>
 
     <select id="select" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
@@ -59,4 +86,20 @@
         DELETE FROM m_item
         WHERE m_item_id = ${m_item_id}
     </delete>
+
+    <select id="selectGroup" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
+        SELECT DISTINCT
+            m_item_group
+        FROM
+            m_item
+        ORDER BY m_item_group DESC
+    </select>
+
+    <select id="selectManufacturer" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
+        SELECT DISTINCT
+            m_item_manufacturer
+        FROM
+            m_item
+        ORDER BY m_item_manufacturer DESC
+    </select>
 </mapper>

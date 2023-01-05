@@ -27,26 +27,87 @@
 
     <insert id="insertRegister" useGeneratedKeys="true" keyProperty="m_price_id">
         INSERT INTO m_price (
-        m_price_startPeriod,
-        m_price_lastPeriod,
-        m_price_currency,
-        m_price_discount,
-        m_price_lastPrice,
-        m_price_price,
-        m_price_inserted,
-        m_buyer_id,
-        m_item_id
+            m_price_startPeriod,
+            m_price_lastPeriod,
+            m_price_currency,
+            m_price_discount,
+            m_price_lastPrice,
+            m_price_price,
+            m_price_inserted,
+            m_buyer_id,
+            m_item_id
         )
         VALUES (
-        #{m_price_startPeriod},
-        #{m_price_lastPeriod},
-        #{m_price_currency},
-        #{m_price_discount},
-        #{m_price_lastPrice},
-        #{m_price_price},
-        NOW(),
-        #{m_buyer_id},
-        #{m_item_id}
+            #{m_price_startPeriod},
+            #{m_price_lastPeriod},
+            #{m_price_currency},
+            #{m_price_discount},
+            #{m_price_lastPrice},
+            #{m_price_price},
+            NOW(),
+            #{m_buyer_id},
+            #{m_item_id}
         )
     </insert>
+    <select id="selectById" resultMap="priceMap">
+        SELECT
+            p.m_price_id,
+            p.m_price_price,
+            p.m_price_currency,
+            p.m_price_discount,
+            p.m_price_startPeriod,
+            p.m_price_lastPeriod,
+            p.m_price_lastPrice,
+            p.m_price_inserted,
+            b.m_buyer_id,
+            b.m_buyer_name,
+            i.m_item_id,
+            i.m_item_name
+        FROM
+            m_price p LEFT JOIN m_buyer b ON p.m_buyer_id = b.m_buyer_id
+                      LEFT JOIN m_item i ON p.m_item_id = i.m_item_id
+        WHERE m_price_id = #{m_price_id}
+    </select>
+    <resultMap type="com.soprj.sharedone_prj.domain.price.PriceDto" id="priceMap">
+        <id column="m_price_id" property="m_price_id"></id>
+        <result column="m_price_price" property="m_price_price"></result>
+        <result column="m_price_currency" property="m_price_currency"></result>
+        <result column="m_price_discount" property="m_price_discount"></result>
+        <result column="m_price_startPeriod" property="m_price_startPeriod"></result>
+        <result column="m_price_lastPeriod" property="m_price_lastPeriod"></result>
+        <result column="m_price_lastPrice" property="m_price_lastPrice"></result>
+        <result column="m_price_inserted" property="m_price_inserted"></result>
+        <collection property="m_buyer_id" ofType="int">
+            <result column="m_buyer_id" property="m_buyer_id"></result>
+        </collection>
+        <collection property="m_buyer_name" ofType="string">
+            <result column="m_buyer_name" property="m_buyer_name"></result>
+        </collection>
+        <collection property="m_item_id" ofType="string">
+            <result column="m_item_id" property="m_item_id"></result>
+        </collection>
+        <collection property="m_item_name" ofType="string">
+            <result column="m_item_name" property="m_item_name"></result>
+        </collection>
+    </resultMap>
+
+    <update id="updateById">
+        UPDATE
+            m_price
+        SET
+            m_price_id = #{m_price_id},
+            m_price_price = #{m_price_price},
+            m_price_currency = #{m_price_currency},
+            m_buyer_id = #{m_buyer_id},
+            m_item_id = #{m_item_id},
+            m_price_discount = #{m_price_discount},
+            m_price_startPeriod = #{m_price_startPeriod},
+            m_price_lastPeriod = #{m_price_lastPeriod},
+            m_price_lastPrice = #{m_price_lastPrice},
+            m_price_inserted = NOW()
+        WHERE
+            m_price_id = #{m_price_id}
+    </update>
+
+
 </mapper>

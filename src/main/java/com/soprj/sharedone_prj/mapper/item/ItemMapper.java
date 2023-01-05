@@ -8,11 +8,17 @@ public interface ItemMapper {
 
     int register(ItemDto itemDto);
 
-    List<ItemDto> selectItemList();
+    List<ItemDto> selectItemList(String itemIdParam, int offset, int records);
 
-    ItemDto select(int m_item_id);
+    ItemDto select(String m_item_id);
 
     int update(ItemDto itemDto);
 
-    int remove(int m_item_id);
+    int remove(String m_item_id);
+
+    List<String> selectGroup();
+
+    List<String> selectManufacturer();
+
+    int countAll();
 }
