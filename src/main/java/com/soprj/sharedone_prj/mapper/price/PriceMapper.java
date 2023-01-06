@@ -22,4 +22,6 @@ public interface PriceMapper {
     List<PriceDto> getItemList();
 
     int countAll();
+
+    List<PriceDto> remove(List<PriceDto> removeIdList);
 }

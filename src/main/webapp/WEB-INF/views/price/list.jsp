@@ -182,13 +182,19 @@
                 </div>
             </form>
         </div>
-
-
+        <div>
+            <button id="removeButton" type="submit" class="btn btn-danger">삭제</button>
+        </div>
+            <c:url value="/price/remove" var="removeLink"/>
+            <form id="removeForm" action="${removeLink }" method="post">
+                <input type="hidden" name="m_price_id" value="">
+            </form>
         <div class="tableList">
 
             <table class="table addList">
                 <thead style="width: auto">
                     <tr>
+                        <th></th>
                         <th>제품코드</th>
                         <th>제품명</th>
                         <th>바이어코드</th>
@@ -206,6 +212,7 @@
                     <c:forEach items="${priceList }" var="priceList">
                         <div>
                             <tr>
+                                <td><input id="priceBox" name="priceBox" type="checkbox" value="${priceList.m_price_id}"></td>
                                 <td>${priceList.m_item_id }</td>
                                 <td>${priceList.m_item_name }</td>
                                 <td>${priceList.m_buyer_id }</td>
@@ -264,10 +271,10 @@
                                 </c:url>
                                 <li class="page-item
 
-                  <%-- 현재페이지에 active 클래스 추가 --%>
-                  ${priceDto.currentPageNumber eq pageNumber ? 'active' : ''} }
+                                  <%-- 현재페이지에 active 클래스 추가 --%>
+                                  ${priceDto.currentPageNumber eq pageNumber ? 'active' : ''} }
 
-                  "><a class="page-link" href="${listLink}">${pageNumber}</a>
+                                  "><a class="page-link" href="${listLink}">${pageNumber}</a>
                                 </li>
                             </c:forEach>
 
@@ -354,7 +361,21 @@
         }
     });
 
+    function remove() {
+        var length = document.getElementsByName("priceBox").length;
+        var removeIdList = [];
+        for (var i=0; i<length; i++) {
+            var checkedBox = document.getElementsByName("priceBox")[i].checked
+            if (checkedBox) {
+                var selectId = document.getElementsByName("priceBox")[i].value;
+                removeIdList.push(selectId);
+                document.querySelector("input[name='m_price_id']").value = removeIdList;
+                console.log(removeIdList);
+                document.getElementById('removeForm').submit();
+            }
+        }
+    }
+    document.querySelector("#removeButton").addEventListener("click", remove);
 </script>
 
-</body>
 </html>

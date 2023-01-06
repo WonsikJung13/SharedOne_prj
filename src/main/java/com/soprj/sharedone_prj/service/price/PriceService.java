@@ -73,4 +73,9 @@ public class PriceService {
     public List<PriceDto> getItemList() {
         return priceMapper.getItemList();
     }
+
+
+    public List<PriceDto> remove(List<PriceDto> removeIdList) {
+        return priceMapper.remove(removeIdList);
+    }
 }

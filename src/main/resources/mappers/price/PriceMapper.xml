@@ -148,4 +148,12 @@
         FROM m_item
     </select>
 
+    <delete id="remove">
+        DELETE
+        FROM
+            m_price
+        WHERE
+            m_price_id = #{m_price_id}
+    </delete>
+
 </mapper>
