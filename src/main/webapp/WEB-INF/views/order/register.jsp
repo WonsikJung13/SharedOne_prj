@@ -127,7 +127,7 @@
                 <td class="table-active">납품요청일</td>
                 <td colspan="3">
                     <input id="itemPrice" class="form-control" type="date" placeholder="Default input"
-                           aria-label="default input example">
+                           aria-label="default input example" onchange="itemList()">
                 </td>
             </tr>
             </tbody>
@@ -253,6 +253,7 @@
     function itemView() {
         const item = document.querySelector('#orderItems')
         const selected = item.value.split('_').at(0);
+        console.log(selected)
         fetch(ctx + "/order/itemList/" + selected)
             .then(res => res.json())
             .then(data => {
@@ -260,6 +261,27 @@
                 document.querySelector(".itemGroup").innerHTML = data.m_item_group;
                 document.querySelector(".manufacturer").innerHTML = data.m_item_manufacturer;
                 document.querySelector(".listPrice").value = data.m_price_lastPrice;
+            })
+    }
+
+    function itemList() {
+        const requestDate = document.querySelector("#itemPrice").value;
+        const buyer = document.querySelector('#buyer')
+        const selected = buyer.value;
+        const data = {requestDate, selected}
+        fetch(`\${ctx}/order/itemListForDropDown`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body : JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(data => {
+                for (i = 0; i < data.length; i++) {
+                    console.log(data.at(i).m_item_id)
+                    console.log(data.at(i).m_item_name)
+                }
             })
     }
 
