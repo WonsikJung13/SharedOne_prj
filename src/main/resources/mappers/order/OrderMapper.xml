@@ -23,19 +23,40 @@
                 m_item_name
         FROM m_item
     </select>
-    <select id="itemList" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
-        SELECT  i.m_item_name,
-                i.m_item_group,
-                i.m_item_manufacturer,
-                p.m_price_lastPrice
-        FROM m_item i JOIN m_price p ON i.m_item_id = p.m_item_id
-        WHERE i.m_item_id = #{m_item_id}
-    </select>
+<!--    <select id="itemList" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">-->
+<!--&lt;!&ndash;        SELECT  i.m_item_name,&ndash;&gt;-->
+<!--&lt;!&ndash;                i.m_item_group,&ndash;&gt;-->
+<!--&lt;!&ndash;                i.m_item_manufacturer,&ndash;&gt;-->
+<!--&lt;!&ndash;                p.m_price_lastPrice&ndash;&gt;-->
+<!--&lt;!&ndash;        FROM m_item i JOIN m_price p ON i.m_item_id = p.m_item_id&ndash;&gt;-->
+<!--&lt;!&ndash;        WHERE i.m_item_id = #{m_item_id}&ndash;&gt;-->
+
+<!--        SELECT  p.m_price_lastPrice,-->
+<!--        i.m_item_name,-->
+<!--        i.m_item_group,-->
+<!--        i.m_item_manufacturer-->
+<!--        FROM m_price p LEFT JOIN m_item i ON p.m_item_id = i.m_item_id-->
+<!--        WHERE m_buyer_id = #{m_buyer_id}-->
+<!--        AND #{m_order_inserted} >= m_price_startPeriod-->
+<!--        AND m_price_lastPeriod >= #{m_order_inserted}-->
+<!--        AND p.m_item_id = #{m_item_id};-->
+<!--    </select>-->
     <select id="itemListForDropDown" resultType="com.soprj.sharedone_prj.domain.order.ItemListVO">
         SELECT DISTINCT m_price.m_item_id, m_item.m_item_name
         FROM m_price LEFT JOIN m_item ON m_price.m_item_id = m_item.m_item_id
         WHERE m_buyer_id = #{m_buyer_id}
         AND #{m_order_inserted} >= m_price_startPeriod
         AND m_price_lastPeriod >= #{m_order_inserted}
+    </select>
+    <select id="orderPrice" resultType="com.soprj.sharedone_prj.domain.order.OrderPriceVO">
+        SELECT  p.m_price_lastPrice,
+        i.m_item_name,
+        i.m_item_group,
+        i.m_item_manufacturer
+        FROM m_price p LEFT JOIN m_item i ON p.m_item_id = i.m_item_id
+        WHERE m_buyer_id = #{m_buyer_id}
+        AND #{m_order_inserted} >= m_price_startPeriod
+        AND m_price_lastPeriod >= #{m_order_inserted}
+        AND p.m_item_id = #{m_item_id};
     </select>
 </mapper>
