@@ -18,12 +18,11 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping("register")
-    public void register(@RequestParam(name = "m_item_id", defaultValue = "") String itemIdParam,
+    public void register(@RequestParam(name = "m_item_id", defaultValue = "") String m_item_id,
                          Model model
     ) {
-        if (!itemIdParam.isEmpty()) {
-            ItemDto selectItem = itemService.get(itemIdParam);
-            System.out.println("itemIdParam: " + itemIdParam);
+        if (!m_item_id.isEmpty()) {
+            ItemDto selectItem = itemService.get(m_item_id);
             model.addAttribute("getItem", selectItem);
         }
         List<String> groupList = itemService.selectGroup();
@@ -37,14 +36,14 @@ public class ItemController {
     @PostMapping("register")
     public String register(ItemDto itemDto
     ) {
-        System.out.println("등록창 : " + itemDto);
+        System.out.println("등록진행!" + itemDto);
         int cnt = itemService.register(itemDto);
         return "redirect:/item/list";
     }
 
     @GetMapping("list")
     public void list(Model model,
-                     @RequestParam(name = "m_item_id", defaultValue = "0") String itemIdParam,
+                     @RequestParam(name = "m_item_id", defaultValue = "") String itemIdParam,
                      @RequestParam(name = "page", defaultValue = "1") int page,
                      ItemDto itemDto
     ) {
@@ -56,13 +55,11 @@ public class ItemController {
         model.addAttribute("itemList", list);
         model.addAttribute("groupList", groupList);
         model.addAttribute("manufacturerList", manufacturerList);
-        System.out.println("groupList: " + groupList);
-        System.out.println("itemList: " + list);
     }
 
     @PostMapping("remove")
     public String remove(String m_item_id) {
-        System.out.println("controller remove 진행");
+        System.out.println("remove 진행");
         int cnt = itemService.remove(m_item_id);
 
         return "redirect:/item/list";

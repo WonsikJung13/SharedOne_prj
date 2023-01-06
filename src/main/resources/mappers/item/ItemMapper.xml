@@ -48,8 +48,8 @@
             m_item_manufacturer,
             m_item_unit
         FROM m_item
-        WHERE
-            m_item_id LIKE #{itemIdParam}
+<!--        WHERE-->
+<!--            m_item_id LIKE #{itemIdParam}-->
         ORDER BY m_item_id DESC
         LIMIT #{offset}, #{records}
     </select>
@@ -68,12 +68,18 @@
         FROM
             m_item
         WHERE
-            m_item_id = ${m_item_id}
+            m_item_id = #{m_item_id}
     </select>
 
     <update id="update">
-        UPDATE m_item
+        UPDATE
+            m_item
         SET
+            m_item_id = CONCAT (
+                LEFT(#{m_item_group},2),
+                LEFT(#{m_item_manufacturer},2),
+                LPAD(#{m_item_id},4,'0')
+                ),
             m_item_name = #{m_item_name},
             m_item_group = #{m_item_group},
             m_item_manufacturer = #{m_item_manufacturer},
@@ -83,8 +89,11 @@
     </update>
 
     <delete id="remove">
-        DELETE FROM m_item
-        WHERE m_item_id = ${m_item_id}
+        DELETE
+        FROM
+            m_item
+        WHERE
+            m_item_id = #{m_item_id}
     </delete>
 
     <select id="selectGroup" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">

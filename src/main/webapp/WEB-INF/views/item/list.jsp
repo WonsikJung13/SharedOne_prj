@@ -9,6 +9,8 @@
 <% request.setCharacterEncoding("utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+
 
 <html>
 <head>
@@ -23,67 +25,168 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
   <style>
-    /*제품그룹 박스*/
-    #groupSelect, #manufacturerSelect{
-      height: 30px;
-    }
-    option {
-      height: 30px;
-      line-height: 30px;
+    .itemRegisterBtn {
+      position: relative;
     }
 
-    .groupEditOption, .manufacturerEditable{
+    * {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #eeeeee ;
+    }
+    .table{
+      width: 900px;
+      --bs-table-bg:#fff;
+    }
+    .table.addList{
+      --bs-table-bg:#5f7175;
+      --bs-table-color:#fff;
+      text-align: center;
+      line-height: 39px;
+      font-size: 16px;
+    }
+    tr{
+      height: 55px;
+    }
+    h1{
+      font-size:1.7em;
+      margin: 30px 0;
+    }
+    h2{
+      font-size: 1.1em;
+      margin: 20px 0 10px 0;
+    }
+    .table td{
+      /*--bs-table-bg: #fffff;*/
+      background-color: #fff;
+      color: #37393b;
+      text-align: center;
+      line-height: 39px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .tableList {
+      background-color: #fff;
+      height: 672px;
+      width: 900px;
+    }
+    td a {
+      color: #37393b;
+      background-color: #fff;
+      text-decoration: none;
+    }
+    .table button {
+      background-color: #757575;
+      color: #fff;
+      /*border-radius: 0;*/
+      width: 100px;
+      --bs-btn-font-weight: 600;
+      border:none;
+    }
+
+    .searchBox {
+      background-color: white;
+      width: 900px;
+      padding: 20px 80px 10px 80px;
+      color: #212529;
+      font-size:16px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    form > * {
+      background-color: white;
       position: relative;
+    }
+    form .form-control, .form-select {
+      height:40px;
+      margin: 5px 0 5px 0;
+    }
+    .input-group {
+      margin-bottom: 0;
+    }
+
+    .itemRegisterBtn {
+      float:right;
+      margin-top: 20px;
+    }
+    .itemRegisterBtn button {
+      background-color: #658e99;
+      text-align: center;
+      width: 150px;
+      height:55px;
+      color: #fff;
+      line-height:39px;
+      --bs-btn-font-weight: 600;
+      border:none;
+    }
+
+    form div div, label{
+      background-color: white;
+    }
+
+    .searchBtn {
+      width: 100px;
+      height: 40px;
+      margin: 5px 0px 5px 0px;
+      --bs-btn-font-weight: 600;
+      background-color: #658e99;
+      border:none;
     }
   </style>
 </head>
 <body>
-  <div>
-    <div>
-      <h1>
-        제품 관리 및 등록
-      </h1>
+<div class="row">
+  <div class="col-3">
+    <my:header></my:header>
+  </div>
+  <div class="col ">
+    <div style="display: flex;justify-content: space-between;width: 900px;">
+    <div id="itemListTitle">
+      <h1 id="header">제품 관리 및 등록</h1>
+<%--      <h2>제품 검색</h2>--%>
     </div>
-    <div>
+    <div class="itemRegisterBtn">
       <c:url value="/item/register" var="registerLink"></c:url>
-      <a href="${registerLink}">제품 등록</a>
+      <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">제품 등록</button>
+    </div>
     </div>
 
-    <div>
+    <div class="searchBox">
       <c:url value="/item/list" var="listLink"></c:url>
       <form action="${listLink}" role="search">
+        <div style="display: flex;justify-content: space-between;">
         <div>
           <label>제품코드</label>
-          <input value="${param.m_item_id}" type="search" name="m_item_id" placeholder="입력" autocomplete='off'>
+          <input class="form-control" value="${param.m_item_id}" type="search" name="m_item_id" placeholder="입력" autocomplete='off' style="width: 210px">
         </div>
         <div>
           <label>제품그룹</label>
-          <select id="groupSelect">
+          <input class="form-select" type="text" list="groupList" style="width: 210px"/>
+          <datalist id ="groupList">
             <c:forEach items="${groupList}" var="groupList">
               <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>
             </c:forEach>
-            <option class="GroupEditable" value="입력">입력</option>
-          </select>
-          <input class="groupEditOption" style="display:none;" autocomplete='off'>
+          </datalist>
         </div>
-        <div>
+        <div style="float: right">
           <label>제조사</label>
-          <select id="manufacturerSelect">
+          <input class="form-select" type="text" list="manufacturerList" style="width: 210px;"/>
+          <datalist id ="manufacturerList">
             <c:forEach items="${manufacturerList}" var="manufacturerList">
               <option class="non" value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>
             </c:forEach>
-            <option class="manufacturerEditable" value="입력">입력</option>
-          </select>
-          <input class="ManufacturerEditOption" style="display:none;" autocomplete='off'>
+          </datalist>
         </div>
-        <div>
-          <input type="submit" value="검색">
+          </div>
+        <div class="input-group" style="float: none">
+          <input type="text" class="form-control">
+          <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
         </div>
       </form>
     </div>
 
-    <div>
-      <table class="table">
+    <div class="tableList">
+      <table class="table addList">
         <thead>
         <tr>
           <th>제품코드</th>
@@ -91,6 +194,7 @@
           <th>제품그룹</th>
           <th>제조사</th>
           <th>단위</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -98,12 +202,7 @@
             <div>
               <tr>
                 <td>
-                  <c:url value="/item/register" var="getLink">
-                    <c:param name="m_item_id" value="${itemList.m_item_id}"></c:param>
-                  </c:url>
-                  <a href="${getLink}">
                     ${itemList.m_item_id}
-                  </a>
                 </td>
                 <td>
                   ${itemList.m_item_name}
@@ -117,12 +216,17 @@
                 <td>
                   ${itemList.m_item_unit}
                 </td>
+                <td>
+                  <c:url value="/item/register" var="registerLink">
+                    <c:param name="m_item_id" value="${itemList.m_item_id}"></c:param>
+                  </c:url>
+                  <button type="button" class="btn" onclick="location.href='${registerLink}' ">수정</button>
+                </td>
               </tr>
             </div>
           </c:forEach>
         </tbody>
       </table>
-    </div>
     <div class="row">
       <div class="col">
         <nav aria-label="Page navigation example">
@@ -152,7 +256,7 @@
               </li>
             </c:if>
 
-            <c:forEach begin="${itemDto.leftPageNumber}" end="${itemDto.lastPageNumber}" var="pageNumber">
+            <c:forEach begin="${itemDto.leftPageNumber}" end="${itemDto.rightPageNumber}" var="pageNumber">
               <c:url value="/item/list" var="listLink">
                 <c:param name="page" value="${pageNumber }"/>
               </c:url>
@@ -165,24 +269,23 @@
                 </li>
             </c:forEach>
 
-            <c:if test="${itemDto.currentPageNumber ne itemDto.lastPageNumber }">
-              <c:url value="/item/list" var="listLink">
-                <c:param value="${itemDto.lastPageNumber }" name="page" />
-              </c:url>
-              <li class="page-item">
-                <a href="${listLink }" class="page-link">
-                  <i class="fa-solid fa-angle-right"></i>
-                </a>
-              </li>
-            </c:if>
+              <%-- 다음 버튼 --%>
+              <c:if test="${itemDto.hasNextButton }">
+                <c:url value="/item/list" var="listLink">
+                  <c:param name="page" value="${itemDto.jumpNextPageNumber }"></c:param>
+                </c:url>
+                <li class="page-item">
+                  <a href="${listLink }" class="page-link">
+                    <i class="fa-solid fa-angle-right"></i>
+                  </a>
+                </li>
+              </c:if>
 
+              <%-- 맨뒤 버튼 --%>
             <c:if test="${itemDto.currentPageNumber ne itemDto.lastPageNumber }">
               <c:url value="/item/list" var="listLink">
                 <c:param value="${itemDto.lastPageNumber }" name="page" />
-                <c:param name="q" value="${param.q }" />
-                <c:param name="t" value="${param.t }" />
               </c:url>
-              <!-- li.page-item>a.page-link{맨뒤버튼} -->
               <li class="page-item">
                 <a href="${listLink }" class="page-link">
                   <i class="fa-solid fa-angles-right"></i>
@@ -193,7 +296,9 @@
         </nav>
       </div>
     </div>
+    </div>
   </div>
+</div>
 </body>
 
 <script>

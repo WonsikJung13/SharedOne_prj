@@ -12,4 +12,12 @@ public interface PriceMapper {
     PriceDto selectById(int m_price_id);
 
     int updateById(PriceDto priceDto);
+
+    PriceDto buyerList(String m_buyer_id);
+
+    PriceDto itemList(String m_item_id);
+
+    List<PriceDto> getBuyerList();
+
+    List<PriceDto> getItemList();
 }

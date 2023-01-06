@@ -109,5 +109,38 @@
             m_price_id = #{m_price_id}
     </update>
 
+    <select id="buyerList" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
+        SELECT
+            m_buyer_name,
+            m_buyer_currency
+        FROM
+            m_buyer
+        WHERE
+            m_buyer_id = #{m_buyer_id}
+    </select>
+
+    <select id="itemList" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
+        SELECT
+            m_item_name
+        FROM
+            m_item
+        WHERE
+            m_item_id = #{m_item_id}
+    </select>
+
+    <select id="getBuyerList" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
+        SELECT
+            m_buyer_id,
+            m_buyer_name,
+            m_buyer_currency
+        FROM m_buyer
+    </select>
+
+    <select id="getItemList" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
+        SELECT
+            m_item_id,
+            m_item_name
+        FROM m_item
+    </select>
 
 </mapper>
