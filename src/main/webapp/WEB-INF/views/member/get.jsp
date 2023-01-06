@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% request.setCharacterEncoding("utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,33 +23,42 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-<table class="table">
-    <thead>
-    <tr>
-        <td>이름</td>
-        <td>${member.m_member_id}</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>이메일</td>
-        <td>
-            <form method="post" id="modifyForm">
-<%--                <input type="hidden" value="${member.m_member_id}" name="m_member_id">--%>
-                <input type="text" value="${member.m_member_email }" name="m_member_email">
-            </form>
-            <button style="font-family: 'LINESeedKR-Bd'" type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#modifyModal">
-                수정하기
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>직급</td>
-        <td>${member.m_authority_grade}</td>
-    </tr>
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-3">
+        <my:header></my:header>
+    </div>
+    <div class="col">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <td>이름</td>
+                <td>${member.m_member_id}</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>이메일</td>
+                <td>
+                    <form method="post" id="modifyForm">
+                        <%--                <input type="hidden" value="${member.m_member_id}" name="m_member_id">--%>
+                        <input type="text" value="${member.m_member_email }" name="m_member_email">
+                    </form>
+                    <button style="font-family: 'LINESeedKR-Bd'" type="submit" class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modifyModal">
+                        수정하기
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>직급</td>
+                <td>${member.m_authority_grade}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -64,7 +74,8 @@
                 <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
                         data-bs-dismiss="modal">취소
                 </button>
-                <button style="font-family: 'LINESeedKR-Bd'" id="modifyConfirmButton" type="button" class="btn btn-primary">
+                <button style="font-family: 'LINESeedKR-Bd'" id="modifyConfirmButton" type="button"
+                        class="btn btn-primary">
                     확인
                 </button>
             </div>

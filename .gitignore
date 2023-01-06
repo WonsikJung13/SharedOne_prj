@@ -36,3 +36,27 @@ out/
 ### VS Code ###
 .vscode/
 custom.properties
+/src/main/webapp/WEB-INF/views/tteesstt/a.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/b.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/c.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/d.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/e.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/f.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/g.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/h.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/i.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/j.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/k.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/l.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/m.jsp
+/src/main/webapp/WEB-INF/views/member/manage.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/n.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/o.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/p.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/q.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/r.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/s.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/t.jsp
+/src/main/webapp/WEB-INF/views/tteesstt/test.jsp
+/src/main/java/com/soprj/sharedone_prj/controller/tteesstt/TteessttController.java
+/src/main/webapp/WEB-INF/views/tteesstt/u.jsp
