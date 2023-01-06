@@ -21,8 +21,10 @@ public class PriceController {
     private ItemService itemService;
 
     @GetMapping("list")
-    public void getPriceList(Model model) {
-        List<PriceDto> priceList = priceService.getPriceList();
+    public void getPriceList(Model model,
+                             @RequestParam(name = "page", defaultValue = "1") int page,
+                             PriceDto priceDto) {
+        List<PriceDto> priceList = priceService.getPriceList(page, priceDto);
         model.addAttribute("priceList", priceList);
     }
 
