@@ -2,6 +2,7 @@ package com.soprj.sharedone_prj.controller.order;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
+import com.soprj.sharedone_prj.domain.order.ItemListVO;
 import com.soprj.sharedone_prj.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -40,6 +42,14 @@ public class OrderController {
         ItemDto list = orderService.itemView(selected);
         return list;
     }
+
+    @RequestMapping("itemListForDropDown")
+    @ResponseBody
+    public List<ItemListVO> itemListForDropDown(@RequestBody Map<String, Object> datas) {
+        List<ItemListVO> itemList = orderService.itemListForDropDown(datas.get("requestDate"), datas.get("selected"));
+        return itemList;
+    }
+
     @GetMapping("list")
     private void itemList(){
 
