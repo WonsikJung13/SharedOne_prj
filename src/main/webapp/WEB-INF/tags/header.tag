@@ -65,7 +65,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<div class="flex-shrink-0 p-3 navbg" style="width: 280px; height: auto;">
+<div class="flex-shrink-0 p-3 navbg" style="width: 280px; height: 100%;">
     <a href="${reportLink}" class=" navbg d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
         <span class="navbg fs-5 fw-semibold">SharedOne</span>
     </a>
