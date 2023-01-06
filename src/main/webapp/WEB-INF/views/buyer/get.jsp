@@ -21,52 +21,57 @@
 <body>
 <h1>get</h1>
 
-<h3 style="font-family: LINESeedKR-Bd">
-    ${Buyer.m_buyer_id}
-</h3>
-<input class="form-control" type="text" value="${Buyer.m_buyer_id}" readonly>
-<input class="form-control" type="text" value="${Buyer.m_buyer_name}" readonly>
-<input class="form-control" type="text" value="${Buyer.m_buyer_region}" readonly>
-<input class="form-control" type="text" value="${Buyer.m_buyer_address}" readonly>
-<input class="form-control" type="text" value="${Buyer.m_buyer_number}" readonly>
-<input class="form-control" type="text" value="${Buyer.m_buyer_currency}" readonly>
-<br>
+<div class="row">
+    <div class="col-3">
+        <my:header></my:header>
+    </div>
+    <h3 style="font-family: LINESeedKR-Bd">
+        ${Buyer.m_buyer_id}
+    </h3>
+    <input class="form-control" type="text" value="${Buyer.m_buyer_id}" readonly>
+    <input class="form-control" type="text" value="${Buyer.m_buyer_name}" readonly>
+    <input class="form-control" type="text" value="${Buyer.m_buyer_region}" readonly>
+    <input class="form-control" type="text" value="${Buyer.m_buyer_address}" readonly>
+    <input class="form-control" type="text" value="${Buyer.m_buyer_number}" readonly>
+    <input class="form-control" type="text" value="${Buyer.m_buyer_currency}" readonly>
+    <br>
 
-<c:url value="/buyer/modify" var="modifyLink">
-    <c:param name="m_buyer_id" value="${Buyer.m_buyer_id}"></c:param>
-</c:url>
+    <c:url value="/buyer/modify" var="modifyLink">
+        <c:param name="m_buyer_id" value="${Buyer.m_buyer_id}"></c:param>
+    </c:url>
 
-<c:url value="/buyer/remove" var="removeLink">
-    <c:param name="m_buyer_id" value="${Buyer.m_buyer_id}"></c:param>
-</c:url>
+    <c:url value="/buyer/remove" var="removeLink">
+        <c:param name="m_buyer_id" value="${Buyer.m_buyer_id}"></c:param>
+    </c:url>
 
-<form id="removeForm" action="${removeLink }" method="post">
-    <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
-</form>
+    <form id="removeForm" action="${removeLink }" method="post">
+        <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
+    </form>
 
-<div style="font-family: LINESeedKR-Bd">
-    <a class="btn btn-ico " href="${modifyLink}">수정하기</a>
-    <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
-           data-bs-target="#removeModal">
-</div>
+    <div style="font-family: LINESeedKR-Bd">
+        <a class="btn btn-ico " href="${modifyLink}">수정하기</a>
+        <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
+               data-bs-target="#removeModal">
+    </div>
 
-<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                삭제하시겠습니까?
-            </div>
-            <div class="modal-footer">
-                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">취소
-                </button>
-                <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton" type="button"
-                        class="btn btn-danger">확인
-                </button>
+    <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">취소
+                    </button>
+                    <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton" type="button"
+                            class="btn btn-danger">확인
+                    </button>
+                </div>
             </div>
         </div>
     </div>

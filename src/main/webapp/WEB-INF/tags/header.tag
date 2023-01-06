@@ -4,6 +4,7 @@
 <c:url value="/buyer/list" var="buyerList"></c:url>
 <c:url value="/item/list" var="itemList"></c:url>
 <c:url value="/price/list" var="priceList"></c:url>
+<c:url value="/member/manage" var="memberList"></c:url>
 <c:url value="/order/register" var="orderLink"></c:url>
 <c:url value="/order/list" var="orderList"></c:url>
 <c:url value="/report/orderReport" var="reportLink"></c:url>
@@ -78,7 +79,7 @@
                     <li><a href="${itemList}" class="navbg d-inline-flex text-decoration-none rounded">제품 등록 관리</a></li>
                     <li><a href="${buyerList}" class="navbg d-inline-flex text-decoration-none rounded">바이어 등록 관리</a></li>
                     <li><a href="${priceList}" class="navbg d-inline-flex text-decoration-none rounded">판매가 등록 관리</a></li>
-                    <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">회원 관리</a></li>
+                    <li><a href="${memberList}" class="navbg d-inline-flex text-decoration-none rounded">회원 관리</a></li>
                 </ul>
             </div>
         </li>
