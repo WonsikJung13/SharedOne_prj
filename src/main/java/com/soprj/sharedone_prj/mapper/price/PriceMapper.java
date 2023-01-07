@@ -5,7 +5,7 @@ import com.soprj.sharedone_prj.domain.price.PriceDto;
 import java.util.List;
 
 public interface PriceMapper {
-    List<PriceDto> getPriceList();
+    List<PriceDto> getPriceList(int offset, int records);
 
     int insertRegister(PriceDto price);
 
@@ -20,4 +20,8 @@ public interface PriceMapper {
     List<PriceDto> getBuyerList();
 
     List<PriceDto> getItemList();
+
+    int countAll();
+
+    List<PriceDto> remove(List<PriceDto> removeIdList);
 }

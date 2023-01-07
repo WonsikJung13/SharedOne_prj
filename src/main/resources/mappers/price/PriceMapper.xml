@@ -22,7 +22,12 @@
         FROM
             m_price p LEFT JOIN m_buyer b ON p.m_buyer_id = b.m_buyer_id
                       LEFT JOIN m_item i ON p.m_item_id = i.m_item_id
-        ORDER BY m_price_id DESC;
+        ORDER BY m_price_id DESC
+        LIMIT #{offset}, #{records};
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM m_price
     </select>
 
     <insert id="insertRegister" useGeneratedKeys="true" keyProperty="m_price_id">
@@ -142,5 +147,13 @@
             m_item_name
         FROM m_item
     </select>
+
+    <delete id="remove">
+        DELETE
+        FROM
+            m_price
+        WHERE
+            m_price_id = #{m_price_id}
+    </delete>
 
 </mapper>
