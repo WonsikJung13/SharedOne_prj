@@ -173,14 +173,14 @@
                 </td>
                 <td class="table-active">오더수량</td>
                 <td>
-                    <input class="form-control" type="text" placeholder="Default input"
+                    <input id="orderCount" class="form-control" type="text" placeholder="Default input"
                            aria-label="default input example">
                 </td>
             </tr>
             <tr>
                 <td class="table-active">총 금액</td>
-                <td colspan="3">
-                    11
+                <td colspan="3" id="totalPrice">
+
                 </td>
             </tr>
             <tr>
@@ -284,7 +284,6 @@
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 document.querySelector(".itemName").innerHTML = data.m_item_name;
                 document.querySelector(".itemGroup").innerHTML = data.m_item_group;
                 document.querySelector(".manufacturer").innerHTML = data.m_item_manufacturer;
@@ -319,6 +318,18 @@
                 }
             })
     }
+
+    //  총 금액 계산 후 화면에 출력
+    document.querySelector("#orderCount").addEventListener("keyup", function () {
+        let lastPrice = document.querySelector(".listPrice").value;
+        const orderCount = document.querySelector("#orderCount").value;
+
+        lastPrice = orderCount * lastPrice;
+
+        document.querySelector("#totalPrice").innerHTML = lastPrice;
+    })
+
+
 
 </script>
 </body>
