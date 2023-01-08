@@ -23,5 +23,5 @@ public interface PriceMapper {
 
     int countAll();
 
-    List<PriceDto> remove(List<PriceDto> removeIdList);
+    int remove(String removeList);
 }

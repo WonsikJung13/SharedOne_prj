@@ -315,51 +315,6 @@
         crossorigin="anonymous">
 </script>
 <script>
-    // 제품그룹 select
-    var initialText = $('.GroupEditable').val();
-    $('.groupEditOption').val(initialText);
-
-    $('#groupSelect').change(function(){
-        var selected = $('option:selected', this).attr('class');
-        var optionText = $('.GroupEditable').text();
-
-        if(selected == "GroupEditable"){
-            $('.groupEditOption').show();
-
-
-            $('.groupEditOption').keyup(function(){
-                var editText = $('.groupEditOption').val();
-                $('.GroupEditable').val(editText);
-                $('.GroupEditable').html(editText);
-            });
-
-        }else{
-            $('.groupEditOption').hide();
-        }
-    });
-
-    // 제품 제조사 select
-    var initialText = $('.manufacturerEditable').val();
-    $('.ManufacturerEditOption').val(initialText);
-
-    $('#manufacturerSelect').change(function(){
-        var selected = $('option:selected', this).attr('class');
-        var optionText = $('.manufacturerEditable').text();
-
-        if(selected == "manufacturerEditable"){
-            $('.ManufacturerEditOption').show();
-
-
-            $('.ManufacturerEditOption').keyup(function(){
-                var editText = $('.ManufacturerEditOption').val();
-                $('.manufacturerEditable').val(editText);
-                $('.manufacturerEditable').html(editText);
-            });
-
-        }else{
-            $('.ManufacturerEditOption').hide();
-        }
-    });
 
     function remove() {
         var length = document.getElementsByName("priceBox").length;
@@ -369,11 +324,10 @@
             if (checkedBox) {
                 var selectId = document.getElementsByName("priceBox")[i].value;
                 removeIdList.push(selectId);
-                document.querySelector("input[name='m_price_id']").value = removeIdList;
-                console.log(removeIdList);
-                document.getElementById('removeForm').submit();
             }
         }
+        document.querySelector("input[name='m_price_id']").value = removeIdList;
+        document.getElementById('removeForm').submit();
     }
     document.querySelector("#removeButton").addEventListener("click", remove);
 </script>
