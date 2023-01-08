@@ -75,7 +75,7 @@ public class PriceService {
     }
 
 
-    public List<PriceDto> remove(List<PriceDto> removeIdList) {
-        return priceMapper.remove(removeIdList);
+    public int remove(String removeList) {
+        return priceMapper.remove(removeList);
     }
 }
