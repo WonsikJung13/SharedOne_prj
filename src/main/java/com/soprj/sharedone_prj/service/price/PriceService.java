@@ -13,8 +13,36 @@ public class PriceService {
     @Autowired
     private PriceMapper priceMapper;
 
-    public List<PriceDto> getPriceList() {
-        return priceMapper.getPriceList();
+    public List<PriceDto> getPriceList(int page, PriceDto priceDto) {
+        int records = 10;
+        int offset = (page - 1) * records;
+
+        int countAll = priceMapper.countAll();
+        int lastPage = (countAll - 1) / records + 1;
+
+        int leftPageNumber = (page -1) / 10 * 10 + 1;
+        int rightPageNumber = leftPageNumber + 9;
+        rightPageNumber = Math.min(rightPageNumber, lastPage);
+
+        // 이전버튼 유무
+        boolean hasPrevButton = page > 10;
+        // 다음버튼 유무
+        boolean hasNextButton = page <= ((lastPage - 1) / 10 * 10);
+
+        // 이전버튼 눌렀을 때 가는 페이지 번호
+        int jumpPrevPageNumber = (page - 1) / 10 * 10 - 9;
+        int jumpNextPageNumber = (page - 1) / 10 * 10 + 11;
+
+        priceDto.setHasPrevButton(hasPrevButton);
+        priceDto.setHasNextButton(hasNextButton);
+        priceDto.setJumpPrevPageNumber(jumpPrevPageNumber);
+        priceDto.setJumpNextPageNumber(jumpNextPageNumber);
+        priceDto.setCurrentPageNumber(page);
+        priceDto.setLeftPageNumber(leftPageNumber);
+        priceDto.setRightPageNumber(rightPageNumber);
+        priceDto.setLastPageNumber(lastPage);
+
+        return priceMapper.getPriceList(offset, records);
     }
 
 
@@ -44,5 +72,10 @@ public class PriceService {
 
     public List<PriceDto> getItemList() {
         return priceMapper.getItemList();
+    }
+
+
+    public List<PriceDto> remove(List<PriceDto> removeIdList) {
+        return priceMapper.remove(removeIdList);
     }
 }

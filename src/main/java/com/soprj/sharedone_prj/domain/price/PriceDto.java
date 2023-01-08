@@ -23,4 +23,13 @@ public class PriceDto {
     private int m_price_lastPrice;
     private LocalDateTime m_price_inserted;
 
+    public int lastPageNumber;
+    public int leftPageNumber;
+    public int rightPageNumber;
+    public int currentPageNumber;
+    private boolean hasPrevButton;
+    private boolean hasNextButton;
+    private int jumpPrevPageNumber;
+    private int jumpNextPageNumber;
+
 }

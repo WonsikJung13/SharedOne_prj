@@ -3,6 +3,7 @@ package com.soprj.sharedone_prj.controller.order;
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.domain.order.ItemListVO;
+import com.soprj.sharedone_prj.domain.order.OrderPriceVO;
 import com.soprj.sharedone_prj.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,11 +37,11 @@ public class OrderController {
         return list;
     };
 
-    @GetMapping("itemList/{selected}")
+    @RequestMapping("itemList")
     @ResponseBody
-    public ItemDto itemList(@PathVariable String selected) {
-        ItemDto list = orderService.itemView(selected);
-        return list;
+    public OrderPriceVO orderPrice(@RequestBody Map<String, Object> data) {
+        OrderPriceVO orderPrice = orderService.orderPrice(data.get("requestDate"), data.get("selectedItem"), data.get("selectedBuyer"));
+        return orderPrice;
     }
 
     @RequestMapping("itemListForDropDown")

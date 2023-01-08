@@ -143,9 +143,9 @@
                         <input onchange="itemView()" class="form-select" aria-label="Default select example" type="text"
                                list="lists" id="orderItems" placeholder="제품를 선택해주세요"/>
                         <datalist id="lists">
-                            <c:forEach items="${itemList}" var="items">
-                                <option value="${items.m_item_id}_${items.m_item_name}" class="itemSelect"></option>
-                            </c:forEach>
+                            <%--                            <c:forEach items="${itemList}" var="items">--%>
+                            <%--                                <option value="${items.m_item_id}_${items.m_item_name}" class="itemSelect"></option>--%>
+                            <%--                            </c:forEach>--%>
                         </datalist>
                     </div>
                 </td>
@@ -173,14 +173,14 @@
                 </td>
                 <td class="table-active">오더수량</td>
                 <td>
-                    <input class="form-control" type="text" placeholder="Default input"
+                    <input id="orderCount" class="form-control" type="text" placeholder="Default input"
                            aria-label="default input example">
                 </td>
             </tr>
             <tr>
                 <td class="table-active">총 금액</td>
-                <td colspan="3">
-                    11
+                <td colspan="3" id="totalPrice">
+
                 </td>
             </tr>
             <tr>
@@ -250,11 +250,38 @@
     }
 
     // item 데이터 가져오기
+    // function itemView() {
+    //     const item = document.querySelector('#orderItems')
+    //     const selected = item.value.split('_').at(0);
+    //     const requestDate = document.querySelector("#itemPrice").value;
+    //     const buyer = document.querySelector('#buyer')
+    //     const selectedBuyer = buyer.value;
+    //     const data = {requestDate, selected, selectedBuyer}
+    //     console.log(selected)
+    //     fetch(ctx + "/order/itemList/" + selected)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             document.querySelector(".itemName").innerHTML = data.m_item_name;
+    //             document.querySelector(".itemGroup").innerHTML = data.m_item_group;
+    //             document.querySelector(".manufacturer").innerHTML = data.m_item_manufacturer;
+    //             document.querySelector(".listPrice").value = data.m_price_lastPrice;
+    //         })
+    // }
+
     function itemView() {
         const item = document.querySelector('#orderItems')
-        const selected = item.value.split('_').at(0);
-        console.log(selected)
-        fetch(ctx + "/order/itemList/" + selected)
+        const selectedItem = item.value.split('_').at(0);
+        const requestDate = document.querySelector("#itemPrice").value;
+        const buyer = document.querySelector('#buyer')
+        const selectedBuyer = buyer.value.split('_').at(0);
+        const data = {requestDate, selectedItem, selectedBuyer}
+        fetch(`\${ctx}/order/itemList`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
             .then(res => res.json())
             .then(data => {
                 document.querySelector(".itemName").innerHTML = data.m_item_name;
@@ -274,16 +301,35 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body : JSON.stringify(data)
+            body: JSON.stringify(data)
         })
             .then(res => res.json())
             .then(data => {
                 for (i = 0; i < data.length; i++) {
-                    console.log(data.at(i).m_item_id)
-                    console.log(data.at(i).m_item_name)
+                    let datalist = document.getElementById('lists');
+
+                    let new_optionTag = document.createElement('option');
+
+                    new_optionTag.setAttribute('class', 'itemSelect');
+                    new_optionTag.setAttribute('value', data.at(i).m_item_id + '_' + data.at(i).m_item_name)
+
+                    datalist.appendChild(new_optionTag);
+
                 }
             })
     }
+
+    //  총 금액 계산 후 화면에 출력
+    document.querySelector("#orderCount").addEventListener("keyup", function () {
+        let lastPrice = document.querySelector(".listPrice").value;
+        const orderCount = document.querySelector("#orderCount").value;
+
+        lastPrice = orderCount * lastPrice;
+
+        document.querySelector("#totalPrice").innerHTML = lastPrice;
+    })
+
+
 
 </script>
 </body>

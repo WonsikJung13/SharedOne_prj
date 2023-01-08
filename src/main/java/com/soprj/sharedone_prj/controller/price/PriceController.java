@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("price")
@@ -21,8 +23,10 @@ public class PriceController {
     private ItemService itemService;
 
     @GetMapping("list")
-    public void getPriceList(Model model) {
-        List<PriceDto> priceList = priceService.getPriceList();
+    public void getPriceList(Model model,
+                             @RequestParam(name = "page", defaultValue = "1") int page,
+                             PriceDto priceDto) {
+        List<PriceDto> priceList = priceService.getPriceList(page, priceDto);
         model.addAttribute("priceList", priceList);
     }
 
@@ -70,5 +74,29 @@ public class PriceController {
 
         priceService.getByIdModify(priceDto);
         return "redirect:/price/list";
+    }
+
+    @PostMapping("remove")
+    public String remove(@RequestParam Map<String,String> removeIdList) {
+        System.out.println("ididididid" + removeIdList);
+        System.out.println(removeIdList.get("m_price_id"));
+        String[] aa = removeIdList.get("m_price_id").toString().split(",");
+        List<String> testList = new ArrayList<String>();
+        testList.add(removeIdList.get("m_price_id"));
+        System.out.println(testList);
+        String a = testList.toString();
+        String[] testList2 = a.split(",");
+        for (int i = 0; i < aa.length; i++) {
+            System.out.println(aa[i]);
+        }
+//        for (int i = 0; i < removeIdList.get("m_price_id"); i++) {
+//            System.out.println(removeIdList.get("m_price_id").);
+//        }
+
+//        List<PriceDto> priceRemoveId = priceService.remove(removeIdList);
+//        priceService.remove(removeIdList);
+//        System.out.println("????" + priceRemoveId);
+//        return "redirect:/price/list";
+        return null;
     }
 }
