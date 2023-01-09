@@ -19,37 +19,43 @@
             position: relative;
         }
 
-        * {
+        body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #eeeeee ;
+            background-color: #eeeeee;
         }
-        .table{
+
+        .table {
             width: 1000px;
-            --bs-table-bg:#fff;
+            --bs-table-bg: #fff;
         }
-        .table.addList{
-            --bs-table-bg:#5f7175;
-            --bs-table-color:#fff;
+
+        .table.addList {
+            --bs-table-bg: #5f7175;
+            --bs-table-color: #fff;
             text-align: center;
             line-height: 39px;
             font-size: 16px;
             width: 1000px;
 
         }
-        tr{
+
+        tr {
             height: 55px;
             width: 1000px;
 
         }
-        h1{
-            font-size:1.7em;
+
+        h1 {
+            font-size: 1.7em;
             margin: 30px 0;
         }
-        h2{
+
+        h2 {
             font-size: 1.1em;
             margin: 20px 0 10px 0;
         }
-        .table td{
+
+        .table td {
             /*--bs-table-bg: #fffff;*/
             background-color: #fff;
             color: #37393b;
@@ -60,23 +66,26 @@
             width: 1000px;
 
         }
+
         .tableList {
             background-color: #fff;
             height: 672px;
             width: 1000px;
         }
+
         td a {
             color: #37393b;
             background-color: #fff;
             text-decoration: none;
         }
+
         .table button {
             background-color: #757575;
             color: #fff;
             /*border-radius: 0;*/
             width: 100px;
             --bs-btn-font-weight: 600;
-            border:none;
+            border: none;
         }
 
         .searchBox {
@@ -84,7 +93,7 @@
             width: 1000px;
             padding: 20px 80px 10px 80px;
             color: #212529;
-            font-size:16px;
+            font-size: 16px;
             font-weight: bold;
             margin-bottom: 20px;
         }
@@ -93,32 +102,35 @@
             background-color: white;
             position: relative;
         }
+
         form .form-control, .form-select {
-            height:40px;
+            height: 40px;
             margin: 5px 0 5px 0;
             width: 1000px;
 
         }
+
         .input-group {
             margin-bottom: 0;
         }
 
         .itemRegisterBtn {
-            float:right;
+            float: right;
             margin-top: 20px;
         }
+
         .itemRegisterBtn button {
             background-color: #658e99;
             text-align: center;
             width: 150px;
-            height:55px;
+            height: 55px;
             color: #fff;
-            line-height:39px;
+            line-height: 39px;
             --bs-btn-font-weight: 600;
-            border:none;
+            border: none;
         }
 
-        form div div, label{
+        form div div, label {
             background-color: white;
         }
 
@@ -128,7 +140,7 @@
             margin: 5px 0px 5px 0px;
             --bs-btn-font-weight: 600;
             background-color: #658e99;
-            border:none;
+            border: none;
         }
     </style>
 </head>
@@ -140,12 +152,13 @@
     <div class="col">
         <div style="display: flex;justify-content: space-between;width: 900px;">
             <div id="itemListTitle">
-                <h1 id="header">제품 관리 및 등록</h1>
+                <h1 id="header">판매가 관리 및 등록</h1>
                 <%--      <h2>제품 검색</h2>--%>
             </div>
             <div class="itemRegisterBtn">
                 <c:url value="/price/register" var="registerLink"></c:url>
-                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">판매가 등록</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">판매가 등록
+                </button>
             </div>
         </div>
 
@@ -154,84 +167,92 @@
             <form action="${listLink}" role="search">
                 <div style="display: flex;justify-content: space-between;">
                     <div>
-                        <label>제품코드</label>
-                        <input class="form-control" value="${param.m_item_id}" type="search" name="m_item_id" placeholder="입력" autocomplete='off' style="width: 210px">
+                        <label>기간</label>
+                        <div class="input-group">
+                            <input class="form-control" style="margin-right: 4px" required="required" type="date">
+                            -
+                            <input class="form-control" style="margin-left: 4px" required="required" type="date">
+                        </div>
                     </div>
-                    <div>
-                        <label>제품그룹</label>
-                        <input class="form-select" type="text" list="groupList" style="width: 210px"/>
-                        <datalist id ="groupList">
-                            <c:forEach items="${groupList}" var="groupList">
-                                <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>
+                    <div style="float: right">
+                        <label>제품코드</label>
+                        <input class="form-select" type="text" list="itemList" style="width: 210px;"
+                               autocomplete="off"/>
+                        <datalist id="itemList">
+                            <c:forEach items="${itemList}" var="itemList">
+                                <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>
                             </c:forEach>
                         </datalist>
                     </div>
                     <div style="float: right">
-                        <label>제조사</label>
-                        <input class="form-select" type="text" list="manufacturerList" style="width: 210px;"/>
-                        <datalist id ="manufacturerList">
-                            <c:forEach items="${manufacturerList}" var="manufacturerList">
-                                <option class="non" value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>
+                        <label>바이어코드</label>
+                        <input class="form-select" type="text" list="buyerList" style="width: 210px;"
+                               autocomplete="off"/>
+                        <datalist id="buyerList">
+                            <c:forEach items="${buyerList}" var="buyerList">
+                                <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
                             </c:forEach>
                         </datalist>
                     </div>
                 </div>
                 <div class="input-group" style="float: none">
                     <input type="text" class="form-control">
-                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
+                    <button class="btn btn-secondary searchBtn" type="submit">검색</button>
                 </div>
             </form>
         </div>
         <div>
-            <button id="removeButton" type="submit" class="btn btn-danger">삭제</button>
+            <input style="float: right; width: 100px; margin-right: 100px" data-bs-toggle="modal"
+                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger"></input>
         </div>
-            <c:url value="/price/remove" var="removeLink"/>
-            <form id="removeForm" action="${removeLink }" method="post">
-                <input type="hidden" name="m_price_id" value="">
-            </form>
+        <c:url value="/price/remove" var="removeLink"/>
+        <form id="removeForm" action="${removeLink }" method="post">
+            <input type="hidden" name="m_price_id" value="">
+        </form>
         <div class="tableList">
 
             <table class="table addList">
                 <thead style="width: auto">
-                    <tr>
-                        <th></th>
-                        <th>제품코드</th>
-                        <th>제품명</th>
-                        <th>바이어코드</th>
-                        <th>바이어명</th>
-                        <th>시작일</th>
-                        <th>종료일</th>
-                        <th>통화</th>
-                        <th>할인율</th>
-                        <th>금액</th>
-                        <th>최종금액</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th></th>
+                    <th>제품코드</th>
+                    <th>제품명</th>
+                    <th>바이어코드</th>
+                    <th>바이어명</th>
+                    <th>시작일</th>
+                    <th>종료일</th>
+                    <th>통화</th>
+                    <th>할인율</th>
+                    <th>금액</th>
+                    <th>최종금액</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${priceList }" var="priceList">
-                        <div>
-                            <tr>
-                                <td><input id="priceBox" name="priceBox" type="checkbox" value="${priceList.m_price_id}"></td>
-                                <td>${priceList.m_item_id }</td>
-                                <td>${priceList.m_item_name }</td>
-                                <td>${priceList.m_buyer_id }</td>
-                                <td>${priceList.m_buyer_name }</td>
-                                <td>${priceList.m_price_startPeriod }</td>
-                                <td>${priceList.m_price_lastPeriod }</td>
-                                <td>${priceList.m_price_currency }</td>
-                                <td>${priceList.m_price_discount }</td>
-                                <td>${priceList.m_price_price }</td>
-                                <td>${priceList.m_price_lastPrice }</td>
-                                <td>
-                                    <c:url value="/price/modify" var="modifyLink">
-                                        <c:param value="${priceList.m_price_id }" name="m_price_id"/>
-                                    </c:url>
-                                    <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>
-                                </td>
-                            </tr>
-                        </div>
-                    </c:forEach>
+                <c:forEach items="${priceList }" var="priceList">
+                    <div>
+                        <tr>
+                            <td><input id="priceBox" name="priceBox" type="checkbox" value="${priceList.m_price_id}">
+                            </td>
+                            <td>${priceList.m_item_id }</td>
+                            <td>${priceList.m_item_name }</td>
+                            <td>${priceList.m_buyer_id }</td>
+                            <td>${priceList.m_buyer_name }</td>
+                            <td>${priceList.m_price_startPeriod }</td>
+                            <td>${priceList.m_price_lastPeriod }</td>
+                            <td>${priceList.m_price_currency }</td>
+                            <td>${priceList.m_price_discount }</td>
+                            <td>${priceList.m_price_price }</td>
+                            <td>${priceList.m_price_lastPrice }</td>
+                            <td>
+                                <c:url value="/price/modify" var="modifyLink">
+                                    <c:param value="${priceList.m_price_id }" name="m_price_id"/>
+                                </c:url>
+                                <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>
+                            </td>
+                        </tr>
+                    </div>
+                </c:forEach>
                 </tbody>
             </table>
 
@@ -244,7 +265,7 @@
                             <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
                             <c:if test="${priceDto.currentPageNumber ne 1 }">
                                 <c:url value="/price/list" var="listLink">
-                                    <c:param name="page" value="1" />
+                                    <c:param name="page" value="1"/>
                                 </c:url>
                                 <%-- 맨앞 버튼 --%>
                                 <li class="page-item">
@@ -265,7 +286,8 @@
                                 </li>
                             </c:if>
 
-                            <c:forEach begin="${priceDto.leftPageNumber}" end="${priceDto.rightPageNumber}" var="pageNumber">
+                            <c:forEach begin="${priceDto.leftPageNumber}" end="${priceDto.rightPageNumber}"
+                                       var="pageNumber">
                                 <c:url value="/price/list" var="listLink">
                                     <c:param name="page" value="${pageNumber }"/>
                                 </c:url>
@@ -293,7 +315,7 @@
                             <%-- 맨뒤 버튼 --%>
                             <c:if test="${priceDto.currentPageNumber ne priceDto.lastPageNumber }">
                                 <c:url value="/price/list" var="listLink">
-                                    <c:param value="${priceDto.lastPageNumber }" name="page" />
+                                    <c:param value="${priceDto.lastPageNumber }" name="page"/>
                                 </c:url>
                                 <li class="page-item">
                                     <a href="${listLink }" class="page-link">
@@ -303,6 +325,29 @@
                             </c:if>
                         </ul>
                     </nav>
+                </div>
+            </div>
+        </div>
+        <!-- remove Modal -->
+        <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
+                            확인</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        삭제하시겠습니까? 복구할 수 없습니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">취소
+                        </button>
+                        <button style="font-family: 'LINESeedKR-Bd'" id="removeButton" type="submit"
+                                class="btn btn-danger">확인
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -319,7 +364,7 @@
     function remove() {
         var length = document.getElementsByName("priceBox").length;
         var removeIdList = [];
-        for (var i=0; i<length; i++) {
+        for (var i = 0; i < length; i++) {
             var checkedBox = document.getElementsByName("priceBox")[i].checked
             if (checkedBox) {
                 var selectId = document.getElementsByName("priceBox")[i].value;
@@ -329,7 +374,10 @@
         document.querySelector("input[name='m_price_id']").value = removeIdList;
         document.getElementById('removeForm').submit();
     }
+
     document.querySelector("#removeButton").addEventListener("click", remove);
+
+
 </script>
 
 </html>
