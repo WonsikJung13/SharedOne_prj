@@ -7,40 +7,40 @@
 
     <select id="buyerSelect" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
         SELECT m_buyer_id,
-               m_buyer_name
+        m_buyer_name
         FROM m_buyer
     </select>
     <select id="buyerList" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
-        SELECT  m_buyer_region,
-                m_buyer_address,
-                m_buyer_number,
-                m_buyer_currency
+        SELECT m_buyer_region,
+        m_buyer_address,
+        m_buyer_number,
+        m_buyer_currency
         FROM m_buyer
         WHERE m_buyer_id = #{m_Buyer_Id}
     </select>
     <select id="itemSelect" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
-        SELECT  m_item_id,
-                m_item_name
+        SELECT m_item_id,
+        m_item_name
         FROM m_item
     </select>
-<!--    <select id="itemList" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">-->
-<!--&lt;!&ndash;        SELECT  i.m_item_name,&ndash;&gt;-->
-<!--&lt;!&ndash;                i.m_item_group,&ndash;&gt;-->
-<!--&lt;!&ndash;                i.m_item_manufacturer,&ndash;&gt;-->
-<!--&lt;!&ndash;                p.m_price_lastPrice&ndash;&gt;-->
-<!--&lt;!&ndash;        FROM m_item i JOIN m_price p ON i.m_item_id = p.m_item_id&ndash;&gt;-->
-<!--&lt;!&ndash;        WHERE i.m_item_id = #{m_item_id}&ndash;&gt;-->
+    <!--    <select id="itemList" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">-->
+    <!--&lt;!&ndash;        SELECT  i.m_item_name,&ndash;&gt;-->
+    <!--&lt;!&ndash;                i.m_item_group,&ndash;&gt;-->
+    <!--&lt;!&ndash;                i.m_item_manufacturer,&ndash;&gt;-->
+    <!--&lt;!&ndash;                p.m_price_lastPrice&ndash;&gt;-->
+    <!--&lt;!&ndash;        FROM m_item i JOIN m_price p ON i.m_item_id = p.m_item_id&ndash;&gt;-->
+    <!--&lt;!&ndash;        WHERE i.m_item_id = #{m_item_id}&ndash;&gt;-->
 
-<!--        SELECT  p.m_price_lastPrice,-->
-<!--        i.m_item_name,-->
-<!--        i.m_item_group,-->
-<!--        i.m_item_manufacturer-->
-<!--        FROM m_price p LEFT JOIN m_item i ON p.m_item_id = i.m_item_id-->
-<!--        WHERE m_buyer_id = #{m_buyer_id}-->
-<!--        AND #{m_order_inserted} >= m_price_startPeriod-->
-<!--        AND m_price_lastPeriod >= #{m_order_inserted}-->
-<!--        AND p.m_item_id = #{m_item_id};-->
-<!--    </select>-->
+    <!--        SELECT  p.m_price_lastPrice,-->
+    <!--        i.m_item_name,-->
+    <!--        i.m_item_group,-->
+    <!--        i.m_item_manufacturer-->
+    <!--        FROM m_price p LEFT JOIN m_item i ON p.m_item_id = i.m_item_id-->
+    <!--        WHERE m_buyer_id = #{m_buyer_id}-->
+    <!--        AND #{m_order_inserted} >= m_price_startPeriod-->
+    <!--        AND m_price_lastPeriod >= #{m_order_inserted}-->
+    <!--        AND p.m_item_id = #{m_item_id};-->
+    <!--    </select>-->
     <select id="itemListForDropDown" resultType="com.soprj.sharedone_prj.domain.order.ItemListVO">
         SELECT DISTINCT m_price.m_item_id, m_item.m_item_name
         FROM m_price LEFT JOIN m_item ON m_price.m_item_id = m_item.m_item_id
@@ -49,7 +49,7 @@
         AND m_price_lastPeriod >= #{m_order_inserted}
     </select>
     <select id="orderPrice" resultType="com.soprj.sharedone_prj.domain.order.OrderPriceVO">
-        SELECT  p.m_price_lastPrice,
+        SELECT p.m_price_lastPrice,
         i.m_item_name,
         i.m_item_group,
         i.m_item_manufacturer
@@ -61,5 +61,51 @@
     </select>
     <insert id="orderInsert">
 
+    </insert>
+    <insert id="addDataHeader" useGeneratedKeys="true" keyProperty="m_order_id">
+        INSERT INTO m_order_header (
+            m_order_inserted,
+            m_order_buyerId,
+            m_order_buyerName,
+            m_order_buyerRegion,
+            m_order_buyerAddress,
+            m_order_buyerNumber,
+            m_order_buyerCurrency,
+            m_order_comment,
+            m_order_sumPrice)
+        VALUES(
+            #{m_order_inserted},
+            #{m_order_buyerId},
+            #{m_order_buyerName},
+            #{m_order_buyerRegion},
+            #{m_order_buyerAddress},
+            #{m_order_buyerNumber},
+            #{m_order_buyerCurrency},
+            #{m_order_comment},
+            #{m_order_sumPrice})
+        <selectKey keyProperty="m_order_id" resultType="int" order="BEFORE">
+            SELECT IFNULL(MAX(m_order_id+1), 1) FROM m_order_header
+        </selectKey>
+    </insert>
+    <insert id="addDataItem">
+        INSERT INTO
+        m_order_item (
+            m_order_id,
+            m_order_count,
+            m_order_price,
+            m_order_itemId,
+            m_order_itemName,
+            m_order_itemGroup,
+            m_order_itemManufacturer,
+            m_order_totalPrice )
+        VALUES (
+            #{m_order_id},
+            #{m_order_count},
+            #{m_order_price},
+            #{m_order_itemId},
+            #{m_order_itemName},
+            #{m_order_itemGroup},
+            #{m_order_itemManufacturer},
+            #{m_order_totalPrice} )
     </insert>
 </mapper>

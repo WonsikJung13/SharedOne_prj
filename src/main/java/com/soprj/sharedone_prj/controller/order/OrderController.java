@@ -1,10 +1,11 @@
 package com.soprj.sharedone_prj.controller.order;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
-import com.soprj.sharedone_prj.domain.order.ItemListVO;
-import com.soprj.sharedone_prj.domain.order.OrderPriceVO;
+import com.soprj.sharedone_prj.domain.order.*;
 import com.soprj.sharedone_prj.service.order.OrderService;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,7 +64,18 @@ public class OrderController {
     }
 
     @PostMapping("add")
-    public void Add(){
+    public void Add(@RequestBody List<Map<String, Object>> addData){
+
+        orderService.addDataHeader(addData.get(0));
+        ObjectMapper mapper = new ObjectMapper();
+        TestDTO orderDto = mapper.convertValue(addData.get(0),TestDTO.class);
+
+        int id = orderDto.getM_order_id();
+
+        for(int i = 0; i < addData.size(); i++){
+            addData.get(i).put("m_order_id", id);
+            orderService.addDataItem(addData.get(i));
+        }
 
     }
 }

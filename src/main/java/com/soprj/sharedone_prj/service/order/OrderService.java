@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderService {
@@ -42,4 +43,13 @@ public class OrderService {
     public OrderPriceVO orderPrice(Object m_order_inserted, Object m_item_id, Object m_buyer_id) {
         return mapper.orderPrice(m_order_inserted, m_item_id, m_buyer_id);
     }
+
+    public int addDataHeader(Map<String, Object> stringObjectMap) {
+        return mapper.addDataHeader(stringObjectMap);
+    }
+
+    public int addDataItem(Map<String, Object> stringObjectMap) {
+        return mapper.addDataItem(stringObjectMap);
+    }
+
 }

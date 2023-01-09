@@ -22,23 +22,123 @@
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap"
             rel="stylesheet">
     <style>
+        <style>
+        .itemRegisterBtn {
+            position: relative;
+        }
+
         * {
             font-family: 'Noto Sans KR', sans-serif;
+            background-color: #eeeeee ;
         }
         .table{
-            width: 900px;
+            width: 1000px;
+            --bs-table-bg:#fff;
+        }
+        .table.addList{
+            --bs-table-bg:#5f7175;
+            --bs-table-color:#fff;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+            width: 1000px;
+
         }
         tr{
             height: 55px;
+            width: 1000px;
+
         }
         h1{
-            font-size:1.5em;
+            font-size:1.7em;
             margin: 30px 0;
         }
         h2{
             font-size: 1.1em;
             margin: 20px 0 10px 0;
         }
+        .table td{
+            /*--bs-table-bg: #fffff;*/
+            background-color: #fff;
+            color: #37393b;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+            font-weight: bold;
+            width: 1000px;
+
+        }
+        .tableList {
+            background-color: #fff;
+            height: 672px;
+            width: 1000px;
+        }
+        td a {
+            color: #37393b;
+            background-color: #fff;
+            text-decoration: none;
+        }
+        .table button {
+            background-color: #757575;
+            color: #fff;
+            /*border-radius: 0;*/
+            width: 100px;
+            --bs-btn-font-weight: 600;
+            border:none;
+        }
+
+        .searchBox {
+            background-color: white;
+            width: 1000px;
+            padding: 20px 80px 10px 80px;
+            color: #212529;
+            font-size:16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        form > * {
+            background-color: white;
+            position: relative;
+        }
+        form .form-control, .form-select {
+            height:40px;
+            margin: 5px 0 5px 0;
+            width: 1000px;
+
+        }
+        .input-group {
+            margin-bottom: 0;
+        }
+
+        .itemRegisterBtn {
+            float:right;
+            margin-top: 20px;
+        }
+        .itemRegisterBtn button {
+            background-color: #658e99;
+            text-align: center;
+            width: 150px;
+            height:55px;
+            color: #fff;
+            line-height:39px;
+            --bs-btn-font-weight: 600;
+            border:none;
+        }
+
+        form div div, label{
+            background-color: white;
+        }
+
+        .searchBtn {
+            width: 100px;
+            height: 40px;
+            margin: 5px 0px 5px 0px;
+            --bs-btn-font-weight: 600;
+            background-color: #658e99;
+            border:none;
+        }
+    </style>
     </style>
 </head>
 <body>
