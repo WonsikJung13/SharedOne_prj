@@ -84,6 +84,7 @@ public class BuyerController {
     @ResponseBody
     public Map<String, Object> checkId(@PathVariable String m_buyer_number) {
         Map<String, Object> map = new HashMap<>();
+        System.out.println("하기싫어");
 
         BuyerDto buyer = buyerService.getBuyerNum(m_buyer_number);
 
