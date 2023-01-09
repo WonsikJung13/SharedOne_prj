@@ -153,6 +153,7 @@
         <my:header></my:header>
     </div>
     <div class="col">
+
         <div style="display: flex;justify-content: space-between;width: 900px;">
             <div id="itemListTitle">
                 <h1 id="header">바이어 관리 및 등록</h1>
