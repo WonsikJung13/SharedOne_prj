@@ -17,24 +17,23 @@ public class ItemService {
     @Setter(onMethod_ = @Autowired)
     private ItemMapper itemMapper;
 
-    public int register(List<ItemDto> itemDto) {
+    public int register(ItemDto itemDto) {
 
-//        int m_item_id = itemDto.indexOf(get());
-//        System.out.println("???" + m_item_id);
+        String m_item_id = itemDto.getM_item_id();
+        System.out.println("???" + m_item_id);
 
-//        if (m_item_id == null) {
+        if (m_item_id == null) {
             System.out.println("등록 진행!");
 //            String itemId = itemDto.getM_item_group() + itemDto.getM_item_manufacturer() + itemDto.getM_item_name();
 //            System.out.println(itemId);
 //            itemDto.setM_item_id(itemId);
 
             return itemMapper.register(itemDto);
-//        }
-//        else if (m_item_id != null) {
-//            System.out.println("수정 진행!");
-//            return itemMapper.update(itemDto);
-//        }
-//        return 0;
+        }
+        else {
+            System.out.println("수정 진행!");
+            return itemMapper.update(itemDto);
+        }
     }
 
     public List<ItemDto> itemList(String itemIdParam, int page, ItemDto itemDto) {
