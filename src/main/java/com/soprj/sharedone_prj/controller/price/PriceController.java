@@ -26,7 +26,12 @@ public class PriceController {
                              @RequestParam(name = "page", defaultValue = "1") int page,
                              PriceDto priceDto) {
         List<PriceDto> priceList = priceService.getPriceList(page, priceDto);
+        List<PriceDto> buyerList = priceService.getBuyerList();
+        List<PriceDto> itemList = priceService.getItemList();
+
         model.addAttribute("priceList", priceList);
+        model.addAttribute("buyerList", buyerList);
+        model.addAttribute("itemList", itemList);
     }
 
     @GetMapping("register")

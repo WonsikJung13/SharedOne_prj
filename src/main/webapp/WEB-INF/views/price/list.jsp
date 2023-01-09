@@ -19,7 +19,7 @@
             position: relative;
         }
 
-        * {
+        body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #eeeeee ;
         }
@@ -140,7 +140,7 @@
     <div class="col">
         <div style="display: flex;justify-content: space-between;width: 900px;">
             <div id="itemListTitle">
-                <h1 id="header">제품 관리 및 등록</h1>
+                <h1 id="header">판매가 관리 및 등록</h1>
                 <%--      <h2>제품 검색</h2>--%>
             </div>
             <div class="itemRegisterBtn">
@@ -154,36 +154,40 @@
             <form action="${listLink}" role="search">
                 <div style="display: flex;justify-content: space-between;">
                     <div>
-                        <label>제품코드</label>
-                        <input class="form-control" value="${param.m_item_id}" type="search" name="m_item_id" placeholder="입력" autocomplete='off' style="width: 210px">
+                        <label>기간</label>
+                        <div class="input-group">
+                            <input class="form-control" style="margin-right: 4px" required="required" type="date">
+                            -
+                            <input class="form-control" style="margin-left: 4px" required="required" type="date">
+                        </div>
                     </div>
-                    <div>
-                        <label>제품그룹</label>
-                        <input class="form-select" type="text" list="groupList" style="width: 210px"/>
-                        <datalist id ="groupList">
-                            <c:forEach items="${groupList}" var="groupList">
-                                <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>
+                    <div style="float: right">
+                        <label>제품코드</label>
+                        <input class="form-select" type="text" list="itemList" style="width: 210px;" autocomplete="off"/>
+                        <datalist id ="itemList">
+                            <c:forEach items="${itemList}" var="itemList">
+                                <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>
                             </c:forEach>
                         </datalist>
                     </div>
                     <div style="float: right">
-                        <label>제조사</label>
-                        <input class="form-select" type="text" list="manufacturerList" style="width: 210px;"/>
-                        <datalist id ="manufacturerList">
-                            <c:forEach items="${manufacturerList}" var="manufacturerList">
-                                <option class="non" value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>
+                        <label>바이어코드</label>
+                        <input class="form-select" type="text" list="buyerList" style="width: 210px;" autocomplete="off"/>
+                        <datalist id ="buyerList">
+                            <c:forEach items="${buyerList}" var="buyerList">
+                                <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
                             </c:forEach>
                         </datalist>
                     </div>
                 </div>
                 <div class="input-group" style="float: none">
                     <input type="text" class="form-control">
-                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
+                    <button class="btn btn-secondary searchBtn" type="submit">검색</button>
                 </div>
             </form>
         </div>
         <div>
-            <button id="removeButton" type="submit" class="btn btn-danger">삭제</button>
+            <input style="float: right; width: 100px; margin-right: 100px" data-bs-toggle="modal" data-bs-target="#removeModal" value="삭제" class="btn btn-danger"></input>
         </div>
             <c:url value="/price/remove" var="removeLink"/>
             <form id="removeForm" action="${removeLink }" method="post">
@@ -306,6 +310,28 @@
                 </div>
             </div>
         </div>
+        <!-- remove Modal -->
+        <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        삭제하시겠습니까? 복구할 수 없습니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">취소
+                        </button>
+                        <button style="font-family: 'LINESeedKR-Bd'" id="removeButton" type="submit"
+                                class="btn btn-danger">확인
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
@@ -330,6 +356,8 @@
         document.getElementById('removeForm').submit();
     }
     document.querySelector("#removeButton").addEventListener("click", remove);
+
+
 </script>
 
 </html>
