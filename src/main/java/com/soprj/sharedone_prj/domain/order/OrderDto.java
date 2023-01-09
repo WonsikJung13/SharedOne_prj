@@ -23,5 +23,4 @@ public class OrderDto {
     private String m_order_comment;
     private int m_price_id;
 
-
 }

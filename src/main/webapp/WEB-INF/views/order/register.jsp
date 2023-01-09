@@ -107,17 +107,19 @@
         .tableList thead th {
             position: sticky;
             top: 0;
-            width : 128px;
+            width: 128px;
         }
 
         .tableList input {
             border: none;
             background: transparent;
         }
-        .orderAdd{
+
+        .orderAdd {
             width: 128px;
         }
-        .commentStyle{
+
+        .commentStyle {
             background-color: #fff;
             height: 100px;
             width: 900px;
@@ -243,7 +245,7 @@
 
         </div>
 
-        <div class="commentStyle" >
+        <div class="commentStyle">
             <h2>메모</h2>
             <div>
                 <textarea class="form-control" id="comment"></textarea>
@@ -251,10 +253,11 @@
         </div>
 
         <button class="btn btn-secondary storageBtn">임시저장</button>
-        <button class="btn btn-secondary submitBtn">오더등록</button>
+        <button class="btn btn-secondary submitBtn">승인요청</button>
 
 
     </div>
+    록
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
@@ -314,7 +317,7 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body : JSON.stringify(data)
+            body: JSON.stringify(data)
         })
             .then(res => res.json())
             .then(data => {
@@ -343,47 +346,75 @@
     })
 
     // 장바구니 보여주기
+    let addData = [];
     document.querySelector(".addBtn").addEventListener("click", function () {
-        const buyer = document.querySelector("#buyer").value;
-        const buyerAddress = document.querySelector("#buyerAddress").innerText;
-        const buyerRegion = document.querySelector("#buyerRegion").innerText;
-        const buyerNumber = document.querySelector("#buyerNumber").innerText;
-        const currency = document.querySelector("#buyerCurrency").innerText;
-        const inserted = document.querySelector("#buyerInserted").value;
+        const buyer = document.querySelector("#buyer").value.split("_");
+        const m_order_buyerId = buyer.at(0)
+        const m_order_buyerName = buyer.at(1)
+        const m_order_buyerAddress = document.querySelector("#buyerAddress").innerText;
+        const m_order_buyerRegion = document.querySelector("#buyerRegion").innerText;
+        const m_order_buyerNumber = document.querySelector("#buyerNumber").innerText;
+        const m_order_buyerCurrency = document.querySelector("#buyerCurrency").innerText;
+        const m_order_inserted = document.querySelector("#buyerInserted").value;
 
-        const itemId = document.querySelector("#orderItems").value;
-        const itemName = document.querySelector(".itemName").innerText;
-        const itemGroup = document.querySelector(".itemGroup").innerText;
-        const itemManufacturer = document.querySelector(".manufacturer").innerText;
-        const itemPrice = document.querySelector(".listPrice").value;
-        const orderCount = document.querySelector("#orderCount").value;
-        const totalPrice = document.querySelector("#totalPrice").innerText;
-        const comment = document.querySelector("#comment").value;
+        const m_order_comment = document.querySelector("#comment").value;
+        const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
+
+        const itemId = document.querySelector("#orderItems").value.split("_");
+        const m_order_itemId = itemId.at(0);
+        const m_order_itemName = document.querySelector(".itemName").innerText;
+        const m_order_itemGroup = document.querySelector(".itemGroup").innerText;
+        const m_order_itemManufacturer = document.querySelector(".manufacturer").innerText;
+        const m_order_price = document.querySelector(".listPrice").value;
+        const m_order_count = document.querySelector("#orderCount").value;
 
         const orderAdd = `
             <tr>
-                 <td class="orderAdd"> \${inserted} </td>
-                 <td class="orderAdd"> \${itemId} </td>
-                 <td class="orderAdd"> \${itemName} </td>
-                 <td class="orderAdd"> \${itemPrice} </td>
-                 <td class="orderAdd"> \${orderCount} </td>
-                 <td class="orderAdd"> \${totalPrice} </td>
+                 <td class="orderAdd"> \${m_order_inserted} </td>
+                 <td class="orderAdd"> \${m_order_itemId} </td>
+                 <td class="orderAdd"> \${m_order_itemName} </td>
+                 <td class="orderAdd"> \${m_order_price} </td>
+                 <td class="orderAdd"> \${m_order_count} </td>
+                 <td class="orderAdd"> \${m_order_totalPrice} </td>
                 <td><button class="btn btn-secondary">삭제</button></td>
             </tr>
         `
         itemBody.insertAdjacentHTML("beforeend", orderAdd);
+
+        const data = {
+            m_order_buyerId,
+            m_order_buyerName,
+            m_order_buyerAddress,
+            m_order_buyerRegion,
+            m_order_buyerNumber,
+            m_order_buyerCurrency,
+            m_order_inserted,
+            m_order_comment,
+            m_order_totalPrice,
+            m_order_itemId,
+            m_order_itemName,
+            m_order_itemGroup,
+            m_order_itemManufacturer,
+            m_order_price,
+            m_order_count
+        }
+
+        addData.push(data);
+        console.log(addData);
+
+    })
+    document.querySelector(".submitBtn").addEventListener("click", function () {
+        fetch(`\${ctx}/order/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(addData)
+        })
+        .then(res => res.json())
     })
 
 
-    // function addItem(){
-    //     const data = {buyer,  }
-    //     fetch( ctx + "order/add", {
-    //         method : "POST",
-    //         headers : {
-    //             "Content-Type" : "application/json"
-    //         },
-    //         body : JSON.stringify(data)
-    // }
 </script>
 </body>
 </html>
