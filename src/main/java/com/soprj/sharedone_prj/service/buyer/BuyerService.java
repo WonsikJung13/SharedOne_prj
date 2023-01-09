@@ -1,6 +1,7 @@
 package com.soprj.sharedone_prj.service.buyer;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
+import com.soprj.sharedone_prj.domain.price.PriceDto;
 import com.soprj.sharedone_prj.mapper.buyer.BuyerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,38 @@ public class BuyerService {
 
     public BuyerDto getBuyerNum(String m_buyer_number) {
         return buyerMapper.getBuyerNum(m_buyer_number);
+    }
+
+    public List<BuyerDto> getBuyerList(int page, BuyerDto buyerDto) {
+        int records = 10;
+        int offset = (page - 1) * records;
+
+        int countAll = buyerMapper.countAll();
+        int lastPage = (countAll - 1) / records + 1;
+
+        int leftPageNumber = (page -1) / 10 * 10 + 1;
+        int rightPageNumber = leftPageNumber + 9;
+        rightPageNumber = Math.min(rightPageNumber, lastPage);
+
+        // 이전버튼 유무
+        boolean hasPrevButton = page > 10;
+        // 다음버튼 유무
+        boolean hasNextButton = page <= ((lastPage - 1) / 10 * 10);
+
+        // 이전버튼 눌렀을 때 가는 페이지 번호
+        int jumpPrevPageNumber = (page - 1) / 10 * 10 - 9;
+        int jumpNextPageNumber = (page - 1) / 10 * 10 + 11;
+
+        buyerDto.setHasPrevButton(hasPrevButton);
+        buyerDto.setHasNextButton(hasNextButton);
+        buyerDto.setJumpPrevPageNumber(jumpPrevPageNumber);
+        buyerDto.setJumpNextPageNumber(jumpNextPageNumber);
+        buyerDto.setCurrentPageNumber(page);
+        buyerDto.setLeftPageNumber(leftPageNumber);
+        buyerDto.setRightPageNumber(rightPageNumber);
+        buyerDto.setLastPageNumber(lastPage);
+
+        return buyerMapper.getBuyerList(offset, records);
     }
 }
 

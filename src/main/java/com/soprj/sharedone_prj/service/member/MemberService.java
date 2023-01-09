@@ -83,4 +83,36 @@ public class MemberService {
     public String getPassword(String m_member_id) {
         return memberMapper.getPassword(m_member_id);
     }
+
+    public List<MemberDto> getMemberList(int page, MemberDto memberDto) {
+        int records = 10;
+        int offset = (page - 1) * records;
+
+        int countAll = memberMapper.countAll();
+        int lastPage = (countAll - 1) / records + 1;
+
+        int leftPageNumber = (page -1) / 10 * 10 + 1;
+        int rightPageNumber = leftPageNumber + 9;
+        rightPageNumber = Math.min(rightPageNumber, lastPage);
+
+        // 이전버튼 유무
+        boolean hasPrevButton = page > 10;
+        // 다음버튼 유무
+        boolean hasNextButton = page <= ((lastPage - 1) / 10 * 10);
+
+        // 이전버튼 눌렀을 때 가는 페이지 번호
+        int jumpPrevPageNumber = (page - 1) / 10 * 10 - 9;
+        int jumpNextPageNumber = (page - 1) / 10 * 10 + 11;
+
+        memberDto.setHasPrevButton(hasPrevButton);
+        memberDto.setHasNextButton(hasNextButton);
+        memberDto.setJumpPrevPageNumber(jumpPrevPageNumber);
+        memberDto.setJumpNextPageNumber(jumpNextPageNumber);
+        memberDto.setCurrentPageNumber(page);
+        memberDto.setLeftPageNumber(leftPageNumber);
+        memberDto.setRightPageNumber(rightPageNumber);
+        memberDto.setLastPageNumber(lastPage);
+
+        return memberMapper.getMemberList(offset, records);
+    }
 }

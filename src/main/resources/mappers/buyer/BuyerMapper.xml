@@ -58,6 +58,23 @@
         WHERE
         m_buyer_number = #{m_buyer_number}
     </select>
+    <select id="getBuyerList" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
+        SELECT
+        m_buyer_id,
+        m_buyer_name,
+        m_buyer_region,
+        m_buyer_address,
+        m_buyer_number,
+        m_buyer_currency
+        FROM
+        m_buyer
+        ORDER BY m_buyer_id DESC
+        LIMIT #{offset}, #{records};
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM m_buyer
+    </select>
 
     <insert id="addBuyer">
         INSERT INTO m_buyer (

@@ -32,10 +32,11 @@ public class MemberController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("list")
-    public void list(Model model) {
-        List<MemberDto> list = memberService.listMember();
-
-        model.addAttribute("memberList", list);
+    public void list(Model model,
+                             @RequestParam(name = "page", defaultValue = "1") int page,
+                             MemberDto memberDto) {
+        List<MemberDto> memberList = memberService.getMemberList(page, memberDto);
+        model.addAttribute("memberList", memberList);
     }
 
     @PostMapping("list")

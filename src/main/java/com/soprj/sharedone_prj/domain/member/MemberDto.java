@@ -17,4 +17,13 @@ public class MemberDto {
 
     private String m_authority_grade;
 
+    public int lastPageNumber;
+    public int leftPageNumber;
+    public int rightPageNumber;
+    public int currentPageNumber;
+    private boolean hasPrevButton;
+    private boolean hasNextButton;
+    private int jumpPrevPageNumber;
+    private int jumpNextPageNumber;
+
 }
