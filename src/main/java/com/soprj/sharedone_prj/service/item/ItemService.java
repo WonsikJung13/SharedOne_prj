@@ -1,6 +1,5 @@
 package com.soprj.sharedone_prj.service.item;
 
-import com.soprj.sharedone_prj.domain.item.CartDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.mapper.item.ItemMapper;
 import lombok.Setter;
@@ -17,24 +16,16 @@ public class ItemService {
     @Setter(onMethod_ = @Autowired)
     private ItemMapper itemMapper;
 
-    public int register(List<ItemDto> itemDto) {
+    public int register(ItemDto itemDto) {
 
-//        int m_item_id = itemDto.indexOf(get());
-//        System.out.println("???" + m_item_id);
+        String m_item_id = itemDto.getM_item_id();
 
-//        if (m_item_id == null) {
-            System.out.println("등록 진행!");
-//            String itemId = itemDto.getM_item_group() + itemDto.getM_item_manufacturer() + itemDto.getM_item_name();
-//            System.out.println(itemId);
-//            itemDto.setM_item_id(itemId);
-
+        if (m_item_id == null) {
             return itemMapper.register(itemDto);
-//        }
-//        else if (m_item_id != null) {
-//            System.out.println("수정 진행!");
-//            return itemMapper.update(itemDto);
-//        }
-//        return 0;
+        }
+        else {
+            return itemMapper.update(itemDto);
+        }
     }
 
     public List<ItemDto> itemList(String itemIdParam, int page, ItemDto itemDto) {
@@ -87,14 +78,4 @@ public class ItemService {
 
         return itemMapper.selectManufacturer();
     }
-
-//    public List<CartDto> itemCart(CartDto cartDto) {
-//
-//        System.out.println("service : " + cartDto);
-//        itemMapper.cartInsert(cartDto);
-//
-////        cartDto = itemMapper.cartInfo();
-////        System.out.println("cartDto: " + cartDto);
-//        return itemMapper.cartInfo();
-//    }
 }
