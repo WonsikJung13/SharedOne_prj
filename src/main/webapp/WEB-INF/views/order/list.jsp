@@ -25,21 +25,17 @@
         * {
             font-family: 'Noto Sans KR', sans-serif;
         }
-
-        .table {
+        .table{
             width: 900px;
         }
-
-        tr {
+        tr{
             height: 55px;
         }
-
-        h1 {
-            font-size: 1.5em;
+        h1{
+            font-size:1.5em;
             margin: 30px 0;
         }
-
-        h2 {
+        h2{
             font-size: 1.1em;
             margin: 20px 0 10px 0;
         }
@@ -52,66 +48,63 @@
         <my:header></my:header>
     </div>
     <div class="col">
-        <h1>오더관리</h1>
-        <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
-               data-bs-target="#removeModal">
+<h1>오더관리</h1>
+<input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
+       data-bs-target="#removeModal">
 
-        <table class="table">
-            <tbody>
-            <tr style="font-family: 'LINESeedKR-Bd'">
-                <th>오더코드</th>
-                <th>바이어코드</th>
-                <th>바이어명</th>
-                <th>전체금액</th>
-                <th>발주상태</th>
-                <th></th>
-            </tr>
-            <c:forEach items="${buyerList }" var="buyer">
-                <tr>
-                    <td>001001</td>
-                    <td>001001</td>
-                    <td>바이어명</td>
-                    <td>전체금액</td>
-                    <td>발주상태</td>
-                    <td>
-                        <a class="btn btn-primary" href="">수정하기</a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+<table class="table">
+    <tbody>
+    <tr style="font-family: 'LINESeedKR-Bd'">
+        <th>오더코드</th>
+        <th>바이어코드</th>
+        <th>바이어명</th>
+        <th>전체금액</th>
+        <th>발주상태</th>
+        <th></th>
+    </tr>
+        <tr>
+            <td>001001</td>
+            <td>001001</td>
+            <td>바이어명</td>
+            <td>전체금액</td>
+            <td>발주상태</td>
+            <td>
+                <a class="btn btn-primary" href="">수정하기</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-        <form id="removeForm" action="${removeLink }" method="post">
-            <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
-        </form>
-        <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
-                            확인</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        삭제하시겠습니까?
-                    </div>
-                    <div class="modal-footer">
-                        <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">취소
-                        </button>
-                        <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton" type="button"
-                                class="btn btn-danger">확인
-                        </button>
-                    </div>
-                </div>
+<form id="removeForm" action="${removeLink }" method="post">
+    <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
+</form>
+<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                삭제하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">취소
+                </button>
+                <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton" type="button"
+                        class="btn btn-danger">확인
+                </button>
             </div>
         </div>
     </div>
+</div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-            crossorigin="anonymous"></script>
-    <script>
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+<script>
+</script>
 </body>
 </html>

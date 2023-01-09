@@ -55,4 +55,15 @@ public class OrderController {
     private void itemList(){
 
     }
+
+    @PostMapping("register")
+    public String Register(){
+        orderService.orderInsert();
+        return "redirect:/order/list";
+    }
+
+    @PostMapping("add")
+    public void Add(){
+
+    }
 }

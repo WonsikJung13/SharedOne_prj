@@ -86,6 +86,43 @@
         }
 
 
+        .tableList {
+            background-color: #fff;
+            height: 444px;
+            width: 900px;
+            /*overFlow: scroll;*/
+            overflow-x: hidden;
+        }
+
+        .tableList td {
+            /*--bs-table-bg: #fffff;*/
+            background-color: #fff;
+            color: #37393b;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tableList thead th {
+            position: sticky;
+            top: 0;
+            width : 128px;
+        }
+
+        .tableList input {
+            border: none;
+            background: transparent;
+        }
+        .orderAdd{
+            width: 128px;
+        }
+        .commentStyle{
+            background-color: #fff;
+            height: 100px;
+            width: 900px;
+        }
+
     </style>
 </head>
 <body>
@@ -107,7 +144,7 @@
                                type="text" list="list" id="buyer" placeholder="거래처를 선택해주세요"/>
                         <datalist id="list">
                             <c:forEach items="${buyerList}" var="buyer">
-                                <option value="${buyer.m_buyer_id}_${buyer.m_buyer_name}" class="buyerSelect"></option>
+                                <option value="${buyer.m_buyer_id}_${buyer.m_buyer_name}"></option>
                             </c:forEach>
                         </datalist>
                     </div>
@@ -126,7 +163,7 @@
                 <td id="buyerCurrency"></td>
                 <td class="table-active">납품요청일</td>
                 <td colspan="3">
-                    <input id="itemPrice" class="form-control" type="date" placeholder="Default input"
+                    <input id="buyerInserted" class="form-control" type="date" placeholder="Default input"
                            aria-label="default input example" onchange="itemList()">
                 </td>
             </tr>
@@ -143,9 +180,6 @@
                         <input onchange="itemView()" class="form-select" aria-label="Default select example" type="text"
                                list="lists" id="orderItems" placeholder="제품를 선택해주세요"/>
                         <datalist id="lists">
-                            <%--                            <c:forEach items="${itemList}" var="items">--%>
-                            <%--                                <option value="${items.m_item_id}_${items.m_item_name}" class="itemSelect"></option>--%>
-                            <%--                            </c:forEach>--%>
                         </datalist>
                     </div>
                 </td>
@@ -168,12 +202,12 @@
             <tr>
                 <td class="table-active">판매가격</td>
                 <td>
-                    <input class="form-control listPrice" type="text" placeholder="Default input"
+                    <input class="form-control listPrice" type="text" placeholder="판매가격"
                            aria-label="default input example">
                 </td>
                 <td class="table-active">오더수량</td>
                 <td>
-                    <input id="orderCount" class="form-control" type="text" placeholder="Default input"
+                    <input id="orderCount" class="form-control" type="text" placeholder="수량을 입력하세요."
                            aria-label="default input example">
                 </td>
             </tr>
@@ -183,44 +217,39 @@
 
                 </td>
             </tr>
-            <tr>
-                <td class="table-active">메모</td>
-                <td colspan="3">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </td>
-            </tr>
+
             </tbody>
         </table>
         <button class="btn btn-secondary addBtn">제품추가</button>
 
         <h2>추가된 제품</h2>
-        <table class="table addList">
-            <thead>
-            <tr>
-                <th scope="col">납품요청일</th>
-                <th scope="col">제품코드</th>
-                <th scope="col">제품명</th>
-                <th scope="col">판매가격</th>
-                <th scope="col">오더수량</th>
-                <th scope="col">총 금액</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <%--    <c:forEach items="" var="">--%>
-            <%--        <tr>--%>
-            <%--            <th scope="row">1</th>--%>
-            <%--            <td>Mark</td>--%>
-            <%--            <td>Otto</td>--%>
-            <%--            <td>@mdo</td>--%>
-            <%--            <td>@mdo</td>--%>
-            <%--            <td><button></button></td>--%>
-            <%--        </tr>--%>
-            <%--    </c:forEach>--%>
+        <div class="tableList">
+            <table class="table addList">
+                <thead>
+                <tr>
+                    <th scope="col">납품요청일</th>
+                    <th scope="col">제품코드</th>
+                    <th scope="col">제품명</th>
+                    <th scope="col">판매가격</th>
+                    <th scope="col">오더수량</th>
+                    <th scope="col">총 금액</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody id="itemBody">
 
+                </tbody>
+            </table>
 
-            </tbody>
-        </table>
+        </div>
+
+        <div class="commentStyle" >
+            <h2>메모</h2>
+            <div>
+                <textarea class="form-control" id="comment"></textarea>
+            </div>
+        </div>
+
         <button class="btn btn-secondary storageBtn">임시저장</button>
         <button class="btn btn-secondary submitBtn">오더등록</button>
 
@@ -249,29 +278,12 @@
             })
     }
 
-    // item 데이터 가져오기
-    // function itemView() {
-    //     const item = document.querySelector('#orderItems')
-    //     const selected = item.value.split('_').at(0);
-    //     const requestDate = document.querySelector("#itemPrice").value;
-    //     const buyer = document.querySelector('#buyer')
-    //     const selectedBuyer = buyer.value;
-    //     const data = {requestDate, selected, selectedBuyer}
-    //     console.log(selected)
-    //     fetch(ctx + "/order/itemList/" + selected)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             document.querySelector(".itemName").innerHTML = data.m_item_name;
-    //             document.querySelector(".itemGroup").innerHTML = data.m_item_group;
-    //             document.querySelector(".manufacturer").innerHTML = data.m_item_manufacturer;
-    //             document.querySelector(".listPrice").value = data.m_price_lastPrice;
-    //         })
-    // }
 
+    // 아이템 데이터 가져오기
     function itemView() {
         const item = document.querySelector('#orderItems')
         const selectedItem = item.value.split('_').at(0);
-        const requestDate = document.querySelector("#itemPrice").value;
+        const requestDate = document.querySelector("#buyerInserted").value;
         const buyer = document.querySelector('#buyer')
         const selectedBuyer = buyer.value.split('_').at(0);
         const data = {requestDate, selectedItem, selectedBuyer}
@@ -291,8 +303,9 @@
             })
     }
 
+    // 아이템 선택 후 데이터 끌고오기
     function itemList() {
-        const requestDate = document.querySelector("#itemPrice").value;
+        const requestDate = document.querySelector("#buyerInserted").value;
         const buyer = document.querySelector('#buyer')
         const selected = buyer.value;
         const data = {requestDate, selected}
@@ -301,7 +314,7 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body : JSON.stringify(data)
         })
             .then(res => res.json())
             .then(data => {
@@ -329,8 +342,48 @@
         document.querySelector("#totalPrice").innerHTML = lastPrice;
     })
 
+    // 장바구니 보여주기
+    document.querySelector(".addBtn").addEventListener("click", function () {
+        const buyer = document.querySelector("#buyer").value;
+        const buyerAddress = document.querySelector("#buyerAddress").innerText;
+        const buyerRegion = document.querySelector("#buyerRegion").innerText;
+        const buyerNumber = document.querySelector("#buyerNumber").innerText;
+        const currency = document.querySelector("#buyerCurrency").innerText;
+        const inserted = document.querySelector("#buyerInserted").value;
+
+        const itemId = document.querySelector("#orderItems").value;
+        const itemName = document.querySelector(".itemName").innerText;
+        const itemGroup = document.querySelector(".itemGroup").innerText;
+        const itemManufacturer = document.querySelector(".manufacturer").innerText;
+        const itemPrice = document.querySelector(".listPrice").value;
+        const orderCount = document.querySelector("#orderCount").value;
+        const totalPrice = document.querySelector("#totalPrice").innerText;
+        const comment = document.querySelector("#comment").value;
+
+        const orderAdd = `
+            <tr>
+                 <td class="orderAdd"> \${inserted} </td>
+                 <td class="orderAdd"> \${itemId} </td>
+                 <td class="orderAdd"> \${itemName} </td>
+                 <td class="orderAdd"> \${itemPrice} </td>
+                 <td class="orderAdd"> \${orderCount} </td>
+                 <td class="orderAdd"> \${totalPrice} </td>
+                <td><button class="btn btn-secondary">삭제</button></td>
+            </tr>
+        `
+        itemBody.insertAdjacentHTML("beforeend", orderAdd);
+    })
 
 
+    // function addItem(){
+    //     const data = {buyer,  }
+    //     fetch( ctx + "order/add", {
+    //         method : "POST",
+    //         headers : {
+    //             "Content-Type" : "application/json"
+    //         },
+    //         body : JSON.stringify(data)
+    // }
 </script>
 </body>
 </html>
