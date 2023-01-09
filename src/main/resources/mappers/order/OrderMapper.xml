@@ -59,4 +59,7 @@
         AND m_price_lastPeriod >= #{m_order_inserted}
         AND p.m_item_id = #{m_item_id};
     </select>
+    <insert id="orderInsert">
+
+    </insert>
 </mapper>
