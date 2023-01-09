@@ -18,23 +18,14 @@ public class ItemService {
     private ItemMapper itemMapper;
 
     public int register(List<ItemDto> itemDto) {
-
-//        int m_item_id = itemDto.indexOf(get());
-//        System.out.println("???" + m_item_id);
-
-//        if (m_item_id == null) {
-            System.out.println("등록 진행!");
-//            String itemId = itemDto.getM_item_group() + itemDto.getM_item_manufacturer() + itemDto.getM_item_name();
-//            System.out.println(itemId);
-//            itemDto.setM_item_id(itemId);
+    
+        String m_item_id = itemDto.getM_item_id();
 
             return itemMapper.register(itemDto);
-//        }
-//        else if (m_item_id != null) {
-//            System.out.println("수정 진행!");
-//            return itemMapper.update(itemDto);
-//        }
-//        return 0;
+        }
+        else {
+            return itemMapper.update(itemDto);
+        }
     }
 
     public List<ItemDto> itemList(String itemIdParam, int page, ItemDto itemDto) {
