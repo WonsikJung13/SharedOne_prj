@@ -2,6 +2,7 @@ package com.soprj.sharedone_prj.controller.buyer;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.member.MemberDto;
+import com.soprj.sharedone_prj.domain.price.PriceDto;
 import com.soprj.sharedone_prj.service.buyer.BuyerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,11 +22,13 @@ public class BuyerController {
     @Autowired
     private BuyerService buyerService;
 
-    @GetMapping("list")
-    public void list(Model model){
-        List<BuyerDto> list = buyerService.listBuyer();
 
-        model.addAttribute("buyerList", list);
+    @GetMapping("list")
+    public void getPriceList(Model model,
+                             @RequestParam(name = "page", defaultValue = "1") int page,
+                             BuyerDto buyerDto) {
+        List<BuyerDto> buyerList = buyerService.getBuyerList(page, buyerDto);
+        model.addAttribute("buyerList", buyerList);
     }
 
     @GetMapping("get")

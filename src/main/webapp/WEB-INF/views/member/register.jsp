@@ -18,6 +18,89 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #eeeeee;
+        }
+
+        .table {
+            width: 900px;
+            --bs-table-bg: #fff;
+        }
+
+        .table.addList {
+            --bs-table-bg: #5f7175;
+            --bs-table-color: #fff;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+        }
+
+        tr {
+            height: 55px;
+        }
+
+        h1 {
+            font-size: 1.7em;
+            margin: 30px 0;
+        }
+
+        h2 {
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
+        .addBtn {
+            background-color: #5f7175;
+            padding: 5px 30px;
+            margin-left: 350px;
+        }
+
+        .addBtn:hover,
+        .addBtn:focus, .storageBtn:hover, .storageBtn.focus {
+            background-color: #505f62;
+        }
+
+        .storageBtn {
+            background-color: #5f7175;
+            padding: 5px 30px;
+            margin-left: 280px;
+        }
+
+        .submitBtn {
+            background-color: #598f9b;
+            padding: 5px 30px;
+
+        }
+
+        .form-select {
+            width: 250px;
+        }
+
+        .form-control {
+            width: 250px;
+        }
+
+        .inputLength {
+            width: 250px;
+        }
+
+
+        /*제품그룹 박스*/
+        #groupSelect, #manufacturerSelect {
+            position: absolute;
+        }
+
+        option {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .groupEditOption, .ManufacturerEditOption {
+            position: relative;
+        }
+    </style>
 </head>
 <body>
 <div class="row">
@@ -25,13 +108,27 @@
         <my:header></my:header>
     </div>
     <div class="col">
+        <div style="display: flex;justify-content: space-between;width: 900px;">
+            <div id="itemListTitle">
+                <h1 id="header">회원 등록</h1>
+            </div>
+        </div>
 
-        <form action="" method="post" enctype="multipart/form-data">
-            이름<input class="form-control" type="text" name="m_member_id">
-            <input class="form-control" type="hidden" name="m_member_password" value="1111">
-            이메일<input class="form-control" type="text" name="m_member_email">
-            <input style="font-family: LINESeedKR-Bd" class="btn btn-ico" type="submit" value="등록">
-        </form>
+        <table class="table table-bordered">
+            <tbody>
+            <form action="" method="post" enctype="multipart/form-data">
+                <tr>
+                    <th class="table-active">이름</th>
+                    <th><input class="form-control form300" type="text" name="m_member_id"></th>
+                </tr>
+                <tr>
+                    <th class="table-active">이메일</th>
+                    <th><input class="form-control form300" type="text" name="m_member_email"></th>
+                </tr>
+                <input style="font-family: LINESeedKR-Bd" class="btn btn-ico" type="submit" value="등록">
+            </form>
+            </tbody>
+        </table>
     </div>
 </div>
 

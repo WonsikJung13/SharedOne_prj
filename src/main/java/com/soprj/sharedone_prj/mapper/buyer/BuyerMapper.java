@@ -1,6 +1,7 @@
 package com.soprj.sharedone_prj.mapper.buyer;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
+import com.soprj.sharedone_prj.domain.price.PriceDto;
 
 import java.util.List;
 
@@ -21,4 +22,8 @@ public interface BuyerMapper {
     BuyerDto select(int m_buyer_id);
 
     BuyerDto getBuyerNum(String m_buyer_number);
+
+    List<BuyerDto> getBuyerList(int offset, int records);
+
+    int countAll();
 }

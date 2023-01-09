@@ -236,12 +236,15 @@
                     <form id="removeForm${buyer.m_buyer_name }" action="${removeLink }" method="post">
                         <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
                     </form>
-                    <div class="modal fade" id="removeModal${buyer.m_buyer_name }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="removeModal${buyer.m_buyer_name }" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5"
+                                        id="exampleModalLabel">삭제 확인</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     삭제하시겠습니까?
@@ -250,7 +253,8 @@
                                     <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">취소
                                     </button>
-                                    <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton${buyer.m_buyer_name }" type="button"
+                                    <button style="font-family: 'LINESeedKR-Bd'"
+                                            id="removeConfirmButton${buyer.m_buyer_name }" type="button"
                                             class="btn btn-danger">확인
                                     </button>
                                 </div>
@@ -266,33 +270,78 @@
                 </tbody>
             </table>
         </div>
+        <div class="row">
+            <div class="col">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+
+                        <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
+                        <c:if test="${buyerDto.currentPageNumber ne 1 }">
+                            <c:url value="/buyer/list" var="listLink">
+                                <c:param name="page" value="1"/>
+                            </c:url>
+                            <%-- 맨앞 버튼 --%>
+                            <li class="page-item">
+                                <a href="${listLink }" class="page-link">
+                                    <i class="fa-solid fa-angles-left"></i>
+                                </a>
+                            </li>
+                        </c:if>
+
+                        <c:if test="${buyerDto.hasPrevButton }">
+                            <c:url value="/buyer/list" var="listLink">
+                                <c:param name="page" value="${buyerDto.jumpPrevPageNumber }"></c:param>
+                            </c:url>
+                            <li class="page-item">
+                                <a href="${listLink }" class="page-link">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </a>
+                            </li>
+                        </c:if>
+
+                        <c:forEach begin="${buyerDto.leftPageNumber}" end="${buyerDto.rightPageNumber}"
+                                   var="pageNumber">
+                            <c:url value="/buyer/list" var="listLink">
+                                <c:param name="page" value="${pageNumber }"/>
+                            </c:url>
+                            <li class="page-item
+
+                  <%-- 현재페이지에 active 클래스 추가 --%>
+                  ${buyerDto.currentPageNumber eq pageNumber ? 'active' : ''} }
+
+                  "><a class="page-link" href="${listLink}">${pageNumber}</a>
+                            </li>
+                        </c:forEach>
+
+                        <%-- 다음 버튼 --%>
+                        <c:if test="${buyerDto.hasNextButton }">
+                            <c:url value="/buyer/list" var="listLink">
+                                <c:param name="page" value="${buyerDto.jumpNextPageNumber }"></c:param>
+                            </c:url>
+                            <li class="page-item">
+                                <a href="${listLink }" class="page-link">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </c:if>
+
+                        <%-- 맨뒤 버튼 --%>
+                        <c:if test="${buyerDto.currentPageNumber ne buyerDto.lastPageNumber }">
+                            <c:url value="/buyer/list" var="listLink">
+                                <c:param value="${buyerDto.lastPageNumber }" name="page"/>
+                            </c:url>
+                            <li class="page-item">
+                                <a href="${listLink }" class="page-link">
+                                    <i class="fa-solid fa-angles-right"></i>
+                                </a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </div>
-
-<%--<form id="removeForm" action="${removeLink }" method="post">--%>
-<%--    <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">--%>
-<%--</form>--%>
-<%--<div class="modal fade" id="removeModal${buyer.m_buyer_name }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
-<%--    <div class="modal-dialog">--%>
-<%--        <div class="modal-content">--%>
-<%--            <div class="modal-header">--%>
-<%--                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>--%>
-<%--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
-<%--            </div>--%>
-<%--            <div class="modal-body">--%>
-<%--                삭제하시겠습니까?--%>
-<%--            </div>--%>
-<%--            <div class="modal-footer">--%>
-<%--                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"--%>
-<%--                        data-bs-dismiss="modal">취소--%>
-<%--                </button>--%>
-<%--                <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton${buyer.m_buyer_name }" type="button"--%>
-<%--                        class="btn btn-danger">확인--%>
-<%--                </button>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
 
 
 <c:url value="/buyer/register" var="registerLink">
@@ -301,11 +350,6 @@
     <i class="fa-sharp fa-solid fa-pen"></i>
 </a>
 
-<%--<script>--%>
-<%--    document.querySelector("#removeConfirmButton${buyer.m_buyer_name }").addEventListener("click", function () {--%>
-<%--        document.querySelector("#removeForm${buyer.m_buyer_name }").submit();--%>
-<%--    })--%>
-<%--</script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
