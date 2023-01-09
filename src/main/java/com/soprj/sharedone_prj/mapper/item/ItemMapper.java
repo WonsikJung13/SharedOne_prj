@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface ItemMapper {
 
-    int register(ItemDto itemDto);
+    int register(List<ItemDto> itemDto);
 
     List<ItemDto> selectItemList(String itemIdParam, int offset, int records);
 
     ItemDto select(String m_item_id);
 
-    int update(ItemDto itemDto);
+    int update(List<ItemDto> itemDto);
 
     int remove(String m_item_id);
 
