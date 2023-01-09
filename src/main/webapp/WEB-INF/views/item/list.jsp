@@ -66,7 +66,7 @@
     }
     .tableList {
       background-color: #fff;
-      height: 672px;
+      height: 616px;
       width: 900px;
     }
     td a {
@@ -86,7 +86,7 @@
     .searchBox {
       background-color: white;
       width: 900px;
-      padding: 20px 80px 10px 80px;
+      padding: 20px 80px 5px 80px;
       color: #212529;
       font-size:16px;
       font-weight: bold;
@@ -135,7 +135,7 @@
   </style>
 </head>
 <body>
-<div class="row">
+<div class="row" style="height: 100%;">
   <div class="col-3">
     <my:header></my:header>
   </div>
@@ -220,13 +220,14 @@
                   <c:url value="/item/register" var="registerLink">
                     <c:param name="m_item_id" value="${itemList.m_item_id}"></c:param>
                   </c:url>
-                  <button type="button" class="btn" onclick="location.href='${registerLink}' ">수정</button>
+                  <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">수정</button>
                 </td>
               </tr>
             </div>
           </c:forEach>
         </tbody>
       </table>
+    </div>
     <div class="row">
       <div class="col">
         <nav aria-label="Page navigation example">
@@ -295,7 +296,6 @@
           </ul>
         </nav>
       </div>
-    </div>
     </div>
   </div>
 </div>

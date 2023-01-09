@@ -11,7 +11,8 @@ public class ItemDto {
     private String m_item_unit;
     private String m_item_group;
     private String m_item_manufacturer;
-    private int m_item_number;
+
+    private int m_item_cart_number;
     private int m_price_lastPrice;
 
     public int lastPageNumber;
