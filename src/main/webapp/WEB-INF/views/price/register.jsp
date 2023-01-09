@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         .table{
             width: 900px;
@@ -97,7 +98,7 @@
                 <tr>
                     <td class="table-active">종료일</td>
                     <td>
-                        <input class="form-control" autocomplete="off" type="date" name="m_price_lastPeriod"></input>
+                        <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod"></input>
                     </td>
                 </tr>
 
@@ -197,12 +198,26 @@
             })
     }
 
+    // 오늘 날짜 이전 막기
     var now_utc = Date.now() // 지금 날짜를 밀리초로
     // getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
     var timeOff = new Date().getTimezoneOffset() * 60000; // 분단위를 밀리초로 변환
     // new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
     var today = new Date(now_utc - timeOff).toISOString().split("T")[0];
     document.getElementById("m_price_startPeriod").setAttribute("min", today);
+
+    // 종료일 : 시작일 이전 날짜 막기
+    var m_price_startPeriod = document.getElementById('m_price_startPeriod');
+    var m_price_lastPeriod = document.getElementById('m_price_lastPeriod');
+
+    m_price_startPeriod.addEventListener('change', function() {
+        if (m_price_startPeriod.value)
+            m_price_lastPeriod.min = m_price_startPeriod.value;
+    }, false);
+    m_price_lastPeriod.addEventLiseter('change', function() {
+        if (m_price_lastPeriod.value)
+            m_price_startPeriod.max = m_price_lastPeriod.value;
+    }, false);
 
 
 </script>
