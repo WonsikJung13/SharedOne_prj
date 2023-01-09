@@ -417,7 +417,7 @@
 
         let tr = $("#itemBody tr");
         let td = tr.children();
-        // td.each(function (i) {
+        td.each(function(i){
             // let data = "m_item_name : " + $("input[name='m_item_name']").eq(i).val()
             //         + ", m_item_group : " + $("input[name='m_item_name']").eq(i).val()
             //         + ", m_item_manufacturer : " + $("input[name='m_item_manufacturer']").eq(i).val()
@@ -427,58 +427,39 @@
             // param.push($("input[name='m_item_group']").eq(i).val()),
             // param.push($("input[name='m_item_manufacturer']").eq(i).val()),
             // param.push($("input[name='m_item_unit']").eq(i).val())
-            // console.log("data : " + data);
-            // paramArray.push(data);
-            //     console.log("paramArray : " + paramArray);
-        // })
-        // console.log("param: " + param)
-        let dataList = [];
-        let data = {};
-        for (let i = 0; i < tbodyNum.length; i++) {
-            data = {"m_item_name":$("input[name='m_item_name']").eq(i).val(), "m_item_group":$("input[name='m_item_group']").eq(i).val(), "m_item_manufacturer":$("input[name='m_item_manufacturer']").eq(i).val(), "m_item_unit":$("input[name='m_item_unit']").eq(i).val()};
-            dataList.push(data);
-        //     data = "m_item_name : " + $("input[name='m_item_name']").eq(i).val()
-        //         + ", m_item_group : " + $("input[name='m_item_group']").eq(i).val()
-        //         + ", m_item_manufacturer : " + $("input[name='m_item_manufacturer']").eq(i).val()
-        //         + ", m_item_unit : " + $("input[name='m_item_unit']").eq(i).val();
-        //     // param.push(("#itemBody").find("td").eq(i).val());
-        //     //
-        //     // param.push($("input[name='m_item_name']").eq(i).val()),
-        //     // param.push($("input[name='m_item_group']").eq(i).val()),
-        //     // param.push($("input[name='m_item_manufacturer']").eq(i).val()),
-        //     // param.push($("input[name='m_item_unit']").eq(i).val())
+        // console.log("data : " + data);
+        // paramArray.push(data);
+        //     console.log("paramArray : " + paramArray);
+        })
+        console.log("param: " + param)
+
+        for(let i = 0; i < tbodyNum.length; i++) {
+            let data = "m_item_name : " + $("input[name='m_item_name']").eq(i).val()
+                    + ", m_item_group : " + $("input[name='m_item_group']").eq(i).val()
+                    + ", m_item_manufacturer : " + $("input[name='m_item_manufacturer']").eq(i).val()
+                    + ", m_item_unit : " + $("input[name='m_item_unit']").eq(i).val();
+            // param.push(("#itemBody").find("td").eq(i).val());
+            //
+            // param.push($("input[name='m_item_name']").eq(i).val()),
+            // param.push($("input[name='m_item_group']").eq(i).val()),
+            // param.push($("input[name='m_item_manufacturer']").eq(i).val()),
+            // param.push($("input[name='m_item_unit']").eq(i).val())
             console.log("data : " + data);
-            console.log("dataList : " + dataList)
-        //     // paramArray.push({data});
-        //     // console.log("paramArray : " + paramArray);
+            paramArray.push({data});
+            console.log("paramArray : " + paramArray);
         }
         // paramArray.push(param);
         // console.log("paramArray: " + paramArray);
 
-        $.ajax({
-            url: ctx + '/item/registerList',
-            method: 'POST',
-            data : JSON.stringify(dataList),
-            contentType: 'application/json; charset=UTF-8',
-            success: function (resp) {
-                var respData = "m_item_name : " + resp["m_item_name"]+", m_item_group : " + resp["m_item_manufacturer"] + ", m_item_unit : " + resp["m_item_unit"]
-                console.log("resp: " + respData)
-                // data = "m_item_name : " + $("input[name='m_item_name']").eq(i).val()
-                //     + ", m_item_group : " + $("input[name='m_item_group']").eq(i).val()
-                //     + ", m_item_manufacturer : " + $("input[name='m_item_manufacturer']").eq(i).val()
-                //     + ", m_item_unit : " + $("input[name='m_item_unit']").eq(i).val();
-            }
-        })
 
-    //     fetch(ctx + "/item/registerList", {
-    //         method: "post",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify(data)
-    //     })
-    //         .then(res => res.json())
-    }
+        fetch(ctx + "/item/registerList", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(paramArray)
+        })
+            .then(res => res.json())
 
         // for (let i = 0; i < tbodyNum; i++) {
         //     let itemSet = new ItemSet(
@@ -498,6 +479,8 @@
         //         body: JSON.stringify(param)
         //     })
         // }
+
+    }
 
 
 </script>

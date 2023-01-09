@@ -1,7 +1,6 @@
 package com.soprj.sharedone_prj.controller.item;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soprj.sharedone_prj.domain.item.CartDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.service.item.ItemService;
@@ -38,37 +37,43 @@ public class ItemController {
     }
 
     @PostMapping("register")
-    public String register(ItemDto itemDto) throws Exception {
+    @ResponseBody
+    public String register(@RequestBody Map<String, Object> itemDto) throws Exception {
         System.out.println("???" + itemDto);
+//        for ( String param : paramAray) {
+//            System.out.println("param: " + param);
+//        }
+//        System.out.println("등록진행!" + itemDto);
+//        System.out.println(itemDto.get(0));
+//        System.out.println("name: " + itemDto.get("m_item_id"));
+//        System.out.println(itemDto.get("m_item_group"));
 
-        Map<String, Object> map = new HashMap<String, Object>();
+//        int cnt = itemService.register(itemDto);
 
-        int cnt = itemService.register(itemDto);
-
-        if (cnt == 1) {
-            map.put("message", "제품 수정이 완료되었습니다.");
-        } else {
-            map.put("message", "제품 수정을 실패하였습니다.");
-        }
         return "redirect:/item/list";
     }
 
+//    @PostMapping("registerList")
+//    @ResponseBody
+//    public Map<String, Object> registerList(ItemDto itemDto) throws Exception {
+//        System.out.println("ajax 요청 도착!" + itemDto);
+//        Map<String, Object> map = new HashMap<String, Object>();
+//
+//        return map;
+//    }
+
     @PostMapping("registerList")
     @ResponseBody
-    public Map<String, Object> registerList (@RequestBody List<Object> dataList) throws Exception {
-        Map<String, Object> map = new HashMap<String, Object>();
-        ObjectMapper mapper = new ObjectMapper();
-        for (int i = 0; i < dataList.size(); i++) {
-            ItemDto itemDto = mapper.convertValue(dataList.get(i),ItemDto.class);
-            int cnt = itemService.register(itemDto);
-
-            if (cnt == 1) {
-                map.put("message", "제품 등록이 완료되었습니다.");
-            } else {
-                map.put("message", "제품 등록을 실패하였습니다.");
-            }
-        }
-        return map;
+    public Map<String, Object> registerList (ItemDto itemDto) throws Exception {
+//        String m_item_name, String m_item_group, String m_item_manufacturer, String m_item_unit
+//        ItemDto itemDto = new ItemDto();
+//        itemDto.setM_item_name(m_item_name);
+//        itemDto.setM_item_group(m_item_group);
+//        itemDto.setM_item_manufacturer(m_item_manufacturer);
+//        itemDto.setM_item_unit(m_item_unit);
+        System.out.println(itemDto);
+//        itemDto.setM_item_name(1);
+        return null;
     }
 
 
