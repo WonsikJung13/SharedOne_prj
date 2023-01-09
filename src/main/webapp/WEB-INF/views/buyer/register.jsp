@@ -22,8 +22,86 @@
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
-        .form300 {
-            width: 60%;
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #eeeeee;
+        }
+
+        .table {
+            width: 900px;
+            --bs-table-bg: #fff;
+        }
+
+        .table.addList {
+            --bs-table-bg: #5f7175;
+            --bs-table-color: #fff;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+        }
+
+        tr {
+            height: 55px;
+        }
+
+        h1 {
+            font-size: 1.7em;
+            margin: 30px 0;
+        }
+
+        h2 {
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
+        .addBtn {
+            background-color: #5f7175;
+            padding: 5px 30px;
+            margin-left: 350px;
+        }
+
+        .addBtn:hover,
+        .addBtn:focus, .storageBtn:hover, .storageBtn.focus {
+            background-color: #505f62;
+        }
+
+        .storageBtn {
+            background-color: #5f7175;
+            padding: 5px 30px;
+            margin-left: 280px;
+        }
+
+        .submitBtn {
+            background-color: #598f9b;
+            padding: 5px 30px;
+
+        }
+
+        .form-select {
+            width: 250px;
+        }
+
+        .form-control {
+            width: 250px;
+        }
+
+        .inputLength {
+            width: 250px;
+        }
+
+
+        /*제품그룹 박스*/
+        #groupSelect, #manufacturerSelect {
+            position: absolute;
+        }
+
+        option {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .groupEditOption, .ManufacturerEditOption {
+            position: relative;
         }
     </style>
 </head>
@@ -33,43 +111,77 @@
         <my:header></my:header>
     </div>
     <div class="col">
+        <div style="display: flex;justify-content: space-between;width: 900px;">
+            <div id="itemListTitle">
+                <h1 id="header">바이어 등록</h1>
+            </div>
+            <div class="itemRegisterBtn">
+                <c:url value="/item/register" var="registerLink"></c:url>
+                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">구현중
+                </button>
+            </div>
+        </div>
+        <h2>바이어 추가</h2>
 
-        <table class="table">
+        <table class="table table-bordered">
             <tbody>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" id="registerForm">
                 <tr>
-                    <th>거래처 명</th>
+                    <th class="table-active">거래처 명</th>
                     <th><input class="form-control form300" type="text" name="m_buyer_name"></th>
                 </tr>
                 <tr>
-                    <th>거래처 국가</th>
+                    <th class="table-active">거래처 국가</th>
                     <th><input class="form-control form300" type="text" name="m_buyer_region"></th>
                 </tr>
                 <tr>
-                    <th>거래처 주소</th>
+                    <th class="table-active">거래처 주소</th>
                     <th><input type="text" class="form-control form300" name="m_buyer_address"></th>
                 </tr>
                 <tr>
-                    <th>통화</th>
+                    <th class="table-active">통화</th>
                     <th><input type="text" class="form-control form300" name="m_buyer_currency"></th>
                 </tr>
                 <tr>
-                    <th>사업자번호</th>
+                    <th class="table-active">사업자번호</th>
                     <th><input type="text" class="form-control form300" name="m_buyer_number" id="buyerIdInput">
-                        <p id="inputText"></p></th>
-                    <th>
-                        <button style="border-color: #0cc; font-family: LINESeedKR-Bd" id="buyerIdButton" class="btn"
-                                type="button">중복확인
-                        </button>
-                    </th>
-                </tr>
-                <tr>
-                    <input type="submit" class="btn btn-primary" value="등록" disabled id="register">
+                        <p id="inputText" style="background-color: white"></p></th>
                 </tr>
             </form>
             </tbody>
         </table>
+        <button disabled class="btn btn-secondary" id="register">바이어 추가</button>
+
+        <h2>추가된 바이</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">거래처 명</th>
+                <th scope="col">거래처 국가</th>
+                <th scope="col">거래처 주소</th>
+                <th scope="col">통화</th>
+                <th scope="col">사업자번호</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <%--    <c:forEach items="" var="">--%>
+            <%--        <tr>--%>
+            <%--            <th scope="row">1</th>--%>
+            <%--            <td>Mark</td>--%>
+            <%--            <td>Otto</td>--%>
+            <%--            <td>@mdo</td>--%>
+            <%--            <td>@mdo</td>--%>
+            <%--            <td><button></button></td>--%>
+            <%--        </tr>--%>
+            <%--    </c:forEach>--%>
+
+
+            </tbody>
+        </table>
+
     </div>
+</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
@@ -78,7 +190,9 @@
 <script>
     const ctx = "${pageContext.request.contextPath}";
 
-    document.querySelector("#buyerIdButton").addEventListener("click", function () {
+    document.querySelector("#buyerIdInput").addEventListener("blur", function () {
+        // document.querySelector("#buyerIdButton").addEventListener("click", function () {
+        console.log("하기싫어")
         checkedDoubleId = false;
         const insertBuyerNum = document.querySelector("#buyerIdInput").value;
 
@@ -91,10 +205,16 @@
                 })
 
                 if (data.statusNum === 'not exist') {
-                    inputText.removeAttribute("style");
+                    $(function () {
+                        $('#inputText').css("color", "black");
+                    })
                     document.querySelector("#register").removeAttribute("disabled");
                 }
             })
+    })
+
+    document.querySelector("#register").addEventListener("click", function () {
+        document.querySelector("#registerForm").submit();
     })
 </script>
 </body>

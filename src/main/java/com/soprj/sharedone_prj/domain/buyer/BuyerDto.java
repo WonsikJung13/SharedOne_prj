@@ -13,7 +13,7 @@ public class BuyerDto {
 
     private String m_buyer_address;
 
-    private int m_buyer_number;
+    private String m_buyer_number;
 
     private String m_buyer_currency;
 }
