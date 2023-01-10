@@ -28,4 +28,6 @@ public interface OrderMapper {
   int addDataHeader(Map<String, Object> stringObjectMap);
 
   int addDataItem(Map<String, Object> stringObjectMap);
+
+  List<OrderDto> orderList();
 }

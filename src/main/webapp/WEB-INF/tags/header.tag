@@ -119,12 +119,12 @@
         <li class="mb-1 main-nav navbg">
             <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed" data-bs-toggle="collapse"
                     data-bs-target="#orders-collapse" aria-expanded="false">
-                오더
+                주문
             </button>
             <div class="collapse navbg" id="orders-collapse">
                 <ul class="navbg btn-toggle-nav  pb-1 small">
-                    <li><a href="${orderLink}" class="navbg d-inline-flex text-decoration-none rounded">오더작성</a></li>
-                    <li><a href="${orderList}" class="navbg d-inline-flex text-decoration-none rounded">오더관리</a></li>
+                    <li><a href="${orderList}" class="navbg d-inline-flex text-decoration-none rounded">주문관리</a></li>
+                    <li><a href="${orderLink}" class="navbg d-inline-flex text-decoration-none rounded">주문작성</a></li>
                     <sec:authentication property="authorities" var="authorities"/>
                     <c:if test="${authorities eq '[팀장]'}">
                         <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">승인관리</a></li>

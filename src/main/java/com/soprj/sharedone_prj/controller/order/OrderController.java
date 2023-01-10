@@ -52,10 +52,6 @@ public class OrderController {
         return itemList;
     }
 
-    @GetMapping("list")
-    private void itemList(){
-
-    }
 
     @PostMapping("register")
     public String Register(){
@@ -63,6 +59,7 @@ public class OrderController {
         return "redirect:/order/list";
     }
 
+//  장바구니 오더 보내기
     @PostMapping("add")
     public void Add(@RequestBody List<Map<String, Object>> addData){
 
@@ -78,4 +75,14 @@ public class OrderController {
         }
 
     }
+
+    // 주문 관리 리스트 보여주기
+    @GetMapping("list")
+    public void list(Model model) {
+        List<OrderDto> list = orderService.orderList();
+        model.addAttribute("orderList", list);
+    }
+
+
+
 }

@@ -22,5 +22,9 @@ public class OrderDto {
     private int m_order_price;
     private String m_order_comment;
     private int m_price_id;
+    private String m_order_buyerName;
+    private int m_order_sumPrice;
+
+
 
 }

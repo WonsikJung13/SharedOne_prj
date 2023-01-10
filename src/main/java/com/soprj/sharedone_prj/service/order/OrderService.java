@@ -27,11 +27,6 @@ public class OrderService {
 
     public List<ItemDto> itemList() { return mapper.itemSelect(); }
 
-//    public ItemDto itemView(String m_item_id) {
-//        return mapper.itemList(m_item_id);
-//    }
-
-
     public OrderDto orderInsert() {
         return mapper.orderInsert();
     }
@@ -52,4 +47,7 @@ public class OrderService {
         return mapper.addDataItem(stringObjectMap);
     }
 
+    public  List<OrderDto> orderList() {
+        return mapper.orderList();
+    }
 }
