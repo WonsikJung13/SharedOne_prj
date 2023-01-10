@@ -185,7 +185,7 @@
                         </datalist>
                     </div>
                     <div style="float: right">
-                        <label>바이어코드</label>
+                        <label>거래처코드</label>
                         <input class="form-select" type="text" list="buyerList" style="width: 210px;"
                                autocomplete="off"/>
                         <datalist id="buyerList">
@@ -217,8 +217,8 @@
                     <th></th>
                     <th>제품코드</th>
                     <th>제품명</th>
-                    <th>바이어코드</th>
-                    <th>바이어명</th>
+                    <th>거래처코드</th>
+                    <th>거래처명</th>
                     <th>시작일</th>
                     <th>종료일</th>
                     <th>통화</th>

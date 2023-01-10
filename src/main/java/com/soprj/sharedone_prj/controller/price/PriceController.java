@@ -1,5 +1,6 @@
 package com.soprj.sharedone_prj.controller.price;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soprj.sharedone_prj.domain.price.PriceDto;
 import com.soprj.sharedone_prj.service.item.ItemService;
 import com.soprj.sharedone_prj.service.price.PriceService;
@@ -56,6 +57,7 @@ public class PriceController {
         return itemList;
     }
 
+
     @PostMapping("register")
     public String register(PriceDto price){
         priceService.register(price);
@@ -92,4 +94,14 @@ public class PriceController {
         return "redirect:/price/list";
     }
 
+    @PostMapping("checkPeriod")
+    @ResponseBody
+    public List<PriceDto> checkPeriod(@RequestBody Map<String, Object> priceMap) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        PriceDto priceDto = mapper.convertValue(priceMap, PriceDto.class);
+        List<PriceDto> periodList = priceService.getPricePeriod(priceDto);
+
+        return periodList;
+    }
 }

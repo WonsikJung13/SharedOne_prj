@@ -42,31 +42,6 @@
 
                 <tbody>
                     <tr>
-                        <td class="table-active">거래처 코드</td>
-                        <td>
-                            <input class="form-select" id="buyerId" type="text" name="m_buyer_id" list="buyerList"
-                                   placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()">
-                                <datalist id="buyerList">
-                                    <c:forEach items="${buyerList}" var="buyerList" >
-                                        <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                                    </c:forEach>
-                                </datalist>
-                            </input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-active">거래처명</td>
-                        <td>
-                            <input class="form-control" id="buyerName" readonly></input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-active">통화</td>
-                        <td>
-                            <input class="form-control" id="buyerCurrency" name="m_price_currency" readonly></input>
-                        </td>
-                    </tr>
-                    <tr>
                         <td class="table-active">제품코드</td>
                         <td>
                             <input class="form-select" id="itemId" type="text" name="m_item_id" list="itemList"
@@ -83,6 +58,31 @@
                         <td class="table-active">제품명</td>
                         <td>
                             <input class="form-control" id="itemName" readonly></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">거래처 코드</td>
+                        <td>
+                            <input class="form-select" id="buyerId" type="text" name="m_buyer_id" list="buyerList"
+                                   placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()">
+                            <datalist id="buyerList">
+                                <c:forEach items="${buyerList}" var="buyerList" >
+                                    <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
+                                </c:forEach>
+                            </datalist>
+                            </input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">거래처명</td>
+                        <td>
+                            <input class="form-control" id="buyerName" readonly></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">통화</td>
+                        <td>
+                            <input class="form-control" id="buyerCurrency" name="m_price_currency" readonly></input>
                         </td>
                     </tr>
                 </tbody>
@@ -214,10 +214,34 @@
         if (m_price_startPeriod.value)
             m_price_lastPeriod.min = m_price_startPeriod.value;
     }, false);
-    m_price_lastPeriod.addEventLiseter('change', function() {
+    m_price_lastPeriod.addEventListener('change', function() {
         if (m_price_lastPeriod.value)
             m_price_startPeriod.max = m_price_lastPeriod.value;
     }, false);
+
+    // 날짜 중복확인 (DB)
+    document.querySelector("#m_price_startPeriod").addEventListener("click", function () {
+        const m_item_id = document.querySelector("#itemId").value;
+        const m_buyer_id = document.querySelector("#buyerId").value;
+
+        const addData = {
+            m_item_id,
+            m_buyer_id
+        }
+        fetch(ctx + "/price/checkPeriod", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(addData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if()
+                // document.querySelector("#").value = data.;
+            })
+    })
+
 
 
 </script>

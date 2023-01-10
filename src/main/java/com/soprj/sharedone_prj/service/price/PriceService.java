@@ -78,4 +78,9 @@ public class PriceService {
     public int remove(String removeList) {
         return priceMapper.remove(removeList);
     }
+
+
+    public List<PriceDto> getPricePeriod(PriceDto priceDto) {
+        return priceMapper.getPricePeriod(priceDto);
+    }
 }
