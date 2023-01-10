@@ -12,33 +12,29 @@
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <style>
-        /*.tableWrapper {*/
-        /*    !*width: 400px;*!*/
-        /*    !*height: 300px;*!*/
-        /*    !*background-color: lightgreen;*!*/
-        /*    overflow: auto;*/
-        /*}*/
-
-        /*#userListTable {*/
-        /*    !*width: 500px;*!*/
-        /*    border: 0px;*/
-        /*    border-collapse: collapse;*/
-        /*}*/
-
-        /*#userListTable th {*/
-        /*    position: sticky;*/
-        /*    top: 0px;*/
-        /*    !*background-color: gray !important;*!*/
-        /*}*/
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #eeeeee ;
+        }
+        .table{
+            width: 900px;
+            --bs-table-bg:#fff;
+        }
+        .mainTable .mainTableHead {
+            --bs-table-bg:#5f7175;
+        }
     </style>
 </head>
 <body>
-<my:header/>
-<h1>오더 현황</h1>
 
-<div class="bd-example tableWrapper">
-    <table class="table table-striped table-bordered">
-        <thead>
+<div class="row" style="height: 100%;">
+    <div class="col-3">
+        <my:header/>
+    </div>
+<div class="bd-example tableWrapper col" style="margin-right: 100px">
+    <h1>오더 현황</h1>
+    <table class="table table-striped table-bordered mainTable">
+        <thead class="mainTableHead">
         <tr>
             <th scope="col">오더 번호</th>
             <%--            <th scope="col">담당자</th>--%>
