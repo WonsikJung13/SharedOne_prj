@@ -110,7 +110,8 @@
                     </li>
                     <sec:authentication property="authorities" var="authorities"/>
                     <c:if test="${authorities eq '[팀장]'}">
-                    <li><a href="${memberList}" class="navbg d-inline-flex text-decoration-none rounded">회원 관리</a></li>
+                        <li><a href="${memberList}" class="navbg d-inline-flex text-decoration-none rounded">회원 관리</a>
+                        </li>
                     </c:if>
                 </ul>
             </div>
@@ -126,7 +127,8 @@
                     <li><a href="${orderList}" class="navbg d-inline-flex text-decoration-none rounded">오더관리</a></li>
                     <sec:authentication property="authorities" var="authorities"/>
                     <c:if test="${authorities eq '[팀장]'}">
-                    <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">승인관리</a></li>
+                        <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">승인관리</a></li>
+                    </c:if>
                 </ul>
             </div>
         </li>
