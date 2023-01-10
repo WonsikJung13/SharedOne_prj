@@ -96,7 +96,7 @@
             </div>
         </li>
         <li class="mb-1 main-nav">
-                <a href="${reportLink}" class="btn btn-toggle d-inline-flex align-items-center border-0"  >리포터</a>
+                <a href="${reportLink}" class="btn btn-toggle d-inline-flex align-items-center border-0"  >리포트</a>
         </li>
 
 

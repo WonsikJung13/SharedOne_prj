@@ -1,7 +1,11 @@
 package com.soprj.sharedone_prj.mapper.report;
 
-public interface ReportMapper {
-    void getOrderHeader();
+import com.soprj.sharedone_prj.domain.report.ReportHeaderDto;
 
-    void getOrderItem();
+import java.util.List;
+
+public interface ReportMapper {
+    List<ReportHeaderDto> getOrderHeader();
+
+//    void getOrderItem();
 }

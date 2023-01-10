@@ -5,11 +5,29 @@
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.report.ReportMapper">
 
-    <select id="getOrderHeader">
-        SELECT * FROM m_order_header
+    <select id="getOrderHeader" resultMap="order">
+        SELECT *
+        FROM m_order_header h LEFT JOIN m_order_item i ON h.m_order_id = i.m_order_id
+        ORDER BY h.m_order_id DESC;
     </select>
-    <select id="getOrderItem">
-        SELECT * FROM m_order_item
-    </select>
+    <resultMap id="order" type="com.soprj.sharedone_prj.domain.report.ReportHeaderDto">
+        <id column="m_order_id" property="m_order_id"/>
+        <result column="m_order_buyerName" property="m_order_buyerName"/>
+        <result column="m_order_inserted" property="m_order_inserted"/>
+        <result column="m_order_status" property="m_order_status"/>
+        <result column="m_order_sumPrice" property="m_order_sumPrice"/>
+        <collection property="reportItemDtoList" ofType="com.soprj.sharedone_prj.domain.report.ReportItemDto">
+            <result property="m_order_itemId" column="m_order_itemId"/>
+            <result property="m_order_count" column="m_order_count"/>
+            <result property="m_order_totalPrice" column="m_order_totalPrice"/>
+            <result property="m_orderItemName" column="m_orderItemName"/>
+        </collection>
+    </resultMap>
+
+
+
+<!--    <select id="getOrderItem">-->
+<!--        SELECT * FROM m_order_item-->
+<!--    </select>-->
 
 </mapper>

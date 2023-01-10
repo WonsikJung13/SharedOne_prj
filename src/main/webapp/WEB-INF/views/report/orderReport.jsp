@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% request.setCharacterEncoding("utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +33,7 @@
     </style>
 </head>
 <body>
+<my:header/>
 <h1>오더 현황</h1>
 
 <div class="bd-example tableWrapper">
@@ -39,105 +41,51 @@
         <thead>
         <tr>
             <th scope="col">오더 번호</th>
-            <th scope="col">담당자</th>
+            <%--            <th scope="col">담당자</th>--%>
             <th scope="col">바이어</th>
             <th scope="col">납품 요청일</th>
+            <th scope="col">오더 총 금액</th>
             <th scope="col">승인 상태</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Wonsik Jung</td>
-            <td>삼성전자</td>
-            <td>2023-01-01</td>
-            <td>승인요청</td>
-        </tr>
-        <tr>
-            <td colspan="5">
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th scope="col">아이템 번호</th>
-                        <th scope="col">판매부번</th>
-                        <th scope="col">수량</th>
-                        <th scope="col">단위</th>
-                        <th scope="col">할인율</th>
-                        <th scope="col">판매가</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>001001</td>
-                        <td>10</td>
-                        <td>EA</td>
-                        <td>10%</td>
-                        <td>10,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>001001</td>
-                        <td>10</td>
-                        <td>EA</td>
-                        <td>10%</td>
-                        <td>10,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>001001</td>
-                        <td>10</td>
-                        <td>EA</td>
-                        <td>10%</td>
-                        <td>10,000</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-
-        <tr>
-            <th scope="row">2</th>
-            <td>Chaeun Lim</td>
-            <td>LG전자</td>
-            <td>2023-06-01</td>
-            <td>승인완료</td>
-        </tr>
-        <tr>
-            <td colspan="5">
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th scope="col">아이템 번호</th>
-                        <th scope="col">판매부번</th>
-                        <th scope="col">수량</th>
-                        <th scope="col">단위</th>
-                        <th scope="col">할인율</th>
-                        <th scope="col">판매가</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>001001</td>
-                        <td>10</td>
-                        <td>EA</td>
-                        <td>10%</td>
-                        <td>10,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>001001</td>
-                        <td>10</td>
-                        <td>EA</td>
-                        <td>10%</td>
-                        <td>10,000</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
+        <c:forEach items="${report}" var="report">
+            <tbody>
+            <tr>
+                <th scope="row">${report.m_order_id}</th>
+                    <%--            <td>Wonsik Jung</td>--%>
+                <td>${report.m_order_buyerName}</td>
+                <td>${report.m_order_inserted}</td>
+                <td>${report.m_order_sumPrice}</td>
+                <td>${report.m_order_status}</td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <table class="table mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">판매부번</th>
+                            <th scope="col">제품명</th>
+                            <th scope="col">수량</th>
+                            <th scope="col">판매가</th>
+                        </tr>
+                        </thead>
+                        <c:forEach items="${report.reportItemDtoList}" var="items" varStatus="number">
+                            <tbody>
+                            <tr>
+                                <th scope="row">${number.index + 1}</th>
+                                <td>${items.m_order_itemId}</td>
+                                <td>${items.m_orderItemName}</td>
+                                <td>${items.m_order_count}</td>
+                                <td>${items.m_order_totalPrice}</td>
+                            </tr>
+                            </tbody>
+                        </c:forEach>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </c:forEach>
     </table>
 </div>
 
