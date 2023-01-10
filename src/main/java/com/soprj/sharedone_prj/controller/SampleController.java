@@ -13,9 +13,9 @@ public class SampleController {
     @Autowired
     private SampleService sampleService;
 
-    @GetMapping("test")
-    public void getTest() {
-
+    @GetMapping("")
+    public String getTest() {
+        return "redirect:/report/orderReport";
     }
 
 
