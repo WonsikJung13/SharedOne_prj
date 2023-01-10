@@ -112,30 +112,4 @@
         ORDER BY m_item_manufacturer DESC
     </select>
 
-<!--    <insert id="cartInsert">-->
-<!--        INSERT INTO m_item_cart (-->
-<!--            m_item_name,-->
-<!--            m_item_group,-->
-<!--            m_item_manufacturer,-->
-<!--            m_item_unit-->
-<!--        )-->
-<!--        VALUES (-->
-<!--            #{m_item_name},-->
-<!--            #{m_item_group},-->
-<!--            #{m_item_manufacturer},-->
-<!--            #{m_item_unit}-->
-<!--        )-->
-<!--    </insert>-->
-
-<!--    <select id="cartInfo" resultType="com.soprj.sharedone_prj.domain.item.CartDto">-->
-<!--        SELECT-->
-<!--            m_item_cart_number,-->
-<!--            m_item_name,-->
-<!--            m_item_group,-->
-<!--            m_item_manufacturer,-->
-<!--            m_item_unit-->
-<!--        FROM-->
-<!--            m_item_cart-->
-<!--        ORDER BY m_item_cart_number-->
-<!--    </select>-->
 </mapper>

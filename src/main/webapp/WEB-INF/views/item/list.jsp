@@ -29,7 +29,7 @@
       position: relative;
     }
 
-    * {
+    body {
       font-family: 'Noto Sans KR', sans-serif;
       background-color: #eeeeee ;
     }
@@ -135,15 +135,24 @@
   </style>
 </head>
 <body>
+      <c:if test="${not empty message }">
+        <div style="cursor:pointer" onclick="">
+          <script>
+            alert('<c:out value="${message }"/>')
+          </script>
+        </div>
+      </c:if>
 <div class="row" style="height: 100%;">
   <div class="col-3">
     <my:header></my:header>
   </div>
   <div class="col ">
     <div style="display: flex;justify-content: space-between;width: 900px;">
+
+
     <div id="itemListTitle">
       <h1 id="header">제품 관리 및 등록</h1>
-<%--      <h2>제품 검색</h2>--%>
+      <h2>제품 검색</h2>
     </div>
     <div class="itemRegisterBtn">
       <c:url value="/item/register" var="registerLink"></c:url>
@@ -185,10 +194,20 @@
       </form>
     </div>
 
+    <div style="position:absolute;background-color: transparent;width:900px">
+      <button class="btn btn-danger" style="float: right; width: 100px;" data-bs-toggle="modal"
+             data-bs-target="#removeModal" value="삭제" class="btn btn-danger">선택삭제</button>
+    </div>
+    <c:url value="/item/remove" var="removeLink"/>
+    <form id="removeForm" action="${removeLink }" method="post">
+      <input type="hidden" id="removeInput" name="m_item_id" value="">
+    </form>
+
     <div class="tableList">
       <table class="table addList">
         <thead>
         <tr>
+          <th></th>
           <th>제품코드</th>
           <th>제품명</th>
           <th>제품그룹</th>
@@ -201,6 +220,9 @@
           <c:forEach items="${itemList}" var="itemList">
             <div>
               <tr>
+                <td>
+                  <input id="itemBox" name="itemBox" type="checkbox" value="${itemList.m_item_id}">
+                </td>
                 <td>
                     ${itemList.m_item_id}
                 </td>
@@ -299,6 +321,29 @@
     </div>
   </div>
 </div>
+<!-- remove Modal -->
+<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
+          확인</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        삭제하시겠습니까? 복구할 수 없습니다.
+      </div>
+      <div class="modal-footer">
+        <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                data-bs-dismiss="modal">취소
+        </button>
+        <button style="font-family: 'LINESeedKR-Bd'" id="removeButton" type="submit"
+                class="btn btn-danger">확인
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 <script>
@@ -348,6 +393,39 @@
     }
   });
 
+</script>
+<script>
+  // 삭제 진행
+  function remove() {
+    var length = document.getElementsByName("itemBox").length;
+    var removeIdList = [];
+    for (var i = 0; i < length; i++) {
+      var checkedBox = document.getElementsByName("itemBox")[i].checked
+      if (checkedBox) {
+        var selectId = document.getElementsByName("itemBox")[i].value;
+        removeIdList.push(selectId);
+      }
+    }
+    document.querySelector("#removeInput").value = removeIdList;
+    console.log(document.querySelector("#removeInput").value );
+    document.getElementById('removeForm').submit();
+  <%--const ctx = "${pageContext.request.contextPath}";--%>
+  <%--document.location.href = ctx + "/item/list";--%>
+  }
+  document.querySelector("#removeButton").addEventListener("click", remove);
+</script>
+
+<script>
+
+  <%--if (${message} !null) {--%>
+  <%--  alert(${message})--%>
+  <%--};--%>
+  // $(document).ready(function() {
+  <%--  console.log(${message})--%>
+  <%--  if (${message} !null) {--%>
+  <%--    alert(${message });--%>
+  <%--  }--%>
+  // })
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"

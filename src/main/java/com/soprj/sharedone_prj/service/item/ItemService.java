@@ -64,9 +64,8 @@ public class ItemService {
         return itemMapper.select(m_item_id);
     }
 
-    public int remove(String m_item_id) {
-        ItemDto itemDto = itemMapper.select(m_item_id);
-        return itemMapper.remove(m_item_id);
+    public int remove(String removeList) {
+        return itemMapper.remove(removeList);
     }
 
     public List<String> selectGroup() {

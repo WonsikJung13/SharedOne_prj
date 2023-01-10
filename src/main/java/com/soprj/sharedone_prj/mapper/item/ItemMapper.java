@@ -15,7 +15,7 @@ public interface ItemMapper {
 
     int update(ItemDto itemDto);
 
-    int remove(String m_item_id);
+    int remove(String removeList);
 
     List<String> selectGroup();
 
