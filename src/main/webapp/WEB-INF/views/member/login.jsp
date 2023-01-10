@@ -20,6 +20,89 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #eeeeee;
+        }
+
+        .table {
+            width: 900px;
+            --bs-table-bg: #fff;
+        }
+
+        .table.addList {
+            --bs-table-bg: #5f7175;
+            --bs-table-color: #fff;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+        }
+
+        tr {
+            height: 55px;
+        }
+
+        h1 {
+            font-size: 1.7em;
+            margin: 30px 0;
+        }
+
+        h2 {
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
+        .addBtn {
+            background-color: #5f7175;
+            padding: 5px 30px;
+            margin-left: 350px;
+        }
+
+        .addBtn:hover,
+        .addBtn:focus, .storageBtn:hover, .storageBtn.focus {
+            background-color: #505f62;
+        }
+
+        .storageBtn {
+            background-color: #5f7175;
+            padding: 5px 30px;
+            margin-left: 280px;
+        }
+
+        .submitBtn {
+            background-color: #598f9b;
+            padding: 5px 30px;
+
+        }
+
+        .form-select {
+            width: 250px;
+        }
+
+        .form-control {
+            width: 250px;
+        }
+
+        .inputLength {
+            width: 250px;
+        }
+
+
+        /*제품그룹 박스*/
+        #groupSelect, #manufacturerSelect {
+            position: absolute;
+        }
+
+        option {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .groupEditOption, .ManufacturerEditOption {
+            position: relative;
+        }
+    </style>
 </head>
 <body class="align-middle" >
 <div class="container-fluid d-flex justify-content-center" style="height: 100vh">

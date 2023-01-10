@@ -26,7 +26,7 @@
             position: relative;
         }
 
-        * {
+        body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #eeeeee;
         }
