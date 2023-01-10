@@ -191,8 +191,6 @@
     const ctx = "${pageContext.request.contextPath}";
 
     document.querySelector("#buyerIdInput").addEventListener("blur", function () {
-        // document.querySelector("#buyerIdButton").addEventListener("click", function () {
-        console.log("하기싫어")
         checkedDoubleId = false;
         const insertBuyerNum = document.querySelector("#buyerIdInput").value;
 

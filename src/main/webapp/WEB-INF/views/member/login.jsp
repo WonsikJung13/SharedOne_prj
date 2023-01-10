@@ -40,7 +40,7 @@
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">패스워드</span>
-                    <input type="text" name="password" class="form-control" placeholder="PASSWORD">
+                    <input type="password" name="password" class="form-control" placeholder="PASSWORD">
                 </div>
                 <div class="my-4">
                     <div class="float-end">
