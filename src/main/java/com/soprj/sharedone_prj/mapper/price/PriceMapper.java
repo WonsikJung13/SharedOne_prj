@@ -24,4 +24,8 @@ public interface PriceMapper {
     int countAll();
 
     int remove(String removeList);
+
+    PriceDto priceList(String m_price_id);
+
+    List<PriceDto> getPricePeriod(PriceDto priceDto);
 }

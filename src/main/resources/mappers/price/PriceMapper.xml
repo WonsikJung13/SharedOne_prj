@@ -156,4 +156,15 @@
             m_price_id = #{m_price_id}
     </delete>
 
+    <select id="getPricePeriod" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
+        SELECT
+            m_price_startPeriod,
+            m_price_lastPeriod
+        FROM
+            m_price
+        WHERE
+            m_item_id = #{m_item_id}
+            AND
+            m_buyer_id = #{m_buyer_id}
+    </select>
 </mapper>
