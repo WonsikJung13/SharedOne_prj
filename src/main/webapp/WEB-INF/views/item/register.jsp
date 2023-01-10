@@ -225,23 +225,10 @@
 
         <div>
             <button class="btn btn-secondary" type="button" id="plusButton1">제품 추가</button>
-            <button id="InputRemoveButton" class="btn btn-danger" type="submit" value="제품 삭제" data-bs-toggle="modal"
-                    data-bs-target="#removeModal">제품 삭제
-            </button>
+            <button class="btn btn-secondary" type="button" id="submitButton1">제품 수정</button>
         </div>
-        <c:url value="/item/remove" var="removeLink"/>
-        <form id="removeForm" action="${removeLink }" method="post">
-            <input type="hidden" name="m_item_id" value="${getItem.m_item_id }">
-        </form>
-        <script>
-            // document.querySelector("#submitButton1").addEventListener("click", function () {
-            //     document.querySelector("#itemRegisterForm").submit();
-            // })
-            // document.querySelector("#InputRemoveButton").addEventListener("click", function (){
-            //     document.querySelector("#removeForm").submit();
-            // })
-        </script>
 
+        <div id="addList">
         <h2>추가된 제품</h2>
         <form id="itemListForm" method="post">
             <div class="tableList">
@@ -265,49 +252,32 @@
                 </button>
             </div>
         </form>
-
-        <!-- remove Modal -->
-        <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        삭제하시겠습니까? 복구할 수 없습니다.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button id="removeConfirmButton" type="button" class="btn btn-danger">확인</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 </body>
 <script>
+    // 수정버튼
+    document.querySelector("#submitButton1").addEventListener("click", function () {
+        document.querySelector("#itemRegisterForm").submit();
+    })
+</script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
-        const itemId = document.querySelector("input[name='m_item_id']").value;
+        const itemId = document.querySelector('#itemId input').value;
         if (itemId != 0) {
+            document.getElementById("addList").style.display = "none";
             document.getElementById("inputItemId").style.display = "";
-            document.getElementById("submitButton1").innerHTML = "제품 수정";
             document.getElementById("header").innerHTML = "제품 수정"
+            document.getElementById("submitButton1").style.display = "";
+            document.getElementById("plusButton1").style.display = "none"
         } else {
             document.getElementById("inputItemId").style.display = "none";
-            document.getElementById("InputRemoveButton").style.display = "none";
+            document.getElementById("submitButton1").style.display = "none";
+
         }
     });
 
-</script>
-
-<script>
-    // 삭제하기
-    document.querySelector("#removeConfirmButton").addEventListener("click", function () {
-        document.querySelector("#removeForm").submit();
-    });
-    $.ajax({})
 </script>
 
 <script>
@@ -340,8 +310,6 @@
     $('#manufacturerSelect').change(function () {
         var selected = $('option:selected', this).attr('class');
         var optionText = $('.manufacturerEditable').text();
-        // var aa = document.getElementById('manufacturerSelect');
-        // console.log(aa.options[aa.selectedIndex].value)
         if (selected == "manufacturerEditable") {
             $('.ManufacturerEditOption').show();
             $('.ManufacturerEditOption').focus();
@@ -359,6 +327,7 @@
 </script>
 
 <script>
+    // 테이블 생성
     function deleteRow() {
         const tBody = document.getElementById('itemBody');
 
@@ -397,92 +366,42 @@
     });
 </script>
 <script>
+    // 테이블 값 서버로 전송
     const ctx = "${pageContext.request.contextPath}";
     let table = document.querySelector(".addList");
 
-    let ItemSet = function (m_item_name, m_item_group, m_item_manufacturer, m_item_unit) {
-        this.m_item_name = m_item_name;
-        this.m_item_group = m_item_group;
-        this.m_item_manufacturer = m_item_manufacturer;
-        this.m_item_unit = m_item_unit;
-    }
-
-
     function itemRegister() {
-
-        let paramArray = [];
-        let param = new Array();
         let tbodyNum = table.tBodies[0].rows;
-        console.log(tbodyNum)
-
-        let tr = $("#itemBody tr");
-        let td = tr.children();
-        td.each(function(i){
-            // let data = "m_item_name : " + $("input[name='m_item_name']").eq(i).val()
-            //         + ", m_item_group : " + $("input[name='m_item_name']").eq(i).val()
-            //         + ", m_item_manufacturer : " + $("input[name='m_item_manufacturer']").eq(i).val()
-            //         + ", m_item_unit : " + $("input[name='m_item_unit']").eq(i).val();
-            // param.push(tr.find("td").eq(i).find("input").val());
-            // param.push($("input[name='m_item_name']").eq(i).val()),
-            // param.push($("input[name='m_item_group']").eq(i).val()),
-            // param.push($("input[name='m_item_manufacturer']").eq(i).val()),
-            // param.push($("input[name='m_item_unit']").eq(i).val())
-        // console.log("data : " + data);
-        // paramArray.push(data);
-        //     console.log("paramArray : " + paramArray);
-        })
-        console.log("param: " + param)
-
-        for(let i = 0; i < tbodyNum.length; i++) {
-            let data = "m_item_name : " + $("input[name='m_item_name']").eq(i).val()
-                    + ", m_item_group : " + $("input[name='m_item_group']").eq(i).val()
-                    + ", m_item_manufacturer : " + $("input[name='m_item_manufacturer']").eq(i).val()
-                    + ", m_item_unit : " + $("input[name='m_item_unit']").eq(i).val();
-            // param.push(("#itemBody").find("td").eq(i).val());
-            //
-            // param.push($("input[name='m_item_name']").eq(i).val()),
-            // param.push($("input[name='m_item_group']").eq(i).val()),
-            // param.push($("input[name='m_item_manufacturer']").eq(i).val()),
-            // param.push($("input[name='m_item_unit']").eq(i).val())
-            console.log("data : " + data);
-            paramArray.push({data});
-            console.log("paramArray : " + paramArray);
+        let dataList = [];
+        let data = {};
+        for (let i = 0; i < tbodyNum.length; i++) {
+            data = {
+                "m_item_name":$("input[name='m_item_name']").eq(i).val(),
+                "m_item_group":$("input[name='m_item_group']").eq(i).val(),
+                "m_item_manufacturer":$("input[name='m_item_manufacturer']").eq(i).val(),
+                "m_item_unit":$("input[name='m_item_unit']").eq(i).val()
+            };
+            dataList.push(data);
         }
-        // paramArray.push(param);
-        // console.log("paramArray: " + paramArray);
 
-
-        fetch(ctx + "/item/registerList", {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json"
+        $.ajax({
+            url: ctx + '/item/registerList',
+            method: 'POST',
+            data : JSON.stringify(dataList),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (resp) {
+                if (resp.cnt >= 1) {
+                alert(resp.cnt + "개의 제품 등록이 완료되었습니다.");
+                location.href = ctx + '/item/list';
+                } else {
+                    alert("제품 등록을 실패하였습니다.")
+                }
             },
-            body: JSON.stringify(paramArray)
+            error:function(request,status,error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
         })
-            .then(res => res.json())
-
-        // for (let i = 0; i < tbodyNum; i++) {
-        //     let itemSet = new ItemSet(
-        //         $("input[name='m_item_name']").eq(i).val(),
-        //         $("input[name='m_item_group']").eq(i).val(),
-        //         $("input[name='m_item_manufacturer']").eq(i).val(),
-        //         $("input[name='m_item_unit']").eq(i).val(),
-        //     )
-        //     param.push(itemSet);
-        //     console.log(param)
-        //
-        //     fetch(ctx + "/item/register", {
-        //         method: "post",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify(param)
-        //     })
-        // }
-
     }
-
-
 </script>
 
 
