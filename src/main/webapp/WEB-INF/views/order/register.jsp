@@ -54,6 +54,11 @@
             margin: 20px 0 10px 0;
         }
 
+        .orderTotalPrice {
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
         .addBtn {
             background-color: #5f7175;
             padding: 5px 30px;
@@ -123,6 +128,10 @@
             background-color: #fff;
             height: 100px;
             width: 900px;
+        }
+
+        .orderTotalPrice {
+            color: red;
         }
 
     </style>
@@ -242,8 +251,19 @@
 
                 </tbody>
             </table>
-
         </div>
+
+        <table class="table table-bordered orderTotalPrice">
+            <tbody>
+            <tr>
+                <th class="table-active">총 금액</th>
+                <td id="orderTotalPrice">
+
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
 
         <div class="commentStyle">
             <h2>메모</h2>
@@ -257,7 +277,6 @@
 
 
     </div>
-    록
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
@@ -265,6 +284,7 @@
 <script>
 
     const ctx = "${pageContext.request.contextPath}";
+    let orderTotalPrice = 0;
 
     // buyer 데이터 가져오기
     function buyerView() {
@@ -360,6 +380,10 @@
         const m_order_comment = document.querySelector("#comment").value;
         const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
 
+        // 추가된 제품 총 금액으로 오더 총 금액 구하기
+        orderTotalPrice = orderTotalPrice + parseInt(m_order_totalPrice);
+        document.querySelector("#orderTotalPrice").innerHTML = orderTotalPrice;
+
         const itemId = document.querySelector("#orderItems").value.split("_");
         const m_order_itemId = itemId.at(0);
         const m_order_itemName = document.querySelector(".itemName").innerText;
@@ -400,8 +424,6 @@
         }
 
         addData.push(data);
-        console.log(addData);
-
     })
     document.querySelector(".submitBtn").addEventListener("click", function () {
         fetch(`\${ctx}/order/add`, {
