@@ -108,4 +108,18 @@
             #{m_order_itemManufacturer},
             #{m_order_totalPrice} )
     </insert>
+
+
+<!--주문관리 리스트 보여주기-->
+    <select id="orderList" resultType="com.soprj.sharedone_prj.domain.order.OrderDto">
+        SELECT
+            m_order_id,
+            m_buyer_id,
+            m_order_buyerName,
+            m_order_sumPrice,
+            m_order_status
+        FROM m_order_header
+    </select>
+
+
 </mapper>

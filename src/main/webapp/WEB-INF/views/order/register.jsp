@@ -28,7 +28,7 @@
         }
 
         .table {
-            width: 900px;
+            width: 1000px;
             --bs-table-bg: #fff;
         }
 
@@ -94,8 +94,8 @@
         .tableList {
             background-color: #fff;
             height: 444px;
-            width: 900px;
-            /*overFlow: scroll;*/
+            width: 1000px;
+            overFlow: scroll;
             overflow-x: hidden;
         }
 
@@ -127,11 +127,14 @@
         .commentStyle {
             background-color: #fff;
             height: 100px;
-            width: 900px;
+            width: 1000px;
         }
 
         .orderTotalPrice {
             color: red;
+        }
+        .table-active{
+            width: 180px;
         }
 
     </style>
@@ -142,7 +145,7 @@
         <my:header></my:header>
     </div>
     <div class="col">
-        <h1>오더 작성</h1>
+        <h1>주문 작성</h1>
 
         <h2>거래처 선택</h2>
         <table class="table table-bordered">
@@ -207,7 +210,7 @@
             </tbody>
         </table>
 
-        <h2>오더정보</h2>
+        <h2>주문정보</h2>
         <table class="table table-bordered">
             <tbody>
             <tr>
@@ -216,7 +219,7 @@
                     <input class="form-control listPrice" type="text" placeholder="판매가격"
                            aria-label="default input example">
                 </td>
-                <td class="table-active">오더수량</td>
+                <td class="table-active">주문수량</td>
                 <td>
                     <input id="orderCount" class="form-control" type="text" placeholder="수량을 입력하세요."
                            aria-label="default input example">
@@ -242,7 +245,7 @@
                     <th scope="col">제품코드</th>
                     <th scope="col">제품명</th>
                     <th scope="col">판매가격</th>
-                    <th scope="col">오더수량</th>
+                    <th scope="col">주문수량</th>
                     <th scope="col">총 금액</th>
                     <th scope="col"></th>
                 </tr>
@@ -256,7 +259,7 @@
         <table class="table table-bordered orderTotalPrice">
             <tbody>
             <tr>
-                <th class="table-active">총 금액</th>
+                <th class="table-active">주문 총 금액</th>
                 <td id="orderTotalPrice">
 
                 </td>
@@ -393,14 +396,14 @@
         const m_order_count = document.querySelector("#orderCount").value;
 
         const orderAdd = `
-            <tr>
+            <tr id="removeId" >
                  <td class="orderAdd"> \${m_order_inserted} </td>
                  <td class="orderAdd"> \${m_order_itemId} </td>
                  <td class="orderAdd"> \${m_order_itemName} </td>
                  <td class="orderAdd"> \${m_order_price} </td>
                  <td class="orderAdd"> \${m_order_count} </td>
                  <td class="orderAdd"> \${m_order_totalPrice} </td>
-                <td><button class="btn btn-secondary">삭제</button></td>
+                <td><button class="btn btn-secondary" data-value="\${m_order_itemId}" onclick="clickRemove(this)">삭제</button></td>
             </tr>
         `
         itemBody.insertAdjacentHTML("beforeend", orderAdd);
@@ -424,7 +427,10 @@
         }
 
         addData.push(data);
+        console.log(addData);
     })
+
+    // 오더추가
     document.querySelector(".submitBtn").addEventListener("click", function () {
         fetch(`\${ctx}/order/add`, {
             method: "POST",
@@ -435,6 +441,20 @@
         })
         .then(res => res.json())
     })
+
+    // 오더 장바구니 삭제하기
+    function clickRemove(target) {
+        const remove1 = document.querySelector("#removeId");
+        remove1.remove();
+
+        const removeId = target.dataset.value;
+
+        addData = addData.filter((item) => {
+            return !(item["m_order_itemId"] == removeId)
+        })
+
+    }
+
 
 
 </script>

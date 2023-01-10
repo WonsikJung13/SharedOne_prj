@@ -78,6 +78,7 @@
             background-color: #fff;
             height: 672px;
             width: 1000px;
+            margin-bottom: 100px;
         }
 
         td a {
@@ -152,40 +153,99 @@
     </style>
 </head>
 <body>
+        <div class="row">
+            <div class="col-3">
+                <my:header></my:header>
+            </div>
+            <div class="col">
+                        <div style="display: flex;justify-content: space-between;width: 1000px;">
+                            <div id="itemListTitle">
+                                <h1 id="header">주문관리</h1>
+                                <%--      <h2>제품 검색</h2>--%>
+                            </div>
+                            <div class="itemRegisterBtn">
+                                <c:url value="/order/register" var="registerLink"></c:url>
+                                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">주문 작성
+                                </button>
+                            </div>
+                        </div>
+                        <c:url value="/item/list" var="listLink"></c:url>
+                        <form action="${listLink}" role="search">
+                            <div class="searchBox ">
+                                    <div class="row justify-content-start">
+                                        <div class="col-4">
+                                            <label>제품코드</label>
+                                            <input class="form-select" type="text" list="itemList" style="width: 210px;"
+                                                   autocomplete="off"/>
+                                            <datalist id="itemList">
+                                                <c:forEach items="${itemList}" var="itemList">
+                                                    <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>
+                                                </c:forEach>
+                                            </datalist>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>거래처코드</label>
+                                            <input class="form-select" type="text" list="buyerList" style="width: 210px;"
+                                                   autocomplete="off"/>
+                                            <datalist id="buyerList">
+                                                <c:forEach items="${buyerList}" var="buyerList">
+                                                    <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
+                                                </c:forEach>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="input-group" style="float: none">
+                                        <input type="text" class="form-control">
+                                        <button class="btn btn-secondary searchBtn" type="submit">검색</button>
+                                    </div>
 
-<div class="row">
-    <div class="col-3">
-        <my:header></my:header>
-    </div>
-    <div class="col">
-        <h1>오더관리</h1>
-        <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
-               data-bs-target="#removeModal">
+                            </div>
+                        </form>
+                <div class="row justify-content-end">
+                    <input style="float: right; width: 100px; margin-right: 100px" data-bs-toggle="modal"
+                           data-bs-target="#removeModal" value="삭제" class="btn btn-danger"></input>
+                </div>
+                <c:url value="/price/remove" var="removeLink"/>
+                <form id="removeForm" action="${removeLink }" method="post">
+                    <input type="hidden" name="m_price_id" value="">
+                </form>
+                <div class="tableList">
 
-        <table class="table">
-            <tbody>
-            <tr style="font-family: 'LINESeedKR-Bd'">
-                <th>오더코드</th>
-                <th>바이어코드</th>
-                <th>바이어명</th>
-                <th>전체금액</th>
-                <th>발주상태</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>001001</td>
-                <td>001001</td>
-                <td>바이어명</td>
-                <td>전체금액</td>
-                <td>발주상태</td>
-                <td>
-                    <a class="btn btn-primary" href="">수정하기</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    <table class="table addList">
+                        <thead style="width: auto">
+                        <tr>
+                            <th>주문번호</th>
+                            <th>거래처코드</th>
+                            <th>거래처명</th>
+                            <th>전체금액</th>
+                            <th>발주상태</th>
 
-        <form id="removeForm" action="${removeLink }" method="post">
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${orderList }" var="orderList">
+                            <div>
+                                <tr>
+                                    <td>${orderList.m_order_id}</td>
+                                    <td>${orderList.m_buyer_id}</td>
+                                    <td>${orderList.m_order_buyerName}</td>
+                                    <td>${orderList.m_order_sumPrice}</td>
+                                    <td>${orderList.m_order_status}</td>
+<%--                                    <td>--%>
+<%--                                        <c:url value="/price/modify" var="modifyLink">--%>
+<%--                                            <c:param value="${priceList.m_price_id }" name="m_price_id"/>--%>
+<%--                                        </c:url>--%>
+<%--                                        <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>--%>
+<%--                                    </td>--%>
+                                </tr>
+                            </div>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+
+
+
+                    <form id="removeForm" action="${removeLink }" method="post">
             <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
         </form>
         <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
