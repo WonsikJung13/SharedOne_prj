@@ -22,7 +22,7 @@
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
-        * {
+        body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #eeeeee;
         }
