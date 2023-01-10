@@ -20,9 +20,6 @@ public class ReportController {
     @GetMapping("orderReport")
     public void report(Model model) {
         List<ReportHeaderDto> report = reportService.getOrderHeader();
-        for (int i = 0; i < report.size(); i++) {
-            System.out.println("리포트" + (i) +report.get(i));
-        }
         model.addAttribute("report", report);
     }
 }
