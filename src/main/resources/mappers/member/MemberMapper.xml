@@ -35,7 +35,8 @@
         m.m_member_id,
         m.m_member_password,
         m.m_member_email,
-        m.m_authority_id
+        m.m_authority_id,
+        ma.m_authority_grade
         FROM
         m_member m LEFT JOIN m_authority ma ON m.m_authority_id = ma.m_authority_id
         WHERE
@@ -173,5 +174,14 @@
 
     <select id="countAll" resultType="int">
         SELECT COUNT(*) FROM m_member
+    </select>
+    <select id="checkPassword" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
+        SELECT
+        m_member_id,
+        m_member_password
+        FROM
+        m_member
+        WHERE
+        m_member_id = #{m_member_id}
     </select>
 </mapper>

@@ -1,6 +1,7 @@
-<%@ tag language="java" pageEncoding="UTF-8"%>
+<%@ tag language="java" pageEncoding="UTF-8" %>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:url value="/buyer/list" var="buyerList"></c:url>
 <c:url value="/item/list" var="itemList"></c:url>
 <c:url value="/price/list" var="priceList"></c:url>
@@ -9,7 +10,7 @@
 <c:url value="/order/list" var="orderList"></c:url>
 <c:url value="/report/orderReport" var="reportLink"></c:url>
 <style>
-    a{
+    a {
         color: white;
     }
 
@@ -27,15 +28,16 @@
         font-size: 18px;
         background-color: #353535;
         color: white;
-        width:248px;
+        width: 248px;
     }
-    .btn-toggle:hover{
-        color:black;
+
+    .btn-toggle:hover {
+        color: black;
         background-color: white;
 
     }
 
-    .btn-toggle-nav{
+    .btn-toggle-nav {
         margin: 10px 0;
     }
 
@@ -45,16 +47,18 @@
         margin-left: 1.25rem;
         font-size: 15px;
     }
+
     .btn-toggle-nav a:hover,
     .btn-toggle-nav a:focus {
         background-color: #000;
         color: white;
     }
-    .navbg{
+
+    .navbg {
         background-color: #353535;
     }
 
-    li{
+    li {
         background-color: #353535;
     }
 
@@ -66,40 +70,70 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <div class="flex-shrink-0 p-3 navbg" style="width: 280px; height: 100%;">
+    <div style="margin-bottom: 30px" class="tm-mb-65">
+        <div>
+            <sec:authentication property="name" var="username"/>
+            <p style="color:white; margin-bottom: 0px; margin-top: 30px">
+                <i class="fa-regular fa-face-grin-wide"></i>
+                ${username}님
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <div style="width: auto">
+                    <c:url value="/member/modify" var="modifyLink">
+                        <c:param value="${username}" name="m_member_id"/>
+                    </c:url>
+                    <a href="${modifyLink}" style="color: white">
+                        <button class="btn btn-primary">정보 수정</button>
+                    </a>
+                    <c:url value="/logout" var="logoutLink"></c:url>
+                    <a style="color: white" href="${logoutLink}">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <a href="${reportLink}" class=" navbg d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
         <span class="navbg fs-5 fw-semibold">SharedOne</span>
     </a>
     <ul class="list-unstyled ps-0 navbg">
         <li class="mb-1 main-nav navbg">
-            <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+            <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#dashboard-collapse" aria-expanded="false">
                 마스터
             </button>
             <div class="collapse navbg " id="dashboard-collapse">
                 <ul class="btn-toggle-nav pb-1 small navbg">
                     <li><a href="${itemList}" class="navbg d-inline-flex text-decoration-none rounded">제품 등록 관리</a></li>
-                    <li><a href="${buyerList}" class="navbg d-inline-flex text-decoration-none rounded">바이어 등록 관리</a></li>
-                    <li><a href="${priceList}" class="navbg d-inline-flex text-decoration-none rounded">판매가 등록 관리</a></li>
-                    <li><a href="${memberList}" class="navbg d-inline-flex text-decoration-none rounded">회원 관리</a></li>
+                    <li><a href="${buyerList}" class="navbg d-inline-flex text-decoration-none rounded">바이어 등록 관리</a>
+                    </li>
+                    <li><a href="${priceList}" class="navbg d-inline-flex text-decoration-none rounded">판매가 등록 관리</a>
+                    </li>
+                    <sec:authentication property="authorities" var="authorities"/>
+                    <c:if test="${authorities eq '[팀장]'}">
+                        <li><a href="${memberList}" class="navbg d-inline-flex text-decoration-none rounded">회원 관리</a>
+                        </li>
+                    </c:if>
                 </ul>
             </div>
         </li>
         <li class="mb-1 main-nav navbg">
-            <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+            <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#orders-collapse" aria-expanded="false">
                 오더
             </button>
             <div class="collapse navbg" id="orders-collapse">
                 <ul class="navbg btn-toggle-nav  pb-1 small">
                     <li><a href="${orderLink}" class="navbg d-inline-flex text-decoration-none rounded">오더작성</a></li>
                     <li><a href="${orderList}" class="navbg d-inline-flex text-decoration-none rounded">오더관리</a></li>
-                    <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">승인관리</a></li>
+                    <sec:authentication property="authorities" var="authorities"/>
+                    <c:if test="${authorities eq '[팀장]'}">
+                        <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">승인관리</a></li>
+                    </c:if>
                 </ul>
             </div>
         </li>
         <li class="mb-1 main-nav">
-                <a href="${reportLink}" class="btn btn-toggle d-inline-flex align-items-center border-0"  >리포트</a>
+            <a href="${reportLink}" class="btn btn-toggle d-inline-flex align-items-center border-0">리포트</a>
         </li>
-
-
-
     </ul>
 </div>

@@ -23,6 +23,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
+<input type="hidden" value="${member.m_member_id}" id="memberid">
 <div class="row">
     <div class="col-3">
         <my:header></my:header>
@@ -65,28 +66,31 @@
                     </td>
                     <td>
                         <input type="text" id="oldPassword" name="oldPassword">
+                        <div style="color: red" id="inputText"></div>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        새비번
-                    </td>
-                    <td>
-                        <input type="text" id="newPassword1">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        새비번확인
-                    </td>
-                    <td>
-                        <input type="text" id="newPassword2" name="m_member_password">
-                        <div style="color: red" id="newPassword2Text"></div>
-                    </td>
-                    <td>
-                        <input type="submit" class="btn btn-primary" value="전송" disabled id="submitBtn">
-                    </td>
-                </tr>
+                <div id="passwordDiv" style="display: none">
+                    <tr>
+                        <td>
+                            새비번
+                        </td>
+                        <td>
+                            <input type="password" id="newPassword1">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            새비번확인
+                        </td>
+                        <td>
+                            <input type="password" id="newPassword2" name="m_member_password">
+                            <div style="color: red" id="newPassword2Text"></div>
+                        </td>
+                        <td>
+                            <input type="submit" class="btn btn-primary" value="전송" disabled id="submitBtn">
+                        </td>
+                    </tr>
+                </div>
 
             </form>
             </tbody>
@@ -123,12 +127,16 @@
         crossorigin="anonymous"></script>
 
 <script>
+    const ctx = "${pageContext.request.contextPath}";
+
+
     document.querySelector("#modifyConfirmButton").addEventListener("click", function () {
         document.querySelector("#modifyForm").submit();
     });
 
     const customerPasswordInput1 = document.querySelector("#newPassword1");
     const customerPasswordInput2 = document.querySelector("#newPassword2");
+    checkedOldPassword = false;
 
     function matchPassword() {
         checkedPassword = false;
@@ -140,7 +148,9 @@
             newPassword2Text.innerText = "비밀번호가 일치합니다"
             newPassword2Text.removeAttribute("style");
             checkedPassword = true;
-            document.querySelector("#submitBtn").removeAttribute("disabled");
+            if (checkedPassword && checkedOldPassword) {
+                document.querySelector("#submitBtn").removeAttribute("disabled");
+            }
         } else {
             newPassword2Text.innerText = "비밀번호가 일치하지 않습니다"
             newPassword2Text.setAttribute("style", "color:red");
@@ -151,9 +161,42 @@
     document.querySelector("#newPassword2").addEventListener("keyup", matchPassword);
 
     document.querySelector("#submitBtn").addEventListener("click", function () {
-        if (checkedPassword) {
-            document.querySelector("#changePassword").submit;
-        }
+        document.querySelector("#changePassword").submit;
+    })
+
+
+    document.querySelector("#oldPassword").addEventListener("blur", function () {
+        console.log("가냐?")
+        // document.querySelector("#buyerIdButton").addEventListener("click", function () {
+        checkedOldPassword = false;
+
+        const m_member_id = document.querySelector("#memberid").value;
+        const m_member_password = document.querySelector("#oldPassword").value;
+
+        const member = {m_member_id, m_member_password};
+
+        fetch(`\${ctx}/member/checkPassword`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(member)
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector("#inputText").innerText = data.message;
+                $(function () {
+                    $('#inputText').css("color", "red");
+                })
+
+                if (data.statusNum === 'not exist') {
+                    $(function () {
+                        $('#inputText').css("color", "black");
+                    })
+                    document.querySelector('#passwordDiv').style.display = "block";
+                    return checkedOldPassword = true;
+                }
+            })
     })
 </script>
 

@@ -6,13 +6,13 @@ import com.soprj.sharedone_prj.service.member.EmailServiceImpl;
 import com.soprj.sharedone_prj.service.member.MemberService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +32,10 @@ public class MemberController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("list")
-    public void list(Model model,
-                             @RequestParam(name = "page", defaultValue = "1") int page,
-                             MemberDto memberDto) {
-        List<MemberDto> memberList = memberService.getMemberList(page, memberDto);
-        model.addAttribute("memberList", memberList);
+    public void list(Model model) {
+        List<MemberDto> list = memberService.listMember();
+
+        model.addAttribute("memberList", list);
     }
 
     @PostMapping("list")
@@ -79,18 +78,14 @@ public class MemberController {
     public String modify(String m_member_id, String oldPassword,
                          String m_member_password, String m_member_email, RedirectAttributes rttr) {
 
-        System.out.println(m_member_id);
-        System.out.println(m_member_email);
 
         String password = memberService.getPassword(m_member_id);
-        if(oldPassword != null) {
+        if (oldPassword != null) {
             if (passwordEncoder.matches(oldPassword, password)) {
-                System.out.println("야호");
                 int cnt = memberService.updatePasswordd(m_member_id, m_member_password);
             }
         }
         if (m_member_email != memberService.getEmail(m_member_id) && m_member_email != null) {
-            System.out.println("이게 왜...?");
             int cnt = memberService.updateEmail(m_member_id, m_member_email);
         }
 
@@ -109,7 +104,6 @@ public class MemberController {
     @PostMapping("remove")
     public String remove(String m_member_id, RedirectAttributes rttr) {
 
-        System.out.println(m_member_id);
         int cnt = memberService.remove(m_member_id);
 
         return "redirect:/member/manage";
@@ -126,13 +120,14 @@ public class MemberController {
     }
 
     @GetMapping("manage")
-    public void manage(Model model) {
-        List<MemberDto> list = memberService.listMember();
+    @PreAuthorize("hasAuthority('팀장')")
+    public void manage(Model model,
+                       @RequestParam(name = "page", defaultValue = "1") int page,
+                       MemberDto memberDto) {
         List<MemberDto> authority = memberService.selectAuthority();
-
-        model.addAttribute("memberList", list);
+        List<MemberDto> memberList = memberService.getMemberList(page, memberDto);
+        model.addAttribute("memberList", memberList);
         model.addAttribute("authority", authority);
-
     }
 
     @PostMapping("manage")
@@ -154,5 +149,28 @@ public class MemberController {
         return "redirect:/member/manage";
     }
 
+    @RequestMapping("checkPassword")
+    public Map<String, Object> checkId(@RequestBody Map<String, Object> member) {
+//        System.out.println("왔냐?" + member);
+
+        String m_member_id = member.get("m_member_id").toString();
+        MemberDto memberDto = memberService.checkPassword(m_member_id);
+
+        String m_member_password = member.get("m_member_password").toString();
+        Map<String, Object> map = new HashMap<>();
+
+        if (passwordEncoder.matches(m_member_password, memberDto.getM_member_password())) {
+            System.out.println("일치");
+            map.put("statusNum", "not exist");
+            map.put("message", "일치합니다");
+        } else {
+            System.out.println("일치안댐");
+            map.put("statusNum", "exist");
+            map.put("message", "일치하지 않습니다");
+        }
+        return map;
+
+
+    }
 
 }

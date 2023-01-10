@@ -116,19 +116,19 @@
 
         <table class="table table-bordered">
             <tbody>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data" id="registerForm">
                 <tr>
                     <th class="table-active">이름</th>
                     <th><input class="form-control form300" type="text" name="m_member_id"></th>
                 </tr>
                 <tr>
                     <th class="table-active">이메일</th>
-                    <th><input class="form-control form300" type="text" name="m_member_email"></th>
+                    <th><input class="form-control form300" type="email" name="m_member_email"></th>
                 </tr>
-                <input style="font-family: LINESeedKR-Bd" class="btn btn-ico" type="submit" value="등록">
             </form>
             </tbody>
         </table>
+        <button class="btn btn-primary" id="register">등록</button>
     </div>
 </div>
 
@@ -136,5 +136,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
+<script>
+    document.querySelector("#register").addEventListener("click",function (){
+        document.querySelector("#registerForm").submit();
+    })
+</script>
 </body>
 </html>

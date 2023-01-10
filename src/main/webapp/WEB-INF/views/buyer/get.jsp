@@ -85,7 +85,6 @@
     document.querySelector("#removeConfirmButton").addEventListener("click", function () {
         document.querySelector("#removeForm").submit();
     })
-
     const ctx = "${pageContext.request.contextPath}";
 </script>
 </body>

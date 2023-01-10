@@ -1,6 +1,5 @@
 package com.soprj.sharedone_prj.mapper.member;
 
-import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.member.MemberDto;
 import com.soprj.sharedone_prj.domain.member.MemberLoginDto;
 
@@ -41,4 +40,6 @@ public interface MemberMapper {
     int countAll();
 
     List<MemberDto> getMemberList(int offset, int records);
+
+    MemberDto checkPassword(String m_member_id);
 }

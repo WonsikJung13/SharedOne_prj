@@ -26,8 +26,6 @@ import javax.sql.DataSource;
 @MapperScan(value = "com.soprj.sharedone_prj.mapper")
 public class CustomSecurityConfig {
 
-//    private final AuthenticationFailureHandler memberFailureHandler;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

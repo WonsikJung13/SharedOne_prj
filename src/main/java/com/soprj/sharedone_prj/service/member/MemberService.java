@@ -1,6 +1,5 @@
 package com.soprj.sharedone_prj.service.member;
 
-import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.member.MemberDto;
 import com.soprj.sharedone_prj.mapper.member.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +71,6 @@ public class MemberService {
     public int resetPassword(String m_member_id) {
         String pw = emailService.ePw;
         String m_member_password = passwordEncoder.encode(pw);
-        System.out.println(m_member_password);
         return memberMapper.resetPassword(m_member_id, m_member_password);
     }
 
@@ -85,7 +83,7 @@ public class MemberService {
     }
 
     public List<MemberDto> getMemberList(int page, MemberDto memberDto) {
-        int records = 10;
+        int records = 6;
         int offset = (page - 1) * records;
 
         int countAll = memberMapper.countAll();
@@ -114,5 +112,10 @@ public class MemberService {
         memberDto.setLastPageNumber(lastPage);
 
         return memberMapper.getMemberList(offset, records);
+    }
+
+    public MemberDto checkPassword(String m_member_id) {
+
+        return memberMapper.checkPassword(m_member_id);
     }
 }
