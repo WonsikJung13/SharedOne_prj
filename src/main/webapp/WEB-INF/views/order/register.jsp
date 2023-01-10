@@ -284,7 +284,7 @@
 <script>
 
     const ctx = "${pageContext.request.contextPath}";
-    let orderTotalPrice = 0;
+    let m_order_sumPrice = 0;
 
     // buyer 데이터 가져오기
     function buyerView() {
@@ -381,8 +381,8 @@
         const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
 
         // 추가된 제품 총 금액으로 오더 총 금액 구하기
-        orderTotalPrice = orderTotalPrice + parseInt(m_order_totalPrice);
-        document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + orderTotalPrice;
+        m_order_sumPrice = m_order_sumPrice + parseInt(m_order_totalPrice);
+        document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + m_order_sumPrice;
 
         const itemId = document.querySelector("#orderItems").value.split("_");
         const m_order_itemId = itemId.at(0);
