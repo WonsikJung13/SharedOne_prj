@@ -10,7 +10,7 @@ public interface BuyerMapper {
 
     List<BuyerDto> list();
 
-    BuyerDto selectDuo(String m_buyer_name, int m_buyer_id);
+    BuyerDto selectDuo(String m_buyer_name, String m_buyer_id);
 
     int addBuyer(BuyerDto buyer);
 
@@ -18,9 +18,9 @@ public interface BuyerMapper {
 
     int updateBuyer(BuyerDto buyer);
 
-    int removeById(int m_buyer_id);
+    int removeById(String m_buyer_id);
 
-    BuyerDto select(int m_buyer_id);
+    BuyerDto select(String m_buyer_id);
 
     BuyerDto getBuyerNum(String m_buyer_number);
 

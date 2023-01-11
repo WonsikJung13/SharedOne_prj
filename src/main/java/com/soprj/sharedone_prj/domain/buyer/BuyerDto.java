@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class BuyerDto {
 
-    private int m_buyer_id;
+    private String m_buyer_id;
 
     private String m_buyer_name;
 
