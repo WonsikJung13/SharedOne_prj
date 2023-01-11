@@ -100,10 +100,9 @@ public class PriceController {
     @ResponseBody
     public Map<String, Object> checkPeriod(@RequestBody Map<String, Object> priceMap) {
 //        System.out.println(priceMap);
-
 //        ObjectMapper mapper = new ObjectMapper();
 //        PriceDto priceDto = mapper.convertValue(priceMap, PriceDto.class);
-        int buyerId = Integer.valueOf((String) priceMap.get("m_buyer_id"));
+        String buyerId = priceMap.get("m_buyer_id").toString();
         LocalDate date = LocalDate.parse(priceMap.get("m_price_startPeriod").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         PriceDto priceDto = new PriceDto();
         priceDto.setM_item_id(priceMap.get("m_item_id").toString());
@@ -111,7 +110,6 @@ public class PriceController {
         priceDto.setM_price_startPeriod(date);
 
         List<PriceDto> periodList = priceService.getPricePeriod(priceDto);
-
         Map<String, Object> map = new HashMap<>();
         if (periodList.size() == 0) {
             // MIN값이 필요한 경우 아래 사용
@@ -123,17 +121,18 @@ public class PriceController {
 //                System.out.println("오늘 날짜가 MIN 값!!!!");
 //                map.put("beforeLastPeriod", priceMap.get("m_price_startPeriod"));
 //            }
-            String yesterday = priceDto.getM_price_startPeriod().minusDays(1).toString();
+            LocalDate result = priceService.getAfterStartPeriod(priceDto);
+            if (result != null) {
+            String yesterday = result.minusDays(1).toString();
             map.put("maxDate" , yesterday);
-            if (priceDto.getM_price_startPeriod() != null) {
-
+            return map;
             } else {
                 map.put("maxDate", null);
+                return map;
             }
-
-            return map;
         } else {
             // 선택이 불가하다고 전달!
+            map.put("message" , "해당 날짜는 선택 불가합니다");
             return map;
         }
     }

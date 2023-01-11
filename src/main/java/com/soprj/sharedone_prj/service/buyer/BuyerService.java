@@ -19,7 +19,7 @@ public class BuyerService {
         return buyerMapper.list();
     }
 
-    public BuyerDto getDuo(String m_buyer_name, int m_buyer_id) {
+    public BuyerDto getDuo(String m_buyer_name, String m_buyer_id) {
         return buyerMapper.selectDuo(m_buyer_name, m_buyer_id);
     }
 
@@ -38,11 +38,11 @@ public class BuyerService {
         return cnt;
     }
 
-    public int remove(int m_buyer_id) {
+    public int remove(String m_buyer_id) {
         return buyerMapper.removeById(m_buyer_id);
     }
 
-    public BuyerDto get(int m_buyer_id) {
+    public BuyerDto get(String m_buyer_id) {
         return buyerMapper.select(m_buyer_id);
     }
 

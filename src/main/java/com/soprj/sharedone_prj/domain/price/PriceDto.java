@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class PriceDto {
-    private int m_buyer_id;
+    private String m_buyer_id;
     private String m_buyer_name;
     private String m_buyer_currency;
     private String m_item_id;
@@ -22,6 +22,8 @@ public class PriceDto {
     private LocalDate m_price_lastPeriod;
     private int m_price_lastPrice;
     private LocalDateTime m_price_inserted;
+
+//    private LocalDate maxDate;
 
     public int lastPageNumber;
     public int leftPageNumber;

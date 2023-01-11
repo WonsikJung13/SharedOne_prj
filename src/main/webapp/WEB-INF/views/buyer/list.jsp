@@ -208,12 +208,7 @@
                 <c:forEach items="${buyerList }" var="buyer">
                     <tr>
                         <td id="id">
-                            <c:url value="/buyer/get" var="infoLink">
-                                <c:param value="${buyer.m_buyer_id }" name="m_buyer_id"/>
-                            </c:url>
-                            <a href="${infoLink }" class="listHref">
-                                    ${buyer.m_buyer_id  }
-                            </a>
+                                ${buyer.m_buyer_id  }
                         </td>
                         <td>${buyer.m_buyer_name }</td>
                         <td>${buyer.m_buyer_region }</td>

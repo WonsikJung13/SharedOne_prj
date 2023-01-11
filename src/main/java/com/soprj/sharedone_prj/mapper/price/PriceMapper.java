@@ -2,6 +2,7 @@ package com.soprj.sharedone_prj.mapper.price;
 
 import com.soprj.sharedone_prj.domain.price.PriceDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PriceMapper {
@@ -32,5 +33,5 @@ public interface PriceMapper {
     // MIN값이 필요하면 사용
 //    String getBeforeLastPeriod(PriceDto priceDto);
 
-    PriceDto getAfterStartPeriod(PriceDto priceDto);
+    LocalDate getAfterStartPeriod(PriceDto priceDto);
 }

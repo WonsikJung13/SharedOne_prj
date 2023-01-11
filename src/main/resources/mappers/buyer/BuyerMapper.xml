@@ -94,7 +94,11 @@
     </insert>
 
     <insert id="insert">
+        <selectKey keyProperty="m_buyer_id" order="BEFORE" resultType="String">
+            SELECT m_buyer_seq FROM m_buyer_seq ORDER BY m_buyer_seq DESC LIMIT 1
+        </selectKey>
         INSERT INTO m_buyer (
+        m_buyer_id,
         m_buyer_name,
         m_buyer_region,
         m_buyer_address,
@@ -102,6 +106,10 @@
         m_buyer_currency
         )
         VALUES (
+        CONCAT (
+        'B',
+        LPAD(#{m_buyer_id},4,'0')
+        ),
         #{m_buyer_name},
         #{m_buyer_region},
         #{m_buyer_address},
