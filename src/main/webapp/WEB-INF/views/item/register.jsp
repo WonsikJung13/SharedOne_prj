@@ -177,13 +177,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="table-active">제품명</td>
-                    <td id="itemName">
-                        <input type="text" class="form-control" name="m_item_name" value="${getItem.m_item_name}"
-                               autocomplete='off'>
-                    </td>
-                </tr>
-                <tr>
                     <td class="table-active">제품그룹</td>
                     <td id="itemGroup" style="">
                         <select id="groupSelect" name="m_item_group" class="form-select">
@@ -214,6 +207,13 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="table-active">제품명</td>
+                    <td id="itemName">
+                        <input type="text" class="form-control" name="m_item_name" value="${getItem.m_item_name}"
+                               autocomplete='off'>
+                    </td>
+                </tr>
+                <tr>
                     <td class="table-active">단위</td>
                     <td id="itemUnit">
                         <input type="text" name="m_item_unit" class="form-control" value="ea" autocomplete='off'>
@@ -225,19 +225,19 @@
 
         <div>
             <button class="btn btn-secondary" type="button" id="plusButton1">제품 추가</button>
-            <button class="btn btn-secondary" type="button" id="submitButton1">제품 수정</button>
+            <button class="btn btn-secondary" type="button" id="modifyButton1">제품 수정</button>
         </div>
 
         <div id="addList">
         <h2>추가된 제품</h2>
-        <form id="itemListForm" method="post">
+<%--        <form id="itemListForm" method="post">--%>
             <div class="tableList">
                 <table class="table addList">
                     <thead>
                     <tr>
-                        <th scope="col" style="width:250px">제품명</th>
                         <th scope="col" style="width:200px">제품그룹</th>
                         <th scope="col" style="width:200px">제조사</th>
+                        <th scope="col" style="width:250px">제품명</th>
                         <th scope="col" style="width:100px">단위</th>
                         <th style="width:150px"></th>
                     </tr>
@@ -251,14 +251,14 @@
                 <button class="btn btn-secondary" type="button" id="submitButton" onclick="itemRegister()">제품 등록
                 </button>
             </div>
-        </form>
+<%--        </form>--%>
         </div>
     </div>
 </div>
 </body>
 <script>
     // 수정버튼
-    document.querySelector("#submitButton1").addEventListener("click", function () {
+    document.querySelector("#modifyButton1").addEventListener("click", function () {
         document.querySelector("#itemRegisterForm").submit();
     })
 </script>
@@ -269,11 +269,11 @@
             document.getElementById("addList").style.display = "none";
             document.getElementById("inputItemId").style.display = "";
             document.getElementById("header").innerHTML = "제품 수정"
-            document.getElementById("submitButton1").style.display = "";
+            document.getElementById("modifyButton1").style.display = "";
             document.getElementById("plusButton1").style.display = "none"
         } else {
             document.getElementById("inputItemId").style.display = "none";
-            document.getElementById("submitButton1").style.display = "none";
+            document.getElementById("modifyButton1").style.display = "none";
 
         }
     });
@@ -327,21 +327,13 @@
 </script>
 
 <script>
-    // 테이블 생성
-    function deleteRow() {
-        const tBody = document.getElementById('itemBody');
-
-        for (let i = 0; i < tBody.rows.length; i++) {
-            tBody.deleteRow(i);
-        }
-    }
 
     document.getElementById('plusButton1').addEventListener("click", function () {
-        const item_name = document.querySelector("input[name='m_item_name']").value;
         const itemGroup = document.querySelector("#groupSelect");
         const item_group = itemGroup.options[itemGroup.selectedIndex].value;
         const itemManufacturer = document.querySelector("#manufacturerSelect");
         const item_manufacturer = itemManufacturer.options[itemManufacturer.selectedIndex].value;
+        const item_name = document.querySelector("input[name='m_item_name']").value;
         const item_unit = document.querySelector("input[name='m_item_unit']").value;
 
         const tBody = document.getElementById('itemBody');
@@ -352,18 +344,30 @@
         const newCell3 = newRow.insertCell(2);
         const newCell4 = newRow.insertCell(3);
         const newCell5 = newRow.insertCell(4);
-        newCell1.style.width = "250px";
+
+        newCell1.style.width = "200px";
         newCell2.style.width = "200px";
-        newCell3.style.width = "200px";
+        newCell3.style.width = "250px";
         newCell4.style.width = "100px";
         newCell5.style.width = "150px";
 
-        newCell1.innerHTML = '<input type="text" name="m_item_name" value="' + item_name + '" style="width: 220px">';
-        newCell2.innerHTML = '<input type="text" name="m_item_group" value="' + item_group + '" style="width: 180px">';
-        newCell3.innerHTML = '<input type="text" name="m_item_manufacturer" value="' + item_manufacturer + '" style="width: 180px">';
+        newCell1.innerHTML = '<input type="text" name="m_item_group" value="' + item_group + '" style="width: 180px">';
+        newCell2.innerHTML = '<input type="text" name="m_item_manufacturer" value="' + item_manufacturer + '" style="width: 180px">';
+        newCell3.innerHTML = '<input type="text" name="m_item_name" value="' + item_name + '" style="width: 220px">';
         newCell4.innerHTML = '<input type="text" name="m_item_unit" value="' + item_unit + '" style="width: 80px">';
-        newCell5.innerHTML = '<button class="btn btn-secondary" onclick="deleteRow()">삭제</button>';
+        newCell5.innerHTML = '<button name="deleteBtn" class="btn btn-secondary deleteBtn" onclick="deleteBtn(this)">삭제</button>';
+
     });
+</script>
+<script>
+    // 테이블 행 index 확인 및 삭제
+    function deleteBtn(obj) {
+
+        var index = $(obj).parent().parent().index();
+        console.log("index : "+ index);
+
+        $(obj).parent().parent().remove();
+    }
 </script>
 <script>
     // 테이블 값 서버로 전송
@@ -376,9 +380,9 @@
         let data = {};
         for (let i = 0; i < tbodyNum.length; i++) {
             data = {
-                "m_item_name":$("input[name='m_item_name']").eq(i).val(),
                 "m_item_group":$("input[name='m_item_group']").eq(i).val(),
                 "m_item_manufacturer":$("input[name='m_item_manufacturer']").eq(i).val(),
+                "m_item_name":$("input[name='m_item_name']").eq(i).val(),
                 "m_item_unit":$("input[name='m_item_unit']").eq(i).val()
             };
             dataList.push(data);
@@ -394,7 +398,7 @@
                 alert(resp.cnt + "개의 제품 등록이 완료되었습니다.");
                 location.href = ctx + '/item/list';
                 } else {
-                    alert("제품 등록을 실패하였습니다.")
+                    alert("추가된 제품 테이블을 확인해주세요.")
                 }
             },
             error:function(request,status,error) {
@@ -402,6 +406,58 @@
         }
         })
     }
+</script>
+<script>
+    // 중복체크
+    document.getElementById("plusButton1").addEventListener('click', function() {
+
+        const itemGroup = document.querySelector("#groupSelect");
+        const m_item_group = itemGroup.options[itemGroup.selectedIndex].value;
+        const itemManufacturer = document.querySelector("#manufacturerSelect");
+        const m_item_manufacturer = itemManufacturer.options[itemManufacturer.selectedIndex].value;
+        const m_item_name = document.querySelector("input[name='m_item_name']").value;
+        const m_item_unit = document.querySelector("input[name='m_item_unit']").value;
+
+        const itemCompareList = {
+            m_item_group,
+            m_item_manufacturer,
+            m_item_name,
+            m_item_unit
+        }
+        const ctx = "${pageContext.request.contextPath}";
+
+        $.ajax({
+            url: ctx + '/item/comapare',
+            method: 'POST',
+            data: JSON.stringify(itemCompareList),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (cnt) {
+                if (cnt >= 1) {
+                    alert("이미 등록 되어있는 제품입니다.");
+                }
+            }
+        });
+
+        let tbodyNum = table.tBodies[0].rows;
+        let dataList = [];
+        let data = {};
+        for (let i = 0; i < tbodyNum.length; i++) {
+            data = {
+                "m_item_group":$("input[name='m_item_group']").eq(i).val(),
+                "m_item_manufacturer":$("input[name='m_item_manufacturer']").eq(i).val(),
+                "m_item_name":$("input[name='m_item_name']").eq(i).val(),
+                "m_item_unit":$("input[name='m_item_unit']").eq(i).val()
+            };
+            if (data !=null && data.size() > 0) {
+                for (let j = 0; data.size() > j; j++) {
+                    Iterator<String> keys = data.get(j).keySet().iterator();
+                }
+            }
+            dataList.push(data);
+        }
+
+    })
+
 </script>
 
 

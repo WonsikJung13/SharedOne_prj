@@ -84,16 +84,12 @@ public class ItemController {
     @PostMapping("remove")
     public String remove(@RequestParam Map<String,String> removeIdList,
                          RedirectAttributes rttr) {
-        System.out.println("removeIdList: " + removeIdList);
         String[] removeList = removeIdList.get("m_item_id").split(",");
-        System.out.println("remveList: " + removeList);
         int cnt = 0;
         for (int i = 0; i < removeList.length; i++) {
-            System.out.println("removeId: " + removeList[i]);
             itemService.remove(removeList[i]);
             cnt = cnt + 1;
         }
-        System.out.println(cnt);
 
         if (cnt >= 1) {
             rttr.addFlashAttribute("message", cnt +"개의 제품이 제거되었습니다.");
@@ -102,5 +98,18 @@ public class ItemController {
             rttr.addFlashAttribute("message", "제품 제거를 실패하였습니다.");
         }
         return "redirect:/item/list";
+    }
+
+    @PostMapping("comapare")
+    @ResponseBody
+    public int itemCompare(@RequestBody ItemDto itemCompareList,
+                           RedirectAttributes rttr) {
+        System.out.println("controller: " + itemCompareList);
+
+        int cnt = itemService.itemCompare(itemCompareList);
+        System.out.println("cnt: "  + cnt);
+
+        return cnt;
+
     }
 }
