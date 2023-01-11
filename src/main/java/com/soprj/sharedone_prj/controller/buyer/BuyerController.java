@@ -30,7 +30,7 @@ public class BuyerController {
     }
 
     @GetMapping("get")
-    public void get(@RequestParam(name = "m_buyer_id") int m_buyer_id, Model model) {
+    public void get(@RequestParam(name = "m_buyer_id") String m_buyer_id, Model model) {
         BuyerDto buyer = buyerService.get(m_buyer_id);
         model.addAttribute("Buyer", buyer);
     }
@@ -64,14 +64,14 @@ public class BuyerController {
     }
 
     @GetMapping("modify")
-    public void modify(String m_buyer_name,int m_buyer_id, Model model) {
+    public void modify(String m_buyer_name,String m_buyer_id, Model model) {
         BuyerDto buyerDto = buyerService.getDuo(m_buyer_name, m_buyer_id);
 
         model.addAttribute("Buyer", buyerDto);
     }
 
     @PostMapping("remove")
-    public String remove(int m_buyer_id, RedirectAttributes rttr) {
+    public String remove(String m_buyer_id, RedirectAttributes rttr) {
         int cnt = buyerService.remove(m_buyer_id);
         if (cnt == 1) {
             rttr.addFlashAttribute("message", m_buyer_id + "번 게시물이 삭제되었습니다.");
