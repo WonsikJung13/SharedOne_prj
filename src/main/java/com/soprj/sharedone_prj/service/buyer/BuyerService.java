@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BuyerService {
@@ -32,7 +33,7 @@ public class BuyerService {
         return buyerMapper.updateBuyer(buyer);
     }
 
-    public int register(BuyerDto buyer) {
+    public int register(Map<String, Object> buyer) {
         int cnt = buyerMapper.insert(buyer);
         return cnt;
     }

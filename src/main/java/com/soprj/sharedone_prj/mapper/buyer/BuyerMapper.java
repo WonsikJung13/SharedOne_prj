@@ -4,6 +4,7 @@ import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.price.PriceDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BuyerMapper {
 
@@ -13,7 +14,7 @@ public interface BuyerMapper {
 
     int addBuyer(BuyerDto buyer);
 
-    int insert(BuyerDto buyer);
+    int insert(Map<String, Object> buyer);
 
     int updateBuyer(BuyerDto buyer);
 

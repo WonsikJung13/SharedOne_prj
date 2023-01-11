@@ -1,8 +1,6 @@
 package com.soprj.sharedone_prj.controller.buyer;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
-import com.soprj.sharedone_prj.domain.member.MemberDto;
-import com.soprj.sharedone_prj.domain.price.PriceDto;
 import com.soprj.sharedone_prj.service.buyer.BuyerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,15 +42,15 @@ public class BuyerController {
     }
 
     @PostMapping("register")
-    public String register(BuyerDto buyer,
+    public String register(@RequestBody List<Map<String, Object>> addData,
                            RedirectAttributes rttr) {
-        int cnt = buyerService.register(buyer);
-        if (cnt == 1) {
 
-            rttr.addFlashAttribute("message", "새 게시물이 등록되었습니다.");
-        } else {
-            rttr.addFlashAttribute("message", "새 게시물이 등록되지 않았습니다.");
+        Map<String, Object> buyer = new HashMap<>();
+        for (int i = 0; i < addData.size(); i++) {
+            buyerService.register(addData.get(i));
         }
+
+
 
         return "redirect:/buyer/list";
     }
