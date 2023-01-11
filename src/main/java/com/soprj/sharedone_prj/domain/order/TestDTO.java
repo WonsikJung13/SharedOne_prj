@@ -2,13 +2,10 @@ package com.soprj.sharedone_prj.domain.order;
 
 import lombok.Data;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 @Data
 public class TestDTO {
     private int m_order_id;
-    private int m_order_buyerId;
+    private String m_order_buyerId;
     private String m_order_buyerName;
     private String m_order_buyerAddress;
     private String m_order_buyerRegion;
@@ -23,4 +20,5 @@ public class TestDTO {
     private String m_order_itemManufacturer;
     private int m_order_price;
     private int m_order_count;
+    private int m_order_sumPrice;
 }

@@ -292,7 +292,7 @@
     // buyer 데이터 가져오기
     function buyerView() {
         const buyer = document.querySelector('#buyer')
-        const selected = buyer.value;
+        const selected = buyer.value.split('_').at(0);
 
         fetch(ctx + "/order/buyerList/" + selected)
             .then(res => res.json())
@@ -333,7 +333,7 @@
     function itemList() {
         const requestDate = document.querySelector("#buyerInserted").value;
         const buyer = document.querySelector('#buyer')
-        const selected = buyer.value;
+        const selected = buyer.value.split('_').at(0);
         const data = {requestDate, selected}
         fetch(`\${ctx}/order/itemListForDropDown`, {
             method: "POST",
@@ -380,7 +380,6 @@
         const m_order_buyerCurrency = document.querySelector("#buyerCurrency").innerText;
         const m_order_inserted = document.querySelector("#buyerInserted").value;
 
-        const m_order_comment = document.querySelector("#comment").value;
         const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
 
         // 추가된 제품 총 금액으로 오더 총 금액 구하기
@@ -416,7 +415,6 @@
             m_order_buyerNumber,
             m_order_buyerCurrency,
             m_order_inserted,
-            m_order_comment,
             m_order_totalPrice,
             m_order_itemId,
             m_order_itemName,
@@ -427,11 +425,18 @@
         }
 
         addData.push(data);
-        console.log(addData);
     })
+
 
     // 오더추가
     document.querySelector(".submitBtn").addEventListener("click", function () {
+        const m_order_comment = document.getElementById('comment').value;
+
+        for (let i = 0; i < addData.length; i++) {
+            addData.at(i).m_order_comment = m_order_comment;
+            addData.at(i).m_order_sumPrice = m_order_sumPrice;
+        }
+
         fetch(`\${ctx}/order/add`, {
             method: "POST",
             headers: {
