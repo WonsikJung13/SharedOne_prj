@@ -132,6 +132,7 @@ public class PriceController {
             }
         } else {
             // 선택이 불가하다고 전달!
+            map.put("message" , "해당 날짜는 선택 불가합니다");
             return map;
         }
     }
