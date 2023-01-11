@@ -110,8 +110,6 @@ public class PriceController {
         priceDto.setM_price_startPeriod(date);
 
         List<PriceDto> periodList = priceService.getPricePeriod(priceDto);
-        System.out.println(periodList);
-        System.out.println("사이즈" + periodList.size());
         Map<String, Object> map = new HashMap<>();
         if (periodList.size() == 0) {
             // MIN값이 필요한 경우 아래 사용
@@ -134,7 +132,6 @@ public class PriceController {
             }
         } else {
             // 선택이 불가하다고 전달!
-            System.out.println("맵" + map);
             return map;
         }
     }

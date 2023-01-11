@@ -247,7 +247,6 @@
             .then(res => res.json())
             .then(data => {
                 if (data.maxDate != null) {
-                    console.log(data.maxDate)
                     m_price_lastPeriod.max = data.maxDate;
                 } else {
                     alert("선택 불가한 날짜입니다")
