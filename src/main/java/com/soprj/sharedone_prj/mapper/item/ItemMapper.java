@@ -22,4 +22,6 @@ public interface ItemMapper {
     List<String> selectManufacturer();
 
     int countAll();
+
+    int itemCompare(ItemDto itemCompareList);
 }

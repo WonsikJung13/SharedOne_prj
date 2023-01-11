@@ -173,14 +173,7 @@
                 <tr id="inputItemId">
                     <td class="table-active">제품코드</td>
                     <td id="itemId">
-                        <input type="text" class="form-control" name="" value="${getItem.m_item_id}" disabled>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">제품명</td>
-                    <td id="itemName">
-                        <input type="text" class="form-control" name="m_item_name" value="${getItem.m_item_name}"
-                               autocomplete='off'>
+                        <input type="hidden" id="realInputItemId" class="form-control" name="" value="${getItem.m_item_id}" disabled>
                     </td>
                 </tr>
                 <tr>
@@ -193,8 +186,8 @@
                             </c:forEach>
                             <option class="GroupEditable" value="입력">입력</option>
                         </select>
-                        <input class="groupEditOption form-control" value="${getItem.m_item_group}" autocomplete='off'
-                               style="display:none; width: 210px;border-bottom-right-radius: 0;border-top-right-radius: 0;">
+                        <input type="hidden" class="groupEditOption form-control" value="${getItem.m_item_group}" autocomplete='off'
+                               style="width: 210px;border-bottom-right-radius: 0;border-top-right-radius: 0;">
                     </td>
                 </tr>
                 <tr>
@@ -208,9 +201,16 @@
                             </c:forEach>
                             <option class="manufacturerEditable" value="입력">입력</option>
                         </select>
-                        <input class="ManufacturerEditOption form-control" value="${getItem.m_item_manufacturer}"
+                        <input type="hidden" class="ManufacturerEditOption form-control" value="${getItem.m_item_manufacturer}"
                                autocomplete='off'
-                               style="display:none; width: 210px;border-bottom-right-radius: 0;border-top-right-radius: 0;">
+                               style="width: 210px;border-bottom-right-radius: 0;border-top-right-radius: 0;">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-active">제품명</td>
+                    <td id="itemName">
+                        <input type="text" class="form-control" name="m_item_name" value="${getItem.m_item_name}"
+                               autocomplete='off'>
                     </td>
                 </tr>
                 <tr>
@@ -225,19 +225,19 @@
 
         <div>
             <button class="btn btn-secondary" type="button" id="plusButton1">제품 추가</button>
-            <button class="btn btn-secondary" type="button" id="submitButton1">제품 수정</button>
+            <button class="btn btn-secondary" type="button" id="modifyButton1">제품 수정</button>
         </div>
 
         <div id="addList">
         <h2>추가된 제품</h2>
-        <form id="itemListForm" method="post">
+<%--        <form id="itemListForm" method="post">--%>
             <div class="tableList">
                 <table class="table addList">
                     <thead>
                     <tr>
-                        <th scope="col" style="width:250px">제품명</th>
                         <th scope="col" style="width:200px">제품그룹</th>
                         <th scope="col" style="width:200px">제조사</th>
+                        <th scope="col" style="width:250px">제품명</th>
                         <th scope="col" style="width:100px">단위</th>
                         <th style="width:150px"></th>
                     </tr>
@@ -251,14 +251,14 @@
                 <button class="btn btn-secondary" type="button" id="submitButton" onclick="itemRegister()">제품 등록
                 </button>
             </div>
-        </form>
+<%--        </form>--%>
         </div>
     </div>
 </div>
 </body>
 <script>
     // 수정버튼
-    document.querySelector("#submitButton1").addEventListener("click", function () {
+    document.querySelector("#modifyButton1").addEventListener("click", function () {
         document.querySelector("#itemRegisterForm").submit();
     })
 </script>
@@ -269,11 +269,12 @@
             document.getElementById("addList").style.display = "none";
             document.getElementById("inputItemId").style.display = "";
             document.getElementById("header").innerHTML = "제품 수정"
-            document.getElementById("submitButton1").style.display = "";
+            document.getElementById("modifyButton1").style.display = "";
             document.getElementById("plusButton1").style.display = "none"
+            document.getElementById("realInputItemId").type="text";
         } else {
             document.getElementById("inputItemId").style.display = "none";
-            document.getElementById("submitButton1").style.display = "none";
+            document.getElementById("modifyButton1").style.display = "none";
 
         }
     });
@@ -289,7 +290,8 @@
         var optionText = $('.GroupEditable').text();                // 입력 인풋 텍스트값
 
         if (selected == "GroupEditable") {    // 입력 인풋이 선택되면
-            $('.groupEditOption').show();   // 숨겨진 인풋 보이기
+            // $('.groupEditOption').show();   // 숨겨진 인풋 보이기
+            $('.groupEditOption').prop('type', "text");
             $('.groupEditOption').focus();
 
             $('.groupEditOption').keyup(function () {             // 숨겨진 인풋 키업일 때
@@ -299,7 +301,9 @@
             });
 
         } else {
-            $('.groupEditOption').hide();
+            $('.groupEditOption').prop('type', "hidden");
+
+            // $('.groupEditOption').hide();
         }
     });
 
@@ -311,7 +315,8 @@
         var selected = $('option:selected', this).attr('class');
         var optionText = $('.manufacturerEditable').text();
         if (selected == "manufacturerEditable") {
-            $('.ManufacturerEditOption').show();
+            // $('.ManufacturerEditOption').show();
+            $('.ManufacturerEditOption').prop('type', "text");
             $('.ManufacturerEditOption').focus();
 
             $('.ManufacturerEditOption').keyup(function () {
@@ -321,29 +326,37 @@
             });
 
         } else {
-            $('.ManufacturerEditOption').hide();
+            $('.ManufacturerEditOption').prop('type', "hidden");
+            // $('.ManufacturerEditOption').hide();
         }
     });
 </script>
 
 <script>
-    // 테이블 생성
-    function deleteRow() {
-        const tBody = document.getElementById('itemBody');
-
-        for (let i = 0; i < tBody.rows.length; i++) {
-            tBody.deleteRow(i);
-        }
-    }
-
+    // 추가버튼 클릭 시
     document.getElementById('plusButton1').addEventListener("click", function () {
-        const item_name = document.querySelector("input[name='m_item_name']").value;
-        const itemGroup = document.querySelector("#groupSelect");
-        const item_group = itemGroup.options[itemGroup.selectedIndex].value;
-        const itemManufacturer = document.querySelector("#manufacturerSelect");
-        const item_manufacturer = itemManufacturer.options[itemManufacturer.selectedIndex].value;
-        const item_unit = document.querySelector("input[name='m_item_unit']").value;
+        let lastIndex = document.querySelector(".addList").tBodies[0].rows.length;
 
+        const itemGroup = document.querySelector("#groupSelect");
+        const m_item_group = itemGroup.options[itemGroup.selectedIndex].value;
+        const itemManufacturer = document.querySelector("#manufacturerSelect");
+        const m_item_manufacturer = itemManufacturer.options[itemManufacturer.selectedIndex].value;
+        const m_item_name = document.querySelector("input[name='m_item_name']").value;
+        const m_item_unit = document.querySelector("input[name='m_item_unit']").value;
+
+        // 빈값 체크
+        var is_empty = false;
+        $('#itemRegisterForm').find('input[type!="hidden"]').each(function(){
+            if(!$(this).val()) {
+                is_empty = true;
+            }
+        });
+        if(is_empty) {
+            alert('값을 전부 입력하세요');
+            document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
+        }
+
+        // 테이블 추가
         const tBody = document.getElementById('itemBody');
         const newRow = tBody.insertRow();
 
@@ -352,18 +365,72 @@
         const newCell3 = newRow.insertCell(2);
         const newCell4 = newRow.insertCell(3);
         const newCell5 = newRow.insertCell(4);
-        newCell1.style.width = "250px";
+
+        newCell1.style.width = "200px";
         newCell2.style.width = "200px";
-        newCell3.style.width = "200px";
+        newCell3.style.width = "250px";
         newCell4.style.width = "100px";
         newCell5.style.width = "150px";
 
-        newCell1.innerHTML = '<input type="text" name="m_item_name" value="' + item_name + '" style="width: 220px">';
-        newCell2.innerHTML = '<input type="text" name="m_item_group" value="' + item_group + '" style="width: 180px">';
-        newCell3.innerHTML = '<input type="text" name="m_item_manufacturer" value="' + item_manufacturer + '" style="width: 180px">';
-        newCell4.innerHTML = '<input type="text" name="m_item_unit" value="' + item_unit + '" style="width: 80px">';
-        newCell5.innerHTML = '<button class="btn btn-secondary" onclick="deleteRow()">삭제</button>';
+        newCell1.innerHTML = '<input type="text" name="m_item_group_tb" value="' + m_item_group + '"readonly style="width: 180px">';
+        newCell2.innerHTML = '<input type="text" name="m_item_manufacturer_tb" value="' + m_item_manufacturer + '"readonly style="width: 180px">';
+        newCell3.innerHTML = '<input type="text" name="m_item_name_tb" value="' + m_item_name + '"readonly style="width: 220px">';
+        newCell4.innerHTML = '<input type="text" name="m_item_unit_tb" value="' + m_item_unit + '"readonly style="width: 80px">';
+        newCell5.innerHTML = '<button name="deleteBtn" class="btn btn-secondary deleteBtn" onclick="deleteBtn(this)">삭제</button>';
+
+        // 중복체크(db)
+        const itemCompareList = {
+            m_item_group,
+            m_item_manufacturer,
+            m_item_name,
+            m_item_unit
+        }
+        const ctx = "${pageContext.request.contextPath}";
+
+        $.ajax({
+            url: ctx + '/item/comapare',
+            method: 'POST',
+            data: JSON.stringify(itemCompareList),
+            contentType: 'application/json; charset=UTF-8',
+            success: function (cnt) {
+                if (cnt >= 1) {
+                    alert("이미 등록 되어 있는 제품입니다.");
+                    // check.abort();
+                    document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
+                }
+            }
+        });
+
+        // 중복체크(table)
+        let data = {};
+
+        if (lastIndex > 0) {
+            data = {
+                "m_item_group": $("input[name='m_item_group_tb']").eq(lastIndex-1).val(),
+                "m_item_manufacturer": $("input[name='m_item_manufacturer_tb']").eq(lastIndex-1).val(),
+                "m_item_name": $("input[name='m_item_name_tb']").eq(lastIndex-1).val(),
+                "m_item_unit": $("input[name='m_item_unit_tb']").eq(lastIndex-1).val()
+            };
+            let dataValue = Object.values(data);
+            console.log("data: " + dataValue);
+            let CompareValue = Object.values(itemCompareList);
+            console.log("input: " + CompareValue)
+            if (dataValue.every((value, idx) => value === CompareValue[idx])) {
+                alert("테이블에 중복된 제품이 있습니다.")
+                document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
+            }
+        }
     });
+</script>
+<script>
+    // 테이블 행 index 확인 및 삭제
+    function deleteBtn(obj) {
+
+        var index = $(obj).parent().parent().index();
+        console.log("index : "+ index);
+
+        $(obj).parent().parent().remove();
+    }
 </script>
 <script>
     // 테이블 값 서버로 전송
@@ -376,10 +443,10 @@
         let data = {};
         for (let i = 0; i < tbodyNum.length; i++) {
             data = {
-                "m_item_name":$("input[name='m_item_name']").eq(i).val(),
-                "m_item_group":$("input[name='m_item_group']").eq(i).val(),
-                "m_item_manufacturer":$("input[name='m_item_manufacturer']").eq(i).val(),
-                "m_item_unit":$("input[name='m_item_unit']").eq(i).val()
+                "m_item_group":$("input[name='m_item_group_tb']").eq(i).val(),
+                "m_item_manufacturer":$("input[name='m_item_manufacturer_tb']").eq(i).val(),
+                "m_item_name":$("input[name='m_item_name_tb']").eq(i).val(),
+                "m_item_unit":$("input[name='m_item_unit_tb']").eq(i).val()
             };
             dataList.push(data);
         }
@@ -394,7 +461,7 @@
                 alert(resp.cnt + "개의 제품 등록이 완료되었습니다.");
                 location.href = ctx + '/item/list';
                 } else {
-                    alert("제품 등록을 실패하였습니다.")
+                    alert("추가된 제품 테이블을 확인해주세요.")
                 }
             },
             error:function(request,status,error) {
@@ -403,6 +470,75 @@
         })
     }
 </script>
+<%--<script>--%>
+<%--    // 중복체크--%>
+<%--    document.getElementById("plusButton1").addEventListener('click', function() {--%>
+
+<%--        const itemGroup = document.querySelector("#groupSelect");--%>
+<%--        const m_item_group = itemGroup.options[itemGroup.selectedIndex].value;--%>
+<%--        const itemManufacturer = document.querySelector("#manufacturerSelect");--%>
+<%--        const m_item_manufacturer = itemManufacturer.options[itemManufacturer.selectedIndex].value;--%>
+<%--        const m_item_name = document.querySelector("input[name='m_item_name']").value;--%>
+<%--        const m_item_unit = document.querySelector("input[name='m_item_unit']").value;--%>
+
+<%--        const itemCompareList = {--%>
+<%--            m_item_group,--%>
+<%--            m_item_manufacturer,--%>
+<%--            m_item_name,--%>
+<%--            m_item_unit--%>
+<%--        }--%>
+<%--        const ctx = "${pageContext.request.contextPath}";--%>
+
+<%--        const check =--%>
+<%--        $.ajax({--%>
+<%--            url: ctx + '/item/comapare',--%>
+<%--            method: 'POST',--%>
+<%--            data: JSON.stringify(itemCompareList),--%>
+<%--            contentType: 'application/json; charset=UTF-8',--%>
+<%--            success: function (cnt) {--%>
+<%--                if (cnt >= 1) {--%>
+<%--                    alert("이미 등록 되어있는 제품입니다.");--%>
+<%--                    check.abort();--%>
+<%--                }--%>
+<%--            }--%>
+<%--        });--%>
+
+<%--        let tbodyNum = table.tBodies[0].rows;--%>
+<%--        let dataList = [];--%>
+<%--        let data = {};--%>
+<%--        let lastIndex = document.querySelector(".addList").tBodies[0].rows.length-1;--%>
+
+<%--        if (lastIndex > 0) {--%>
+<%--            data = {--%>
+<%--                "m_item_group": $("input[name='m_item_group']").eq(lastIndex).val(),--%>
+<%--                "m_item_manufacturer": $("input[name='m_item_manufacturer']").eq(lastIndex).val(),--%>
+<%--                "m_item_name": $("input[name='m_item_name']").eq(lastIndex).val(),--%>
+<%--                "m_item_unit": $("input[name='m_item_unit']").eq(lastIndex).val()--%>
+<%--            };--%>
+<%--            let dataValue = Object.values(data);--%>
+<%--            let CompareValue = Object.values(itemCompareList);--%>
+
+<%--            if ( dataValue == CompareValue) {--%>
+<%--                alert("테이블에 중복된 아이템이 있습니다.")--%>
+<%--            }--%>
+<%--        }--%>
+<%--        // };--%>
+
+<%--        // if (dataList != null && dataList.length > 0) {--%>
+<%--        //     // console.log(dataList)--%>
+<%--        //     for (let j = 1; j < dataList.length; j++) {--%>
+<%--        //--%>
+<%--        //         // let dataValue = Object.values(dataList[j]);--%>
+<%--        //         // console.log("j: " + dataValue)--%>
+<%--        //         console.log("i: " + CompareValue)--%>
+<%--        //--%>
+<%--        //     }--%>
+<%--        //--%>
+<%--        // }--%>
+<%--        });--%>
+
+
+<%--</script>--%>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

@@ -112,4 +112,16 @@
         ORDER BY m_item_manufacturer DESC
     </select>
 
+    <select id="itemCompare" resultType="int">
+        SELECT
+            COUNT(1) AS CNT
+        FROM
+            m_item
+        WHERE
+            1=1
+        AND m_item_name = #{m_item_name}
+        AND m_item_group = #{m_item_group}
+        AND m_item_manufacturer = #{m_item_manufacturer}
+        AND m_item_unit = #{m_item_unit}
+    </select>
 </mapper>
