@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class PriceController {
         model.addAttribute("itemList", itemList);
     }
 
-    @GetMapping ("buyerList/{selected}")
+    @GetMapping("buyerList/{selected}")
     @ResponseBody
     public PriceDto buyerList(@PathVariable String selected) {
         PriceDto buyerList = priceService.buyerList(selected);
@@ -59,7 +60,7 @@ public class PriceController {
 
 
     @PostMapping("register")
-    public String register(PriceDto price){
+    public String register(PriceDto price) {
         priceService.register(price);
 
         return "redirect:/price/list";
@@ -83,7 +84,7 @@ public class PriceController {
     }
 
     @PostMapping("remove")
-    public String remove(@RequestParam Map<String,String> removeIdList) {
+    public String remove(@RequestParam Map<String, String> removeIdList) {
 
         String[] removeList = removeIdList.get("m_price_id").split(",");
 
@@ -96,12 +97,37 @@ public class PriceController {
 
     @PostMapping("checkPeriod")
     @ResponseBody
-    public List<PriceDto> checkPeriod(@RequestBody Map<String, Object> priceMap) {
+    public Map<String, Object> checkPeriod(@RequestBody Map<String, Object> priceMap) {
 
         ObjectMapper mapper = new ObjectMapper();
         PriceDto priceDto = mapper.convertValue(priceMap, PriceDto.class);
         List<PriceDto> periodList = priceService.getPricePeriod(priceDto);
+        System.out.println(periodList);
 
-        return periodList;
+        Map<String, Object> map = new HashMap<>();
+        if (periodList.size() == 0) {
+            // MIN값이 필요한 경우 아래 사용
+//            String beforeLastPeriod = priceService.getBeforeLastPeriod(priceDto);
+//            if (beforeLastPeriod != null) {
+//                System.out.println("이것이 MIN값 : " + beforeLastPeriod);
+//                map.put("minDate", beforeLastPeriod);
+//            } else {
+//                System.out.println("오늘 날짜가 MIN 값!!!!");
+//                map.put("beforeLastPeriod", priceMap.get("m_price_startPeriod"));
+//            }
+            PriceDto afterStartPeriod = priceService.getAfterStartPeriod(priceDto);
+            System.out.println(afterStartPeriod.getM_price_startPeriod());
+            if (afterStartPeriod.getM_price_startPeriod() != null) {
+                String yesterday = (afterStartPeriod.getM_price_startPeriod().minusDays(1)).toString();
+                map.put("maxDate", yesterday);
+            } else {
+                map.put("maxDate", null);
+            }
+
+            return map;
+        } else {
+            // 선택이 불가하다고 전달!
+            return map;
+        }
     }
 }

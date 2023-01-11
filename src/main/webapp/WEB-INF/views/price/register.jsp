@@ -211,6 +211,7 @@
     var m_price_lastPeriod = document.getElementById('m_price_lastPeriod');
 
     m_price_startPeriod.addEventListener('change', function() {
+        m_price_startPeriod.max = null;
         if (m_price_startPeriod.value)
             m_price_lastPeriod.min = m_price_startPeriod.value;
     }, false);
@@ -220,13 +221,15 @@
     }, false);
 
     // 날짜 중복확인 (DB)
-    document.querySelector("#m_price_startPeriod").addEventListener("click", function () {
+    document.querySelector("#m_price_startPeriod").addEventListener("change", function () {
         const m_item_id = document.querySelector("#itemId").value;
         const m_buyer_id = document.querySelector("#buyerId").value;
+        const m_price_startPeriod = document.querySelector("#m_price_startPeriod").value;
 
         const addData = {
             m_item_id,
-            m_buyer_id
+            m_buyer_id,
+            m_price_startPeriod
         }
         fetch(ctx + "/price/checkPeriod", {
             method: "POST",
@@ -237,8 +240,13 @@
         })
             .then(res => res.json())
             .then(data => {
-                if()
-                // document.querySelector("#").value = data.;
+                if (data.maxDate == null) {
+                    alert("선택 불가한 날짜입니다")
+                    m_price_startPeriod.value = null;
+                    // 선택값 초기화
+                } else {
+                    m_price_lastPeriod.max = data.maxDate;
+                }
             })
     })
 
