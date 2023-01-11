@@ -149,9 +149,9 @@ public class MemberController {
         return "redirect:/member/manage";
     }
 
-    @RequestMapping("checkPassword")
+    @PostMapping("checkPassword")
+    @ResponseBody
     public Map<String, Object> checkId(@RequestBody Map<String, Object> member) {
-//        System.out.println("왔냐?" + member);
 
         String m_member_id = member.get("m_member_id").toString();
         MemberDto memberDto = memberService.checkPassword(m_member_id);
@@ -160,17 +160,13 @@ public class MemberController {
         Map<String, Object> map = new HashMap<>();
 
         if (passwordEncoder.matches(m_member_password, memberDto.getM_member_password())) {
-            System.out.println("일치");
             map.put("statusNum", "not exist");
             map.put("message", "일치합니다");
         } else {
-            System.out.println("일치안댐");
             map.put("statusNum", "exist");
             map.put("message", "일치하지 않습니다");
         }
+        System.out.println(map);
         return map;
-
-
     }
-
 }

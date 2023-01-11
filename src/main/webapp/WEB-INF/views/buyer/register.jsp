@@ -28,7 +28,7 @@
         }
 
         .table {
-            width: 900px;
+            width: 1000px;
             --bs-table-bg: #fff;
         }
 
@@ -50,6 +50,11 @@
         }
 
         h2 {
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
+        .orderTotalPrice {
             font-size: 1.1em;
             margin: 20px 0 10px 0;
         }
@@ -81,28 +86,57 @@
             width: 250px;
         }
 
-        .form-control {
-            width: 250px;
-        }
-
         .inputLength {
             width: 250px;
         }
 
 
-        /*제품그룹 박스*/
-        #groupSelect, #manufacturerSelect {
-            position: absolute;
+        /*.tableList {*/
+        /*    background-color: #fff;*/
+        /*    height: 444px;*/
+        /*    width: 1000px;*/
+        /*    overFlow: scroll;*/
+        /*    overflow-x: hidden;*/
+        /*}*/
+
+        .tableList td {
+            /*--bs-table-bg: #fffff;*/
+            background-color: #fff;
+            color: #37393b;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+            font-weight: bold;
         }
 
-        option {
-            height: 30px;
-            line-height: 30px;
+        .tableList thead th {
+            position: sticky;
+            top: 0;
+            width: 128px;
         }
 
-        .groupEditOption, .ManufacturerEditOption {
-            position: relative;
+        .tableList input {
+            border: none;
+            background: transparent;
         }
+
+        .orderAdd {
+            width: 128px;
+        }
+
+        .commentStyle {
+            background-color: #fff;
+            height: 100px;
+            width: 1000px;
+        }
+
+        .orderTotalPrice {
+            color: red;
+        }
+        .table-active{
+            width: 180px;
+        }
+
     </style>
 </head>
 <body>
@@ -116,31 +150,31 @@
                 <h1 id="header">바이어 등록</h1>
             </div>
             <div class="itemRegisterBtn">
-                <c:url value="/item/register" var="registerLink"></c:url>
-                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">구현중
-                </button>
             </div>
         </div>
         <h2>바이어 추가</h2>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="aaa">
             <tbody>
             <form action="" method="post" id="registerForm">
                 <tr>
                     <th class="table-active">거래처 명</th>
-                    <th><input class="form-control form300" type="text" name="m_buyer_name"></th>
+                    <th><input class="form-control form300" type="text" name="m_buyer_name" id="m_buyer_name"></th>
                 </tr>
                 <tr>
                     <th class="table-active">거래처 국가</th>
-                    <th><input class="form-control form300" type="text" name="m_buyer_region"></th>
+                    <th><input class="form-control form300" type="text" name="m_buyer_region" id="m_buyer_region"></th>
                 </tr>
                 <tr>
                     <th class="table-active">거래처 주소</th>
-                    <th><input type="text" class="form-control form300" name="m_buyer_address"></th>
+                    <th><input type="text" class="form-control form300" name="m_buyer_address" id="m_buyer_address">
+                    </th>
                 </tr>
                 <tr>
                     <th class="table-active">통화</th>
-                    <th><input type="text" class="form-control form300" name="m_buyer_currency"></th>
+                    <th id="ddd"><input type="text" class="form-control form300" name="m_buyer_currency"
+                                        id="m_buyer_currency">
+                    </th>
                 </tr>
                 <tr>
                     <th class="table-active">사업자번호</th>
@@ -150,38 +184,29 @@
             </form>
             </tbody>
         </table>
-        <button disabled class="btn btn-secondary" id="register">바이어 추가</button>
+        <button disabled class="btn btn-secondary" id="addBtn">바이어 추가</button>
 
-        <h2>추가된 바이</h2>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">거래처 명</th>
-                <th scope="col">거래처 국가</th>
-                <th scope="col">거래처 주소</th>
-                <th scope="col">통화</th>
-                <th scope="col">사업자번호</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <%--    <c:forEach items="" var="">--%>
-            <%--        <tr>--%>
-            <%--            <th scope="row">1</th>--%>
-            <%--            <td>Mark</td>--%>
-            <%--            <td>Otto</td>--%>
-            <%--            <td>@mdo</td>--%>
-            <%--            <td>@mdo</td>--%>
-            <%--            <td><button></button></td>--%>
-            <%--        </tr>--%>
-            <%--    </c:forEach>--%>
+        <h2>추가된 바이어</h2>
+        <div class="tableList">
 
+            <table class="table addList">
+                <thead>
+                <tr>
+                    <th scope="col">거래처 명</th>
+                    <th scope="col">거래처 국가</th>
+                    <th scope="col">거래처 주소</th>
+                    <th scope="col">통화</th>
+                    <th scope="col">사업자번호</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="itemBody">
 
-            </tbody>
-        </table>
-
+                </tbody>
+            </table>
+        </div>
+        <button disabled class="btn btn-secondary" id="submitBtn">등록</button>
     </div>
-</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
@@ -191,7 +216,6 @@
     const ctx = "${pageContext.request.contextPath}";
 
     document.querySelector("#buyerIdInput").addEventListener("blur", function () {
-        checkedDoubleId = false;
         const insertBuyerNum = document.querySelector("#buyerIdInput").value;
 
         fetch(ctx + "/buyer/checkNum/" + insertBuyerNum)
@@ -206,14 +230,79 @@
                     $(function () {
                         $('#inputText').css("color", "black");
                     })
-                    document.querySelector("#register").removeAttribute("disabled");
+                    document.querySelector("#addBtn").removeAttribute("disabled");
+                    document.querySelector("#submitBtn").removeAttribute("disabled");
                 }
             })
     })
 
-    document.querySelector("#register").addEventListener("click", function () {
-        document.querySelector("#registerForm").submit();
+    let addData = [];
+
+    document.querySelector("#addBtn").addEventListener("click", function () {
+        const m_buyer_name = document.querySelector("#m_buyer_name").value;
+        const m_buyer_region = document.querySelector("#m_buyer_region").value;
+        const m_buyer_address = document.querySelector("#m_buyer_address").value;
+        const m_buyer_currency = document.querySelector("#m_buyer_currency").value;
+        const m_buyer_number = document.querySelector("#buyerIdInput").value;
+
+        const data = {
+            m_buyer_name,
+            m_buyer_region,
+            m_buyer_address,
+            m_buyer_currency,
+            m_buyer_number
+        }
+        addData.push(data)
+        const buyerAdd = `
+            <tr id="\${m_buyer_number}">
+                 <td class="buyerAdd"> \${m_buyer_name} </td>
+                 <td class="buyerAdd"> \${m_buyer_region} </td>
+                 <td class="buyerAdd"> \${m_buyer_address} </td>
+                 <td class="buyerAdd"> \${m_buyer_currency} </td>
+                 <td class="buyerAdd"> \${m_buyer_number} </td>
+                <td><button class="btn btn-secondary" data-value="\${m_buyer_number}" onclick="clickRemove(this)">삭제</button></td>
+            </tr>
+        `;
+        itemBody.insertAdjacentHTML("beforeend", buyerAdd);
+
+        document.querySelector("#m_buyer_name").value = null;
+        document.querySelector("#m_buyer_region").value = null;
+        document.querySelector("#m_buyer_address").value = null;
+        document.querySelector("#m_buyer_currency").value = null;
+        document.querySelector("#buyerIdInput").value = null;
+        document.querySelector("#addBtn").setAttribute("disabled", "");
     })
+
+    function clickRemove(target) {
+        const removeNum = target.dataset.value;
+
+        const remove1 = document.getElementById(removeNum);
+        remove1.remove();
+
+        addData = addData.filter((item) => {
+            return !(item["m_buyer_number"] == removeNum)
+        })
+    }
+
+    document.querySelector("#submitBtn").addEventListener("click", function () {
+        fetch(`\${ctx}/buyer/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(addData)
+        })
+            .then(res => res.json())
+
+        const buyerList = ctx + '/buyer/list';
+
+
+        setTimeout(function (){
+            location.href = buyerList;
+        },500)
+    })
+
+
 </script>
 </body>
 </html>

@@ -249,8 +249,6 @@
 
 
     document.querySelector("#oldPassword").addEventListener("blur", function () {
-        console.log("가냐?")
-        // document.querySelector("#buyerIdButton").addEventListener("click", function () {
         checkedOldPassword = false;
 
         const m_member_id = document.querySelector("#memberid").value;
@@ -271,8 +269,9 @@
                 $(function () {
                     $('#inputText').css("color", "red");
                 })
-
+                console.log(data)
                 if (data.statusNum === 'not exist') {
+                    console.log("일치")
                     $(function () {
                         $('#inputText').css("color", "black");
                     })
