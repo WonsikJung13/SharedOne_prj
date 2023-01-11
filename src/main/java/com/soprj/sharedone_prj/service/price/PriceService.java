@@ -83,4 +83,14 @@ public class PriceService {
     public List<PriceDto> getPricePeriod(PriceDto priceDto) {
         return priceMapper.getPricePeriod(priceDto);
     }
+
+    // MIN값이 필요하면 사용
+
+//    public String getBeforeLastPeriod(PriceDto priceDto) {
+//        return priceMapper.getBeforeLastPeriod(priceDto);
+//    }
+
+    public PriceDto getAfterStartPeriod(PriceDto priceDto) {
+        return priceMapper.getAfterStartPeriod(priceDto);
+    }
 }

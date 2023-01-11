@@ -2,7 +2,7 @@ package com.soprj.sharedone_prj.domain.price;
 
 import lombok.Data;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -18,8 +18,8 @@ public class PriceDto {
     private int m_price_price;
     private String m_price_currency;
     private int m_price_discount;
-    private Date m_price_startPeriod;
-    private Date m_price_lastPeriod;
+    private LocalDate m_price_startPeriod;
+    private LocalDate m_price_lastPeriod;
     private int m_price_lastPrice;
     private LocalDateTime m_price_inserted;
 

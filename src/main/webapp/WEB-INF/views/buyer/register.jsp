@@ -215,6 +215,8 @@
 <script>
     const ctx = "${pageContext.request.contextPath}";
 
+    let number = [];
+
     document.querySelector("#buyerIdInput").addEventListener("blur", function () {
         const insertBuyerNum = document.querySelector("#buyerIdInput").value;
 
@@ -234,9 +236,20 @@
                     document.querySelector("#submitBtn").removeAttribute("disabled");
                 }
             })
+
+        setTimeout(function (){
+        for(const a in number){
+            if(number[a] === insertBuyerNum){
+                document.querySelector("#addBtn").setAttribute("disabled", "");
+                document.querySelector("#inputText").innerText = "이미 등록되었습니다"
+                $('#inputText').css("color", "red");
+            }
+            console.log(number[a])
+        }},300)
     })
 
     let addData = [];
+
 
     document.querySelector("#addBtn").addEventListener("click", function () {
         const m_buyer_name = document.querySelector("#m_buyer_name").value;
@@ -244,6 +257,8 @@
         const m_buyer_address = document.querySelector("#m_buyer_address").value;
         const m_buyer_currency = document.querySelector("#m_buyer_currency").value;
         const m_buyer_number = document.querySelector("#buyerIdInput").value;
+
+        number.push(m_buyer_number);
 
         const data = {
             m_buyer_name,

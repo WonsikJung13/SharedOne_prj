@@ -25,7 +25,12 @@ public interface PriceMapper {
 
     int remove(String removeList);
 
-    PriceDto priceList(String m_price_id);
+//    PriceDto priceList(String m_price_id);
 
     List<PriceDto> getPricePeriod(PriceDto priceDto);
+
+    // MIN값이 필요하면 사용
+//    String getBeforeLastPeriod(PriceDto priceDto);
+
+    PriceDto getAfterStartPeriod(PriceDto priceDto);
 }
