@@ -5,6 +5,7 @@ import com.soprj.sharedone_prj.mapper.price.PriceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -90,7 +91,7 @@ public class PriceService {
 //        return priceMapper.getBeforeLastPeriod(priceDto);
 //    }
 
-    public PriceDto getAfterStartPeriod(PriceDto priceDto) {
+    public LocalDate getAfterStartPeriod(PriceDto priceDto) {
         return priceMapper.getAfterStartPeriod(priceDto);
     }
 }
