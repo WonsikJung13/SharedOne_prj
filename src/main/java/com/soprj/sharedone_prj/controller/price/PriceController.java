@@ -1,6 +1,5 @@
 package com.soprj.sharedone_prj.controller.price;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soprj.sharedone_prj.domain.price.PriceDto;
 import com.soprj.sharedone_prj.service.item.ItemService;
 import com.soprj.sharedone_prj.service.price.PriceService;
@@ -9,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,11 +99,18 @@ public class PriceController {
     @PostMapping("checkPeriod")
     @ResponseBody
     public Map<String, Object> checkPeriod(@RequestBody Map<String, Object> priceMap) {
+//        System.out.println(priceMap);
 
-        ObjectMapper mapper = new ObjectMapper();
-        PriceDto priceDto = mapper.convertValue(priceMap, PriceDto.class);
+//        ObjectMapper mapper = new ObjectMapper();
+//        PriceDto priceDto = mapper.convertValue(priceMap, PriceDto.class);
+        int buyerId = Integer.valueOf((String) priceMap.get("m_buyer_id"));
+        LocalDate date = LocalDate.parse(priceMap.get("m_price_startPeriod").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        PriceDto priceDto = new PriceDto();
+        priceDto.setM_item_id(priceMap.get("m_item_id").toString());
+        priceDto.setM_buyer_id(buyerId);
+        priceDto.setM_price_startPeriod(date);
+
         List<PriceDto> periodList = priceService.getPricePeriod(priceDto);
-        System.out.println(periodList);
 
         Map<String, Object> map = new HashMap<>();
         if (periodList.size() == 0) {
@@ -115,11 +123,10 @@ public class PriceController {
 //                System.out.println("오늘 날짜가 MIN 값!!!!");
 //                map.put("beforeLastPeriod", priceMap.get("m_price_startPeriod"));
 //            }
-            PriceDto afterStartPeriod = priceService.getAfterStartPeriod(priceDto);
-            System.out.println(afterStartPeriod.getM_price_startPeriod());
-            if (afterStartPeriod.getM_price_startPeriod() != null) {
-                String yesterday = (afterStartPeriod.getM_price_startPeriod().minusDays(1)).toString();
-                map.put("maxDate", yesterday);
+            String yesterday = priceDto.getM_price_startPeriod().minusDays(1).toString();
+            map.put("maxDate" , yesterday);
+            if (priceDto.getM_price_startPeriod() != null) {
+
             } else {
                 map.put("maxDate", null);
             }
