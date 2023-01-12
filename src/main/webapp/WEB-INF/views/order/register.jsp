@@ -131,10 +131,6 @@
             background-color: #fff;
             border-color:#dee2e6;
         }
-        textarea:focus-visible{
-
-        }
-
 
         .table-active{
             width: 200px;
@@ -371,7 +367,6 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
         })
             .then(res => res.json())
             .then(data => {
@@ -447,7 +442,6 @@
             m_order_buyerNumber,
             m_order_buyerCurrency,
             m_order_inserted,
-            m_order_comment,
             m_order_totalPrice,
             m_order_itemId,
             m_order_itemName,

@@ -87,16 +87,21 @@ public class OrderController {
         model.addAttribute("orderList", list);
     }
 
-
+    // 주문 디테일 모달 데이테 보여주기
     @PostMapping("list/{m_order_id}")
     @ResponseBody
     public List<OrderItemDTO> orderDetail(@PathVariable int m_order_id) {
 //        int orderId = Integer.valueOf((String) map.get("m_order_id"));
-
+        System.out.println(m_order_id);
         List<OrderItemDTO> list = orderService.orderDetail(m_order_id);
 
         return list;
     }
 
+    @PostMapping("list")
+    public String orderAccept(){
+        System.out.println("1111");
+        return "redirect:/order/list";
+    }
 
 }
