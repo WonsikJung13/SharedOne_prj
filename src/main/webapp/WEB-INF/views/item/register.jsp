@@ -194,11 +194,11 @@
                     <td class="table-active">제조사</td>
                     <td id="itemManufacturer">
                         <select id="manufacturerSelect" name="m_item_manufacturer" class="form-select">
-                            <option value="${getItem.m_item_manufacturer}">${getItem.m_item_manufacturer}</option>
-                            <c:forEach items="${manufacturerList}" var="manufacturerList">
-                                <option class="non"
-                                        value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>
-                            </c:forEach>
+                            <option id="modifyManufacturer" value="${getItem.m_item_manufacturer}">${getItem.m_item_manufacturer}</option>
+<%--                            <c:forEach items="${manufacturerList}" var="manufacturerList">--%>
+<%--                                <option class="non"--%>
+<%--                                        value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>--%>
+<%--                            </c:forEach>--%>
                             <option class="manufacturerEditable" value="입력">입력</option>
                         </select>
                         <input type="hidden" class="ManufacturerEditOption form-control" value="${getItem.m_item_manufacturer}"
@@ -309,7 +309,6 @@
         const itemGroup = document.querySelector("#groupSelect");
         const m_item_group = itemGroup.options[itemGroup.selectedIndex].value;
 
-        console.log(m_item_group)
         const groupValue = {
             m_item_group
         }
@@ -319,7 +318,13 @@
             data : JSON.stringify(groupValue),
             contentType: 'application/json; charset=UTF-8',
             success: function(res) {
-                console.log("res: " + res)
+                const modifyManufacturer = $("#modifyManufacturer");
+
+                let option = '';
+                $.each(res, function(i) {
+                    option += '<option value="' + res[i] + '">' + res[i] + '</option>';
+                });
+                modifyManufacturer.after(option);
 
             }
         })
@@ -413,6 +418,7 @@
             contentType: 'application/json; charset=UTF-8',
             success: function (cnt) {
                 if (cnt >= 1) {
+                    console.log(cnt)
                     alert("이미 등록 되어 있는 제품입니다.");
                     // check.abort();
                     document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
@@ -431,9 +437,7 @@
                 "m_item_unit": $("input[name='m_item_unit_tb']").eq(lastIndex-1).val()
             };
             let dataValue = Object.values(data);
-            console.log("data: " + dataValue);
             let CompareValue = Object.values(itemCompareList);
-            console.log("input: " + CompareValue)
             if (dataValue.every((value, idx) => value === CompareValue[idx])) {
                 alert("테이블에 중복된 제품이 있습니다.")
                 document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
@@ -488,6 +492,36 @@
         }
         })
     }
+</script>
+<script>
+    // function periodOverLaps(testPeriod, periods) {
+    //     for (var i = 0; i < periods.length; i++) {
+    //         var period = periods[i];
+    //         if (period.start < testPeriod.start && period.end > testPeriod.start)
+    //             return true;
+    //         if (period.start > testPeriod.start && period.start < testPeriod.end)
+    //             return true;
+    //     }
+    //     return false;
+    // }
+    //
+    // var periods = [{
+    //     start : new Date('1/1/2015'),
+    //     end : new Date('1/3/2015')
+    // }, {
+    //     start : new Date('1/5/2015'),
+    //     end : new Date('1/7/2015')
+    // }
+    // ];
+    //
+    // var testPeriod = {
+    //     start : new Date('1/1/2015'),
+    //     end : new Date('1/2/2015')
+    // };
+    //
+    // if (periodOverLaps(testPeriod, periods) == true) {
+    //     alert("!?")
+    // }
 </script>
 
 
