@@ -15,11 +15,11 @@ public class PriceService {
     @Autowired
     private PriceMapper priceMapper;
 
-    public List<PriceDto> getPriceList(int page, PriceDto priceDto) {
+    public List<PriceDto> getPriceList(int page, String type, String keyword, PriceDto priceDto) {
         int records = 10;
         int offset = (page - 1) * records;
 
-        int countAll = priceMapper.countAll();
+        int countAll = priceMapper.countAll(type, "%"+keyword+"%");
         int lastPage = (countAll - 1) / records + 1;
 
         int leftPageNumber = (page -1) / 10 * 10 + 1;
@@ -44,7 +44,7 @@ public class PriceService {
         priceDto.setRightPageNumber(rightPageNumber);
         priceDto.setLastPageNumber(lastPage);
 
-        return priceMapper.getPriceList(offset, records);
+        return priceMapper.getPriceList(offset, records, type, "%"+keyword+"%");
     }
 
 
