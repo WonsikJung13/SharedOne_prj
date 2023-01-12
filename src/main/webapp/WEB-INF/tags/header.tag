@@ -106,51 +106,74 @@
         data-bs-target="#sideBar-collapse" aria-expanded="false">
     <i class="fas fa-bars"></i>
 </button>
-<div id="sideBar-collapse" class="sideBtn collapse">
-    <button data-bs-toggle="collapse"
-            data-bs-target="#master-collapse" aria-expanded="false">
-        마스터
-    </button>
-    <button
-            data-bs-toggle="collapse"
-            data-bs-target="#order-collapse" aria-expanded="false">
-        주문
-    </button>
-    <button href="${reportLink}" class="">리포트</button>
+<div id="sideBar-collapse" class="sideBtn collapse" style="margin-left: 20px">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
+                    aria-controls="collapseOne">
+                마스터
+            </button>
+        </h2>
+    </div>
 
-    <div class="collapse " id="master-collapse">
-        <div class="">
-            <div><button href="${itemList}" class="">제품 등록 관리</button>
+
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+         data-bs-parent="#accordionExample">
+        <div class="accordion-body" style="margin-left: 10px;margin-right: 3px;border-left-style: solid;border-left-width: 3px  ">
+            <div>
+                <br>
+                <button type="button" onclick="location.href='${itemList}'" class="accordion-button">제품 등록 관리</button>
             </div>
-            <div><button href="${buyerList}" class="">바이어 등록
-                관리</button>
+            <div>
+                <button onclick="location.href='${buyerList}'" class="accordion-button">바이어 등록
+                    관리
+                </button>
             </div>
-            <div><button href="${priceList}" class="">판매가 등록
-                관리</button>
+            <div>
+                <button onclick="location.href='${priceList}'" class="accordion-button">판매가 등록
+                    관리
+                </button>
             </div>
             <sec:authentication property="authorities" var="authorities"/>
             <c:if test="${authorities eq '[팀장]'}">
-                <div><button href="${memberList}" class="">회원
-                    관리</button>
+                <div>
+                    <button onclick="location.href='${memberList}'" class="accordion-button">회원
+                        관리
+                    </button>
                 </div>
             </c:if>
         </div>
     </div>
 
-
-    <div class="collapse" id="order-collapse">
-        <div class="">
-            <div><button href="${orderList}" class="">주문관리</button>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                주문
+            </button>
+        </h2>
+    </div>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+         data-bs-parent="#accordionExample" style="margin-left: 10px">
+        <div class="accordion-body" style="margin-right: 3px;border-left-style: solid;border-left-width: 3px  ">
+            <div>
+                <br>
+                <button onclick="location.href='${orderList}'" class="accordion-button">주문관리</button>
             </div>
-            <div><button href="${orderLink}" class="">주문작성</button>
+            <div>
+                <button onclick="location.href='${orderLink}'" class="accordion-button">주문작성</button>
             </div>
             <sec:authentication property="authorities" var="authorities"/>
             <c:if test="${authorities eq '[팀장]'}">
-                <div><button href="#" class="">승인관리</button></div>
+                <div>
+                    <button onclick="location.href='${orderLink}'" class="accordion-button">승인관리</button>
+                </div>
             </c:if>
         </div>
     </div>
-
+    <br>
+    <button onclick="location.href='${reportLink}'" class="accordion-button" type="button">리포트</button>
 
 </div>
 

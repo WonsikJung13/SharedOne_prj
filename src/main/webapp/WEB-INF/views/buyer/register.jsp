@@ -22,6 +22,10 @@
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
+        .itemRegisterBtn {
+            position: relative;
+        }
+
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #eeeeee;
@@ -54,52 +58,7 @@
             margin: 20px 0 10px 0;
         }
 
-        .orderTotalPrice {
-            font-size: 1.1em;
-            margin: 20px 0 10px 0;
-        }
-
-        .addBtn {
-            background-color: #5f7175;
-            padding: 5px 30px;
-            margin-left: 350px;
-        }
-
-        .addBtn:hover,
-        .addBtn:focus, .storageBtn:hover, .storageBtn.focus {
-            background-color: #505f62;
-        }
-
-        .storageBtn {
-            background-color: #5f7175;
-            padding: 5px 30px;
-            margin-left: 280px;
-        }
-
-        .submitBtn {
-            background-color: #598f9b;
-            padding: 5px 30px;
-
-        }
-
-        .form-select {
-            width: 250px;
-        }
-
-        .inputLength {
-            width: 250px;
-        }
-
-
-        /*.tableList {*/
-        /*    background-color: #fff;*/
-        /*    height: 444px;*/
-        /*    width: 1000px;*/
-        /*    overFlow: scroll;*/
-        /*    overflow-x: hidden;*/
-        /*}*/
-
-        .tableList td {
+        .table td {
             /*--bs-table-bg: #fffff;*/
             background-color: #fff;
             color: #37393b;
@@ -109,34 +68,94 @@
             font-weight: bold;
         }
 
-        .tableList thead th {
-            position: sticky;
-            top: 0;
-            width: 128px;
-        }
-
-        .tableList input {
-            border: none;
-            background: transparent;
-        }
-
-        .orderAdd {
-            width: 128px;
-        }
-
-        .commentStyle {
+        .tableList {
             background-color: #fff;
-            height: 100px;
+            /*height: 672px;*/
             width: 1000px;
         }
 
-        .orderTotalPrice {
-            color: red;
-        }
-        .table-active{
-            width: 180px;
+        td a {
+            color: #37393b;
+            background-color: #fff;
+            text-decoration: none;
         }
 
+        .table button {
+            background-color: #757575;
+            color: #fff;
+            /*border-radius: 0;*/
+            width: 100px;
+            --bs-btn-font-weight: 600;
+            border: none;
+        }
+
+        .searchBox {
+            background-color: white;
+            width: 1000px;
+            padding: 20px 80px 10px 80px;
+            color: #212529;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        form > * {
+            background-color: white;
+            position: relative;
+        }
+
+        form .form-control, .form-select {
+            height: 40px;
+            margin: 5px 0 5px 0;
+        }
+
+        .input-group {
+            margin-bottom: 0;
+        }
+
+        .itemRegisterBtn {
+            float: right;
+            margin-top: 20px;
+        }
+
+        .itemRegisterBtn button {
+            background-color: #658e99;
+            text-align: center;
+            width: 150px;
+            height: 55px;
+            color: #fff;
+            line-height: 39px;
+            --bs-btn-font-weight: 600;
+            border: none;
+        }
+
+        form div div, label {
+            background-color: white;
+        }
+
+        .searchBtn {
+            width: 100px;
+            height: 40px;
+            margin: 5px 0px 5px 0px;
+            --bs-btn-font-weight: 600;
+            background-color: #658e99;
+            border: none;
+        }
+
+        .selectBtn {
+            width: 100px;
+            height: 40px;
+            margin: 5px 0px 5px 0px;
+            --bs-btn-font-weight: 600;
+            /*background-color: #658e99;*/
+            border: none;
+            border-top-left-radius: 0.375rem;
+            border-bottom-left-radius: 0.375rem;
+        }
+
+        .page-item {
+            background-color: #eeeeee;
+        }
     </style>
 </head>
 <body>
@@ -215,7 +234,6 @@
 <script>
     const ctx = "${pageContext.request.contextPath}";
 
-    let number = [];
 
     document.querySelector("#buyerIdInput").addEventListener("blur", function () {
         const insertBuyerNum = document.querySelector("#buyerIdInput").value;
@@ -238,8 +256,8 @@
             })
 
         setTimeout(function (){
-        for(const a in number){
-            if(number[a] === insertBuyerNum){
+        for(const a in addData){
+            if(addData[a].m_buyer_number === insertBuyerNum){
                 document.querySelector("#addBtn").setAttribute("disabled", "");
                 document.querySelector("#inputText").innerText = "이미 등록되었습니다"
                 $('#inputText').css("color", "red");
@@ -251,13 +269,30 @@
 
 
     document.querySelector("#addBtn").addEventListener("click", function () {
+
+
         const m_buyer_name = document.querySelector("#m_buyer_name").value;
         const m_buyer_region = document.querySelector("#m_buyer_region").value;
         const m_buyer_address = document.querySelector("#m_buyer_address").value;
         const m_buyer_currency = document.querySelector("#m_buyer_currency").value;
         const m_buyer_number = document.querySelector("#buyerIdInput").value;
-
-        number.push(m_buyer_number);
+        if(m_buyer_name == ""){
+            document.querySelector("#m_buyer_name").focus();
+            $('#m_buyer_name').css('border-color','red');
+        }else if(m_buyer_region == "") {
+            document.querySelector("#m_buyer_region").focus();
+            $('#m_buyer_region').css('border-color', 'red');
+        }else if(m_buyer_address == "") {
+            document.querySelector("#m_buyer_address").focus();
+            $('#m_buyer_address').css('border-color', 'red');
+        }else if(m_buyer_currency == "") {
+            document.querySelector("#m_buyer_currency").focus();
+            $('#m_buyer_currency').css('border-color', 'red');
+        }else if(m_buyer_number == "") {
+            document.querySelector("#m_buyer_number").focus();
+            $('#m_buyer_number').css('border-color', 'red');
+        }else{
+        // number.push(m_buyer_number);
 
         const data = {
             m_buyer_name,
@@ -286,6 +321,9 @@
         document.querySelector("#buyerIdInput").value = null;
         document.querySelector("#addBtn").setAttribute("disabled", "");
         document.querySelector("#inputText").innerText = "";
+            console.log("addData")
+            console.log(addData)
+        }
     })
 
     function clickRemove(target) {
@@ -297,6 +335,9 @@
         addData = addData.filter((item) => {
             return !(item["m_buyer_number"] == removeNum)
         })
+
+        console.log("addData")
+        console.log(addData)
     }
 
     document.querySelector("#submitBtn").addEventListener("click", function () {

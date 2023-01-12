@@ -54,7 +54,7 @@ public class BuyerService {
         int records = 10;
         int offset = (page - 1) * records;
 
-        int countAll = buyerMapper.countAll();
+        int countAll = buyerMapper.countAll(searchNum, "%" + searchText + "%");
         int lastPage = (countAll - 1) / records + 1;
 
         int leftPageNumber = (page -1) / 10 * 10 + 1;
