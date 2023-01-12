@@ -254,13 +254,13 @@
                                     ${itemList.m_item_id}
                             </td>
                             <td>
-                                    ${itemList.m_item_name}
-                            </td>
-                            <td>
                                     ${itemList.m_item_group}
                             </td>
                             <td>
                                     ${itemList.m_item_manufacturer}
+                            </td>
+                            <td>
+                                    ${itemList.m_item_name}
                             </td>
                             <td>
                                     ${itemList.m_item_unit}

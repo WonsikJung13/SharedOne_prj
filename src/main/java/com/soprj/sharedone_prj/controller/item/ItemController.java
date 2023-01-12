@@ -86,6 +86,7 @@ public class ItemController {
                      @RequestParam(name = "q", defaultValue = "") String keyword,
                      ItemDto itemDto
     ) {
+        System.out.println("t: " + type + " q: " + keyword);
         List<ItemDto> list = itemService.itemList(page, type, keyword, itemDto);
 //        List<String> groupList = itemService.selectGroup();
 //        List<String> manufacturerList = itemService.selectManufacturer();
