@@ -11,9 +11,9 @@
         </selectKey>
         INSERT INTO m_item (
             m_item_id,
-            m_item_name,
             m_item_group,
             m_item_manufacturer,
+            m_item_name,
             m_item_unit
         )
         VALUES (
@@ -22,9 +22,9 @@
                 LEFT(#{m_item_manufacturer},2),
                 LPAD(#{m_item_id},4,'0')
             ),
-            #{m_item_name},
             #{m_item_group},
             #{m_item_manufacturer},
+            #{m_item_name},
             #{m_item_unit}
         )
     </insert>
@@ -43,13 +43,12 @@
     <select id="selectItemList" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
         SELECT
             m_item_id,
-            m_item_name,
             m_item_group,
             m_item_manufacturer,
+            m_item_name,
             m_item_unit
         FROM m_item
         WHERE
-<!--            m_item_id LIKE #{itemIdParam}-->
         <trim prefixOverrides="OR">
             <if test="type == 'all' or type == 'itemId'">
                 OR m_item_id LIKE #{keyword}
@@ -96,9 +95,9 @@
     <select id="select" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
         SELECT
             m_item_id,
-            m_item_name,
             m_item_group,
             m_item_manufacturer,
+            m_item_name,
             m_item_unit
         FROM
             m_item
@@ -115,9 +114,9 @@
                 LEFT(#{m_item_manufacturer},2),
                 LPAD(#{m_item_id},4,'0')
                 ),
-            m_item_name = #{m_item_name},
             m_item_group = #{m_item_group},
             m_item_manufacturer = #{m_item_manufacturer},
+            m_item_name = #{m_item_name},
             m_item_unit = #{m_item_unit}
         WHERE
             m_item_id = #{m_item_id}
@@ -156,9 +155,9 @@
             m_item
         WHERE
             1=1
-        AND m_item_name = #{m_item_name}
         AND m_item_group = #{m_item_group}
         AND m_item_manufacturer = #{m_item_manufacturer}
+        AND m_item_name = #{m_item_name}
         AND m_item_unit = #{m_item_unit}
     </select>
 </mapper>

@@ -35,25 +35,15 @@ public class ItemController {
 
     @PostMapping("selectManufacturer")
     @ResponseBody
-    public ModelAndView selectManufacturer (@RequestBody Map<String, Object> item_group,
-                                            Model model
+    public List<String> selectManufacturer (@RequestBody Map<String, Object> item_group
             )
     {
-
         String m_item_group = (String) item_group.get("m_item_group");
         System.out.println(m_item_group);
 
         List<String> manufacturerList = itemService.selectManufacturer(m_item_group);
-        System.out.println("manufacturerList: " + manufacturerList);
 
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("jsonView");
-        mav.addObject("manufacturerList", manufacturerList);
-        model.addAttribute("manufacturerList", manufacturerList);
-        System.out.println(mav);
-        System.out.println(model);
-//        return manufacturerList;
-        return mav;
+        return manufacturerList;
     }
 
     @PostMapping("register")
@@ -96,6 +86,7 @@ public class ItemController {
                      @RequestParam(name = "q", defaultValue = "") String keyword,
                      ItemDto itemDto
     ) {
+        System.out.println("t: " + type + " q: " + keyword);
         List<ItemDto> list = itemService.itemList(page, type, keyword, itemDto);
 //        List<String> groupList = itemService.selectGroup();
 //        List<String> manufacturerList = itemService.selectManufacturer();
