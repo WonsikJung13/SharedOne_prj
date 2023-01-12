@@ -33,4 +33,5 @@ public interface OrderMapper {
 
   OrderHeaderDTO orderDetail(int m_order_id);
 
+  int orderAccept(OrderDto orderDto);
 }

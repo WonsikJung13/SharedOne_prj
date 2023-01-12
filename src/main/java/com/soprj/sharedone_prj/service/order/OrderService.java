@@ -56,4 +56,8 @@ public class OrderService {
     public OrderHeaderDTO orderDetail(int m_order_id) {
         return mapper.orderDetail(m_order_id);
     }
+
+    public int orderAccept(OrderDto orderDto) {
+        return mapper.orderAccept(orderDto);
+    }
 }

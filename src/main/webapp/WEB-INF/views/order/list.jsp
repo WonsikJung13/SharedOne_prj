@@ -22,6 +22,10 @@
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap"
             rel="stylesheet">
     <style>
+        .row{
+            --bs-gutter-x: 0;
+        }
+
         .itemRegisterBtn {
             position: relative;
         }
@@ -187,87 +191,90 @@
     </style>
 </head>
 <body>
-<div class="row">
-    <div class="col-3">
-        <my:header></my:header>
-    </div>
-    <div class="col">
-        <div style="display: flex;justify-content: space-between;width: 1000px;">
-            <div id="itemListTitle">
-                <h1 id="header">주문 관리 및 등록</h1>
+        <div class="row">
+            <div class="col-3">
+                <my:header></my:header>
             </div>
-            <div class="itemRegisterBtn">
-                <c:url value="/order/register" var="registerLink"></c:url>
-                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">주문 작성
-                </button>
-            </div>
-        </div>
-        <c:url value="/item/list" var="listLink"></c:url>
-        <form action="${listLink}" role="search">
-            <div class="searchBox ">
-                <div class="row justify-content-start">
-                    <div class="col-4">
-                        <label>제품코드</label>
-                        <input class="form-select" type="text" list="itemList" style="width: 210px;"
-                               autocomplete="off"/>
-                        <datalist id="itemList">
-                            <c:forEach items="${itemList}" var="itemList">
-                                <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
-                    <div class="col-4">
-                        <label>거래처코드</label>
-                        <input class="form-select" type="text" list="buyerList" style="width: 210px;"
-                               autocomplete="off"/>
-                        <datalist id="buyerList">
-                            <c:forEach items="${buyerList}" var="buyerList">
-                                <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
+            <div class="col">
+                        <div style="display: flex;justify-content: space-between;width: 1000px;">
+                            <div id="itemListTitle">
+                                <h1 id="header">주문 관리 및 등록</h1>
+                            </div>
+                            <div class="itemRegisterBtn">
+                                <c:url value="/order/register" var="registerLink"></c:url>
+                                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">주문 작성
+                                </button>
+                            </div>
+                        </div>
+                        <c:url value="/item/list" var="listLink"></c:url>
+                        <form action="${listLink}" role="search">
+                            <div class="searchBox ">
+                                    <div class="row justify-content-start">
+                                        <div class="col-4">
+                                            <label>제품코드</label>
+                                            <input class="form-select" type="text" list="itemList" style="width: 210px;"
+                                                   autocomplete="off"/>
+                                            <datalist id="itemList">
+                                                <c:forEach items="${itemList}" var="itemList">
+                                                    <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>
+                                                </c:forEach>
+                                            </datalist>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>거래처코드</label>
+                                            <input class="form-select" type="text" list="buyerList" style="width: 210px;"
+                                                   autocomplete="off"/>
+                                            <datalist id="buyerList">
+                                                <c:forEach items="${buyerList}" var="buyerList">
+                                                    <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
+                                                </c:forEach>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="input-group" style="float: none">
+                                        <input type="text" class="form-control">
+                                        <button class="btn btn-secondary searchBtn" type="submit">검색</button>
+                                    </div>
+                            </div>
+                        </form>
+                <div class="row justify-content-end" style="width: 1000px">
+                    <input style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal"
+                           data-bs-target="#removeModal" value="삭제" class="btn btn-danger">
                 </div>
-                <div class="input-group" style="float: none">
-                    <input type="text" class="form-control">
-                    <button class="btn btn-secondary searchBtn" type="submit">검색</button>
-                </div>
-            </div>
-        </form>
-        <div class="row justify-content-end">
-            <input style="float: right; width: 100px; margin-right: 100px" data-bs-toggle="modal"
-                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger">
-        </div>
-        <%--수정하기로 이동--%>
-        <%--                <c:url value="/price/remove" var="removeLink"/>--%>
-        <%--                <form id="removeForm" action="${removeLink }" method="post">--%>
-        <%--                    <input type="hidden" name="m_price_id" value="">--%>
-        <%--                </form>--%>
+<%--수정하기로 이동--%>
+<%--                <c:url value="/price/remove" var="removeLink"/>--%>
+<%--                <form id="removeForm" action="${removeLink }" method="post">--%>
+<%--                    <input type="hidden" name="m_price_id" value="">--%>
+<%--                </form>--%>
 
-        <div class="tableList">
-            <table class="table table-hover addList">
-                <thead style="width: auto">
-                <tr>
-                    <th>주문번호</th>
-                    <th>거래처코드</th>
-                    <th>거래처명</th>
-                    <th>전체금액</th>
-                    <th>발주상태</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${orderList }" var="orderList">
-                    <tr onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
-                        data-bs-target="#orderConfirm" value="">
-                        <td>${orderList.m_order_id}</td>
-                        <td>${orderList.m_buyer_id}</td>
-                        <td>${orderList.m_order_buyerName}</td>
-                        <td>${orderList.m_order_sumPrice}</td>
-                        <td>${orderList.m_order_status}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+                <div class="tableList">
+                    <table class="table table-hover addList">
+                        <thead style="width: auto">
+                        <tr>
+                            <th>주문번호</th>
+                            <th>거래처코드</th>
+                            <th>거래처명</th>
+                            <th>전체금액</th>
+                            <th>발주상태</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${orderList }" var="orderList">
+                                <tr onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
+                                    data-bs-target="#orderConfirm" value="">
+<%--                                    <td>--%>
+<%--                                        <input id="itemBox" name="itemBox" type="checkbox" value="${itemList.m_item_id}">--%>
+<%--                                    </td>--%>
+                                    <td>${orderList.m_order_id}</td>
+                                    <td>${orderList.m_buyer_id}</td>
+                                    <td>${orderList.m_order_buyerName}</td>
+                                    <td>${orderList.m_order_sumPrice}</td>
+                                    <td>${orderList.m_order_status}</td>
+                                </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
 
         <form id="removeForm" action="${removeLink }" method="post">
             <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
@@ -296,18 +303,19 @@
             </div>
         </div>
 
-        <%--주문서 확인하기--%>
-        <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="orderConfirmLabel">주문서 확인</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="orderForm" method="post">
-                            <input type="hidden" name="m_order_id">
-                            <input type="hidden" name="m_order_message">
+            <%--주문서 확인하기--%>
+            <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="orderConfirmLabel">주문서 확인</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" id="orderForm" method="post">
+                                <input type="hidden" name="m_order_id" id="m_order_id" >
+                                <input type="hidden" name="m_order_status" id="m_order_status" >
+
                             <h2>거래처</h2>
                             <table class="table table-bordered orderModal">
                                 <tbody>
@@ -377,25 +385,25 @@
                             <div class="commentStyle">
                                 <h2>메세지</h2>
                                 <div>
-                                    <textarea id="message"></textarea>
+                                    <textarea id="message" name="m_order_memo"></textarea>
                                 </div>
                             </div>
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">승인반려
-                        </button>
-                        <button id="orderConfirmButton" type="button"
-                                class="btn btn-danger">승인확인
-                        </button>
+                        <div class="modal-footer">
+                            <button id="orderReturnButton" class="btn btn-secondary">
+                                승인반려
+                            </button>
+                            <button id="orderConfirmButton" class="btn btn-danger">
+                                승인확인
+                            </button>
+                        </div>
                     </div>
+                    </form>
                 </div>
-                </form>
+            </div>
             </div>
         </div>
-    </div>
-</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -446,87 +454,41 @@
                         let itemTD7 = document.createElement("td");
                         itemTD7.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_totalPrice + ""));
 
-                        itemTR.appendChild(itemTD1);
-                        itemTR.appendChild(itemTD2);
-                        itemTR.appendChild(itemTD3);
-                        itemTR.appendChild(itemTD4);
-                        itemTR.appendChild(itemTD5);
-                        itemTR.appendChild(itemTD6);
-                        itemTR.appendChild(itemTD7);
-                        itemBody.appendChild(itemTR);
+                            itemTR.appendChild(itemTD1);
+                            itemTR.appendChild(itemTD2);
+                            itemTR.appendChild(itemTD3);
+                            itemTR.appendChild(itemTD4);
+                            itemTR.appendChild(itemTD5);
+                            itemTR.appendChild(itemTD6);
+                            itemTR.appendChild(itemTD7);
+                            itemBody.appendChild(itemTR);
                     }
 
 
                 }
             })
     }
+            // 승인 확인 버튼
+            document.querySelector("#orderConfirmButton").addEventListener("click",function(){
+                const orderId = document.querySelector(".orderId").innerText;
+                document.querySelector("#m_order_id").value = orderId;
+                document.querySelector("#m_order_status").value = "승인완료";
 
-    <%-- 오더 디테이 목록 불러오기 --%>
-    // function orderDetail(target) {
-    //     const m_order_id = target.dataset.value;
-    //     const data = {m_order_id}
-    //     fetch(`\${ctx}/order/list/` + m_order_id, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         }
-    //         // body : JSON.stringify(data)
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             document.querySelector(".buyerName").innerHTML = data.at(0).m_order_buyerName;
-    //             document.querySelector(".buyerAddress").innerHTML = data.at(0).m_order_buyerAddress;
-    //             document.querySelector(".buyerRegion").innerHTML = data.at(0).m_order_buyerRegion;
-    //             document.querySelector(".buyerCurrency").innerHTML = data.at(0).m_order_buyerCurrency;
-    //             document.querySelector(".buyerNumber").innerHTML = data.at(0).m_order_buyerNumber;
-    //             document.querySelector(".inserted").innerHTML = data.at(0).m_order_inserted;
-    //             document.querySelector(".sumPrice").innerHTML = data.at(0).m_order_sumPrice;
-    //             document.querySelector(".comment").innerHTML =data.at(0).m_order_comment;
-    //             document.querySelector(".orderId").innerHTML =data.at(0).m_order_id;
-    //             document.querySelector(".orderDate").innerHTML = data.at(0).m_order_date;
-    //
-    //             console.log('아이템리스트' + data.at(0).orderItemDTOList)
-    //
-    //             for (i = 0; i < data.at(0).orderItemDTOList.length; i++) {
-    //                 let itemTR = document.createElement("tr")
-    //                 let itemTD1 = document.createElement("td");
-    //                 itemTD1.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemId +""));
-    //                 let itemTD2 = document.createElement("td");
-    //                 itemTD2.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemName +""));
-    //                 let itemTD3 = document.createElement("td");
-    //                 itemTD3.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemGroup +""));
-    //                 let itemTD4 = document.createElement("td");
-    //                 itemTD4.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_count +""));
-    //                 let itemTD5 = document.createElement("td");
-    //                 itemTD5.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemManufacturer +""));
-    //                 let itemTD6 = document.createElement("td");
-    //                 itemTD6.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_price +""));
-    //                 let itemTD7 = document.createElement("td");
-    //                 itemTD7.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_totalPrice +""));
-    //
-    //                 itemTR.appendChild(itemTD1);
-    //                 itemTR.appendChild(itemTD2);
-    //                 itemTR.appendChild(itemTD3);
-    //                 itemTR.appendChild(itemTD4);
-    //                 itemTR.appendChild(itemTD5);
-    //                 itemTR.appendChild(itemTD6);
-    //                 itemTR.appendChild(itemTD7);
-    //                 itemBody.appendChild(itemTR);
-    //             }
-    //         })
-    // }
+                document.querySelector("#orderForm").submit();
+            })
+            // 승인 반려 버튼
+            document.querySelector("#orderReturnButton").addEventListener("click",function(){
+                const orderId = document.querySelector(".orderId").innerText;
+                document.querySelector("#m_order_id").value = orderId;
 
-    document.querySelector("#orderConfirmButton").addEventListener("click", function () {
-        // 주문번호에 따라 orderStatus 생성중으로 디비 넣어
-        // 요청 메세지 insert
-        const orderId = document.querySelector(".orderId").innerText;
-        document.setAttribute
-        const message = document.querySelector("#message").value;
+                //오더 상태 input value
+                document.querySelector("#m_order_status").value = "주문반려";
+                console.log( document.querySelector("#m_order_status").value );
 
-        document.querySelector("#orderForm").submit();
+                document.querySelector("#orderForm").submit();
+            })
 
 
-    })
-</script>
+        </script>
 </body>
 </html>

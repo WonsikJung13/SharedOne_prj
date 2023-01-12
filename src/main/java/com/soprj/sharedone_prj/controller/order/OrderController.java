@@ -106,7 +106,11 @@ public class OrderController {
     }
 
     @PostMapping("list")
-    public String orderAccept(){
+    public String orderAccept(OrderDto orderDto, String m_order_status){
+        System.out.println(m_order_status);
+        System.out.println(orderDto);
+        orderService.orderAccept(orderDto);
+
         return "redirect:/order/list";
     }
 
