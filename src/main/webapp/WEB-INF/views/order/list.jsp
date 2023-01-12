@@ -150,6 +150,37 @@
             background-color: #658e99;
             border: none;
         }
+        .modal-content{
+            width: 1000px;
+        }
+
+        .orderModal{
+            width: 960px;
+        }
+        .orderItmeList{
+            --bs-table-bg: #5f7175;
+            --bs-table-color: #fff;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+            width: 960px;
+        }
+        .tablePrice{
+            width: 400px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight:unset;
+            color: white;
+            --bs-table-bg: #5f7175;
+        }
+
+        textarea {
+            height: 140px;
+            width: 960px;
+            background-color: #fff;
+            border-color:#dee2e6;
+        }
     </style>
 </head>
 <body>
@@ -160,8 +191,7 @@
             <div class="col">
                         <div style="display: flex;justify-content: space-between;width: 1000px;">
                             <div id="itemListTitle">
-                                <h1 id="header">주문관리</h1>
-                                <%--      <h2>제품 검색</h2>--%>
+                                <h1 id="header">주문 관리 및 등록</h1>
                             </div>
                             <div class="itemRegisterBtn">
                                 <c:url value="/order/register" var="registerLink"></c:url>
@@ -198,20 +228,20 @@
                                         <input type="text" class="form-control">
                                         <button class="btn btn-secondary searchBtn" type="submit">검색</button>
                                     </div>
-
                             </div>
                         </form>
                 <div class="row justify-content-end">
                     <input style="float: right; width: 100px; margin-right: 100px" data-bs-toggle="modal"
-                           data-bs-target="#removeModal" value="삭제" class="btn btn-danger"></input>
+                           data-bs-target="#removeModal" value="삭제" class="btn btn-danger">
                 </div>
-                <c:url value="/price/remove" var="removeLink"/>
-                <form id="removeForm" action="${removeLink }" method="post">
-                    <input type="hidden" name="m_price_id" value="">
-                </form>
-                <div class="tableList">
+<%--수정하기로 이동--%>
+<%--                <c:url value="/price/remove" var="removeLink"/>--%>
+<%--                <form id="removeForm" action="${removeLink }" method="post">--%>
+<%--                    <input type="hidden" name="m_price_id" value="">--%>
+<%--                </form>--%>
 
-                    <table class="table addList">
+                <div class="tableList">
+                    <table class="table table-hover addList">
                         <thead style="width: auto">
                         <tr>
                             <th>주문번호</th>
@@ -219,62 +249,225 @@
                             <th>거래처명</th>
                             <th>전체금액</th>
                             <th>발주상태</th>
-
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach items="${orderList }" var="orderList">
-                            <div>
-                                <tr>
+                                <tr onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
+                                    data-bs-target="#orderConfirm" value="">
                                     <td>${orderList.m_order_id}</td>
                                     <td>${orderList.m_buyer_id}</td>
                                     <td>${orderList.m_order_buyerName}</td>
                                     <td>${orderList.m_order_sumPrice}</td>
                                     <td>${orderList.m_order_status}</td>
-<%--                                    <td>--%>
-<%--                                        <c:url value="/price/modify" var="modifyLink">--%>
-<%--                                            <c:param value="${priceList.m_price_id }" name="m_price_id"/>--%>
-<%--                                        </c:url>--%>
-<%--                                        <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>--%>
-<%--                                    </td>--%>
                                 </tr>
-                            </div>
                         </c:forEach>
                         </tbody>
                     </table>
+                </div>
 
-
-
-                    <form id="removeForm" action="${removeLink }" method="post">
-            <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
-        </form>
-        <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
-                            확인</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        삭제하시겠습니까?
-                    </div>
-                    <div class="modal-footer">
-                        <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">취소
-                        </button>
-                        <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton" type="button"
-                                class="btn btn-danger">확인
-                        </button>
+                <form id="removeForm" action="${removeLink }" method="post">
+                    <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
+                </form>
+<%--오더리스트 삭제하기--%>
+                <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">삭제
+                                    확인</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                삭제하시겠습니까?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">취소
+                                </button>
+                                <button  id="removeConfirmButton" type="button"
+                                        class="btn btn-danger">확인
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+            <%--주문서 확인하기--%>
+            <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="orderConfirmLabel">주문서 확인</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="orderForm" method="post">
+                                <input type="hidden" name="m_order_id">
+                                <input type="hidden" name="m_order_message">
+                            <h2>거래처</h2>
+                            <table class="table table-bordered orderModal">
+                                <tbody>
+                                <tr>
+                                    <td class="table-active">주문번호</td>
+                                    <td class="orderId"></td>
+                                    <td class="table-active">주문일</td>
+                                    <td class="orderDate"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table-active">거래처</td>
+                                    <td class="buyerName"></td>
+                                    <td class="table-active">주소</td>
+                                    <td class="buyerAddress"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table-active">국가</td>
+                                    <td class="buyerRegion"></td>
+                                    <td class="table-active">사업자등록번호</td>
+                                    <td class="buyerNumber"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table-active">통화</td>
+                                    <td class="buyerCurrency"></td>
+                                    <td class="table-active">납품요청일</td>
+                                    <td colspan="3" class="inserted"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+                            <h2>주문 제품</h2>
+                                <table class="table orderItmeList">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">제품코드</th>
+                                            <th scope="col">제품명</th>
+                                            <th scope="col">제품품목</th>
+                                            <th scope="col">제조사</th>
+                                            <th scope="col">판매가격</th>
+                                            <th scope="col">주문수량</th>
+                                            <th scope="col">총 금액</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="itemBody">
+
+                                    </tbody>
+                                </table>
+
+
+                            <table class="table table-bordered orderModal">
+                                <tbody>
+                                <tr>
+                                    <th class="tablePrice">주문 총 금액</th>
+                                    <td class="sumPrice"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-bordered orderModal">
+                                <tbody>
+                                <tr>
+                                    <th class="tablePrice">승인 요청 메세지</th>
+                                    <td class="comment"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="commentStyle">
+                                <h2>메세지</h2>
+                                <div>
+                                    <textarea id="message"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">승인반려
+                            </button>
+                            <button id="orderConfirmButton" type="button"
+                                    class="btn btn-danger">승인확인
+                            </button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
             </div>
         </div>
-    </div>
-</div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
             crossorigin="anonymous"></script>
+        <script>
+            const ctx = "${pageContext.request.contextPath}";
+
+            <%-- 오더 디테이 목록 불러오기 --%>
+            function orderDetail(target) {
+                const m_order_id = target.dataset.value;
+                const data = {m_order_id}
+                fetch(`\${ctx}/order/list/` + m_order_id, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                    // body : JSON.stringify(data)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        document.querySelector(".buyerName").innerHTML = data.at(0).m_order_buyerName;
+                        document.querySelector(".buyerAddress").innerHTML = data.at(0).m_order_buyerAddress;
+                        document.querySelector(".buyerRegion").innerHTML = data.at(0).m_order_buyerRegion;
+                        document.querySelector(".buyerCurrency").innerHTML = data.at(0).m_order_buyerCurrency;
+                        document.querySelector(".buyerNumber").innerHTML = data.at(0).m_order_buyerNumber;
+                        document.querySelector(".inserted").innerHTML = data.at(0).m_order_inserted;
+                        document.querySelector(".sumPrice").innerHTML = data.at(0).m_order_sumPrice;
+                        document.querySelector(".comment").innerHTML =data.at(0).m_order_comment;
+                        document.querySelector(".orderId").innerHTML =data.at(0).m_order_id;
+                        document.querySelector(".orderDate").innerHTML = data.at(0).m_order_date;
+
+                        for (i = 0; i < data.at(0).orderItemDTOList.length; i++) {
+                            let itemTR = document.createElement("tr")
+                            let itemTD1 = document.createElement("td");
+                            itemTD1.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemId +""));
+                            let itemTD2 = document.createElement("td");
+                            itemTD2.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemName +""));
+                            let itemTD3 = document.createElement("td");
+                            itemTD3.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemGroup +""));
+                            let itemTD4 = document.createElement("td");
+                            itemTD4.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_count +""));
+                            let itemTD5 = document.createElement("td");
+                            itemTD5.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemManufacturer +""));
+                            let itemTD6 = document.createElement("td");
+                            itemTD6.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_price +""));
+                            let itemTD7 = document.createElement("td");
+                            itemTD7.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_totalPrice +""));
+
+                            itemTR.appendChild(itemTD1);
+                            itemTR.appendChild(itemTD2);
+                            itemTR.appendChild(itemTD3);
+                            itemTR.appendChild(itemTD4);
+                            itemTR.appendChild(itemTD5);
+                            itemTR.appendChild(itemTD6);
+                            itemTR.appendChild(itemTD7);
+                            itemBody.appendChild(itemTR);
+                        }
+                    })
+            }
+
+            document.querySelector("#orderConfirmButton").addEventListener("click",function(){
+                // 주문번호에 따라 orderStatus 생성중으로 디비 넣어
+                // 요청 메세지 insert
+                const orderId = document.querySelector(".orderId").innerText;
+                document.setAttribute
+                const message = document.querySelector("#message").value;
+
+                document.querySelector("#orderForm").submit();
+
+
+            })
+
+
+        </script>
 </body>
 </html>

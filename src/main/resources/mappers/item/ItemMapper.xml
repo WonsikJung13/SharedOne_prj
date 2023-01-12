@@ -48,14 +48,49 @@
             m_item_manufacturer,
             m_item_unit
         FROM m_item
-<!--        WHERE-->
+        WHERE
 <!--            m_item_id LIKE #{itemIdParam}-->
+        <trim prefixOverrides="OR">
+            <if test="type == 'all' or type == 'itemId'">
+                OR m_item_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'itemGroup'">
+                OR m_item_group LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'itemManufacturer'">
+                OR m_item_manufacturer LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'itemName'">
+                OR m_item_name LIKE #{keyword}
+            </if>
+        </trim>
         ORDER BY m_item_inserted DESC
         LIMIT #{offset}, #{records}
     </select>
 
     <select id="countAll" resultType="int">
         SELECT COUNT(*) FROM m_item
+        WHERE
+        <trim prefixOverrides="OR">
+            <if test="type == 'all' or type == 'itemId'">
+                OR m_item_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'itemGroup'">
+                OR m_item_group LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'itemManufacturer'">
+                OR m_item_manufacturer LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'itemName'">
+                OR m_item_name LIKE #{keyword}
+            </if>
+        </trim>
     </select>
 
     <select id="select" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
@@ -104,11 +139,13 @@
         ORDER BY m_item_group DESC
     </select>
 
-    <select id="selectManufacturer" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
+    <select id="selectManufacturer" resultType="String">
         SELECT DISTINCT
             m_item_manufacturer
         FROM
             m_item
+        WHERE
+            m_item_group = #{m_item_group}
         ORDER BY m_item_manufacturer DESC
     </select>
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
@@ -27,10 +28,32 @@ public class ItemController {
             model.addAttribute("getItem", selectItem);
         }
         List<String> groupList = itemService.selectGroup();
-        List<String> manufacturerList = itemService.selectManufacturer();
+//        List<String> manufacturerList = itemService.selectManufacturer();
 
         model.addAttribute("groupList", groupList);
+    }
+
+    @PostMapping("selectManufacturer")
+    @ResponseBody
+    public ModelAndView selectManufacturer (@RequestBody Map<String, Object> item_group,
+                                            Model model
+            )
+    {
+
+        String m_item_group = (String) item_group.get("m_item_group");
+        System.out.println(m_item_group);
+
+        List<String> manufacturerList = itemService.selectManufacturer(m_item_group);
+        System.out.println("manufacturerList: " + manufacturerList);
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("jsonView");
+        mav.addObject("manufacturerList", manufacturerList);
         model.addAttribute("manufacturerList", manufacturerList);
+        System.out.println(mav);
+        System.out.println(model);
+//        return manufacturerList;
+        return mav;
     }
 
     @PostMapping("register")
@@ -67,18 +90,20 @@ public class ItemController {
 
     @GetMapping("list")
     public void list(Model model,
-                     @RequestParam(name = "m_item_id", defaultValue = "") String itemIdParam,
+//                     @RequestParam(name = "m_item_id", defaultValue = "") String itemIdParam,
                      @RequestParam(name = "page", defaultValue = "1") int page,
+                     @RequestParam(name = "t", defaultValue = "all") String type,
+                     @RequestParam(name = "q", defaultValue = "") String keyword,
                      ItemDto itemDto
     ) {
-        List<ItemDto> list = itemService.itemList(itemIdParam, page, itemDto);
-        List<String> groupList = itemService.selectGroup();
-        List<String> manufacturerList = itemService.selectManufacturer();
+        List<ItemDto> list = itemService.itemList(page, type, keyword, itemDto);
+//        List<String> groupList = itemService.selectGroup();
+//        List<String> manufacturerList = itemService.selectManufacturer();
 
 
         model.addAttribute("itemList", list);
-        model.addAttribute("groupList", groupList);
-        model.addAttribute("manufacturerList", manufacturerList);
+//        model.addAttribute("groupList", groupList);
+//        model.addAttribute("manufacturerList", manufacturerList);
     }
 
     @PostMapping("remove")
