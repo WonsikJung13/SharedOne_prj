@@ -232,8 +232,7 @@
                 <c:forEach items="${priceList }" var="priceList">
                     <div>
                         <tr>
-                            <td><input id="priceBox" name="priceBox" type="checkbox" value="${priceList.m_price_id}">
-                            </td>
+                            <td><input id="priceBox" name="priceBox" type="checkbox" value="${priceList.m_price_id}"></td>
                             <td>${priceList.m_item_id }</td>
                             <td>${priceList.m_item_name }</td>
                             <td>${priceList.m_buyer_id }</td>
