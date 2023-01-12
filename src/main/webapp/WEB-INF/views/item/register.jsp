@@ -305,7 +305,26 @@
 
             // $('.groupEditOption').hide();
         }
+
+        const itemGroup = document.querySelector("#groupSelect");
+        const m_item_group = itemGroup.options[itemGroup.selectedIndex].value;
+
+        console.log(m_item_group)
+        const groupValue = {
+            m_item_group
+        }
+        $.ajax({
+            url: ctx + '/item/selectManufacturer/',
+            method: 'POST',
+            data : JSON.stringify(groupValue),
+            contentType: 'application/json; charset=UTF-8',
+            success: function(res) {
+                console.log("res: " + res)
+
+            }
+        })
     });
+
 
     // 제품 제조사 select
     var initialText = $('.manufacturerEditable').val();
@@ -470,75 +489,6 @@
         })
     }
 </script>
-<%--<script>--%>
-<%--    // 중복체크--%>
-<%--    document.getElementById("plusButton1").addEventListener('click', function() {--%>
-
-<%--        const itemGroup = document.querySelector("#groupSelect");--%>
-<%--        const m_item_group = itemGroup.options[itemGroup.selectedIndex].value;--%>
-<%--        const itemManufacturer = document.querySelector("#manufacturerSelect");--%>
-<%--        const m_item_manufacturer = itemManufacturer.options[itemManufacturer.selectedIndex].value;--%>
-<%--        const m_item_name = document.querySelector("input[name='m_item_name']").value;--%>
-<%--        const m_item_unit = document.querySelector("input[name='m_item_unit']").value;--%>
-
-<%--        const itemCompareList = {--%>
-<%--            m_item_group,--%>
-<%--            m_item_manufacturer,--%>
-<%--            m_item_name,--%>
-<%--            m_item_unit--%>
-<%--        }--%>
-<%--        const ctx = "${pageContext.request.contextPath}";--%>
-
-<%--        const check =--%>
-<%--        $.ajax({--%>
-<%--            url: ctx + '/item/comapare',--%>
-<%--            method: 'POST',--%>
-<%--            data: JSON.stringify(itemCompareList),--%>
-<%--            contentType: 'application/json; charset=UTF-8',--%>
-<%--            success: function (cnt) {--%>
-<%--                if (cnt >= 1) {--%>
-<%--                    alert("이미 등록 되어있는 제품입니다.");--%>
-<%--                    check.abort();--%>
-<%--                }--%>
-<%--            }--%>
-<%--        });--%>
-
-<%--        let tbodyNum = table.tBodies[0].rows;--%>
-<%--        let dataList = [];--%>
-<%--        let data = {};--%>
-<%--        let lastIndex = document.querySelector(".addList").tBodies[0].rows.length-1;--%>
-
-<%--        if (lastIndex > 0) {--%>
-<%--            data = {--%>
-<%--                "m_item_group": $("input[name='m_item_group']").eq(lastIndex).val(),--%>
-<%--                "m_item_manufacturer": $("input[name='m_item_manufacturer']").eq(lastIndex).val(),--%>
-<%--                "m_item_name": $("input[name='m_item_name']").eq(lastIndex).val(),--%>
-<%--                "m_item_unit": $("input[name='m_item_unit']").eq(lastIndex).val()--%>
-<%--            };--%>
-<%--            let dataValue = Object.values(data);--%>
-<%--            let CompareValue = Object.values(itemCompareList);--%>
-
-<%--            if ( dataValue == CompareValue) {--%>
-<%--                alert("테이블에 중복된 아이템이 있습니다.")--%>
-<%--            }--%>
-<%--        }--%>
-<%--        // };--%>
-
-<%--        // if (dataList != null && dataList.length > 0) {--%>
-<%--        //     // console.log(dataList)--%>
-<%--        //     for (let j = 1; j < dataList.length; j++) {--%>
-<%--        //--%>
-<%--        //         // let dataValue = Object.values(dataList[j]);--%>
-<%--        //         // console.log("j: " + dataValue)--%>
-<%--        //         console.log("i: " + CompareValue)--%>
-<%--        //--%>
-<%--        //     }--%>
-<%--        //--%>
-<%--        // }--%>
-<%--        });--%>
-
-
-<%--</script>--%>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
