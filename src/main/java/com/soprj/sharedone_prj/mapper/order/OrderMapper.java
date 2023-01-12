@@ -4,6 +4,7 @@ import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.domain.order.ItemListVO;
 import com.soprj.sharedone_prj.domain.order.OrderDto;
+import com.soprj.sharedone_prj.domain.order.OrderItemDTO;
 import com.soprj.sharedone_prj.domain.order.OrderPriceVO;
 
 import java.util.List;
@@ -30,4 +31,6 @@ public interface OrderMapper {
   int addDataItem(Map<String, Object> stringObjectMap);
 
   List<OrderDto> orderList();
+
+  List<OrderItemDTO> orderDetail(int m_order_id);
 }

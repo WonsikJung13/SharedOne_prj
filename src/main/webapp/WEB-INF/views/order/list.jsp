@@ -150,6 +150,13 @@
             background-color: #658e99;
             border: none;
         }
+        .modal-content{
+            width: 1000px;
+        }
+
+        .orderModal{
+            width: 960px;
+        }
     </style>
 </head>
 <body>
@@ -160,7 +167,7 @@
             <div class="col">
                         <div style="display: flex;justify-content: space-between;width: 1000px;">
                             <div id="itemListTitle">
-                                <h1 id="header">주문관리</h1>
+                                <h1 id="header">주문 관리 및 등록</h1>
                                 <%--      <h2>제품 검색</h2>--%>
                             </div>
                             <div class="itemRegisterBtn">
@@ -198,20 +205,20 @@
                                         <input type="text" class="form-control">
                                         <button class="btn btn-secondary searchBtn" type="submit">검색</button>
                                     </div>
-
                             </div>
                         </form>
                 <div class="row justify-content-end">
                     <input style="float: right; width: 100px; margin-right: 100px" data-bs-toggle="modal"
-                           data-bs-target="#removeModal" value="삭제" class="btn btn-danger"></input>
+                           data-bs-target="#removeModal" value="삭제" class="btn btn-danger">
                 </div>
-                <c:url value="/price/remove" var="removeLink"/>
-                <form id="removeForm" action="${removeLink }" method="post">
-                    <input type="hidden" name="m_price_id" value="">
-                </form>
-                <div class="tableList">
+<%--수정하기로 이동--%>
+<%--                <c:url value="/price/remove" var="removeLink"/>--%>
+<%--                <form id="removeForm" action="${removeLink }" method="post">--%>
+<%--                    <input type="hidden" name="m_price_id" value="">--%>
+<%--                </form>--%>
 
-                    <table class="table addList">
+                <div class="tableList">
+                    <table class="table table-hover addList">
                         <thead style="width: auto">
                         <tr>
                             <th>주문번호</th>
@@ -219,62 +226,195 @@
                             <th>거래처명</th>
                             <th>전체금액</th>
                             <th>발주상태</th>
-
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach items="${orderList }" var="orderList">
-                            <div>
-                                <tr>
+                                <tr onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
+                                    data-bs-target="#orderConfirm" value="">
                                     <td>${orderList.m_order_id}</td>
                                     <td>${orderList.m_buyer_id}</td>
                                     <td>${orderList.m_order_buyerName}</td>
                                     <td>${orderList.m_order_sumPrice}</td>
                                     <td>${orderList.m_order_status}</td>
-<%--                                    <td>--%>
-<%--                                        <c:url value="/price/modify" var="modifyLink">--%>
-<%--                                            <c:param value="${priceList.m_price_id }" name="m_price_id"/>--%>
-<%--                                        </c:url>--%>
-<%--                                        <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>--%>
-<%--                                    </td>--%>
                                 </tr>
-                            </div>
                         </c:forEach>
                         </tbody>
                     </table>
+                </div>
 
-
-
-                    <form id="removeForm" action="${removeLink }" method="post">
-            <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
-        </form>
-        <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
-                            확인</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <form id="removeForm" action="${removeLink }" method="post">
+                    <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
+                </form>
+<%--오더리스트 삭제하기--%>
+                <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">삭제
+                                    확인</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                삭제하시겠습니까?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">취소
+                                </button>
+                                <button  id="removeConfirmButton" type="button"
+                                        class="btn btn-danger">확인
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        삭제하시겠습니까?
-                    </div>
-                    <div class="modal-footer">
-                        <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">취소
-                        </button>
-                        <button style="font-family: 'LINESeedKR-Bd'" id="removeConfirmButton" type="button"
-                                class="btn btn-danger">확인
-                        </button>
+                </div>
+
+            <%--주문서 확인하기--%>
+            <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="orderConfirmLabel">주문서 확인</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <h2>거래처</h2>
+                            <table class="table table-bordered orderModal">
+                                <tbody>
+                                <tr>
+                                    <td class="table-active">거래처</td>
+                                    <td class="buyerName"></td>
+                                    <td class="table-active">주소</td>
+                                    <td class="buyerAddress"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table-active">국가</td>
+                                    <td class="buyerRegion"></td>
+                                    <td class="table-active">사업자등록번호</td>
+                                    <td class="buyerNumber"></td>
+                                </tr>
+                                <tr>
+                                    <td class="table-active">통화</td>
+                                    <td class="buyerCurrency"></td>
+                                    <td class="table-active">납품요청일</td>
+                                    <td colspan="3" class="inserted"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+                            <h2>주문 제품</h2>
+                                <table class="table addList orderModal">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">제품코드</th>
+                                            <th scope="col">제품명</th>
+                                            <th scope="col">제품품목</th>
+                                            <th scope="col">제조사</th>
+                                            <th scope="col">판매가격</th>
+                                            <th scope="col">주문수량</th>
+                                            <th scope="col">총 금액</th>
+                                        </tr>
+                                    </thead>
+                                    <tbodylass="itemBody">
+<%--                                        <tr>--%>
+<%--                                            <td class="a1"></td>--%>
+<%--                                            <td class="a2"></td>--%>
+<%--                                            <td class="a3"></td>--%>
+<%--                                            <td class="a4"></td>--%>
+<%--                                            <td class="a5"></td>--%>
+<%--                                            <td class="a6"></td>--%>
+<%--                                            <td class="a7"></td>--%>
+<%--                                        </tr>--%>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <table class="table table-bordered  orderModal">
+                                <tbody>
+                                <tr>
+                                    <th class="tablePrice">주문 총 금액</th>
+                                    <td id="orderTotalPrice"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="commentStyle">
+                                <h2>메세지</h2>
+                                <div>
+                                    <textarea id="comment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">승인반려
+                            </button>
+                            <button id="orderConfirmButton" type="button"
+                                    class="btn btn-danger">승인확인
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+            </div>
         </div>
-    </div>
-</div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
             crossorigin="anonymous"></script>
+        <script>
+            const ctx = "${pageContext.request.contextPath}";
+<%-- 오더 디테이 목록 불러오기 --%>
+            function orderDetail(target) {
+                const m_order_id = target.dataset.value;
+                const data = {m_order_id}
+                fetch(`\${ctx}/order/list/` + m_order_id, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        document.querySelector(".buyerName").innerHTML = data.at(0).m_order_buyerName;
+                        document.querySelector(".buyerAddress").innerHTML = data.at(0).m_order_buyerAddress;
+                        document.querySelector(".buyerRegion").innerHTML = data.at(0).m_order_buyerRegion;
+                        document.querySelector(".buyerCurrency").innerHTML = data.at(0).m_order_buyerCurrency;
+                        document.querySelector(".buyerNumber").innerHTML = data.at(0).m_order_buyerNumber;
+                        document.querySelector(".inserted").innerHTML = data.at(0).m_order_inserted;
+
+                                for (i=0; i < data.at(0).orderItemDTOList.length; i++){
+                                    const itemBody = document.querySelector(".itemBody");
+
+                                    let itemList = document.createElement('td');
+                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemId;
+                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemName;
+                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemGroup;
+                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_count;
+                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemManufacturer;
+                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_price;
+                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_totalPrice;
+
+                                    itemBody.appendChild(itemList);
+
+                                    // console.log(itemBody);
+                                    // let itemList = document.createElement('tr');
+                                    // document.querySelector(".a1").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemId;
+                                    // document.querySelector(".a2").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemName;
+                                    // document.querySelector(".a3").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemGroup;
+                                    // document.querySelector(".a4").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_count;
+                                    // document.querySelector(".a5").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemManufacturer;
+                                    // document.querySelector(".a6").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_price;
+                                    // document.querySelector(".a7").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_totalPrice;
+
+                                }
+
+                    })
+            }
+    </script>
 </body>
 </html>
