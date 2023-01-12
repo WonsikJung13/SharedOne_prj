@@ -28,11 +28,11 @@ public class ItemService {
         }
     }
 
-    public List<ItemDto> itemList(String itemIdParam, int page, ItemDto itemDto) {
+    public List<ItemDto> itemList(int page, String type, String keyword, ItemDto itemDto) {
         int records = 10;
         int offset = (page - 1) * records;
 
-        int countAll = itemMapper.countAll();
+        int countAll = itemMapper.countAll(type, "%"+keyword+"%");
         int lastPage = (countAll - 1) / records + 1;
 
         int leftPageNumber = (page -1) / 10 * 10 + 1;
@@ -57,7 +57,7 @@ public class ItemService {
         itemDto.setRightPageNumber(rightPageNumber);
         itemDto.setLastPageNumber(lastPage);
 
-        return itemMapper.selectItemList(itemIdParam, offset, records);
+        return itemMapper.selectItemList(offset, records, type, "%"+keyword+"%");
     }
 
     public ItemDto get(String m_item_id) {
@@ -73,9 +73,9 @@ public class ItemService {
         return itemMapper.selectGroup();
     }
 
-    public List<String> selectManufacturer() {
+    public List<String> selectManufacturer(String m_item_group) {
 
-        return itemMapper.selectManufacturer();
+        return itemMapper.selectManufacturer(m_item_group);
     }
 
     public int itemCompare(ItemDto itemCompareList) {

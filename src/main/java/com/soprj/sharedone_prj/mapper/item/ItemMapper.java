@@ -1,6 +1,5 @@
 package com.soprj.sharedone_prj.mapper.item;
 
-import com.soprj.sharedone_prj.domain.item.CartDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
 
 import java.util.List;
@@ -9,7 +8,7 @@ public interface ItemMapper {
 
     int register(ItemDto itemDto);
 
-    List<ItemDto> selectItemList(String itemIdParam, int offset, int records);
+    List<ItemDto> selectItemList(int offset, int records, String type, String keyword);
 
     ItemDto select(String m_item_id);
 
@@ -19,9 +18,9 @@ public interface ItemMapper {
 
     List<String> selectGroup();
 
-    List<String> selectManufacturer();
+    List<String> selectManufacturer(String m_item_group);
 
-    int countAll();
+    int countAll(String type, String keyword);
 
     int itemCompare(ItemDto itemCompareList);
 }
