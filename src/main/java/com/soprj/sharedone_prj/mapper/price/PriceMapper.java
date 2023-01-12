@@ -4,6 +4,7 @@ import com.soprj.sharedone_prj.domain.price.PriceDto;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface PriceMapper {
     List<PriceDto> getPriceList(int offset, int records);
@@ -26,12 +27,9 @@ public interface PriceMapper {
 
     int remove(String removeList);
 
-//    PriceDto priceList(String m_price_id);
-
     List<PriceDto> getPricePeriod(PriceDto priceDto);
 
-    // MIN값이 필요하면 사용
-//    String getBeforeLastPeriod(PriceDto priceDto);
-
     LocalDate getAfterStartPeriod(PriceDto priceDto);
+
+    int addPriceData(Map<String, Object> stringObjectMap);
 }

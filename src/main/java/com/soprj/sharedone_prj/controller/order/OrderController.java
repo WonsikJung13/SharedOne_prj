@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,16 +86,32 @@ public class OrderController {
         model.addAttribute("orderList", list);
     }
 
+    // 주문 디테일 모달 데이테 보여주기
+//    @PostMapping("list/{m_order_id}")
+//    @ResponseBody
+//    public List<OrderItemDTO> orderDetail(@PathVariable int m_order_id) {
+//        List<OrderItemDTO> list = orderService.orderDetail(m_order_id);
+//        System.out.println("리스트"  + list.size());
+//
+//        return list;
+//    }
 
-    @PostMapping("list/{m_order_id}")
+
+    @RequestMapping("list/{m_order_id}")
     @ResponseBody
-    public List<OrderItemDTO> orderDetail(@PathVariable int m_order_id) {
-//        int orderId = Integer.valueOf((String) map.get("m_order_id"));
+    public OrderHeaderDTO orderDetail(@PathVariable int m_order_id) {
+        OrderHeaderDTO result = orderService.orderDetail(m_order_id);
 
-        List<OrderItemDTO> list = orderService.orderDetail(m_order_id);
-
-        return list;
+        return result;
     }
 
+    @PostMapping("list")
+    public String orderAccept(OrderDto orderDto, String m_order_status){
+        System.out.println(m_order_status);
+        System.out.println(orderDto);
+        orderService.orderAccept(orderDto);
+
+        return "redirect:/order/list";
+    }
 
 }

@@ -119,28 +119,10 @@
             m_buyer_id,
             m_order_buyerName,
             m_order_sumPrice,
-            m_order_status
+            m_order_status,
+            m_order_comment
         FROM m_order_header
     </select>
-
-<!-- 주문 디테일 보여주기  -->
-<!--<select id="orderDetail" resultType="com.soprj.sharedone_prj.domain.order.OrderDto">-->
-<!--        SELECT-->
-<!--            m_order_id,-->
-<!--            m_buyer_id,-->
-<!--            m_order_buyerName,-->
-<!--            m_order_sumPrice,-->
-<!--            m_order_status,-->
-<!--            m_order_inserted,-->
-<!--            m_order_date,-->
-<!--            m_order_buyerRegion,-->
-<!--            m_order_buyerAddress,-->
-<!--            m_order_buyerNumber,-->
-<!--            m_order_buyerCurrency,-->
-<!--            m_order_comment-->
-<!--        FROM m_order_header-->
-<!--        WHERE m_order_id = #{m_order_id}-->
-<!--</select>-->
 
     <select id="orderDetail" resultMap="order">
         select *
@@ -174,4 +156,15 @@
             <result property="m_order_totalPrice" column="m_order_totalPrice"/>
         </collection>
     </resultMap>
+
+<!-- 승인상태 추가  -->
+    <update id="orderAccept">
+        UPDATE m_order_header
+        SET m_order_status = #{m_order_status},
+            m_order_memo = #{m_order_memo}
+        WHERE m_order_id = #{m_order_id}
+    </update>
+
+
+
 </mapper>

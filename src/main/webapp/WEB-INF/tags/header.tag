@@ -62,6 +62,38 @@
         background-color: #353535;
     }
 
+    #myBtn {
+        display: none; /* Hidden by default */
+        position: fixed; /* Fixed/sticky position */
+        bottom: 20px; /* Place the button at the bottom of the page */
+        right: 30px; /* Place the button 30px from the right */
+        z-index: 99; /* Make sure it does not overlap */
+        border: none; /* Remove borders */
+        outline: none; /* Remove outline */
+        background-color: red; /* Set a background color */
+        color: white; /* Text color */
+        cursor: pointer; /* Add a mouse pointer on hover */
+        padding: 15px; /* Some padding */
+        border-radius: 10px; /* Rounded corners */
+        font-size: 18px; /* Increase font size */
+    }
+
+    #myBtn:hover {
+        background-color: #555; /* Add a dark-grey background on hover */
+    }
+
+    @media screen and (max-width: 1400px) {
+        #sideBar {
+            display: none;
+        }
+    }
+
+    @media screen and (min-width: 1400px) {
+        .sideBtn {
+            display: none;
+        }
+    }
+
 </style>
 
 <link rel="stylesheet"
@@ -69,7 +101,61 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<div class="flex-shrink-0 p-3 navbg row" style="width: 280px; height: 100%;position: fixed">
+<button class="navbar-toggler sideBtn" type="button" aria-label="Toggle navigation" style="margin-left: 20px"
+        data-bs-toggle="collapse"
+        data-bs-target="#sideBar-collapse" aria-expanded="false">
+    <i class="fas fa-bars"></i>
+</button>
+<div id="sideBar-collapse" class="sideBtn collapse">
+    <button data-bs-toggle="collapse"
+            data-bs-target="#master-collapse" aria-expanded="false">
+        마스터
+    </button>
+    <button
+            data-bs-toggle="collapse"
+            data-bs-target="#order-collapse" aria-expanded="false">
+        주문
+    </button>
+    <button href="${reportLink}" class="">리포트</button>
+
+    <div class="collapse " id="master-collapse">
+        <div class="">
+            <div><button href="${itemList}" class="">제품 등록 관리</button>
+            </div>
+            <div><button href="${buyerList}" class="">바이어 등록
+                관리</button>
+            </div>
+            <div><button href="${priceList}" class="">판매가 등록
+                관리</button>
+            </div>
+            <sec:authentication property="authorities" var="authorities"/>
+            <c:if test="${authorities eq '[팀장]'}">
+                <div><button href="${memberList}" class="">회원
+                    관리</button>
+                </div>
+            </c:if>
+        </div>
+    </div>
+
+
+    <div class="collapse" id="order-collapse">
+        <div class="">
+            <div><button href="${orderList}" class="">주문관리</button>
+            </div>
+            <div><button href="${orderLink}" class="">주문작성</button>
+            </div>
+            <sec:authentication property="authorities" var="authorities"/>
+            <c:if test="${authorities eq '[팀장]'}">
+                <div><button href="#" class="">승인관리</button></div>
+            </c:if>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="flex-shrink-0 p-3 navbg row" id="sideBar" style="width: 280px; height: 100%;position: fixed">
+
     <div>
 
         <a href="${reportLink}" class=" navbg d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
@@ -148,3 +234,37 @@
         </div>
     </div>
 </div>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<script>
+    // Get the button:
+    let mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+        scrollFunction()
+    };
+
+    function hiddenFunction() {
+        if (document.body.scrollLeft > 1300 || document.documentElement.scrollTop > 1300) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+
+</script>

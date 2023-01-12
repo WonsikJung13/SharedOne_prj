@@ -24,10 +24,13 @@ public class BuyerController {
     @GetMapping("list")
     public void getPriceList(Model model,
                              @RequestParam(name = "page", defaultValue = "1") int page,
+                             @RequestParam(name = "searchNum", defaultValue = "all") String searchNum,
+                             @RequestParam(name = "searchText", defaultValue = "") String searchText,
                              BuyerDto buyerDto) {
-        List<BuyerDto> buyerList = buyerService.getBuyerList(page, buyerDto);
+        List<BuyerDto> buyerList = buyerService.getBuyerList(page, buyerDto, searchNum, searchText);
         model.addAttribute("buyerList", buyerList);
     }
+
 
     @GetMapping("get")
     public void get(@RequestParam(name = "m_buyer_id") String m_buyer_id, Model model) {
@@ -97,5 +100,6 @@ public class BuyerController {
         }
         return map;
     }
+
 
 }

@@ -104,7 +104,7 @@
         }
     </style>
 </head>
-<body class="align-middle" >
+<body class="align-middle">
 <div class="container-fluid d-flex justify-content-center" style="height: 100vh">
 
     <div class="card align-self-center">

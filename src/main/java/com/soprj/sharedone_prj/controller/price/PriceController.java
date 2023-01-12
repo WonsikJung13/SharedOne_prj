@@ -62,6 +62,9 @@ public class PriceController {
 
     @PostMapping("register")
     public String register(PriceDto price) {
+        price.getM_price_startPeriod();
+
+        System.out.println("????"+price);
         priceService.register(price);
 
         return "redirect:/price/list";
@@ -99,28 +102,16 @@ public class PriceController {
     @PostMapping("checkPeriod")
     @ResponseBody
     public Map<String, Object> checkPeriod(@RequestBody Map<String, Object> priceMap) {
-//        System.out.println(priceMap);
-//        ObjectMapper mapper = new ObjectMapper();
-//        PriceDto priceDto = mapper.convertValue(priceMap, PriceDto.class);
-        String buyerId = priceMap.get("m_buyer_id").toString();
+
         LocalDate date = LocalDate.parse(priceMap.get("m_price_startPeriod").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         PriceDto priceDto = new PriceDto();
         priceDto.setM_item_id(priceMap.get("m_item_id").toString());
-        priceDto.setM_buyer_id(buyerId);
+        priceDto.setM_buyer_id(priceMap.get("m_buyer_id").toString());
         priceDto.setM_price_startPeriod(date);
 
         List<PriceDto> periodList = priceService.getPricePeriod(priceDto);
         Map<String, Object> map = new HashMap<>();
         if (periodList.size() == 0) {
-            // MIN값이 필요한 경우 아래 사용
-//            String beforeLastPeriod = priceService.getBeforeLastPeriod(priceDto);
-//            if (beforeLastPeriod != null) {
-//                System.out.println("이것이 MIN값 : " + beforeLastPeriod);
-//                map.put("minDate", beforeLastPeriod);
-//            } else {
-//                System.out.println("오늘 날짜가 MIN 값!!!!");
-//                map.put("beforeLastPeriod", priceMap.get("m_price_startPeriod"));
-//            }
             LocalDate result = priceService.getAfterStartPeriod(priceDto);
             if (result != null) {
             String yesterday = result.minusDays(1).toString();
@@ -136,4 +127,16 @@ public class PriceController {
             return map;
         }
     }
+
+    @PostMapping("add")
+    @ResponseBody
+    public String add(@RequestBody List<Map<String, Object>> addData) {
+
+        for (int i=0; i<addData.size(); i++) {
+            Map<String, Object> map = addData.get(i);
+            priceService.addPriceData(map);
+        }
+        return "redirect:/price/list";
+    }
+
 }

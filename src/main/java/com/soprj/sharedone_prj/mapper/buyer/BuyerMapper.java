@@ -24,7 +24,7 @@ public interface BuyerMapper {
 
     BuyerDto getBuyerNum(String m_buyer_number);
 
-    List<BuyerDto> getBuyerList(int offset, int records);
+    List<BuyerDto> getBuyerList(int offset, int records, String searchNum, String searchText);
 
     int countAll();
 }

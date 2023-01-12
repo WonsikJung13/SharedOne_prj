@@ -147,12 +147,12 @@
     <div class="col">
         <div style="display: flex;justify-content: space-between;width: 900px;">
             <div id="itemListTitle">
-                <h1 id="header">바이어 등록</h1>
+                <h1 id="header">거래처 등록</h1>
             </div>
             <div class="itemRegisterBtn">
             </div>
         </div>
-        <h2>바이어 추가</h2>
+        <h2>거래처 추가</h2>
 
         <table class="table table-bordered" id="aaa">
             <tbody>
@@ -184,9 +184,9 @@
             </form>
             </tbody>
         </table>
-        <button disabled class="btn btn-secondary" id="addBtn">바이어 추가</button>
+        <button disabled class="btn btn-secondary" id="addBtn">거래처 추가</button>
 
-        <h2>추가된 바이어</h2>
+        <h2>추가된 거래처</h2>
         <div class="tableList">
 
             <table class="table addList">
@@ -244,8 +244,7 @@
                 document.querySelector("#inputText").innerText = "이미 등록되었습니다"
                 $('#inputText').css("color", "red");
             }
-            console.log(number[a])
-        }},300)
+        }},100)
     })
 
     let addData = [];
@@ -286,6 +285,7 @@
         document.querySelector("#m_buyer_currency").value = null;
         document.querySelector("#buyerIdInput").value = null;
         document.querySelector("#addBtn").setAttribute("disabled", "");
+        document.querySelector("#inputText").innerText = "";
     })
 
     function clickRemove(target) {

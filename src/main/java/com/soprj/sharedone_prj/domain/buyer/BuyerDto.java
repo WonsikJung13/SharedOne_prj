@@ -25,4 +25,7 @@ public class BuyerDto {
     private boolean hasNextButton;
     private int jumpPrevPageNumber;
     private int jumpNextPageNumber;
+
+    private String searchNum;
+    private String searchText;
 }
