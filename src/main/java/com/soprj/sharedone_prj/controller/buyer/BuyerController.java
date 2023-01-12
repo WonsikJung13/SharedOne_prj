@@ -45,17 +45,12 @@ public class BuyerController {
     }
 
     @PostMapping("register")
-    public String register(@RequestBody List<Map<String, Object>> addData,
+    public void register(@RequestBody List<Map<String, Object>> addData,
                            RedirectAttributes rttr) {
-
         Map<String, Object> buyer = new HashMap<>();
         for (int i = 0; i < addData.size(); i++) {
             buyerService.register(addData.get(i));
         }
-
-
-
-        return "redirect:/buyer/list";
     }
 
     @PostMapping("modify")

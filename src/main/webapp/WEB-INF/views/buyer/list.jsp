@@ -163,10 +163,10 @@
 <body>
 
 <div class="row">
-    <div class="col-3" style="position: relative; z-index: 2;">
+    <div class="col-3">
         <my:header></my:header>
     </div>
-    <div class="col" style="position: relative; z-index: 1;">
+    <div class="col">
 
         <div style="display: flex; justify-content : center;">
             <div style="display: flex;justify-content: space-between;width: 900px;">
