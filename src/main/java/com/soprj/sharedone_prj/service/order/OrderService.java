@@ -4,6 +4,7 @@ import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.domain.order.OrderDto;
 import com.soprj.sharedone_prj.domain.order.ItemListVO;
+import com.soprj.sharedone_prj.domain.order.OrderItemDTO;
 import com.soprj.sharedone_prj.domain.order.OrderPriceVO;
 import com.soprj.sharedone_prj.mapper.order.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,9 @@ public class OrderService {
 
     public  List<OrderDto> orderList() {
         return mapper.orderList();
+    }
+
+    public List<OrderItemDTO> orderDetail(int m_order_id) {
+        return mapper.orderDetail(m_order_id);
     }
 }

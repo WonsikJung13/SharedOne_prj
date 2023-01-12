@@ -12,7 +12,7 @@ public class OrderDto {
     private String m_order_inserted;
     private String m_order_status;
 
-    private int m_buyer_id;
+    private String m_buyer_id;
     private int m_member_id;
     private String m_order_currency;
 //  order items
@@ -24,6 +24,17 @@ public class OrderDto {
     private int m_price_id;
     private String m_order_buyerName;
     private int m_order_sumPrice;
+    private int m_order_buyerId;
+
+    private String m_order_buyerAddress;
+    private String m_order_buyerRegion;
+    private int m_order_buyerNumber;
+    private String m_order_buyerCurrency;
+    private int m_order_totalPrice;
+    private String m_order_itemId;
+    private String m_order_itemName;
+    private String m_order_itemGroup;
+    private String m_order_itemManufacturer;
 
 
 

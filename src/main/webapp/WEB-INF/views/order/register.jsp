@@ -60,9 +60,11 @@
         }
 
         .addBtn {
-            background-color: #5f7175;
-            padding: 5px 30px;
-            margin-left: 350px;
+            background-color: #598f9b;
+            border-color:#598f9b;
+            padding: 10px 30px;
+            font-size: 18px;
+            margin: 30px 0 30px 430px;
         }
 
         .addBtn:hover,
@@ -72,13 +74,16 @@
 
         .storageBtn {
             background-color: #5f7175;
-            padding: 5px 30px;
+            padding: 10px 30px;
             margin-left: 280px;
+            font-size: 18px;
         }
 
         .submitBtn {
             background-color: #598f9b;
-            padding: 5px 30px;
+            border-color:#598f9b;
+            padding: 10px 30px;
+            font-size: 18px;
 
         }
 
@@ -120,21 +125,44 @@
             background: transparent;
         }
 
-        .orderAdd {
-            width: 128px;
+        textarea {
+            height: 140px;
+            width: 1000px;
+            background-color: #fff;
+            border-color:#dee2e6;
+        }
+        textarea:focus-visible{
+
         }
 
-        .commentStyle {
-            background-color: #fff;
-            height: 100px;
-            width: 1000px;
+
+        .table-active{
+            width: 200px;
+            line-height: 35px;
         }
 
         .orderTotalPrice {
-            color: red;
+            height: 50px;
+            margin: 20px 0 10px 0;
+            line-height: 50px;
+            padding-left: 20px;
         }
-        .table-active{
-            width: 180px;
+        .tablePrice{
+            width: 400px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight:unset;
+            color: white;
+            --bs-table-bg: #5f7175;
+        }
+        .inputWidth{
+            width:300px;
+            line-height: 35px;
+        }
+        .statusBtn{
+            margin-top: 20px;
+            margin-bottom: 50px;
         }
 
     </style>
@@ -152,7 +180,7 @@
             <tbody>
             <tr>
                 <td class="table-active">거래처</td>
-                <td>
+                <td class="inputWidth">
                     <div class="inputLength">
                         <input onchange="buyerView()" class="form-select" aria-label="Default select example"
                                type="text" list="list" id="buyer" placeholder="거래처를 선택해주세요"/>
@@ -164,17 +192,17 @@
                     </div>
                 </td>
                 <td class="table-active">주소</td>
-                <td id="buyerAddress"></td>
+                <td id="buyerAddress" class="inputWidth"></td>
             </tr>
             <tr>
                 <td class="table-active">국가</td>
-                <td id="buyerRegion"></td>
+                <td id="buyerRegion" class="inputWidth"></td>
                 <td class="table-active">사업자등록번호</td>
-                <td id="buyerNumber"></td>
+                <td id="buyerNumber" class="inputWidth"></td>
             </tr>
             <tr>
                 <td class="table-active">통화</td>
-                <td id="buyerCurrency"></td>
+                <td id="buyerCurrency" class="inputWidth"></td>
                 <td class="table-active">납품요청일</td>
                 <td colspan="3">
                     <input id="buyerInserted" class="form-control" type="date" placeholder="Default input"
@@ -189,7 +217,7 @@
             <tbody>
             <tr>
                 <td class="table-active">제품코드</td>
-                <td>
+                <td class="inputWidth">
                     <div class="inputLength">
                         <input onchange="itemView()" class="form-select" aria-label="Default select example" type="text"
                                list="lists" id="orderItems" placeholder="제품를 선택해주세요"/>
@@ -198,14 +226,14 @@
                     </div>
                 </td>
                 <td class="table-active">제품이름</td>
-                <td class="itemName">
+                <td class="itemName inputWidth">
                 </td>
             </tr>
             <tr>
                 <td class="table-active">제품품목</td>
-                <td class="itemGroup"></td>
+                <td class="itemGroup inputWidth" ></td>
                 <td class="table-active">제조사</td>
-                <td class="manufacturer"></td>
+                <td class="manufacturer inputWidth"></td>
             </tr>
             </tbody>
         </table>
@@ -227,14 +255,16 @@
             </tr>
             <tr>
                 <td class="table-active">총 금액</td>
-                <td colspan="3" id="totalPrice">
+                <td colspan="3" id="totalPrice" class="inputWidth">
 
                 </td>
             </tr>
 
             </tbody>
         </table>
+        <div class="btnWidth">
         <button class="btn btn-secondary addBtn">제품추가</button>
+        </div>
 
         <h2>추가된 제품</h2>
         <div class="tableList">
@@ -259,7 +289,7 @@
         <table class="table table-bordered orderTotalPrice">
             <tbody>
             <tr>
-                <th class="table-active">주문 총 금액</th>
+                <th class="tablePrice">주문 총 금액</th>
                 <td id="orderTotalPrice">
 
                 </td>
@@ -269,15 +299,16 @@
         </table>
 
         <div class="commentStyle">
-            <h2>메모</h2>
+            <h2>승인 요청 메세지</h2>
             <div>
-                <textarea class="form-control" id="comment"></textarea>
+                <textarea id="comment"></textarea>
             </div>
         </div>
 
-        <button class="btn btn-secondary storageBtn">임시저장</button>
-        <button class="btn btn-secondary submitBtn">승인요청</button>
-
+        <div class="statusBtn">
+            <button class="btn btn-secondary storageBtn">임시저장</button>
+            <button class="btn btn-secondary submitBtn">승인요청</button>
+        </div>
 
     </div>
 </div>
@@ -349,7 +380,7 @@
 
                     let new_optionTag = document.createElement('option');
 
-                    new_optionTag.setAttribute('class', 'itemSelect');
+                    // new_optionTag.setAttribute('class', 'itemSelect');
                     new_optionTag.setAttribute('value', data.at(i).m_item_id + '_' + data.at(i).m_item_name)
 
                     datalist.appendChild(new_optionTag);
@@ -372,7 +403,7 @@
     let addData = [];
     document.querySelector(".addBtn").addEventListener("click", function () {
         const buyer = document.querySelector("#buyer").value.split("_");
-        const m_order_buyerId = buyer.at(0)
+        const m_buyer_id = buyer.at(0)
         const m_order_buyerName = buyer.at(1)
         const m_order_buyerAddress = document.querySelector("#buyerAddress").innerText;
         const m_order_buyerRegion = document.querySelector("#buyerRegion").innerText;
@@ -380,6 +411,7 @@
         const m_order_buyerCurrency = document.querySelector("#buyerCurrency").innerText;
         const m_order_inserted = document.querySelector("#buyerInserted").value;
 
+        const m_order_comment = document.querySelector("#comment").value;
         const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
 
         // 추가된 제품 총 금액으로 오더 총 금액 구하기
@@ -408,13 +440,14 @@
         itemBody.insertAdjacentHTML("beforeend", orderAdd);
 
         const data = {
-            m_order_buyerId,
+            m_buyer_id,
             m_order_buyerName,
             m_order_buyerAddress,
             m_order_buyerRegion,
             m_order_buyerNumber,
             m_order_buyerCurrency,
             m_order_inserted,
+            m_order_comment,
             m_order_totalPrice,
             m_order_itemId,
             m_order_itemName,
@@ -426,7 +459,6 @@
 
         addData.push(data);
     })
-
 
     // 오더추가
     document.querySelector(".submitBtn").addEventListener("click", function () {
@@ -444,7 +476,7 @@
             },
             body: JSON.stringify(addData)
         })
-        .then(res => res.json())
+
     })
 
     // 오더 장바구니 삭제하기
