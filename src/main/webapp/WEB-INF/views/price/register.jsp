@@ -38,7 +38,7 @@
     </div>
     <div class="col">
         <h1>판매가격 작성</h1>
-        <form action="" method="post" enctype="multipart/form-data" id="formId">
+        <form action="" method="post" id="formId">
             <table class="table table-bordered">
 
                 <tbody>
