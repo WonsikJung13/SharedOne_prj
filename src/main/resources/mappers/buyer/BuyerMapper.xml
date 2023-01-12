@@ -68,6 +68,35 @@
         m_buyer_currency
         FROM
         m_buyer
+
+        WHERE
+        <trim prefixOverrides="OR">
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_id'">
+                OR m_buyer_id LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_name'">
+                OR m_buyer_name LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_region'">
+                OR m_buyer_region LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_address'">
+                OR m_buyer_address LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_number'">
+                OR m_buyer_number LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_currency'">
+                OR m_buyer_currency LIKE #{searchText}
+            </if>
+        </trim>
+
+        GROUP BY m_buyer_id
         ORDER BY m_buyer_id DESC
         LIMIT #{offset}, #{records};
     </select>

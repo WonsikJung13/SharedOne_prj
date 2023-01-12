@@ -165,28 +165,21 @@
             </div>
         </div>
         <div class="searchBox">
-            <c:url value="/buyer/list" var="listLink"></c:url>
-            <form action="${listLink}" role="search">
-                <div style="display: flex;justify-content: flex-start;">
-                    <div>
-                        <label>바이어 코드</label>
-                        <input class="form-control" value="${param.m_buyer_number}" type="search" name="m_buyer_number"
-                               placeholder="입력" autocomplete='off' style="width: 210px">
-                    </div>
-                    <div style="margin-left: 60px">
-                        <label>바이어 국가</label>
-                        <input class="form-select" type="text" list="groupList" style="width: 210px"/>
-                        <datalist id="groupList">
-                            <c:forEach items="${groupList}" var="groupList">
-                                <option class="non"
-                                        value="${groupList.m_buyer_region}">${groupList.m_buyer_region}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
-                </div>
+            <form action="" role="search" id="searchForm">
                 <div class="input-group" style="float: none">
-                    <input type="text" class="form-control">
-                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
+                    <%--                    <input class="form-select" name="m_buyer_region" type="text" list="groupList" id="regionInput"--%>
+                    <%--                           onchange="changeValue(this)" style="width: 210px"/>--%>
+                    <select id="groupList" name="searchNum" onchange="changeValue(this)">
+                        <option class="non" name="m_buyer_id" value="all">전체</option>
+                        <option class="non" name="m_buyer_id" value="m_buyer_id">거래처 번호</option>
+                        <option class="non" name="m_buyer_name" value="m_buyer_name">거래처 이름</option>
+                        <option class="non" name="m_buyer_region" value="m_buyer_region">거래처 나라</option>
+                        <option class="non" name="m_buyer_address" value="m_buyer_address">거래처 주소</option>
+                        <option class="non" name="m_buyer_number" value="m_buyer_number">사업자 번호</option>
+                        <option class="non" name="m_buyer_currency" value="m_buyer_currency">통화</option>
+                    </select>
+                    <input type="text" name="searchText" class="form-control">
+                    <input class="btn btn-secondary searchBtn" type="button" value="검색" id="searchBtn"/>
                 </div>
             </form>
         </div>
@@ -348,6 +341,26 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
+
+<script>
+    const ctx = "${pageContext.request.contextPath}";
+
+
+    const changeValue = (target) => {
+        // 선택한 option의 value 값
+        // console.log(target.value);
+
+        // option의 text 값
+        // console.log(target.options[target.selectedIndex].text);
+        console.log(target)
+        console.log(target.value)
+        console.log(target.name)
+    }
+
+    document.querySelector("#searchBtn").addEventListener("click", function () {
+        document.querySelector("#searchForm").submit();
+    })
+</script>
 
 </body>
 </html>

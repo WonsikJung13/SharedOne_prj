@@ -50,7 +50,7 @@ public class BuyerService {
         return buyerMapper.getBuyerNum(m_buyer_number);
     }
 
-    public List<BuyerDto> getBuyerList(int page, BuyerDto buyerDto) {
+    public List<BuyerDto> getBuyerList(int page, BuyerDto buyerDto, String searchNum, String searchText) {
         int records = 10;
         int offset = (page - 1) * records;
 
@@ -79,7 +79,7 @@ public class BuyerService {
         buyerDto.setRightPageNumber(rightPageNumber);
         buyerDto.setLastPageNumber(lastPage);
 
-        return buyerMapper.getBuyerList(offset, records);
+        return buyerMapper.getBuyerList(offset, records, searchNum, "%" + searchText + "%");
     }
 }
 
