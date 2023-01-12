@@ -39,8 +39,6 @@ public class OrderController {
         return list;
     }
 
-    ;
-
     @RequestMapping("itemList")
     @ResponseBody
     public OrderPriceVO orderPrice(@RequestBody Map<String, Object> data) {
@@ -86,16 +84,6 @@ public class OrderController {
         model.addAttribute("orderList", list);
     }
 
-    // 주문 디테일 모달 데이테 보여주기
-//    @PostMapping("list/{m_order_id}")
-//    @ResponseBody
-//    public List<OrderItemDTO> orderDetail(@PathVariable int m_order_id) {
-//        List<OrderItemDTO> list = orderService.orderDetail(m_order_id);
-//        System.out.println("리스트"  + list.size());
-//
-//        return list;
-//    }
-
 
     @RequestMapping("list/{m_order_id}")
     @ResponseBody
@@ -107,11 +95,38 @@ public class OrderController {
 
     @PostMapping("list")
     public String orderAccept(OrderDto orderDto, String m_order_status){
-        System.out.println(m_order_status);
-        System.out.println(orderDto);
+
         orderService.orderAccept(orderDto);
 
         return "redirect:/order/list";
     }
+
+    @GetMapping("modify")
+    public void modify(){
+
+    }
+
+
+    // 관리자 리스트
+    @GetMapping("adminList")
+    public void adminList(Model model){
+        List<OrderDto> list = orderService.orderList();
+        model.addAttribute("orderList", list);
+    }
+
+    @RequestMapping("adminList/{m_order_id}")
+    @ResponseBody
+    public OrderHeaderDTO adminDetail(@PathVariable int m_order_id) {
+        OrderHeaderDTO result = orderService.orderDetail(m_order_id);
+
+        return result;
+    }
+
+//    삭제하기
+    @PostMapping("remove")
+    public void remove(int m_order_id){
+        orderService.orderRemove(m_order_id);
+    }
+
 
 }

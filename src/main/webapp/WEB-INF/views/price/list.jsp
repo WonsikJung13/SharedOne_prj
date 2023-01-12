@@ -248,7 +248,7 @@
                                     <c:param value="${priceList.m_price_id }" name="m_price_id"/>
                                 </c:url>
                                 <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>
-                            </td>
+                            </td>정
                         </tr>
                     </div>
                 </c:forEach>
