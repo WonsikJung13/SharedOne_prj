@@ -157,6 +157,30 @@
         .orderModal{
             width: 960px;
         }
+        .orderItmeList{
+            --bs-table-bg: #5f7175;
+            --bs-table-color: #fff;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+            width: 960px;
+        }
+        .tablePrice{
+            width: 400px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight:unset;
+            color: white;
+            --bs-table-bg: #5f7175;
+        }
+
+        textarea {
+            height: 140px;
+            width: 960px;
+            background-color: #fff;
+            border-color:#dee2e6;
+        }
     </style>
 </head>
 <body>
@@ -168,7 +192,6 @@
                         <div style="display: flex;justify-content: space-between;width: 1000px;">
                             <div id="itemListTitle">
                                 <h1 id="header">주문 관리 및 등록</h1>
-                                <%--      <h2>제품 검색</h2>--%>
                             </div>
                             <div class="itemRegisterBtn">
                                 <c:url value="/order/register" var="registerLink"></c:url>
@@ -279,10 +302,18 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-
+                            <form id="orderForm" method="post">
+                                <input type="hidden" name="m_order_id">
+                                <input type="hidden" name="m_order_message">
                             <h2>거래처</h2>
                             <table class="table table-bordered orderModal">
                                 <tbody>
+                                <tr>
+                                    <td class="table-active">주문번호</td>
+                                    <td class="orderId"></td>
+                                    <td class="table-active">주문일</td>
+                                    <td class="orderDate"></td>
+                                </tr>
                                 <tr>
                                     <td class="table-active">거래처</td>
                                     <td class="buyerName"></td>
@@ -306,7 +337,7 @@
 
 
                             <h2>주문 제품</h2>
-                                <table class="table addList orderModal">
+                                <table class="table orderItmeList">
                                     <thead>
                                         <tr>
                                             <th scope="col">제품코드</th>
@@ -318,35 +349,36 @@
                                             <th scope="col">총 금액</th>
                                         </tr>
                                     </thead>
-                                    <tbodylass="itemBody">
-<%--                                        <tr>--%>
-<%--                                            <td class="a1"></td>--%>
-<%--                                            <td class="a2"></td>--%>
-<%--                                            <td class="a3"></td>--%>
-<%--                                            <td class="a4"></td>--%>
-<%--                                            <td class="a5"></td>--%>
-<%--                                            <td class="a6"></td>--%>
-<%--                                            <td class="a7"></td>--%>
-<%--                                        </tr>--%>
+                                    <tbody id="itemBody">
+
                                     </tbody>
                                 </table>
-                            </div>
 
-                            <table class="table table-bordered  orderModal">
+
+                            <table class="table table-bordered orderModal">
                                 <tbody>
                                 <tr>
                                     <th class="tablePrice">주문 총 금액</th>
-                                    <td id="orderTotalPrice"></td>
+                                    <td class="sumPrice"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-bordered orderModal">
+                                <tbody>
+                                <tr>
+                                    <th class="tablePrice">승인 요청 메세지</th>
+                                    <td class="comment"></td>
                                 </tr>
                                 </tbody>
                             </table>
                             <div class="commentStyle">
                                 <h2>메세지</h2>
                                 <div>
-                                    <textarea id="comment"></textarea>
+                                    <textarea id="message"></textarea>
                                 </div>
                             </div>
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">승인반려
@@ -356,6 +388,7 @@
                             </button>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
             </div>
@@ -368,7 +401,8 @@
             crossorigin="anonymous"></script>
         <script>
             const ctx = "${pageContext.request.contextPath}";
-<%-- 오더 디테이 목록 불러오기 --%>
+
+            <%-- 오더 디테이 목록 불러오기 --%>
             function orderDetail(target) {
                 const m_order_id = target.dataset.value;
                 const data = {m_order_id}
@@ -377,6 +411,7 @@
                     headers: {
                         "Content-Type": "application/json"
                     }
+                    // body : JSON.stringify(data)
                 })
                     .then(res => res.json())
                     .then(data => {
@@ -386,35 +421,53 @@
                         document.querySelector(".buyerCurrency").innerHTML = data.at(0).m_order_buyerCurrency;
                         document.querySelector(".buyerNumber").innerHTML = data.at(0).m_order_buyerNumber;
                         document.querySelector(".inserted").innerHTML = data.at(0).m_order_inserted;
+                        document.querySelector(".sumPrice").innerHTML = data.at(0).m_order_sumPrice;
+                        document.querySelector(".comment").innerHTML =data.at(0).m_order_comment;
+                        document.querySelector(".orderId").innerHTML =data.at(0).m_order_id;
+                        document.querySelector(".orderDate").innerHTML = data.at(0).m_order_date;
 
-                                for (i=0; i < data.at(0).orderItemDTOList.length; i++){
-                                    const itemBody = document.querySelector(".itemBody");
+                        for (i = 0; i < data.at(0).orderItemDTOList.length; i++) {
+                            let itemTR = document.createElement("tr")
+                            let itemTD1 = document.createElement("td");
+                            itemTD1.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemId +""));
+                            let itemTD2 = document.createElement("td");
+                            itemTD2.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemName +""));
+                            let itemTD3 = document.createElement("td");
+                            itemTD3.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemGroup +""));
+                            let itemTD4 = document.createElement("td");
+                            itemTD4.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_count +""));
+                            let itemTD5 = document.createElement("td");
+                            itemTD5.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_itemManufacturer +""));
+                            let itemTD6 = document.createElement("td");
+                            itemTD6.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_price +""));
+                            let itemTD7 = document.createElement("td");
+                            itemTD7.appendChild(document.createTextNode(data.at(0).orderItemDTOList.at(i).m_order_totalPrice +""));
 
-                                    let itemList = document.createElement('td');
-                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemId;
-                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemName;
-                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemGroup;
-                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_count;
-                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemManufacturer;
-                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_price;
-                                    itemList.innerHTML = data.at(0).orderItemDTOList.at(i).m_order_totalPrice;
-
-                                    itemBody.appendChild(itemList);
-
-                                    // console.log(itemBody);
-                                    // let itemList = document.createElement('tr');
-                                    // document.querySelector(".a1").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemId;
-                                    // document.querySelector(".a2").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemName;
-                                    // document.querySelector(".a3").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemGroup;
-                                    // document.querySelector(".a4").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_count;
-                                    // document.querySelector(".a5").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_itemManufacturer;
-                                    // document.querySelector(".a6").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_price;
-                                    // document.querySelector(".a7").innerHTML = data.at(0).orderItemDTOList.at(i).m_order_totalPrice;
-
-                                }
-
+                            itemTR.appendChild(itemTD1);
+                            itemTR.appendChild(itemTD2);
+                            itemTR.appendChild(itemTD3);
+                            itemTR.appendChild(itemTD4);
+                            itemTR.appendChild(itemTD5);
+                            itemTR.appendChild(itemTD6);
+                            itemTR.appendChild(itemTD7);
+                            itemBody.appendChild(itemTR);
+                        }
                     })
             }
-    </script>
+
+            document.querySelector("#orderConfirmButton").addEventListener("click",function(){
+                // 주문번호에 따라 orderStatus 생성중으로 디비 넣어
+                // 요청 메세지 insert
+                const orderId = document.querySelector(".orderId").innerText;
+                document.setAttribute
+                const message = document.querySelector("#message").value;
+
+                document.querySelector("#orderForm").submit();
+
+
+            })
+
+
+        </script>
 </body>
 </html>
