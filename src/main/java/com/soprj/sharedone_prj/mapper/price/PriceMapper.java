@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface PriceMapper {
-    List<PriceDto> getPriceList(int offset, int records);
+    List<PriceDto> getPriceList(int offset, int records, String type, String keyword);
 
     int insertRegister(PriceDto price);
 
@@ -23,7 +23,7 @@ public interface PriceMapper {
 
     List<PriceDto> getItemList();
 
-    int countAll();
+    int countAll(String type, String keyword);
 
     int remove(String removeList);
 

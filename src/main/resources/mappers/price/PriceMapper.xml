@@ -22,12 +22,50 @@
         FROM
             m_price p LEFT JOIN m_buyer b ON p.m_buyer_id = b.m_buyer_id
                       LEFT JOIN m_item i ON p.m_item_id = i.m_item_id
-        ORDER BY m_price_id DESC
+        WHERE
+            <trim prefixOverrides="OR">
+                <if test="type == 'all' or type == 'm_item_id'">
+                    OR i.m_item_id LIKE #{keyword}
+                </if>
+
+                <if test="type == 'all' or type == 'm_item_name'">
+                    OR i.m_item_name LIKE #{keyword}
+                </if>
+
+                <if test="type == 'all' or type == 'm_buyer_id'">
+                    OR b.m_buyer_id LIKE #{keyword}
+                </if>
+
+                <if test="type == 'all' or type == 'm_buyer_name'">
+                    OR b.m_buyer_name LIKE #{keyword}
+                </if>
+            </trim>
+        ORDER BY p.m_price_id DESC
         LIMIT #{offset}, #{records};
     </select>
 
     <select id="countAll" resultType="int">
-        SELECT COUNT(*) FROM m_price
+        SELECT COUNT(*) FROM
+            m_price p LEFT JOIN m_buyer b ON p.m_buyer_id = b.m_buyer_id
+                        LEFT JOIN m_item i ON p.m_item_id = i.m_item_id
+        WHERE
+            <trim prefixOverrides="OR">
+                <if test="type == 'all' or type == 'm_item_id'">
+                    OR i.m_item_id LIKE #{keyword}
+                </if>
+
+                <if test="type == 'all' or type == 'm_item_name'">
+                    OR i.m_item_name LIKE #{keyword}
+                </if>
+
+                <if test="type == 'all' or type == 'm_buyer_id'">
+                    OR b.m_buyer_id LIKE #{keyword}
+                </if>
+
+                <if test="type == 'all' or type == 'm_buyer_name'">
+                    OR b.m_buyer_name LIKE #{keyword}
+                </if>
+            </trim>
     </select>
 
     <insert id="insertRegister" useGeneratedKeys="true" keyProperty="m_price_id">

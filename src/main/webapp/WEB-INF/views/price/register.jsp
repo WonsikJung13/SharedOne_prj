@@ -128,7 +128,7 @@
 
         <h2>추가된 가격</h2>
         <div class="tableList">
-            <table class="table addList">
+            <table class="table addList ">
                 <thead>
                 <tr>
                     <th scope="col">제품코드</th>
@@ -250,9 +250,10 @@
             })
     })
 
-    // 장바구니
+    // 추가
     let addData = [];
     document.querySelector("#priceButton").addEventListener("click", function () {
+
        const m_item_id = document.querySelector("#itemId").value;
        const m_buyer_id = document.querySelector("#buyerId").value;
        const m_price_startPeriod = document.querySelector("#m_price_startPeriod").value;
@@ -290,6 +291,19 @@
 
        addData.push(data);
 
+        // 추가 중복 체크
+        <%--let check = {}--%>
+        <%--let lastIndex = document.querySelector(".addList").tBodies[0].rows.length -1;--%>
+
+        <%--if (lastIndex > 0) {--%>
+        <%--    check = {--%>
+        <%--        "m_item_id" : (${m_item_id}).eq(lastIndex-1).val(),--%>
+        <%--        "m_buyer_id" : $("input[name='m_buyer_id']").eq(lastIndex-1).val(),--%>
+        <%--        "m_price_startPeriod" : $("input[name='m_price_startPeriod']").eq(lastIndex-1).val(),--%>
+        <%--        "m_price_lastPeriod" : $("input[name='m_price_lastPeriod']").eq(lastIndex-1).val(),--%>
+        <%--    }--%>
+        <%--    console.log(check);--%>
+        <%--}--%>
     });
 
     // 등록
@@ -303,6 +317,7 @@
         })
             // .then(res => res.json())
     })
+
 
 
 

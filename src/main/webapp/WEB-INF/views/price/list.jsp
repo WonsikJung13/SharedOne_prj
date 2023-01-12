@@ -163,41 +163,20 @@
         </div>
 
         <div class="searchBox">
-            <c:url value="/item/list" var="listLink"></c:url>
-            <form action="${listLink}" role="search">
-                <div style="display: flex;justify-content: space-between;">
-                    <div>
-                        <label>기간</label>
-                        <div class="input-group">
-                            <input class="form-control" style="margin-right: 4px" required="required" type="date">
-                            -
-                            <input class="form-control" style="margin-left: 4px" required="required" type="date">
-                        </div>
-                    </div>
-                    <div style="float: right">
-                        <label>제품코드</label>
-                        <input class="form-select" type="text" list="itemList" style="width: 210px;"
-                               autocomplete="off"/>
-                        <datalist id="itemList">
-                            <c:forEach items="${itemList}" var="itemList">
-                                <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
-                    <div style="float: right">
-                        <label>거래처코드</label>
-                        <input class="form-select" type="text" list="buyerList" style="width: 210px;"
-                               autocomplete="off"/>
-                        <datalist id="buyerList">
-                            <c:forEach items="${buyerList}" var="buyerList">
-                                <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
-                </div>
+            <c:url value="/price/list" var="listLink"></c:url>
+            <form action="${listLink}" class="d-flex" role="search">
                 <div class="input-group" style="float: none">
-                    <input type="text" class="form-control">
-                    <button class="btn btn-secondary searchBtn" type="submit">검색</button>
+                    <select name="t" class="form-select">
+                        <option value="all">전체</option>
+                        <option value="m_item_id" ${param.t == 'm_item_id' ? 'selected' : '' }>제품코드</option>
+                        <option value="m_item_name" ${param.t == 'm_item_name' ? 'selected' : '' }>제품명</option>
+                        <option value="m_buyer_id" ${param.t == 'm_buyer_id' ? 'selected' : '' }>거래처코드</option>
+                        <option value="m_buyer_name" ${param.t == 'm_buyer_name' ? 'selected' : '' }>거래처명</option>
+                    </select>
+
+                    <input value="${param.q}" type="search" class="form-control" placeholder="Search"
+                           aria-label="Search" name="q" style="width:450px">
+                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
                 </div>
             </form>
         </div>
@@ -265,6 +244,8 @@
                             <c:if test="${priceDto.currentPageNumber ne 1 }">
                                 <c:url value="/price/list" var="listLink">
                                     <c:param name="page" value="1"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
                                 </c:url>
                                 <%-- 맨앞 버튼 --%>
                                 <li class="page-item">
@@ -277,6 +258,8 @@
                             <c:if test="${priceDto.hasPrevButton }">
                                 <c:url value="/price/list" var="listLink">
                                     <c:param name="page" value="${priceDto.jumpPrevPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
                                 </c:url>
                                 <li class="page-item">
                                     <a href="${listLink }" class="page-link">
@@ -289,6 +272,8 @@
                                        var="pageNumber">
                                 <c:url value="/price/list" var="listLink">
                                     <c:param name="page" value="${pageNumber }"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
                                 </c:url>
                                 <li class="page-item
 
@@ -303,6 +288,8 @@
                             <c:if test="${priceDto.hasNextButton }">
                                 <c:url value="/price/list" var="listLink">
                                     <c:param name="page" value="${priceDto.jumpNextPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
                                 </c:url>
                                 <li class="page-item">
                                     <a href="${listLink }" class="page-link">
@@ -315,6 +302,8 @@
                             <c:if test="${priceDto.currentPageNumber ne priceDto.lastPageNumber }">
                                 <c:url value="/price/list" var="listLink">
                                     <c:param value="${priceDto.lastPageNumber }" name="page"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
                                 </c:url>
                                 <li class="page-item">
                                     <a href="${listLink }" class="page-link">
