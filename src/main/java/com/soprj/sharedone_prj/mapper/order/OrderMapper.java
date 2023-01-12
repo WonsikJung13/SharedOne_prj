@@ -2,10 +2,7 @@ package com.soprj.sharedone_prj.mapper.order;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
-import com.soprj.sharedone_prj.domain.order.ItemListVO;
-import com.soprj.sharedone_prj.domain.order.OrderDto;
-import com.soprj.sharedone_prj.domain.order.OrderItemDTO;
-import com.soprj.sharedone_prj.domain.order.OrderPriceVO;
+import com.soprj.sharedone_prj.domain.order.*;
 
 import java.util.List;
 import java.util.Map;
@@ -32,5 +29,9 @@ public interface OrderMapper {
 
   List<OrderDto> orderList();
 
-  List<OrderItemDTO> orderDetail(int m_order_id);
+//  List<OrderItemDTO> orderDetail(int m_order_id);
+
+  OrderHeaderDTO orderDetail(int m_order_id);
+
+  int orderAccept(OrderDto orderDto);
 }

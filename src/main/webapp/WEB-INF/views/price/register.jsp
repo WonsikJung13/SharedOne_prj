@@ -38,20 +38,20 @@
     </div>
     <div class="col">
         <h1>판매가격 작성</h1>
-        <form action="" method="post" enctype="multipart/form-data" id="formId">
-            <table class="table table-bordered">
+        <form action="" method="post" id="formId">
+        <table class="table table-bordered">
 
-                <tbody>
+            <tbody>
                 <tr>
                     <td class="table-active">제품코드</td>
                     <td>
                         <input class="form-select" id="itemId" type="text" name="m_item_id" list="itemList"
-                               placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()">
-                        <datalist id="itemList">
-                            <c:forEach items="${itemList}" var="itemList">
-                                <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>
-                            </c:forEach>
-                        </datalist>
+                                placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()">
+                            <datalist id="itemList">
+                                <c:forEach items="${itemList}" var="itemList">
+                                    <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>
+                                </c:forEach>
+                            </datalist>
                         </input>
                     </td>
                 </tr>
@@ -67,7 +67,7 @@
                         <input class="form-select" id="buyerId" type="text" name="m_buyer_id" list="buyerList"
                                placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()">
                         <datalist id="buyerList">
-                            <c:forEach items="${buyerList}" var="buyerList">
+                            <c:forEach items="${buyerList}" var="buyerList" >
                                 <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
                             </c:forEach>
                         </datalist>
@@ -86,75 +86,70 @@
                         <input class="form-control" id="buyerCurrency" name="m_price_currency" readonly></input>
                     </td>
                 </tr>
-                </tbody>
-            </table>
-            <table class="table table-bordered">
-                <tbody>
-                <tr>
-                    <td class="table-active">시작일</td>
-                    <td>
-                        <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date"
-                               name="m_price_startPeriod"></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">종료일</td>
-                    <td>
-                        <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date"
-                               name="m_price_lastPeriod"></input>
-                    </td>
-                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <td class="table-active">시작일</td>
+                <td>
+                    <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod"></input>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-active">종료일</td>
+                <td>
+                    <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod"></input>
+                </td>
+            </tr>
 
+            <tr>
+                <td class="table-active">할인율</td>
+                <td>
+                    <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount"></input>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-active">판매가격(단가)</td>
+                <td>
+                    <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price"></input>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-active">최종 단가</td>
+                <td>
+                    <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+            <button class="btn btn-secondary" type="button" id="priceButton">판매가 추가</button>
+        </form>
+
+        <h2>추가된 가격</h2>
+        <div class="tableList">
+            <table class="table addList">
+                <thead>
                 <tr>
-                    <td class="table-active">할인율</td>
-                    <td>
-                        <input class="form-control" autocomplete="off" id="discountInput" type="text"
-                               name="m_price_discount"></input>
-                    </td>
+                    <th scope="col">제품코드</th>
+                    <th scope="col">거래처코드</th>
+                    <th scope="col">시작일</th>
+                    <th scope="col">종료일</th>
+                    <th scope="col">통화</th>
+                    <th scope="col">할인율</th>
+                    <th scope="col">판매단가</th>
+                    <th scope="col">최종단가</th>
                 </tr>
-                <tr>
-                    <td class="table-active">판매가격(단가)</td>
-                    <td>
-                        <input class="form-control" autocomplete="off" id="priceInput" type="text"
-                               name="m_price_price"></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">최종 단가</td>
-                    <td>
-                        <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice"
-                               readonly></input>
-                    </td>
-                </tr>
+                </thead>
+                <tbody id="basketList">
+
                 </tbody>
             </table>
-            <input class="btn btn-secondary" type="submit" value="추가" id="priceSubmitButton">
-        </form>
+        </div>
+
+        <button class="btn btn-secondary" id="priceSubmitButton">등록</button>
     </div>
 </div>
-</div>
-<hr>
-<h2>추가된 가격</h2>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">제품코드</th>
-        <th scope="col">제품명</th>
-        <th scope="col">거래처코드</th>
-        <th scope="col">거래처명</th>
-        <th scope="col">시작일</th>
-        <th scope="col">종료일</th>
-        <th scope="col">통화</th>
-        <th scope="col">할인율</th>
-        <th scope="col">판매가격(단가)</th>
-        <th scope="col">최종단가</th>
-        <th scope="col">등록일</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
@@ -162,6 +157,7 @@
 <script>
     const ctx = "${pageContext.request.contextPath}";
 
+    // 할인율 계산하기
     const discountInput = document.querySelector("#discountInput");
     const priceInput = document.querySelector("#priceInput");
 
@@ -226,7 +222,7 @@
             m_price_startPeriod.max = m_price_lastPeriod.value;
     }, false);
 
-    // 날짜 중복확인 (DB)
+    // 날짜 중복확인
     document.querySelector("#m_price_startPeriod").addEventListener("change", function () {
         const m_item_id = document.querySelector("#itemId").value;
         const m_buyer_id = document.querySelector("#buyerId").value;
@@ -253,6 +249,62 @@
                 }
             })
     })
+
+    // 장바구니
+    let addData = [];
+    document.querySelector("#priceButton").addEventListener("click", function () {
+       const m_item_id = document.querySelector("#itemId").value;
+       const m_buyer_id = document.querySelector("#buyerId").value;
+       const m_price_startPeriod = document.querySelector("#m_price_startPeriod").value;
+       const m_price_lastPeriod = document.querySelector("#m_price_lastPeriod").value;
+       const m_price_currency = document.querySelector("#buyerCurrency").value;
+       const m_price_discount = document.querySelector("#discountInput").value;
+       const m_price_price = document.querySelector("#priceInput").value;
+       const m_price_lastPrice = document.querySelector("#lastPrice").value;
+
+
+       const priceAdd = `
+            <tr id="removeId">
+                <td class="priceAdd"> \${m_item_id} </td>
+                <td class="priceAdd"> \${m_buyer_id} </td>
+                <td class="priceAdd"> \${m_price_startPeriod} </td>
+                <td class="priceAdd"> \${m_price_lastPeriod} </td>
+                <td class="priceAdd"> \${m_price_currency} </td>
+                <td class="priceAdd"> \${m_price_discount} </td>
+                <td class="priceAdd"> \${m_price_price} </td>
+                <td class="priceAdd"> \${m_price_lastPrice} </td>
+            </tr>
+       `
+        basketList.insertAdjacentHTML("beforeend", priceAdd);
+
+       const data = {
+           m_item_id,
+           m_buyer_id,
+           m_price_startPeriod,
+           m_price_lastPeriod,
+           m_price_currency,
+           m_price_discount,
+           m_price_price,
+           m_price_lastPrice
+       }
+
+       addData.push(data);
+
+    });
+
+    // 등록
+    document.querySelector("#priceSubmitButton").addEventListener("click", function () {
+        fetch(`\${ctx}/price/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(addData)
+        })
+            // .then(res => res.json())
+    })
+
+
 
 
 </script>

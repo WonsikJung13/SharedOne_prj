@@ -35,6 +35,7 @@ public class OrderDto {
     private String m_order_itemName;
     private String m_order_itemGroup;
     private String m_order_itemManufacturer;
+    private String m_order_memo;
 
 
 

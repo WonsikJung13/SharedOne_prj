@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PriceService {
@@ -85,13 +86,12 @@ public class PriceService {
         return priceMapper.getPricePeriod(priceDto);
     }
 
-    // MIN값이 필요하면 사용
-
-//    public String getBeforeLastPeriod(PriceDto priceDto) {
-//        return priceMapper.getBeforeLastPeriod(priceDto);
-//    }
 
     public LocalDate getAfterStartPeriod(PriceDto priceDto) {
         return priceMapper.getAfterStartPeriod(priceDto);
+    }
+
+    public int addPriceData(Map<String, Object> stringObjectMap) {
+        return priceMapper.addPriceData(stringObjectMap);
     }
 }
