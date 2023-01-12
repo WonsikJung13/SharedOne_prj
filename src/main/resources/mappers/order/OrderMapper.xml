@@ -165,6 +165,10 @@
         WHERE m_order_id = #{m_order_id}
     </update>
 
+<!--  주문리스트 삭제하기  -->
+    <delete id="orderRemove">
+
+    </delete>
 
 
 </mapper>

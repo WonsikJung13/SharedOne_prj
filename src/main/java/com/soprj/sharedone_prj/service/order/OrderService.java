@@ -60,4 +60,8 @@ public class OrderService {
     public int orderAccept(OrderDto orderDto) {
         return mapper.orderAccept(orderDto);
     }
+
+    public int orderRemove(int mOrderId) {
+        return mapper.orderRemove(mOrderId);
+    }
 }

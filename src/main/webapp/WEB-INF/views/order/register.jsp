@@ -264,7 +264,7 @@
             </tbody>
         </table>
         <div class="btnWidth">
-        <button class="btn btn-secondary addBtn">제품추가</button>
+            <button class="btn btn-secondary addBtn">제품추가</button>
         </div>
 
         <h2>추가된 제품</h2>
@@ -310,7 +310,7 @@
             <button class="btn btn-secondary storageBtn">임시저장</button>
             <button class="btn btn-secondary submitBtn">승인요청</button>
         </div>
-
+인
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -344,6 +344,7 @@
         const requestDate = document.querySelector("#buyerInserted").value;
         const buyer = document.querySelector('#buyer')
         const selectedBuyer = buyer.value.split('_').at(0);
+        console.log(selectedBuyer);
         const data = {requestDate, selectedItem, selectedBuyer}
         fetch(`\${ctx}/order/itemList`, {
             method: "POST",
@@ -372,6 +373,7 @@
             headers: {
                 "Content-Type": "application/json"
             },
+            body : JSON.stringify(data)
         })
             .then(res => res.json())
             .then(data => {
