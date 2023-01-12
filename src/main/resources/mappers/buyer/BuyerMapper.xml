@@ -103,6 +103,32 @@
 
     <select id="countAll" resultType="int">
         SELECT COUNT(*) FROM m_buyer
+        WHERE
+        <trim prefixOverrides="OR">
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_id'">
+                OR m_buyer_id LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_name'">
+                OR m_buyer_name LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_region'">
+                OR m_buyer_region LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_address'">
+                OR m_buyer_address LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_number'">
+                OR m_buyer_number LIKE #{searchText}
+            </if>
+
+            <if test="searchNum == 'all' or searchNum == 'm_buyer_currency'">
+                OR m_buyer_currency LIKE #{searchText}
+            </if>
+        </trim>
     </select>
 
     <insert id="addBuyer">

@@ -22,7 +22,7 @@ public class BuyerController {
 
 
     @GetMapping("list")
-    public void getPriceList(Model model,
+    public void getBuyerList(Model model,
                              @RequestParam(name = "page", defaultValue = "1") int page,
                              @RequestParam(name = "searchNum", defaultValue = "all") String searchNum,
                              @RequestParam(name = "searchText", defaultValue = "") String searchText,

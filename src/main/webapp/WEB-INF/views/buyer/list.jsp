@@ -149,6 +149,8 @@
             --bs-btn-font-weight: 600;
             /*background-color: #658e99;*/
             border: none;
+            border-top-left-radius: 0.375rem;
+            border-bottom-left-radius: 0.375rem;
         }
 
         .page-item {
@@ -279,72 +281,75 @@
         </div>
         <div class="row">
             <div class="col">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination" style="display: flex; justify-content : center;">
+                <div class="position-relative">
+                    <nav aria-label="Page navigation example"
+                         class="position-absolute top-100 start-50 translate-middle">
+                        <ul class="pagination">
 
-                        <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
-                        <c:if test="${buyerDto.currentPageNumber ne 1 }">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param name="page" value="1"/>
-                            </c:url>
-                            <%-- 맨앞 버튼 --%>
-                            <li class="page-item">
-                                <a href="${listLink }" class="page-link">
-                                    <i class="fa-solid fa-angles-left"></i>
-                                </a>
-                            </li>
-                        </c:if>
+                            <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
+                            <c:if test="${buyerDto.currentPageNumber ne 1 }">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param name="page" value="1"/>
+                                </c:url>
+                                <%-- 맨앞 버튼 --%>
+                                <li class="page-item">
+                                    <a href="${listLink }" class="page-link">
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </a>
+                                </li>
+                            </c:if>
 
-                        <c:if test="${buyerDto.hasPrevButton }">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param name="page" value="${buyerDto.jumpPrevPageNumber }"></c:param>
-                            </c:url>
-                            <li class="page-item">
-                                <a href="${listLink }" class="page-link">
-                                    <i class="fa-solid fa-angle-left"></i>
-                                </a>
-                            </li>
-                        </c:if>
+                            <c:if test="${buyerDto.hasPrevButton }">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param name="page" value="${buyerDto.jumpPrevPageNumber }"></c:param>
+                                </c:url>
+                                <li class="page-item">
+                                    <a href="${listLink }" class="page-link">
+                                        <i class="fa-solid fa-angle-left"></i>
+                                    </a>
+                                </li>
+                            </c:if>
 
-                        <c:forEach begin="${buyerDto.leftPageNumber}" end="${buyerDto.rightPageNumber}"
-                                   var="pageNumber">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param name="page" value="${pageNumber }"/>
-                            </c:url>
-                            <li class="page-item
+                            <c:forEach begin="${buyerDto.leftPageNumber}" end="${buyerDto.rightPageNumber}"
+                                       var="pageNumber">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param name="page" value="${pageNumber }"/>
+                                </c:url>
+                                <li class="page-item
 
                   <%-- 현재페이지에 active 클래스 추가 --%>
                   ${buyerDto.currentPageNumber eq pageNumber ? 'active' : ''} }
 
                   "><a style="height: 30px" class="page-link" href="${listLink}">${pageNumber}</a>
-                            </li>
-                        </c:forEach>
+                                </li>
+                            </c:forEach>
 
-                        <%-- 다음 버튼 --%>
-                        <c:if test="${buyerDto.hasNextButton }">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param name="page" value="${buyerDto.jumpNextPageNumber }"></c:param>
-                            </c:url>
-                            <li class="page-item">
-                                <a href="${listLink }" class="page-link">
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </c:if>
+                            <%-- 다음 버튼 --%>
+                            <c:if test="${buyerDto.hasNextButton }">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param name="page" value="${buyerDto.jumpNextPageNumber }"></c:param>
+                                </c:url>
+                                <li class="page-item">
+                                    <a href="${listLink }" class="page-link">
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </c:if>
 
-                        <%-- 맨뒤 버튼 --%>
-                        <c:if test="${buyerDto.currentPageNumber ne buyerDto.lastPageNumber }">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param value="${buyerDto.lastPageNumber }" name="page"/>
-                            </c:url>
-                            <li class="page-item">
-                                <a href="${listLink }" class="page-link">
-                                    <i class="fa-solid fa-angles-right"></i>
-                                </a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </nav>
+                            <%-- 맨뒤 버튼 --%>
+                            <c:if test="${buyerDto.currentPageNumber ne buyerDto.lastPageNumber }">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param value="${buyerDto.lastPageNumber }" name="page"/>
+                                </c:url>
+                                <li class="page-item">
+                                    <a href="${listLink }" class="page-link">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </a>
+                                </li>
+                            </c:if>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
@@ -363,18 +368,6 @@
 
 <script>
     const ctx = "${pageContext.request.contextPath}";
-
-
-    const changeValue = (target) => {
-        // 선택한 option의 value 값
-        // console.log(target.value);
-
-        // option의 text 값
-        // console.log(target.options[target.selectedIndex].text);
-        console.log(target)
-        console.log(target.value)
-        console.log(target.name)
-    }
 
     document.querySelector("#searchBtn").addEventListener("click", function () {
         document.querySelector("#searchForm").submit();

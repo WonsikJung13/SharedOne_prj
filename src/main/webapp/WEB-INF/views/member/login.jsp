@@ -102,32 +102,32 @@
         .groupEditOption, .ManufacturerEditOption {
             position: relative;
         }
+
+        body {
+            background-image: url("/static/img/cat-space.gif");
+        }
     </style>
 </head>
 <body class="align-middle">
 <div class="container-fluid d-flex justify-content-center" style="height: 100vh">
 
     <div class="card align-self-center">
-        <div class="card-header">
-            LOGIN Page
-        </div>
         <div class="card-body">
-            <th:block th:if="${param.logout != null}">
-                <h1>Logout........</h1>
-            </th:block>
+
+            <h1>로그인</h1>
 
             <form id="registerForm" action="/member/login" method="post">
                 <div class="input-group mb-3">
-                    <span class="input-group-text">아이디</span>
-                    <input type="text" name="username" class="form-control" placeholder="USER ID">
+                    <span class="input-group-text">사원이름</span>
+                    <input type="text" name="username" class="form-control" placeholder="이름">
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text">패스워드</span>
-                    <input type="password" name="password" class="form-control" placeholder="PASSWORD">
+                    <span class="input-group-text">비밀번호</span>
+                    <input type="password" name="password" class="form-control" placeholder="비밀번호">
                 </div>
                 <div class="my-4">
                     <div class="float-end">
-                        <button type="submit" class="btn btn-primary submitBtn">LOGIN</button>
+                        <button type="submit" class="btn btn-primary submitBtn">로그인</button>
                     </div>
                 </div>
             </form>
