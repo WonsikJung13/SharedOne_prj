@@ -5,3 +5,15 @@
  2023-01-09 Merge 완료
  
  2023-01-05 목요일 커밋에 대하여 전부 Merge 완료
+
+
+------------------
+### 참여인원
+
+이름 | 깃
+---|---
+정원식 | [WonsikJung13](https://github.com/WonsikJung13)
+하현종 | [Kimchi.Disaster](https://github.com/ha971206)
+정진아 | [Zzinnn](https://github.com/Zzinnn)
+임채은 | [Limdaram](https://github.com/Limdaram)
+임성규 | [SSung](https://github.com/gmlrmrtjd)
