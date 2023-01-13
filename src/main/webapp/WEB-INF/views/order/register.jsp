@@ -251,7 +251,7 @@
                 <td class="table-active">주문수량</td>
                 <td>
                     <input id="orderCount" class="form-control" type="text" placeholder="수량을 입력하세요."
-                           aria-label="default input example">
+                           aria-label="default input example" disabled>
                 </td>
             </tr>
             <tr>
@@ -264,7 +264,7 @@
             </tbody>
         </table>
         <div class="btnWidth">
-            <button class="btn btn-secondary addBtn">제품추가</button>
+            <button class="btn btn-secondary addBtn" disabled>제품추가</button>
         </div>
 
         <h2>추가된 제품</h2>
@@ -310,7 +310,6 @@
             <button class="btn btn-secondary storageBtn">임시저장</button>
             <button class="btn btn-secondary submitBtn">승인요청</button>
         </div>
-인
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -360,7 +359,28 @@
                 document.querySelector(".manufacturer").innerHTML = data.m_item_manufacturer;
                 document.querySelector(".listPrice").value = data.m_price_lastPrice;
             })
+        setTimeout(function (){
+            for(const a in addData){
+                if(addData[a].m_order_itemId === selectedItem){
+                    document.querySelector("#orderItems").value = null;
+                    document.querySelector(".itemName").innerHTML = "";
+                    document.querySelector(".itemGroup").innerHTML = "";
+                    document.querySelector(".manufacturer").innerHTML = "";
+                    document.querySelector("#orderCount").value = null;
+                    document.querySelector("#totalPrice").innerHTML = "";
+                    document.querySelector(".listPrice").value = null;
+                    document.querySelector("#orderCount").setAttribute("disabled", "");
+                }
+            }},100)
+
+
+        document.querySelector("#buyer").readOnly = true;
+        $('#buyer').css("background", "#b2babb");
+        document.querySelector("#buyerInserted").readOnly = true;
+        $('#buyerInserted').css("background", "#b2babb");
+        document.querySelector("#orderCount").removeAttribute("disabled");
     }
+
 
     // 아이템 선택 후 데이터 끌고오기
     function itemList() {
@@ -459,6 +479,19 @@
         }
 
         addData.push(data);
+
+        // 제품 추가 눌렀을때 제품 데이터 사라짐
+        document.querySelector("#orderItems").value = null;
+        document.querySelector(".itemName").innerHTML = "";
+        document.querySelector(".itemGroup").innerHTML = "";
+        document.querySelector(".manufacturer").innerHTML = "";
+        document.querySelector("#orderCount").value = null;
+        document.querySelector("#totalPrice").innerHTML = "";
+        document.querySelector(".listPrice").value = null;
+
+        document.querySelector(".addBtn").setAttribute("disabled", "");
+        document.querySelector("#orderCount").setAttribute("disabled", "");
+
     })
 
     // 오더추가
@@ -493,7 +526,16 @@
 
     }
 
+    // 주문 수량 입력 해야 제품 등록 버튼 뜨게하기
+    document.querySelector("#orderCount").addEventListener("keyup", function () {
+        const orderCount = document.querySelector("#orderCount").value;
 
+        if(orderCount === ""){
+            document.querySelector(".addBtn").setAttribute("disabled", "");
+        }else{
+            document.querySelector('.addBtn').removeAttribute("disabled")
+        }
+    })
 
 </script>
 </body>

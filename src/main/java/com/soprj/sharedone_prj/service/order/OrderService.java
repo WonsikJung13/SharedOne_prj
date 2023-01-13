@@ -61,7 +61,9 @@ public class OrderService {
         return mapper.orderAccept(orderDto);
     }
 
-    public int orderRemove(int mOrderId) {
-        return mapper.orderRemove(mOrderId);
+    public void orderRemove(int mOrderId) {
+        mapper.orderItemRemove(mOrderId);
+        mapper.orderHeaderRemove(mOrderId);
+
     }
 }

@@ -35,5 +35,7 @@ public interface OrderMapper {
 
   int orderAccept(OrderDto orderDto);
 
-  int orderRemove(int mOrderId);
+  void orderHeaderRemove(int mOrderId);
+
+  void orderItemRemove(int mOrderId);
 }

@@ -166,8 +166,14 @@
     </update>
 
 <!--  주문리스트 삭제하기  -->
-    <delete id="orderRemove">
 
+    <delete id="orderHeaderRemove">
+        DELETE FROM m_order_header
+        WHERE m_order_id = #{m_order_id}
+    </delete>
+    <delete id="orderItemRemove">
+        DELETE FROM m_order_item
+        WHERE m_order_id = #{m_order_id}
     </delete>
 
 

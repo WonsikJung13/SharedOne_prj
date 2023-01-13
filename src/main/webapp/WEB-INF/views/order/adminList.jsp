@@ -249,9 +249,11 @@
                 </div>
             </div>
         </form>
-<%--   삭제 버튼    --%>
+
+        <%--   삭제 버튼    --%>
         <div class="row justify-content-end" style="width: 1000px">
-            <input style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal"
+            <input style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal" type="button"
+                   id="removeButton"
                    data-bs-target="#removeModal" value="삭제" class="btn btn-danger">
         </div>
 
@@ -274,7 +276,7 @@
                 <c:forEach items="${orderList }" var="orderList">
                     <tr>
                         <td>
-                            <input class="itemBox" name="itemBox" type="checkbox" value="${itemList.m_item_id}">
+                            <input class="itemBox" name="itemBox" type="checkbox" value="${orderList.m_order_id}">
                         </td>
                         <td onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
                             data-bs-target="#orderConfirm" class="orderDetailBtn">${orderList.m_order_id}</td>
@@ -295,8 +297,9 @@
         </div>
 
         <%--오더리스트 삭제하기--%>
-        <form id="removeForm" action="order/remove" method="post">
-            <input type="hidden" name="m_order_id" value="18">
+        <c:url value="/order/remove" var="removeLink"/>
+        <form id="removeForm" action="${removeLink }" method="post">
+            <input type="hidden" id="removeInput" name="m_order_id" value="">
         </form>
 
         <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -310,16 +313,23 @@
                         삭제하시겠습니까?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">취소
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">
+                            취소
                         </button>
-                        <button id="removeConfirmButton" type="button"
-                                class="btn btn-danger">확인
+                        <button id="removeConfirmButton" class="btn btn-danger">
+                            삭제
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
 
         <%--주문서 확인하기--%>
         <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
@@ -470,8 +480,24 @@
     }
 
     document.querySelector("#removeConfirmButton").addEventListener("click", function () {
-        document.querySelector("#removeForm").submit();
+        remove();
+        document.getElementById('removeForm').submit();
     })
+
+    function remove() {
+        var length = document.getElementsByName("itemBox").length;
+        var removeIdList = [];
+        for (var i = 0; i < length; i++) {
+            var checkedBox = document.getElementsByName("itemBox")[i].checked
+            if (checkedBox) {
+                var selectId = document.getElementsByName("itemBox")[i].value;
+                removeIdList.push(selectId);
+            }
+        }
+        document.querySelector("#removeInput").value = removeIdList;
+    }
+
+    // document.querySelector("#removeButton").addEventListener("click", remove);
 
 </script>
 </body>
