@@ -287,6 +287,19 @@
     // 추가
     document.querySelector("#priceButton").addEventListener("click", function () {
 
+        // 빈값 체크
+        let emptyIndex = document.querySelector(".addList").tBodies[0].rows.length-1;
+        var input_empty = false;
+        $('#formId').find('input[type!="hidden"]').each(function(){
+            if(!$(this).val()) {
+                input_empty = true;
+            }
+        });
+        if(input_empty == true) {
+            alert('값을 전부 입력하세요');
+            document.querySelector(".addList").tBodies[0].deleteRow(emptyIndex);
+        }
+
        const m_item_id = document.querySelector("#itemId").value;
        const m_buyer_id = document.querySelector("#buyerId").value;
        const m_price_startPeriod = document.querySelector("#m_price_startPeriod").value;
@@ -349,19 +362,7 @@
 
         $('#resetBtn').trigger('click');
 
-        // 빈값 체크
-        let emptyIndex = document.querySelector(".addList").tBodies[0].rows.length-1;
-        console.log(emptyIndex)
-        var input_empty = false;
-        $('#formId').find('input[type!="hidden"]').each(function(){
-            if(!$(this).val()) {
-                input_empty = true;
-            }
-        });
-        if(input_empty) {
-            alert('값을 전부 입력하세요');
-            document.querySelector(".addList").tBodies[0].deleteRow(emptyIndex);
-        }
+
 
     });
 
@@ -375,7 +376,16 @@
             },
             body: JSON.stringify(addDatas)
         })
-            // .then(res => res.json())
+            .then(res => res.json())
+            .then(data => {
+                if (data >= 1) {
+                    alert(data + "개의 판매가 등록이 완료되었습니다.")
+                    location.href = "/price/list";
+
+                } else {
+                    alert("추가된 판매가 테이블을 확인해주세요.")
+                }
+            })
     })
 
     // 삭제

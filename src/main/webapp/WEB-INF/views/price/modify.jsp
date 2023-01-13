@@ -107,32 +107,12 @@
                     </tr>
                     </tbody>
                 </table>
-                <input class="btn btn-secondary" type="submit" value="추가" id="priceSubmitButton">
+                <input class="btn btn-secondary" type="submit" value="수정" id="priceSubmitButton">
             </form>
         </div>
     </div>
 </div>
-<hr>
-<h2>수정된 가격</h2>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">제품코드</th>
-        <th scope="col">제품명</th>
-        <th scope="col">거래처코드</th>
-        <th scope="col">거래처명</th>
-        <th scope="col">시작일</th>
-        <th scope="col">종료일</th>
-        <th scope="col">통화</th>
-        <th scope="col">할인율</th>
-        <th scope="col">판매가격(단가)</th>
-        <th scope="col">최종단가</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous">
