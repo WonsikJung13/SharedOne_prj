@@ -94,4 +94,5 @@ public class PriceService {
     public int addPriceData(Map<String, Object> stringObjectMap) {
         return priceMapper.addPriceData(stringObjectMap);
     }
+
 }

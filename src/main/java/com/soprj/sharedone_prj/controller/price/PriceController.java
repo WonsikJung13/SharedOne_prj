@@ -64,11 +64,7 @@ public class PriceController {
 
     @PostMapping("register")
     public String register(PriceDto price) {
-        price.getM_price_startPeriod();
-
-        System.out.println("????"+price);
         priceService.register(price);
-
         return "redirect:/price/list";
     }
 
