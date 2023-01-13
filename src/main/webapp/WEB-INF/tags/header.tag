@@ -8,6 +8,7 @@
 <c:url value="/member/manage" var="memberList"></c:url>
 <c:url value="/order/register" var="orderLink"></c:url>
 <c:url value="/order/list" var="orderList"></c:url>
+<c:url value="/order/adminList" var="adminList"></c:url>
 <c:url value="/report/orderReport" var="reportLink"></c:url>
 <style>
     a {
@@ -170,6 +171,9 @@
                     <button onclick="location.href='${orderLink}'" class="accordion-button">승인관리</button>
                 </div>
             </c:if>
+            <div>
+                <button onclick="location.href='${adminList}'" class="accordion-button">adminList</button>
+            </div>
         </div>
     </div>
     <br>
@@ -226,6 +230,7 @@
                         <c:if test="${authorities eq '[팀장]'}">
                             <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">승인관리</a></li>
                         </c:if>
+                        <li><a href="${adminList}" class="navbg d-inline-flex text-decoration-none rounded">adminList</a>
                     </ul>
                 </div>
             </li>

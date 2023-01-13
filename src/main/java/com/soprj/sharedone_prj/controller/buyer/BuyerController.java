@@ -31,13 +31,6 @@ public class BuyerController {
         model.addAttribute("buyerList", buyerList);
     }
 
-
-    @GetMapping("get")
-    public void get(@RequestParam(name = "m_buyer_id") String m_buyer_id, Model model) {
-        BuyerDto buyer = buyerService.get(m_buyer_id);
-        model.addAttribute("Buyer", buyer);
-    }
-
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("register")
     public void register() {
@@ -69,13 +62,14 @@ public class BuyerController {
     }
 
     @PostMapping("remove")
-    public String remove(String m_buyer_id, RedirectAttributes rttr) {
-        int cnt = buyerService.remove(m_buyer_id);
-        if (cnt == 1) {
-            rttr.addFlashAttribute("message", m_buyer_id + "번 게시물이 삭제되었습니다.");
-        } else {
-            rttr.addFlashAttribute("message", m_buyer_id + "번 게시물이 삭제되지 않았습니다.");
+    public String remove(RedirectAttributes rttr,
+                         String m_buyer_id) {
+        String[] buyer = m_buyer_id.split(",");
+        for (int i = 0; i < buyer.length; i++){
+            buyerService.remove(buyer[i]);
         }
+
+
         return "redirect:/buyer/list";
     }
 
