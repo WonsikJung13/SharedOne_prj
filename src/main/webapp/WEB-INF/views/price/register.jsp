@@ -124,6 +124,7 @@
             </tbody>
         </table>
             <button class="btn btn-secondary" type="button" id="priceButton">판매가 추가</button>
+            <div style="display:none"><button id="resetBtn" type="reset"></button> </div>
         </form>
 
         <h2>추가된 가격</h2>
@@ -346,6 +347,22 @@
        }
         addDatas.push(data);
 
+        $('#resetBtn').trigger('click');
+
+        // 빈값 체크
+        let emptyIndex = document.querySelector(".addList").tBodies[0].rows.length-1;
+        console.log(emptyIndex)
+        var input_empty = false;
+        $('#formId').find('input[type!="hidden"]').each(function(){
+            if(!$(this).val()) {
+                input_empty = true;
+            }
+        });
+        if(input_empty) {
+            alert('값을 전부 입력하세요');
+            document.querySelector(".addList").tBodies[0].deleteRow(emptyIndex);
+        }
+
     });
 
 
@@ -361,13 +378,15 @@
             // .then(res => res.json())
     })
 
-
+    // 삭제
     function clickRemove(target) {
         var listIndex = $(target).parent().parent().index();
         $(target).parent().parent().remove();
 
         addDatas.splice(listIndex, 1)
     }
+
+
 
 
 

@@ -186,13 +186,12 @@
         FROM m_item
     </select>
 
-    <delete id="remove">
-        DELETE
-        FROM
+    <update id="remove">
+        UPDATE
             m_price
-        WHERE
-            m_price_id = #{m_price_id}
-    </delete>
+        SET m_price_active = 0
+        WHERE m_price_id = #{m_price_id}
+    </update>
 
     <select id="getPricePeriod" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
         SELECT
