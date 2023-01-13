@@ -20,27 +20,9 @@ public class MemberService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<MemberDto> listMember() {
-        return memberMapper.list();
-    }
-
-    public MemberDto getMember(String m_member_id) {
-        return memberMapper.getMember(m_member_id);
-    }
-
-
     public int updateEmail(String m_member_id, String m_member_email) {
         return memberMapper.updateMemberEmail(m_member_id, m_member_email);
     }
-
-    public int updatePassword(MemberDto member) {
-        return memberMapper.updateMemberPassword(member);
-    }
-
-    public int addMember(MemberDto member) {
-        return memberMapper.addMember(member);
-    }
-
 
     public int register(MemberDto member) {
         int cnt = memberMapper.insert(member);
