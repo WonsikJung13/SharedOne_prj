@@ -180,10 +180,9 @@
                 </div>
             </form>
         </div>
-        <div style="display: flex;background-color: transparent;width:1000px">
-            <button class="btn btn-danger" style="margin-left: auto;margin-bottom: 10px;" data-bs-toggle="modal"
-                    data-bs-target="#removeModal" value="삭제">선택삭제
-            </button>
+        <div>
+            <input style="float: right; width: 100px; margin-right: 100px" data-bs-toggle="modal"
+                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger"></input>
         </div>
         <c:url value="/price/remove" var="removeLink"/>
         <form id="removeForm" action="${removeLink }" method="post">
