@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -124,8 +125,12 @@ public class OrderController {
 
 //    삭제하기
     @PostMapping("remove")
-    public void remove(int m_order_id){
-        orderService.orderRemove(m_order_id);
+    public String remove(String m_order_id ){
+        String[] order = m_order_id.split(",");
+        for (int i = 0; i < order.length; i++){
+            orderService.orderRemove(Integer.parseInt(order[i]));
+        }
+        return "redirect:/order/adminList";
     }
 
 
