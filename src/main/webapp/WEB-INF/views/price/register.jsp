@@ -254,9 +254,6 @@
                     let arr = new Array();
                     for (let i = 0; i < addDatas.length; i++) {
                         if (m_item_id == addDatas.at(i).m_item_id && m_buyer_id == addDatas.at(i).m_buyer_id) {
-                            console.log("1"+addDatas.at(i).m_price_startPeriod)
-                            console.log("2"+addDatas.at(i).m_price_lastPeriod)
-                            console.log("3"+m_price_startPeriod)
                             if (addDatas.at(i).m_price_startPeriod <= m_price_startPeriod && m_price_startPeriod <= addDatas.at(i).m_price_lastPeriod) {
                                 alert("이미 추가된 판매가의 날짜가 겹칩니다. 다시 확인해주세요")
                             } else {
@@ -269,12 +266,9 @@
                     }
                     let minDate = arr.reduce((prev, curr) => {
                         // 이전것과 비교해 더 작은 것 리턴
-                        console.log("1 "+minDate)
                         return new Date(prev).getTime() <= new Date(curr).getTime() ? prev : curr;
                     })
-                    console.log("2 "+minDate)
                     let a = new Date(minDate);
-                    console.log("3 "+a)
                     let sel_day = -1;
                     a.setDate(a.getDate() + sel_day);
                     let year    = a.getFullYear();
@@ -282,7 +276,6 @@
                     let day     = ('0' + a.getDate()).slice(-2);
                     dt = year+"-"+month+"-"+day;
                     document.querySelector("#m_price_lastPeriod").max = dt;
-                    console.log("4 "+dt)
                 } else {
                     alert(data.message)
                 }
@@ -336,7 +329,7 @@
                 <td class="priceAdd"> \${m_price_discount} </td>
                 <td class="priceAdd"> \${m_price_price} </td>
                 <td class="priceAdd"> \${m_price_lastPrice} </td>
-                <td><button class="btn btn-danger" onclick="clickRemove(this)">삭제</button></td>
+                <td><button class="btn btn-danger removeButton" onclick="clickRemove(this)">삭제</button></td>
             </tr>
        `
         basketList.insertAdjacentHTML("beforeend", priceAdd);
@@ -363,15 +356,17 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(addDatata)
+            body: JSON.stringify(addDatas)
         })
             // .then(res => res.json())
     })
+
 
     function clickRemove(target) {
         var listIndex = $(target).parent().parent().index();
         $(target).parent().parent().remove();
 
+        addDatas.splice(listIndex, 1)
     }
 
 
