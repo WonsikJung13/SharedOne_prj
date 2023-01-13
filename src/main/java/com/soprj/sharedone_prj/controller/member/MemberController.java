@@ -31,31 +31,6 @@ public class MemberController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("list")
-    public void list(Model model) {
-        List<MemberDto> list = memberService.listMember();
-
-        model.addAttribute("memberList", list);
-    }
-
-    @PostMapping("list")
-    public String modifyy(MemberDto member, RedirectAttributes rttr) {
-
-        return "redirect:/member/list";
-    }
-
-    @GetMapping("get")
-    public void get(@RequestParam(name = "m_member_id") String m_member_id, Model model) {
-        MemberDto member = memberService.get(m_member_id);
-        model.addAttribute("member", member);
-    }
-
-    @PostMapping("get")
-    public String getto(MemberDto member, RedirectAttributes rttr) {
-
-        return "redirect:/member/list";
-    }
-
     @RequestMapping("register")
     public void register() {
 
@@ -166,7 +141,6 @@ public class MemberController {
             map.put("statusNum", "exist");
             map.put("message", "일치하지 않습니다");
         }
-        System.out.println(map);
         return map;
     }
 }

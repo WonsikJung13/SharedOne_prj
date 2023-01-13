@@ -341,6 +341,7 @@
     }
 
     document.querySelector("#submitBtn").addEventListener("click", function () {
+        const buyerList = ctx + '/buyer/list';
         fetch(`\${ctx}/buyer/register`, {
             method: "POST",
             headers: {
@@ -350,12 +351,11 @@
         })
             .then(res => res.json())
 
-        const buyerList = ctx + '/buyer/list';
 
 
         setTimeout(function (){
             location.href = buyerList;
-        },500)
+        },300)
     })
 
 

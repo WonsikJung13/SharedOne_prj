@@ -5,20 +5,6 @@
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.buyer.BuyerMapper">
 
-    <select id="list" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
-        SELECT
-        m_buyer_id,
-        m_buyer_name,
-        m_buyer_region,
-        m_buyer_address,
-        m_buyer_number,
-        m_buyer_currency
-        FROM
-        m_buyer
-        ORDER BY m_buyer_id DESC
-
-    </select>
-
     <select id="selectDuo" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
         SELECT
         m_buyer_id,
@@ -33,18 +19,6 @@
         m_buyer_id = #{m_buyer_id}
     </select>
 
-    <select id="select" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
-        SELECT
-        m_buyer_id,
-        m_buyer_name,
-        m_buyer_region,
-        m_buyer_address,
-        m_buyer_number,
-        m_buyer_currency
-        FROM
-        m_buyer
-        ORDER BY m_buyer_id DESC
-    </select>
     <select id="getBuyerNum" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
         SELECT
         m_buyer_id,
@@ -58,6 +32,7 @@
         WHERE
         m_buyer_number = #{m_buyer_number}
     </select>
+
     <select id="getBuyerList" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
         SELECT
         m_buyer_id,
@@ -130,23 +105,6 @@
             </if>
         </trim>
     </select>
-
-    <insert id="addBuyer">
-        INSERT INTO m_buyer (
-        m_buyer_name,
-        m_buyer_region,
-        m_buyer_address,
-        m_buyer_number,
-        m_buyer_currency
-        )
-        VALUES (
-        #{m_buyer_name},
-        #{m_buyer_region},
-        #{m_buyer_address},
-        #{m_buyer_number},
-        #{m_buyer_currency}
-        )
-    </insert>
 
     <insert id="insert">
         <selectKey keyProperty="m_buyer_id" order="BEFORE" resultType="String">

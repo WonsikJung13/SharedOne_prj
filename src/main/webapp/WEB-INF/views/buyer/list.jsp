@@ -163,10 +163,10 @@
 <body>
 
 <div class="row">
-    <div class="col-3" style="position: relative; z-index: 2;">
+    <div class="col-3">
         <my:header></my:header>
     </div>
-    <div class="col" style="position: relative; z-index: 1;">
+    <div class="col">
 
         <div style="display: flex; justify-content : center;">
             <div style="display: flex;justify-content: space-between;width: 900px;">
@@ -207,6 +207,7 @@
                 <table class="table addList">
                     <tbody>
                     <tr style="font-family: 'LINESeedKR-Bd'">
+                        <th></th>
                         <th>거래처 번호</th>
                         <th>거래처명</th>
                         <th>거래처 나라</th>
@@ -214,11 +215,16 @@
                         <th>사업자 번호</th>
                         <th>통화</th>
                         <th>
-
+                            <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
+                                   data-bs-target="#removeModal">
                         </th>
                     </tr>
                     <c:forEach items="${buyerList }" var="buyer">
                         <tr>
+                            <td>
+                                <input class="itemBox" name="buyerBox" type="checkbox"
+                                       data-m_buyer_id="${buyer.m_buyer_id}" value="${buyer.m_buyer_id}">
+                            </td>
                             <td id="id">
                                     ${buyer.m_buyer_id  }
                             </td>
@@ -234,46 +240,47 @@
                                 <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>
 
                                 <c:url value="/buyer/remove" var="removeLink">
-                                    <c:param value="${buyer.m_buyer_id }" name="m_buyer_id"/>
+<%--                                    <c:param value="${buyer.m_buyer_id }" name="m_buyer_id"/>--%>
                                 </c:url>
-                                <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
-                                       data-bs-target="#removeModal${buyer.m_buyer_name }">
+<%--                                <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"--%>
+<%--                                       data-bs-target="#removeModal${buyer.m_buyer_name }">--%>
                             </td>
                         </tr>
-                        <form id="removeForm${buyer.m_buyer_name }" action="${removeLink }" method="post">
-                            <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
-                        </form>
-                        <div class="modal fade" id="removeModal${buyer.m_buyer_name }" tabindex="-1"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5"
-                                            id="exampleModalLabel">삭제 확인</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        삭제하시겠습니까?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button style="font-family: 'LINESeedKR-Bd'" type="button"
-                                                class="btn btn-secondary"
-                                                data-bs-dismiss="modal">취소
-                                        </button>
-                                        <button style="font-family: 'LINESeedKR-Bd'"
-                                                id="removeConfirmButton${buyer.m_buyer_name }" type="button"
-                                                class="btn btn-danger">확인
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <script>
-                            document.querySelector("#removeConfirmButton${buyer.m_buyer_name }").addEventListener("click", function () {
-                                document.querySelector("#removeForm${buyer.m_buyer_name }").submit();
-                            })
-                        </script>
+<%--                        <form id="removeForm${buyer.m_buyer_name }" action="${removeLink }" method="post">--%>
+<%--                            <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">--%>
+<%--                        </form>--%>
+<%--                        --%>
+<%--                        <div class="modal fade" id="removeModal${buyer.m_buyer_name }" tabindex="-1"--%>
+<%--                             aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
+<%--                            <div class="modal-dialog">--%>
+<%--                                <div class="modal-content">--%>
+<%--                                    <div class="modal-header">--%>
+<%--                                        <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5"--%>
+<%--                                            id="exampleModalLabel">삭제 확인</h1>--%>
+<%--                                        <button type="button" class="btn-close" data-bs-dismiss="modal"--%>
+<%--                                                aria-label="Close"></button>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="modal-body">--%>
+<%--                                        삭제하시겠습니까?--%>
+<%--                                    </div>--%>
+<%--                                    <div class="modal-footer">--%>
+<%--                                        <button style="font-family: 'LINESeedKR-Bd'" type="button"--%>
+<%--                                                class="btn btn-secondary"--%>
+<%--                                                data-bs-dismiss="modal">취소--%>
+<%--                                        </button>--%>
+<%--                                        <button style="font-family: 'LINESeedKR-Bd'"--%>
+<%--                                                id="removeConfirmButton${buyer.m_buyer_name }" type="button"--%>
+<%--                                                class="btn btn-danger">확인--%>
+<%--                                        </button>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <script>--%>
+<%--                            document.querySelector("#removeConfirmButton${buyer.m_buyer_name }").addEventListener("click", function () {--%>
+<%--                                document.querySelector("#removeForm${buyer.m_buyer_name }").submit();--%>
+<%--                            })--%>
+<%--                        </script>--%>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -355,6 +362,36 @@
     </div>
 </div>
 
+<div class="modal fade" id="removeModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5"
+                    id="exampleModalLabel">삭제 확인</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                삭제하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button style="font-family: 'LINESeedKR-Bd'" type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">취소
+                </button>
+                <button style="font-family: 'LINESeedKR-Bd'"
+                        id="removeConfirmButton" type="button"
+                        class="btn btn-danger">확인
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="display: none">
+    <form action="${removeLink}" id="deleteForm" method="post"></form>
+</div>
 
 <c:url value="/buyer/register" var="registerLink">
 </c:url>
@@ -371,6 +408,20 @@
 
     document.querySelector("#searchBtn").addEventListener("click", function () {
         document.querySelector("#searchForm").submit();
+    })
+
+    document.querySelector("#removeConfirmButton").addEventListener("click", function () {
+        const buyerSelect = document.querySelectorAll("input[name='buyerBox']:checked");
+        const form = document.forms.deleteForm;
+
+        for (const select of buyerSelect){
+            const buyerId = select.dataset.m_buyer_id;
+
+            const buyerIdInput = '<input name="m_buyer_id" value="'+buyerId+'" />'
+
+            form.insertAdjacentHTML('beforeend', buyerIdInput);
+        }
+        form.submit();
     })
 </script>
 

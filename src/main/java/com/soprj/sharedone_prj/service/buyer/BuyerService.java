@@ -15,19 +15,9 @@ public class BuyerService {
     @Autowired
     private BuyerMapper buyerMapper;
 
-    public List<BuyerDto> listBuyer() {
-        return buyerMapper.list();
-    }
-
     public BuyerDto getDuo(String m_buyer_name, String m_buyer_id) {
         return buyerMapper.selectDuo(m_buyer_name, m_buyer_id);
     }
-
-
-    public int addBuyer(BuyerDto buyer) {
-        return buyerMapper.addBuyer(buyer);
-    }
-
 
     public int update(BuyerDto buyer) {
         return buyerMapper.updateBuyer(buyer);
@@ -42,10 +32,6 @@ public class BuyerService {
         return buyerMapper.removeById(m_buyer_id);
     }
 
-    public BuyerDto get(String m_buyer_id) {
-        return buyerMapper.select(m_buyer_id);
-    }
-
     public BuyerDto getBuyerNum(String m_buyer_number) {
         return buyerMapper.getBuyerNum(m_buyer_number);
     }
@@ -57,7 +43,7 @@ public class BuyerService {
         int countAll = buyerMapper.countAll(searchNum, "%" + searchText + "%");
         int lastPage = (countAll - 1) / records + 1;
 
-        int leftPageNumber = (page -1) / 10 * 10 + 1;
+        int leftPageNumber = (page - 1) / 10 * 10 + 1;
         int rightPageNumber = leftPageNumber + 9;
         rightPageNumber = Math.min(rightPageNumber, lastPage);
 

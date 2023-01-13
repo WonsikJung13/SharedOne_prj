@@ -8,19 +8,13 @@ import java.util.Map;
 
 public interface BuyerMapper {
 
-    List<BuyerDto> list();
-
     BuyerDto selectDuo(String m_buyer_name, String m_buyer_id);
-
-    int addBuyer(BuyerDto buyer);
 
     int insert(Map<String, Object> buyer);
 
     int updateBuyer(BuyerDto buyer);
 
     int removeById(String m_buyer_id);
-
-    BuyerDto select(String m_buyer_id);
 
     BuyerDto getBuyerNum(String m_buyer_number);
 
