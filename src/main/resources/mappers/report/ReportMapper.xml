@@ -4,23 +4,41 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.report.ReportMapper">
-
-    <select id="getOrderHeader" resultMap="order">
-        SELECT *
-        FROM m_order_header h LEFT JOIN m_order_item i ON h.m_order_id = i.m_order_id
-        ORDER BY h.m_order_id DESC;
+    <select id="reportList" resultType="com.soprj.sharedone_prj.domain.report.ReportHeaderDto">
+        SELECT * FROM m_order_header
     </select>
+
+    <select id="reportDetail" resultMap="order">
+        select *
+        from m_order_header h LEFT JOIN m_order_item i ON h.m_order_id = i.m_order_id
+        where h.m_order_id = #{m_order_id};
+            </select>
     <resultMap id="order" type="com.soprj.sharedone_prj.domain.report.ReportHeaderDto">
         <id column="m_order_id" property="m_order_id"/>
-        <result column="m_order_buyerName" property="m_order_buyerName"/>
-        <result column="m_order_inserted" property="m_order_inserted"/>
-        <result column="m_order_status" property="m_order_status"/>
-        <result column="m_order_sumPrice" property="m_order_sumPrice"/>
-        <collection property="reportItemDtoList" ofType="com.soprj.sharedone_prj.domain.report.ReportItemDto">
-            <result property="m_order_itemId" column="m_order_itemId"/>
+        <result property="m_buyer_id" column="m_buyer_id"/>
+        <result property="m_order_date" column="m_order_date"/>
+        <result property="m_order_inserted" column="m_order_inserted"/>
+        <result property="m_order_status" column="m_order_status"/>
+        <result property="m_member_id" column="m_member_id"/>
+        <result property="m_order_buyerName" column="m_order_buyerName"/>
+        <result property="m_order_buyerRegion" column="m_order_buyerRegion"/>
+        <result property="m_order_buyerAddress" column="m_order_buyerAddress"/>
+        <result property="m_order_buyerNumber" column="m_order_buyerNumber"/>
+        <result property="m_order_buyerCurrency" column="m_order_buyerCurrency"/>
+        <result property="m_order_comment" column="m_order_comment"/>
+        <result property="m_order_sumPrice" column="m_order_sumPrice"/>
+        <result property="m_order_memo" column="m_order_memo"/>
+
+        <collection property="orderItemDTOList" ofType="com.soprj.sharedone_prj.domain.report.ReportItemDto">
+            <result property="m_order_id" column="m_order_id"/>
             <result property="m_order_count" column="m_order_count"/>
+            <result property="m_price_id" column="m_price_id"/>
+            <result property="m_order_price" column="m_order_price"/>
+            <result property="m_order_itemId" column="m_order_itemId"/>
+            <result property="m_order_itemName" column="m_order_itemName"/>
+            <result property="m_order_itemGroup" column="m_order_itemGroup"/>
+            <result property="m_order_itemManufacturer" column="m_order_itemManufacturer"/>
             <result property="m_order_totalPrice" column="m_order_totalPrice"/>
-            <result property="m_orderItemName" column="m_orderItemName"/>
         </collection>
     </resultMap>
 
