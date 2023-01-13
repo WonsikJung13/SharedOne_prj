@@ -86,7 +86,6 @@ public class ItemController {
                      @RequestParam(name = "q", defaultValue = "") String keyword,
                      ItemDto itemDto
     ) {
-        System.out.println("t: " + type + " q: " + keyword);
         List<ItemDto> list = itemService.itemList(page, type, keyword, itemDto);
 //        List<String> groupList = itemService.selectGroup();
 //        List<String> manufacturerList = itemService.selectManufacturer();
@@ -101,6 +100,11 @@ public class ItemController {
     public String remove(@RequestParam Map<String,String> removeIdList,
                          RedirectAttributes rttr) {
         String[] removeList = removeIdList.get("m_item_id").split(",");
+
+        for (int i = 0; i < removeList.length; i++) {
+            System.out.println("???: " + removeList[i]);
+        }
+
         int cnt = 0;
         for (int i = 0; i < removeList.length; i++) {
             itemService.remove(removeList[i]);

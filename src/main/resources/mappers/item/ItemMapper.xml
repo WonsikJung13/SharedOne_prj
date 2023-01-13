@@ -48,7 +48,7 @@
             m_item_name,
             m_item_unit
         FROM m_item
-        WHERE
+        WHERE (
         <trim prefixOverrides="OR">
             <if test="type == 'all' or type == 'itemId'">
                 OR m_item_id LIKE #{keyword}
@@ -66,13 +66,15 @@
                 OR m_item_name LIKE #{keyword}
             </if>
         </trim>
+            )
+            AND m_item_active LIKE 1
         ORDER BY m_item_inserted DESC
         LIMIT #{offset}, #{records}
     </select>
 
     <select id="countAll" resultType="int">
         SELECT COUNT(*) FROM m_item
-        WHERE
+        WHERE (
         <trim prefixOverrides="OR">
             <if test="type == 'all' or type == 'itemId'">
                 OR m_item_id LIKE #{keyword}
@@ -90,6 +92,8 @@
                 OR m_item_name LIKE #{keyword}
             </if>
         </trim>
+        )
+        AND m_item_active LIKE 1
     </select>
 
     <select id="select" resultType="com.soprj.sharedone_prj.domain.item.ItemDto">
@@ -123,9 +127,10 @@
     </update>
 
     <delete id="remove">
-        DELETE
-        FROM
+        UPDATE
             m_item
+        SET
+            m_item_active = 0
         WHERE
             m_item_id = #{m_item_id}
     </delete>

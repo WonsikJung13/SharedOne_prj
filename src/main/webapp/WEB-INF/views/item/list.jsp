@@ -99,7 +99,7 @@
             color: #212529;
             font-size: 16px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         form > * {
@@ -160,8 +160,6 @@
     </div>
     <div class="col ">
         <div style="display: flex;justify-content: space-between;width: 900px;">
-
-
             <div id="itemListTitle">
                 <h1 id="header">제품 관리 및 등록</h1>
                 <h2>제품 검색</h2>
@@ -220,21 +218,21 @@
             </form>
         </div>
 
-        <div style="position:absolute;background-color: transparent;width:900px">
-            <button class="btn btn-danger" style="float: right; width: 100px;" data-bs-toggle="modal"
-                    data-bs-target="#removeModal" value="삭제" class="btn btn-danger">선택삭제
+        <div style="display: flex;background-color: transparent;width:900px">
+            <c:url value="/item/remove" var="removeLink"/>
+            <form id="removeForm" action="${removeLink }" method="post">
+                <input type="hidden" id="removeInput" name="m_item_id" value="">
+            </form>
+            <button class="btn btn-danger" style="margin-left: auto;margin-bottom: 10px;" data-bs-toggle="modal"
+                    data-bs-target="#removeModal" value="삭제">선택삭제
             </button>
         </div>
-        <c:url value="/item/remove" var="removeLink"/>
-        <form id="removeForm" action="${removeLink }" method="post">
-            <input type="hidden" id="removeInput" name="m_item_id" value="">
-        </form>
 
         <div class="tableList">
             <table class="table addList">
                 <thead>
                 <tr>
-                    <th></th>
+                    <th><input name="itemBox" type="checkbox" value="selectAll" onclick="selectAll(this)"> </th>
                     <th>제품코드</th>
                     <th>제품그룹</th>
                     <th>제조사</th>
@@ -245,7 +243,6 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${itemList}" var="itemList">
-                    <div>
                         <tr>
                             <td>
                                 <input id="itemBox" name="itemBox" type="checkbox" value="${itemList.m_item_id}">
@@ -274,7 +271,6 @@
                                 </button>
                             </td>
                         </tr>
-                    </div>
                 </c:forEach>
                 </tbody>
             </table>
@@ -438,7 +434,7 @@
     function remove() {
         var length = document.getElementsByName("itemBox").length;
         var removeIdList = [];
-        for (var i = 0; i < length; i++) {
+        for (var i = 1; i < length; i++) {
             var checkedBox = document.getElementsByName("itemBox")[i].checked
             if (checkedBox) {
                 var selectId = document.getElementsByName("itemBox")[i].value;
@@ -453,6 +449,16 @@
     }
 
     document.querySelector("#removeButton").addEventListener("click", remove);
+</script>
+<script>
+    function selectAll(selectAll)  {
+        const checkboxes
+            = document.getElementsByName('itemBox');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
