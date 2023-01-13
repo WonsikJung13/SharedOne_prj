@@ -221,6 +221,7 @@
                 </tr>
                 </tbody>
             </table>
+            <div style="display:none"><button id="resetBtn" type="reset"></button> </div>
         </form>
 
         <div>
@@ -306,6 +307,7 @@
             // $('.groupEditOption').hide();
         }
 
+        // 제조사 카테고리 선택
         const itemGroup = document.querySelector("#groupSelect");
         const m_item_group = itemGroup.options[itemGroup.selectedIndex].value;
 
@@ -359,6 +361,7 @@
 <script>
     // 추가버튼 클릭 시
     document.getElementById('plusButton1').addEventListener("click", function () {
+
         let lastIndex = document.querySelector(".addList").tBodies[0].rows.length;
 
         const itemGroup = document.querySelector("#groupSelect");
@@ -422,6 +425,8 @@
                     alert("이미 등록 되어 있는 제품입니다.");
                     // check.abort();
                     document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
+                } else {
+                    $('#resetBtn').trigger('click');
                 }
             }
         });
@@ -441,6 +446,8 @@
             if (dataValue.every((value, idx) => value === CompareValue[idx])) {
                 alert("테이블에 중복된 제품이 있습니다.")
                 document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
+            } else {
+                $('#resetBtn').trigger('click');
             }
         }
     });
