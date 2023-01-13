@@ -10,10 +10,10 @@
 ------------------
 ### 참여인원
 
-이름 | 깃
----|---
-정원식 | [WonsikJung13](https://github.com/WonsikJung13)
-하현종 | [Kimchi.Disaster](https://github.com/ha971206)
-정진아 | [Zzinnn](https://github.com/Zzinnn)
-임채은 | [Limdaram](https://github.com/Limdaram)
-임성규 | [SSung](https://github.com/gmlrmrtjd)
+이름 | 담당 | 깃
+---|---|---
+정원식 | Report | [WonsikJung13](https://github.com/WonsikJung13)
+하현종 | Buyer, Member | [Kimchi.Disaster](https://github.com/ha971206)
+정진아 | Order | [Zzinnn](https://github.com/Zzinnn)
+임채은 | Price | [Limdaram](https://github.com/Limdaram)
+임성규 | Item | [SSung](https://github.com/gmlrmrtjd)
