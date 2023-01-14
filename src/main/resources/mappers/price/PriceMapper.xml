@@ -23,7 +23,7 @@
             m_price p LEFT JOIN m_buyer b ON p.m_buyer_id = b.m_buyer_id
                       LEFT JOIN m_item i ON p.m_item_id = i.m_item_id
         WHERE
-            <trim prefixOverrides="OR">
+            (<trim prefixOverrides="OR">
                 <if test="type == 'all' or type == 'm_item_id'">
                     OR i.m_item_id LIKE #{keyword}
                 </if>
@@ -39,7 +39,8 @@
                 <if test="type == 'all' or type == 'm_buyer_name'">
                     OR b.m_buyer_name LIKE #{keyword}
                 </if>
-            </trim>
+            </trim>)
+        AND p.m_price_active = 1
         ORDER BY p.m_price_id DESC
         LIMIT #{offset}, #{records};
     </select>
@@ -49,7 +50,7 @@
             m_price p LEFT JOIN m_buyer b ON p.m_buyer_id = b.m_buyer_id
                         LEFT JOIN m_item i ON p.m_item_id = i.m_item_id
         WHERE
-            <trim prefixOverrides="OR">
+            (<trim prefixOverrides="OR">
                 <if test="type == 'all' or type == 'm_item_id'">
                     OR i.m_item_id LIKE #{keyword}
                 </if>
@@ -65,7 +66,8 @@
                 <if test="type == 'all' or type == 'm_buyer_name'">
                     OR b.m_buyer_name LIKE #{keyword}
                 </if>
-            </trim>
+            </trim>)
+        AND p.m_price_active = 1
     </select>
 
     <insert id="insertRegister" useGeneratedKeys="true" keyProperty="m_price_id">
@@ -109,7 +111,7 @@
         FROM
             m_price p LEFT JOIN m_buyer b ON p.m_buyer_id = b.m_buyer_id
                       LEFT JOIN m_item i ON p.m_item_id = i.m_item_id
-        WHERE m_price_id = #{m_price_id}
+        WHERE p.m_price_id = #{m_price_id}
     </select>
     <resultMap type="com.soprj.sharedone_prj.domain.price.PriceDto" id="priceMap">
         <id column="m_price_id" property="m_price_id"></id>
@@ -120,7 +122,7 @@
         <result column="m_price_lastPeriod" property="m_price_lastPeriod"></result>
         <result column="m_price_lastPrice" property="m_price_lastPrice"></result>
         <result column="m_price_inserted" property="m_price_inserted"></result>
-        <collection property="m_buyer_id" ofType="int">
+        <collection property="m_buyer_id" ofType="string">
             <result column="m_buyer_id" property="m_buyer_id"></result>
         </collection>
         <collection property="m_buyer_name" ofType="string">
@@ -160,6 +162,7 @@
             m_buyer
         WHERE
             m_buyer_id = #{m_buyer_id}
+<!--   바이어 엑티브     -->
     </select>
 
     <select id="itemList" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
@@ -169,6 +172,7 @@
             m_item
         WHERE
             m_item_id = #{m_item_id}
+        AND m_item_active = 1
     </select>
 
     <select id="getBuyerList" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
@@ -177,6 +181,7 @@
             m_buyer_name,
             m_buyer_currency
         FROM m_buyer
+        <!--바이어 엑티브-->
     </select>
 
     <select id="getItemList" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
@@ -184,15 +189,15 @@
             m_item_id,
             m_item_name
         FROM m_item
+        WHERE m_item_active = 1
     </select>
 
-    <delete id="remove">
-        DELETE
-        FROM
+    <update id="remove">
+        UPDATE
             m_price
-        WHERE
-            m_price_id = #{m_price_id}
-    </delete>
+        SET m_price_active = 0
+        WHERE m_price_id = #{m_price_id}
+    </update>
 
     <select id="getPricePeriod" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
         SELECT
@@ -202,9 +207,9 @@
             m_price
         WHERE
             m_item_id = #{m_item_id}
-            AND
-            m_buyer_id = #{m_buyer_id}
-            AND #{m_price_startPeriod} BETWEEN m_price_startPeriod AND m_price_lastPeriod;
+            AND m_buyer_id = #{m_buyer_id}
+            AND m_price_active = 1
+            AND #{m_price_startPeriod} BETWEEN m_price_startPeriod AND m_price_lastPeriod
 
     </select>
 
@@ -212,7 +217,10 @@
         <![CDATA[
         SELECT MIN(m_price_startPeriod) maxDate
         FROM m_price
-        WHERE m_buyer_id = #{m_buyer_id} AND m_item_id = #{m_item_id} AND #{m_price_startPeriod} < m_price_startPeriod;
+        WHERE m_buyer_id = #{m_buyer_id}
+        AND m_item_id = #{m_item_id}
+        AND m_price_active = 1
+        AND #{m_price_startPeriod} < m_price_startPeriod
         ]]>
     </select>
 

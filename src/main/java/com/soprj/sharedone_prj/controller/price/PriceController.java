@@ -64,11 +64,7 @@ public class PriceController {
 
     @PostMapping("register")
     public String register(PriceDto price) {
-        price.getM_price_startPeriod();
-
-        System.out.println("????"+price);
         priceService.register(price);
-
         return "redirect:/price/list";
     }
 
@@ -132,13 +128,16 @@ public class PriceController {
 
     @PostMapping("add")
     @ResponseBody
-    public String add(@RequestBody List<Map<String, Object>> addData) {
+    public int add(@RequestBody List<Map<String, Object>> addData) {
 
+        int cnt = 0;
         for (int i=0; i<addData.size(); i++) {
             Map<String, Object> map = addData.get(i);
             priceService.addPriceData(map);
+            cnt += 1;
         }
-        return "redirect:/price/list";
+        System.out.println("몇개?"+cnt);
+        return cnt;
     }
 
 }

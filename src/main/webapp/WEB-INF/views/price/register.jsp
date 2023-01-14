@@ -124,6 +124,7 @@
             </tbody>
         </table>
             <button class="btn btn-secondary" type="button" id="priceButton">판매가 추가</button>
+            <div style="display:none"><button id="resetBtn" type="reset"></button> </div>
         </form>
 
         <h2>추가된 가격</h2>
@@ -139,6 +140,7 @@
                     <th scope="col">할인율</th>
                     <th scope="col">판매단가</th>
                     <th scope="col">최종단가</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody id="basketList">
@@ -222,17 +224,22 @@
             m_price_startPeriod.max = m_price_lastPeriod.value;
     }, false);
 
+    let addDatas = [];
     // 날짜 중복확인
     document.querySelector("#m_price_startPeriod").addEventListener("change", function () {
         const m_item_id = document.querySelector("#itemId").value;
         const m_buyer_id = document.querySelector("#buyerId").value;
         const m_price_startPeriod = document.querySelector("#m_price_startPeriod").value;
+        const m_price_lastPeriod = document.querySelector("#m_price_lastPeriod").value;
 
         const addData = {
             m_item_id,
             m_buyer_id,
-            m_price_startPeriod
+            m_price_startPeriod,
+            m_price_lastPeriod
         }
+
+        // addDatas.push(addData);
         fetch(ctx + "/price/checkPeriod", {
             method: "POST",
             headers: {
@@ -244,15 +251,54 @@
             .then(data => {
                 if (data.message == null) {
                     m_price_lastPeriod.max = data.maxDate;
+
+                    let arr = new Array();
+                    for (let i = 0; i < addDatas.length; i++) {
+                        if (m_item_id == addDatas.at(i).m_item_id && m_buyer_id == addDatas.at(i).m_buyer_id) {
+                            if (addDatas.at(i).m_price_startPeriod <= m_price_startPeriod && m_price_startPeriod <= addDatas.at(i).m_price_lastPeriod) {
+                                alert("이미 추가된 판매가의 날짜가 겹칩니다. 다시 확인해주세요")
+                            } else {
+                                if (m_price_startPeriod < addDatas[i].m_price_startPeriod) {
+                                    arr.push(addDatas[i].m_price_startPeriod)
+                                }
+                            }
+
+                        }
+                    }
+                    let minDate = arr.reduce((prev, curr) => {
+                        // 이전것과 비교해 더 작은 것 리턴
+                        return new Date(prev).getTime() <= new Date(curr).getTime() ? prev : curr;
+                    })
+                    let a = new Date(minDate);
+                    let sel_day = -1;
+                    a.setDate(a.getDate() + sel_day);
+                    let year    = a.getFullYear();
+                    let month   = ('0' + (a.getMonth() +  1 )).slice(-2);
+                    let day     = ('0' + a.getDate()).slice(-2);
+                    dt = year+"-"+month+"-"+day;
+                    document.querySelector("#m_price_lastPeriod").max = dt;
                 } else {
                     alert(data.message)
                 }
             })
+
     })
 
     // 추가
-    let addData = [];
     document.querySelector("#priceButton").addEventListener("click", function () {
+
+        // 빈값 체크
+        let emptyIndex = document.querySelector(".addList").tBodies[0].rows.length-1;
+        var input_empty = false;
+        $('#formId').find('input[type!="hidden"]').each(function(){
+            if(!$(this).val()) {
+                input_empty = true;
+            }
+        });
+        if(input_empty == true) {
+            alert('값을 전부 입력하세요');
+            document.querySelector(".addList").tBodies[0].deleteRow(emptyIndex);
+        }
 
        const m_item_id = document.querySelector("#itemId").value;
        const m_buyer_id = document.querySelector("#buyerId").value;
@@ -263,7 +309,30 @@
        const m_price_price = document.querySelector("#priceInput").value;
        const m_price_lastPrice = document.querySelector("#lastPrice").value;
 
-
+       // for (let i = 0; i <addData.length; i++) {
+       //     if (m_item_id == addData.at(i).m_item_id && m_buyer_id == addData.at(i).m_buyer_id) {
+       //         // 겹칠 때 -> 바로 안됨
+       //         if (addData.at(i).m_price_startPeriod <= m_price_startPeriod && m_price_lastPeriod <= addData.at(i).m_price_lastPeriod) {
+       //             alert("이미 추가된 판매가의 날짜가 겹칩니다. 다시 확인해주세요")
+       //             return false;
+       //         }
+       //         else { // 안 겹칠 때
+       //             // 시작 값 < 시작 배열
+       //             if (m_price_startPeriod < addData.at(i).m_price_startPeriod) {
+       //                 // 시작 배열 <= 끝 값
+       //                 if (addData.at(i).m_price_startPeriod <= m_price_lastPeriod) {
+       //                     alert("이미 추가된 판매가의 날짜가 겹칩니다. 다시 확인해주세요")
+       //                     return false;
+       //                 }
+       //             }
+       //              // 배열 시작 < 시작 값 < 배열 끝
+       //             if (addData.at(i).m_price_startPeriod < m_price_startPeriod && m_price_startPeriod < addData.at(i).m_price_lastPeriod) {
+       //                 alert("이미 추가된 판매가의 날짜가 겹칩니다. 다시 확인해주세요")
+       //                 return false;
+       //             }
+       //         }
+       //     }
+       // }
        const priceAdd = `
             <tr id="removeId">
                 <td class="priceAdd"> \${m_item_id} </td>
@@ -274,6 +343,7 @@
                 <td class="priceAdd"> \${m_price_discount} </td>
                 <td class="priceAdd"> \${m_price_price} </td>
                 <td class="priceAdd"> \${m_price_lastPrice} </td>
+                <td><button class="btn btn-danger removeButton" onclick="clickRemove(this)">삭제</button></td>
             </tr>
        `
         basketList.insertAdjacentHTML("beforeend", priceAdd);
@@ -288,23 +358,14 @@
            m_price_price,
            m_price_lastPrice
        }
+        addDatas.push(data);
 
-       addData.push(data);
+        $('#resetBtn').trigger('click');
 
-        // 추가 중복 체크
-        <%--let check = {}--%>
-        <%--let lastIndex = document.querySelector(".addList").tBodies[0].rows.length -1;--%>
 
-        <%--if (lastIndex > 0) {--%>
-        <%--    check = {--%>
-        <%--        "m_item_id" : (${m_item_id}).eq(lastIndex-1).val(),--%>
-        <%--        "m_buyer_id" : $("input[name='m_buyer_id']").eq(lastIndex-1).val(),--%>
-        <%--        "m_price_startPeriod" : $("input[name='m_price_startPeriod']").eq(lastIndex-1).val(),--%>
-        <%--        "m_price_lastPeriod" : $("input[name='m_price_lastPeriod']").eq(lastIndex-1).val(),--%>
-        <%--    }--%>
-        <%--    console.log(check);--%>
-        <%--}--%>
+
     });
+
 
     // 등록
     document.querySelector("#priceSubmitButton").addEventListener("click", function () {
@@ -313,10 +374,27 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(addData)
+            body: JSON.stringify(addDatas)
         })
-            // .then(res => res.json())
+            .then(res => res.json())
+            .then(data => {
+                if (data >= 1) {
+                    alert(data + "개의 판매가 등록이 완료되었습니다.")
+                    location.href = "/price/list";
+
+                } else {
+                    alert("추가된 판매가 테이블을 확인해주세요.")
+                }
+            })
     })
+
+    // 삭제
+    function clickRemove(target) {
+        var listIndex = $(target).parent().parent().index();
+        $(target).parent().parent().remove();
+
+        addDatas.splice(listIndex, 1)
+    }
 
 
 

@@ -178,7 +178,7 @@
             <form action="" method="post" id="registerForm">
                 <tr>
                     <th class="table-active">거래처 명</th>
-                    <th><input class="form-control form300" type="text" name="m_buyer_name" id="m_buyer_name"></th>
+                    <th><input class="form-control form300" type="text" name="m_buyer_name" id="m_buyer_name" ></th>
                 </tr>
                 <tr>
                     <th class="table-active">거래처 국가</th>

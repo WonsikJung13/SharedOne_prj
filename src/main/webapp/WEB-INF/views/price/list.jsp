@@ -180,14 +180,15 @@
                 </div>
             </form>
         </div>
-        <div>
-            <input style="float: right; width: 100px; margin-right: 100px" data-bs-toggle="modal"
-                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger"></input>
+        <div style="display: flex;background-color: transparent;width:1000px">
+            <c:url value="/price/remove" var="removeLink"/>
+            <form id="removeForm" action="${removeLink }" method="post">
+                <input type="hidden" id="removeInput" name="m_price_id" value="">
+            </form>
+            <button class="btn btn-danger" style="margin-left: auto;margin-bottom: 10px;" data-bs-toggle="modal"
+                    data-bs-target="#removeModal" value="삭제">선택삭제
+            </button>
         </div>
-        <c:url value="/price/remove" var="removeLink"/>
-        <form id="removeForm" action="${removeLink }" method="post">
-            <input type="hidden" name="m_price_id" value="">
-        </form>
         <div class="tableList">
 
             <table class="table addList">
@@ -227,7 +228,7 @@
                                     <c:param value="${priceList.m_price_id }" name="m_price_id"/>
                                 </c:url>
                                 <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>
-                            </td>정
+                            </td>
                         </tr>
                     </div>
                 </c:forEach>
