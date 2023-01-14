@@ -164,8 +164,8 @@
 
         <div class="searchBox">
             <c:url value="/price/list" var="listLink"></c:url>
-            <form action="${listLink}" class="d-flex" role="search">
-                <div class="input-group" style="float: none">
+            <form action="${listLink}" class="" role="search">
+                <div  class="input-group" style="float: none">
                     <select name="t" class="form-select">
                         <option value="all">전체</option>
                         <option value="m_item_id" ${param.t == 'm_item_id' ? 'selected' : '' }>제품코드</option>

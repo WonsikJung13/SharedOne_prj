@@ -39,6 +39,7 @@
                 <if test="type == 'all' or type == 'm_buyer_name'">
                     OR b.m_buyer_name LIKE #{keyword}
                 </if>
+
             </trim>)
         AND p.m_price_active = 1
         ORDER BY p.m_price_id DESC
