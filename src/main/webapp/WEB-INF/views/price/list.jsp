@@ -165,6 +165,18 @@
         <div class="searchBox">
             <c:url value="/price/list" var="listLink"></c:url>
             <form action="${listLink}" class="" role="search">
+<%--                조회 기간--%>
+<%--                <div class="input-group" style="float: none">--%>
+<%--                    <select name="t" class="form-select">--%>
+<%--                        <option value="all">전체</option>--%>
+<%--                        <option value="m_price_startPeriod" ${param.t == 'm_price_startPeriod' ? 'selected' : '' }>시작일</option>--%>
+<%--                        <option value="m_price_lastPeriod" ${param.t == 'm_price_lastPeriod' ? 'selected' : '' }>종료일</option>--%>
+<%--                    </select>--%>
+
+<%--                    <input value="${param.q}" type="date" class="form-control" placeholder=""--%>
+<%--                           aria-label="Search" name="q" style="width:450px">--%>
+<%--                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>--%>
+<%--                </div>--%>
                 <div  class="input-group" style="float: none">
                     <select name="t" class="form-select">
                         <option value="all">전체</option>
@@ -172,6 +184,8 @@
                         <option value="m_item_name" ${param.t == 'm_item_name' ? 'selected' : '' }>제품명</option>
                         <option value="m_buyer_id" ${param.t == 'm_buyer_id' ? 'selected' : '' }>거래처코드</option>
                         <option value="m_buyer_name" ${param.t == 'm_buyer_name' ? 'selected' : '' }>거래처명</option>
+                        <option value="m_price_startPeriod" ${param.t == 'm_price_startPeriod' ? 'selected' : '' }>시작일</option>
+                        <option value="m_price_lastPeriod" ${param.t == 'm_price_lastPeriod' ? 'selected' : '' }>종료일</option>
                     </select>
 
                     <input value="${param.q}" type="search" class="form-control" placeholder="Search"
