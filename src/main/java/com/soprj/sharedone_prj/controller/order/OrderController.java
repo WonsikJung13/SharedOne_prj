@@ -78,6 +78,23 @@ public class OrderController {
         return "redirect:/order/list";
     }
 
+    //  장바구니 오더 임시저장
+    @PostMapping("storageAdd")
+    public String storageAdd(@RequestBody List<Map<String, Object>> addData) {
+
+        orderService.storageHeaderAdd(addData.get(0));
+        ObjectMapper mapper = new ObjectMapper();
+        OrderDto orderDto = mapper.convertValue(addData.get(0), OrderDto.class);
+
+        int id = orderDto.getM_order_id();
+
+        for (int i = 0; i < addData.size(); i++) {
+            addData.get(i).put("m_order_id", id);
+            orderService.storageItemAdd(addData.get(i));
+        }
+        return "redirect:/order/list";
+    }
+
     // 주문 관리 리스트 보여주기
     @GetMapping("list")
     public void list(Model model) {

@@ -84,7 +84,7 @@
             #{m_order_buyerCurrency},
             #{m_order_comment},
             #{m_order_sumPrice},
-            0)
+            '승인요청')
         <selectKey keyProperty="m_order_id" resultType="int" order="BEFORE">
             SELECT IFNULL(MAX(m_order_id+1), 1) FROM m_order_header
         </selectKey>
@@ -110,9 +110,57 @@
             #{m_order_itemManufacturer},
             #{m_order_totalPrice} )
     </insert>
+    <insert id="storageHeaderAdd">
+        INSERT INTO m_order_header (
+        m_order_inserted,
+        m_buyer_id,
+        m_order_buyerName,
+        m_order_buyerRegion,
+        m_order_buyerAddress,
+        m_order_buyerNumber,
+        m_order_buyerCurrency,
+        m_order_comment,
+        m_order_sumPrice,
+        m_order_status)
+        VALUES(
+        #{m_order_inserted},
+        #{m_buyer_id},
+        #{m_order_buyerName},
+        #{m_order_buyerRegion},
+        #{m_order_buyerAddress},
+        #{m_order_buyerNumber},
+        #{m_order_buyerCurrency},
+        #{m_order_comment},
+        #{m_order_sumPrice},
+        '생성중')
+        <selectKey keyProperty="m_order_id" resultType="int" order="BEFORE">
+            SELECT IFNULL(MAX(m_order_id+1), 1) FROM m_order_header
+        </selectKey>
+    </insert>
+    <insert id="storageItemAdd">
+        INSERT INTO
+        m_order_item (
+        m_order_id,
+        m_order_count,
+        m_order_price,
+        m_order_itemId,
+        m_order_itemName,
+        m_order_itemGroup,
+        m_order_itemManufacturer,
+        m_order_totalPrice )
+        VALUES (
+        #{m_order_id},
+        #{m_order_count},
+        #{m_order_price},
+        #{m_order_itemId},
+        #{m_order_itemName},
+        #{m_order_itemGroup},
+        #{m_order_itemManufacturer},
+        #{m_order_totalPrice} )
+    </insert>
 
 
-<!--주문관리 리스트 보여주기-->
+    <!--주문관리 리스트 보여주기-->
     <select id="orderList" resultType="com.soprj.sharedone_prj.domain.order.OrderDto">
         SELECT
             m_order_id,
@@ -120,8 +168,10 @@
             m_order_buyerName,
             m_order_sumPrice,
             m_order_status,
-            m_order_comment
+            m_order_comment,
+            m_order_buyerCurrency
         FROM m_order_header
+        ORDER BY m_order_id DESC
     </select>
 
     <select id="orderDetail" resultMap="order">

@@ -39,6 +39,14 @@
                 <if test="type == 'all' or type == 'm_buyer_name'">
                     OR b.m_buyer_name LIKE #{keyword}
                 </if>
+
+                <if test="type == 'all' or type == 'm_price_startPeriod'">
+                    OR p.m_price_startPeriod LIKE #{keyword}
+                </if>
+
+                <if test="type == 'all' or type == 'm_price_lastPeriod'">
+                    OR p.m_price_lastPeriod LIKE #{keyword}
+                </if>
             </trim>)
         AND p.m_price_active = 1
         ORDER BY p.m_price_id DESC
@@ -65,6 +73,14 @@
 
                 <if test="type == 'all' or type == 'm_buyer_name'">
                     OR b.m_buyer_name LIKE #{keyword}
+                </if>
+
+                <if test="type == 'all' or type == 'm_price_startPeriod'">
+                    OR p.m_price_startPeriod LIKE #{keyword}
+                </if>
+
+                <if test="type == 'all' or type == 'm_price_lastPeriod'">
+                    OR p.m_price_lastPeriod LIKE #{keyword}
                 </if>
             </trim>)
         AND p.m_price_active = 1

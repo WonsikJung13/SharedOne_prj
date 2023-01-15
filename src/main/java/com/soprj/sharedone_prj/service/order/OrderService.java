@@ -66,4 +66,12 @@ public class OrderService {
         mapper.orderHeaderRemove(mOrderId);
 
     }
+
+    public void storageHeaderAdd(Map<String, Object> stringObjectMap) {
+        mapper.storageHeaderAdd(stringObjectMap);
+    }
+
+    public void storageItemAdd(Map<String, Object> stringObjectMap) {
+        mapper.storageItemAdd(stringObjectMap);
+    }
 }

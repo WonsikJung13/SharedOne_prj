@@ -260,7 +260,7 @@
                                     <td>${orderList.m_order_id}</td>
                                     <td>${orderList.m_buyer_id}</td>
                                     <td>${orderList.m_order_buyerName}</td>
-                                    <td>${orderList.m_order_sumPrice}</td>
+                                    <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>
                                     <td>${orderList.m_order_status}</td>
                                 </tr>
                         </c:forEach>
@@ -474,7 +474,7 @@
                 document.querySelector("#m_order_id").value = orderId;
 
                 //오더 상태 input value
-                document.querySelector("#m_order_status").value = "주문반려";
+                document.querySelector("#m_order_status").value = "승인반려";
                 console.log( document.querySelector("#m_order_status").value );
 
                 document.querySelector("#orderForm").submit();
