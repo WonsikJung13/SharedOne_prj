@@ -168,7 +168,8 @@
             m_order_buyerName,
             m_order_sumPrice,
             m_order_status,
-            m_order_comment
+            m_order_comment,
+            m_order_buyerCurrency
         FROM m_order_header
     </select>
 
