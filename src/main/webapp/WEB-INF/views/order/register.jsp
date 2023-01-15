@@ -373,8 +373,7 @@
             }},100)
 
 
-        document.querySelector("#buyer").readOnly = true;
-        $('#buyer').css("background", "#b2babb");
+
         document.querySelector("#buyerInserted").readOnly = true;
         $('#buyerInserted').css("background", "#b2babb");
         document.querySelector("#orderCount").removeAttribute("disabled");
@@ -383,6 +382,8 @@
 
     // 아이템 선택 후 데이터 끌고오기
     function itemList() {
+        document.querySelector("#buyer").readOnly = true;
+        $('#buyer').css("background", "#b2babb");
         const requestDate = document.querySelector("#buyerInserted").value;
         const buyer = document.querySelector('#buyer')
         const selected = buyer.value.split('_').at(0);
