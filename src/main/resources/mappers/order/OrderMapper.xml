@@ -171,6 +171,7 @@
             m_order_comment,
             m_order_buyerCurrency
         FROM m_order_header
+        ORDER BY m_order_id DESC
     </select>
 
     <select id="orderDetail" resultMap="order">
