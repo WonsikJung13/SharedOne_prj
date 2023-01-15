@@ -90,37 +90,37 @@
         </table>
         <table class="table table-bordered">
             <tbody>
-            <tr>
-                <td class="table-active">시작일</td>
-                <td>
-                    <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod"></input>
-                </td>
-            </tr>
-            <tr>
-                <td class="table-active">종료일</td>
-                <td>
-                    <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod"></input>
-                </td>
-            </tr>
+                <tr>
+                    <td class="table-active">시작일</td>
+                    <td>
+                        <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-active">종료일</td>
+                    <td>
+                        <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod"></input>
+                    </td>
+                </tr>
 
-            <tr>
-                <td class="table-active">할인율</td>
-                <td>
-                    <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount"></input>
-                </td>
-            </tr>
-            <tr>
-                <td class="table-active">판매가격(단가)</td>
-                <td>
-                    <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price"></input>
-                </td>
-            </tr>
-            <tr>
-                <td class="table-active">최종 단가</td>
-                <td>
-                    <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
-                </td>
-            </tr>
+                <tr>
+                    <td class="table-active">할인율</td>
+                    <td>
+                        <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-active">판매가격(단가)</td>
+                    <td>
+                        <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-active">최종 단가</td>
+                    <td>
+                        <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
+                    </td>
+                </tr>
             </tbody>
         </table>
             <button class="btn btn-secondary" type="button" id="priceButton">판매가 추가</button>
@@ -214,6 +214,7 @@
     var m_price_startPeriod = document.getElementById('m_price_startPeriod');
     var m_price_lastPeriod = document.getElementById('m_price_lastPeriod');
 
+
     m_price_startPeriod.addEventListener('change', function () {
         m_price_startPeriod.max = null;
         if (m_price_startPeriod.value)
@@ -279,6 +280,7 @@
                     document.querySelector("#m_price_lastPeriod").max = dt;
                 } else {
                     alert(data.message)
+                    $("input[type='date'],textarea").val('');
                 }
             })
 
@@ -288,7 +290,9 @@
     document.querySelector("#priceButton").addEventListener("click", function () {
 
         // 빈값 체크
-        let emptyIndex = document.querySelector(".addList").tBodies[0].rows.length-1;
+        let emptyIndex = document.querySelector(".addList").tBodies[0].rows.length;
+
+
         var input_empty = false;
         $('#formId').find('input[type!="hidden"]').each(function(){
             if(!$(this).val()) {
@@ -300,6 +304,7 @@
             document.querySelector(".addList").tBodies[0].deleteRow(emptyIndex);
         }
 
+
        const m_item_id = document.querySelector("#itemId").value;
        const m_buyer_id = document.querySelector("#buyerId").value;
        const m_price_startPeriod = document.querySelector("#m_price_startPeriod").value;
@@ -308,6 +313,7 @@
        const m_price_discount = document.querySelector("#discountInput").value;
        const m_price_price = document.querySelector("#priceInput").value;
        const m_price_lastPrice = document.querySelector("#lastPrice").value;
+
 
        // for (let i = 0; i <addData.length; i++) {
        //     if (m_item_id == addData.at(i).m_item_id && m_buyer_id == addData.at(i).m_buyer_id) {
@@ -360,9 +366,10 @@
        }
         addDatas.push(data);
 
-        $('#resetBtn').trigger('click');
-
-
+        if(input_empty == false) {
+            // 초기화
+            $('#resetBtn').trigger('click');
+        }
 
     });
 

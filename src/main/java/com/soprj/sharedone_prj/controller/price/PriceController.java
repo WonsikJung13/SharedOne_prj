@@ -81,7 +81,7 @@ public class PriceController {
     @PostMapping("modify")
     public String modify(PriceDto priceDto) {
 
-        priceService.getByIdModify(priceDto);
+        int cnt = priceService.getByIdModify(priceDto);
         return "redirect:/price/list";
     }
 
