@@ -343,7 +343,6 @@
         const requestDate = document.querySelector("#buyerInserted").value;
         const buyer = document.querySelector('#buyer')
         const selectedBuyer = buyer.value.split('_').at(0);
-        console.log(selectedBuyer);
         const data = {requestDate, selectedItem, selectedBuyer}
         fetch(`\${ctx}/order/itemList`, {
             method: "POST",
@@ -515,6 +514,7 @@
 
     // 오더 장바구니 삭제하기
     function clickRemove(target) {
+        m_order_sumPrice = 0;
         const remove1 = document.querySelector("#removeId");
         remove1.remove();
 
@@ -523,6 +523,13 @@
         addData = addData.filter((item) => {
             return !(item["m_order_itemId"] == removeId)
         })
+
+        for (const x in addData) {
+            m_order_sumPrice = m_order_sumPrice + parseInt(addData.at(x).m_order_totalPrice)
+        }
+
+        let Currency = document.querySelector("#buyerCurrency").innerHTML;
+        document.querySelector("#orderTotalPrice").innerHTML = Currency + " " + m_order_sumPrice;
 
     }
 
