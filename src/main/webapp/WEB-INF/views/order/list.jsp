@@ -237,10 +237,6 @@
                                     </div>
                             </div>
                         </form>
-                <div class="row justify-content-end" style="width: 1000px">
-                    <input style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal"
-                           data-bs-target="#removeModal" value="삭제" class="btn btn-danger">
-                </div>
 
                 <div class="tableList">
                     <table class="table table-hover addList">
@@ -256,7 +252,7 @@
                         <tbody>
                         <c:forEach items="${orderList }" var="orderList">
                                 <tr onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
-                                    data-bs-target="#orderConfirm" value="">
+                                    data-bs-target="#orderConfirm" value="" style="cursor: pointer;">
                                     <td>${orderList.m_order_id}</td>
                                     <td>${orderList.m_buyer_id}</td>
                                     <td>${orderList.m_order_buyerName}</td>
@@ -271,29 +267,6 @@
         <form id="removeForm" action="${removeLink }" method="post">
             <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
         </form>
-        <%--오더리스트 삭제하기--%>
-        <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">삭제
-                            확인</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        삭제하시겠습니까?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">취소
-                        </button>
-                        <button id="removeConfirmButton" type="button"
-                                class="btn btn-danger">확인
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
             <%--주문서 확인하기--%>
             <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">

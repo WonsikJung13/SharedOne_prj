@@ -42,4 +42,10 @@ public interface OrderMapper {
   void storageHeaderAdd(Map<String, Object> stringObjectMap);
 
   void storageItemAdd(Map<String, Object> stringObjectMap);
+
+    OrderHeaderDTO orderHeader(int mOrderId);
+
+  int updateHeader(Map<String, Object> map);
+
+  int updateItem(Map<String, Object> map);
 }

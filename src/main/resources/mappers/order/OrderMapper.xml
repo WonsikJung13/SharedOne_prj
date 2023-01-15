@@ -225,6 +225,35 @@
         DELETE FROM m_order_item
         WHERE m_order_id = #{m_order_id}
     </delete>
+    <select id="orderHeader" resultType="com.soprj.sharedone_prj.domain.order.OrderHeaderDTO">
+        SELECT * FROM m_order_header
+        WHERE m_order_id = #{m_order_id}
+    </select>
+
+
+    <update id="updateHeader" useGeneratedKeys="true" keyProperty="m_order_id">
+    UPDATE m_order_header SET
+    m_order_inserted = #{m_order_inserted},
+    m_order_comment = #{m_order_comment},
+    m_order_sumPrice = #{m_order_sumPrice},
+    m_order_status = #{m_order_status}
+    WHERE m_order_id = #{m_order_id}
+    <selectKey keyProperty="m_order_id" resultType="int" order="BEFORE">
+        SELECT IFNULL(MAX(m_order_id+1), 1) FROM m_order_header
+    </selectKey>
+    </update>
+
+    <update id="updateItem">
+        UPDATE m_order_item SET
+        m_order_count = #{m_order_count},
+        m_order_price = #{m_order_price},
+        m_order_itemId = #{m_order_itemId},
+        m_order_itemName = #{m_order_itemName},
+        m_order_itemGroup = #{m_order_itemGroup},
+        m_order_itemManufacturer = #{m_order_itemManufacturer},
+        m_order_totalPrice = #{m_order_totalPrice}
+        WHERE m_order_id = #{m_order_id}
+    </update>
 
 
 </mapper>
