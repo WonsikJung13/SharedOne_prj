@@ -38,4 +38,8 @@ public interface OrderMapper {
   void orderHeaderRemove(int mOrderId);
 
   void orderItemRemove(int mOrderId);
+
+  void storageHeaderAdd(Map<String, Object> stringObjectMap);
+
+  void storageItemAdd(Map<String, Object> stringObjectMap);
 }

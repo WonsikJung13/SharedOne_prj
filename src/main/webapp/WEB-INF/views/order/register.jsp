@@ -343,7 +343,6 @@
         const requestDate = document.querySelector("#buyerInserted").value;
         const buyer = document.querySelector('#buyer')
         const selectedBuyer = buyer.value.split('_').at(0);
-        console.log(selectedBuyer);
         const data = {requestDate, selectedItem, selectedBuyer}
         fetch(`\${ctx}/order/itemList`, {
             method: "POST",
@@ -374,8 +373,7 @@
             }},100)
 
 
-        document.querySelector("#buyer").readOnly = true;
-        $('#buyer').css("background", "#b2babb");
+
         document.querySelector("#buyerInserted").readOnly = true;
         $('#buyerInserted').css("background", "#b2babb");
         document.querySelector("#orderCount").removeAttribute("disabled");
@@ -384,6 +382,8 @@
 
     // 아이템 선택 후 데이터 끌고오기
     function itemList() {
+        document.querySelector("#buyer").readOnly = true;
+        $('#buyer').css("background", "#b2babb");
         const requestDate = document.querySelector("#buyerInserted").value;
         const buyer = document.querySelector('#buyer')
         const selected = buyer.value.split('_').at(0);
@@ -511,10 +511,40 @@
             body: JSON.stringify(addData)
         })
 
+        const orderList = ctx + '/order/list';
+        setTimeout(function (){
+            location.href = orderList;
+        },300)
+
+    })
+
+    // 임시저장
+    document.querySelector(".storageBtn").addEventListener("click", function () {
+        const m_order_comment = document.getElementById('comment').value;
+
+        for (let i = 0; i < addData.length; i++) {
+            addData.at(i).m_order_comment = m_order_comment;
+            addData.at(i).m_order_sumPrice = m_order_sumPrice;
+        }
+
+        fetch(`\${ctx}/order/storageAdd`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(addData)
+        })
+
+        const orderList = ctx + '/order/list';
+        setTimeout(function (){
+            location.href = orderList;
+        },300)
+
     })
 
     // 오더 장바구니 삭제하기
     function clickRemove(target) {
+        m_order_sumPrice = 0;
         const remove1 = document.querySelector("#removeId");
         remove1.remove();
 
@@ -523,6 +553,13 @@
         addData = addData.filter((item) => {
             return !(item["m_order_itemId"] == removeId)
         })
+
+        for (const x in addData) {
+            m_order_sumPrice = m_order_sumPrice + parseInt(addData.at(x).m_order_totalPrice)
+        }
+
+        let Currency = document.querySelector("#buyerCurrency").innerHTML;
+        document.querySelector("#orderTotalPrice").innerHTML = Currency + " " + m_order_sumPrice;
 
     }
 
