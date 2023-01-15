@@ -511,6 +511,35 @@
             body: JSON.stringify(addData)
         })
 
+        const orderList = ctx + '/order/list';
+        setTimeout(function (){
+            location.href = orderList;
+        },300)
+
+    })
+
+    // 임시저장
+    document.querySelector(".storageBtn").addEventListener("click", function () {
+        const m_order_comment = document.getElementById('comment').value;
+
+        for (let i = 0; i < addData.length; i++) {
+            addData.at(i).m_order_comment = m_order_comment;
+            addData.at(i).m_order_sumPrice = m_order_sumPrice;
+        }
+
+        fetch(`\${ctx}/order/storageAdd`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(addData)
+        })
+
+        const orderList = ctx + '/order/list';
+        setTimeout(function (){
+            location.href = orderList;
+        },300)
+
     })
 
     // 오더 장바구니 삭제하기
