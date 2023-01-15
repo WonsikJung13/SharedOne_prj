@@ -25,6 +25,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <style>
+        .row{
+            --bs-gutter-x: 0;
+        }
+
         .itemRegisterBtn {
             position: relative;
         }
@@ -35,7 +39,7 @@
         }
 
         .table {
-            width: 900px;
+            width: 1000px;
             --bs-table-bg: #fff;
         }
 
@@ -74,7 +78,7 @@
         .tableList {
             background-color: #fff;
             height: 616px;
-            width: 900px;
+            width: 1000px;
         }
 
         td a {
@@ -94,7 +98,7 @@
 
         .searchBox {
             background-color: white;
-            width: 900px;
+            width: 1000px;
             padding: 20px 80px 5px 80px;
             color: #212529;
             font-size: 16px;
@@ -159,7 +163,7 @@
         <my:header></my:header>
     </div>
     <div class="col ">
-        <div style="display: flex;justify-content: space-between;width: 900px;">
+        <div style="display: flex;justify-content: space-between;width: 1000px;">
             <div id="itemListTitle">
                 <h1 id="header">제품 관리 및 등록</h1>
                 <h2>제품 검색</h2>
@@ -218,7 +222,7 @@
             </form>
         </div>
 
-        <div style="display: flex;background-color: transparent;width:900px">
+        <div style="display: flex;background-color: transparent;width:1000px">
             <c:url value="/item/remove" var="removeLink"/>
             <form id="removeForm" action="${removeLink }" method="post">
                 <input type="hidden" id="removeInput" name="m_item_id" value="">
@@ -232,13 +236,13 @@
             <table class="table addList">
                 <thead>
                 <tr>
-                    <th><input name="itemBox" type="checkbox" value="selectAll" onclick="selectAll(this)"> </th>
-                    <th>제품코드</th>
-                    <th>제품그룹</th>
-                    <th>제조사</th>
-                    <th>제품명</th>
-                    <th>단위</th>
-                    <th></th>
+                    <th style="width: 50px"><input name="itemBox" type="checkbox" value="selectAll" onclick="selectAll(this)"> </th>
+                    <th style="width: 200px">제품코드</th>
+                    <th style="width: 200px">제품그룹</th>
+                    <th style="width: 200px">제조사</th>
+                    <th style="width: 250px">제품명</th>
+                    <th style="width: 100px">단위</th>
+                    <th style="width: 100px"></th>
                 </tr>
                 </thead>
                 <tbody>

@@ -113,11 +113,11 @@
         UPDATE
             m_item
         SET
-            m_item_id = CONCAT (
-                LEFT(#{m_item_group},2),
-                LEFT(#{m_item_manufacturer},2),
-                LPAD(#{m_item_id},4,'0')
-                ),
+<!--            m_item_id = CONCAT (-->
+<!--                LEFT(#{m_item_group},2),-->
+<!--                LEFT(#{m_item_manufacturer},2),-->
+<!--                LPAD(#{m_item_id},4,'0')-->
+<!--                ),-->
             m_item_group = #{m_item_group},
             m_item_manufacturer = #{m_item_manufacturer},
             m_item_name = #{m_item_name},
@@ -140,6 +140,8 @@
             m_item_group
         FROM
             m_item
+        WHERE
+            m_item_active = 1
         ORDER BY m_item_group DESC
     </select>
 
@@ -150,6 +152,7 @@
             m_item
         WHERE
             m_item_group = #{m_item_group}
+            AND m_item_active = 1
         ORDER BY m_item_manufacturer DESC
     </select>
 
@@ -164,5 +167,6 @@
         AND m_item_manufacturer = #{m_item_manufacturer}
         AND m_item_name = #{m_item_name}
         AND m_item_unit = #{m_item_unit}
+        AND m_item_active = 1
     </select>
 </mapper>
