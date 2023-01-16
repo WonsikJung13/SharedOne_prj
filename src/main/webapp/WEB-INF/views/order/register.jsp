@@ -521,7 +521,7 @@
         const orderList = ctx + '/order/list';
         setTimeout(function (){
             location.href = orderList;
-        },3000)
+        },300)
 
     })
 
@@ -545,7 +545,7 @@
         const orderList = ctx + '/order/list';
         setTimeout(function (){
             location.href = orderList;
-        },3000)
+        },300)
 
     })
 
