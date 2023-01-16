@@ -11,9 +11,9 @@ public interface OrderMapper {
 
     List<BuyerDto> buyerSelect();
 
-  BuyerDto buyerList(String m_Buyer_Id);
+    BuyerDto buyerList(String m_Buyer_Id);
 
-    List<ItemDto> itemSelect();
+    List<OrderItemDTO> itemSelect(int m_order_id);
 
 //    ItemDto itemList(String m_item_id);
 
@@ -23,7 +23,7 @@ public interface OrderMapper {
 
     OrderDto orderInsert();
 
-  int addDataHeader(Map<String, Object> stringObjectMap);
+    int addDataHeader(Map<String, Object> stringObjectMap);
 
   int addDataItem(Map<String, Object> stringObjectMap);
 
@@ -45,7 +45,10 @@ public interface OrderMapper {
 
     OrderHeaderDTO orderHeader(int mOrderId);
 
-  int updateHeader(Map<String, Object> map);
+  void updateHeader(Map<String, Object> map);
 
-  int updateItem(Map<String, Object> map);
+  void updateItem(Map<String, Object> map);
+
+    int orderListDelete(String m_order_itemId, String m_order_id);
+
 }

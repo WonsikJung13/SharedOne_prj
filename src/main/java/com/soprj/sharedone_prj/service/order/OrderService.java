@@ -23,7 +23,8 @@ public class OrderService {
         return mapper.buyerList(m_Buyer_Id);
     }
 
-    public List<ItemDto> itemList() { return mapper.itemSelect(); }
+    public List<OrderItemDTO> itemList(int m_order_id)
+    { return mapper.itemSelect(m_order_id); }
 
     public OrderDto orderInsert() {
         return mapper.orderInsert();
@@ -79,11 +80,16 @@ public class OrderService {
         return mapper.orderHeader(mOrderId);
     }
 
-    public int updateHeader(Map<String, Object> map) {
-        return mapper.updateHeader(map);
+    public void updateHeader(Map<String, Object> map) {
+        mapper.updateHeader(map);
+
+    }
+    public void updateItem(Map<String, Object> map) {
+        mapper.updateItem(map);
     }
 
-    public int updateItem(Map<String, Object> map) {
-        return  mapper.updateItem(map);
+    // 기존 장바구니 리스트 삭제
+    public void orderListDelete(String m_order_itemId, String m_order_id) {
+        mapper.orderListDelete(m_order_itemId, m_order_id);
     }
 }
