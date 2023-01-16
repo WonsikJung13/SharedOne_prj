@@ -401,7 +401,7 @@
                 document.querySelector(".orderDate").innerHTML = data.m_order_date;
 
                 if (document.getElementById('itemBody').childElementCount == 0) {
-                    for (i = 0; i < data.orderItemDTOList.length; i++) {
+                    for (let i = 0; i < data.orderItemDTOList.length; i++) {
                         let itemTR = document.createElement("tr")
                         itemTR.setAttribute("class", "orderItemList")
                         let itemTD1 = document.createElement("td");
@@ -411,11 +411,11 @@
                         let itemTD3 = document.createElement("td");
                         itemTD3.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemGroup + ""));
                         let itemTD4 = document.createElement("td");
-                        itemTD4.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_count + ""));
+                        itemTD4.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemManufacturer + ""));
                         let itemTD5 = document.createElement("td");
-                        itemTD5.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemManufacturer + ""));
+                        itemTD5.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_price + ""));
                         let itemTD6 = document.createElement("td");
-                        itemTD6.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_price + ""));
+                        itemTD6.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_count + ""));
                         let itemTD7 = document.createElement("td");
                         itemTD7.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_totalPrice + ""));
 

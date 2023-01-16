@@ -37,7 +37,7 @@
         <my:header></my:header>
     </div>
     <div class="col">
-        <h1>판매가격 작성</h1>
+        <h1 style="margin-top: 20px">판매가격 작성</h1>
         <form action="" method="post" id="formId">
         <table class="table table-bordered">
 
@@ -149,7 +149,7 @@
             </table>
         </div>
 
-        <button class="btn btn-secondary" id="priceSubmitButton">등록</button>
+        <button style="margin-bottom: 20px" class="btn btn-secondary" id="priceSubmitButton">등록</button>
     </div>
 </div>
 
@@ -251,19 +251,19 @@
             .then(res => res.json())
             .then(data => {
                 if (data.message == null) {
-                    m_price_lastPeriod.max = data.maxDate;
+                    document.querySelector("#m_price_lastPeriod").max = data.maxDate;
 
                     let arr = new Array();
                     for (let i = 0; i < addDatas.length; i++) {
                         if (m_item_id == addDatas.at(i).m_item_id && m_buyer_id == addDatas.at(i).m_buyer_id) {
                             if (addDatas.at(i).m_price_startPeriod <= m_price_startPeriod && m_price_startPeriod <= addDatas.at(i).m_price_lastPeriod) {
                                 alert("이미 추가된 판매가의 날짜가 겹칩니다. 다시 확인해주세요")
+                                $("input[type='date'],textarea").val('');
                             } else {
                                 if (m_price_startPeriod < addDatas[i].m_price_startPeriod) {
                                     arr.push(addDatas[i].m_price_startPeriod)
                                 }
                             }
-
                         }
                     }
                     let minDate = arr.reduce((prev, curr) => {
@@ -339,6 +339,7 @@
        //         }
        //     }
        // }
+
        const priceAdd = `
             <tr id="removeId">
                 <td class="priceAdd"> \${m_item_id} </td>

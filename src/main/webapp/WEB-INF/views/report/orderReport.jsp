@@ -80,7 +80,7 @@
 
         .tableList {
             background-color: #fff;
-            height: 672px;
+            height: auto;
             width: 1000px;
             margin-bottom: 100px;
         }
@@ -232,6 +232,27 @@
                 </div>
             </div>
         </form>
+
+        <div class="tableList">
+            <table class="table addList">
+                <thead style="width: auto">
+                <tr>
+                    <th>월별</th>
+                    <th>주문수</th>
+                    <th>주문 총 금액</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${sortedReport }" var="sortedReport">
+                    <tr>
+                        <td>${sortedReport.inserted}</td>
+                        <td>${sortedReport.od_count}</td>
+                        <td>${sortedReport.sum}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
         <div class="tableList">
             <table class="table table-hover addList">
