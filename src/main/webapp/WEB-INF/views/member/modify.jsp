@@ -106,7 +106,7 @@
     </style>
 </head>
 <body>
-<input type="hidden" value="${member.m_member_id}" id="memberid">
+<input type="hidden" value="${member.m_member_email}" id="memberEmail">
 <div class="row">
     <div class="col-3">
         <my:header></my:header>
@@ -242,10 +242,10 @@
     document.querySelector("#oldPassword").addEventListener("blur", function () {
         checkedOldPassword = false;
 
-        const m_member_id = document.querySelector("#memberid").value;
+        const m_member_email = document.querySelector("#memberEmail").value;
         const m_member_password = document.querySelector("#oldPassword").value;
 
-        const member = {m_member_id, m_member_password};
+        const member = {m_member_email, m_member_password};
 
         fetch(`\${ctx}/member/checkPassword`, {
             method: "POST",

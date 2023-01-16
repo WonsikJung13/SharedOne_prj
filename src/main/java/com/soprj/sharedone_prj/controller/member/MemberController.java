@@ -61,9 +61,9 @@ public class MemberController {
             }
         }
 
-        rttr.addAttribute("id", m_member_id);
+        rttr.addAttribute("email", m_member_email);
 
-        return "redirect:/member/modify?m_member_id={id}";
+        return "redirect:/member/modify?m_member_email={email}";
     }
 
     @GetMapping("modify")
@@ -125,8 +125,9 @@ public class MemberController {
     @ResponseBody
     public Map<String, Object> checkId(@RequestBody Map<String, Object> member) {
 
-        String m_member_id = member.get("m_member_id").toString();
-        MemberDto memberDto = memberService.checkPassword(m_member_id);
+        String m_member_email = member.get("m_member_email").toString();
+        MemberDto memberDto = memberService.checkPassword(m_member_email);
+        System.out.println(memberDto);
 
         String m_member_password = member.get("m_member_password").toString();
         Map<String, Object> map = new HashMap<>();
