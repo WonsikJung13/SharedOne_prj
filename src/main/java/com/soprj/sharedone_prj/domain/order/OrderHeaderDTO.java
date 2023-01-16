@@ -20,6 +20,8 @@ public class OrderHeaderDTO {
     private int m_order_sumPrice;
     private String m_order_comment;
 
+    private String m_order_memo;
+
     private List<OrderItemDTO> orderItemDTOList;
 
 }

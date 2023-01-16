@@ -3,10 +3,7 @@ package com.soprj.sharedone_prj.controller.order;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.item.ItemDto;
-import com.soprj.sharedone_prj.domain.order.ItemListVO;
-import com.soprj.sharedone_prj.domain.order.OrderDto;
-import com.soprj.sharedone_prj.domain.order.OrderHeaderDTO;
-import com.soprj.sharedone_prj.domain.order.OrderPriceVO;
+import com.soprj.sharedone_prj.domain.order.*;
 import com.soprj.sharedone_prj.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +27,8 @@ public class OrderController {
         List<BuyerDto> list = orderService.buyerList();
         model.addAttribute("buyerList", list);
 
-        List<ItemDto> itemList = orderService.itemList();
-        model.addAttribute("itemList", itemList);
+//        List<ItemDto> itemList = orderService.itemList();
+//        model.addAttribute("itemList", itemList);
     }
 
 //  바이어 데이터 가져오기
@@ -44,15 +41,14 @@ public class OrderController {
 
     @RequestMapping("itemList")
     @ResponseBody
-    public OrderPriceVO orderPrice(@RequestBody Map<String, Object> data) {
-        System.out.println(data);
+    public OrderPriceVO orderPrice(@RequestBody Map<Object, Object> data) {
         OrderPriceVO orderPrice = orderService.orderPrice(data.get("requestDate"), data.get("selectedItem"), data.get("selectedBuyer"));
         return orderPrice;
     }
 
     @RequestMapping("itemListForDropDown")
     @ResponseBody
-    public List<ItemListVO> itemListForDropDown(@RequestBody Map<String, Object> datas) {
+    public List<ItemListVO> itemListForDropDown(@RequestBody Map<Object, Object> datas) {
         List<ItemListVO> itemList = orderService.itemListForDropDown(datas.get("requestDate"), datas.get("selected"));
         return itemList;
     }
@@ -69,15 +65,17 @@ public class OrderController {
     public String Add(@RequestBody List<Map<String, Object>> addData) {
 
         orderService.addDataHeader(addData.get(0));
+
+        // id 값 추출 코드
         ObjectMapper mapper = new ObjectMapper();
         OrderDto orderDto = mapper.convertValue(addData.get(0), OrderDto.class);
-
         int id = orderDto.getM_order_id();
 
         for (int i = 0; i < addData.size(); i++) {
             addData.get(i).put("m_order_id", id);
             orderService.addDataItem(addData.get(i));
         }
+
         return "redirect:/order/list";
     }
 
@@ -125,29 +123,34 @@ public class OrderController {
     public void modify(int m_order_id, Model model){
         OrderHeaderDTO list  = orderService.orderHeader(m_order_id);
         model.addAttribute("orderHeader", list);
-        System.out.println(m_order_id);
 
 
-        List<ItemDto> itemList = orderService.itemList();
+        List<OrderItemDTO> itemList = orderService.itemList(m_order_id);
         model.addAttribute("itemList", itemList);
 
     }
 
-    @PostMapping("update")
-    public String update(@RequestBody List<Map<String, Object>> addData) {
+    @PostMapping("update/{orderId}")
+    public void update(@RequestBody List<Map<String, Object>> data, int orderId) {
+        orderService.updateHeader(data.get(0));
 
-        orderService.updateHeader(addData.get(0));
-        ObjectMapper mapper = new ObjectMapper();
-        OrderDto orderDto = mapper.convertValue(addData.get(0), OrderDto.class);
+//        for (int i = 0; i < data.size(); i++) {
+//            data.get(i).put("m_order_id", m_order_id);
+//            orderService.updateItem(data.get(i));
+//        }
 
-        int id = orderDto.getM_order_id();
-
-        for (int i = 0; i < addData.size(); i++) {
-            addData.get(i).put("m_order_id", id);
-            orderService.updateItem(addData.get(i));
-        }
-        return "redirect:/order/adminList";
     }
+
+    @DeleteMapping("deleteList/{order}")
+    public void deleteList(@PathVariable String order){
+        String[] itemId = order.split("_");
+        String m_order_itemId = itemId[0];
+        String m_order_id = itemId[1];
+        orderService.orderListDelete(m_order_itemId, m_order_id );
+
+
+    }
+
 
 
 
@@ -178,6 +181,9 @@ public class OrderController {
         }
         return "redirect:/order/adminList";
     }
+
+
+
 
 
 }

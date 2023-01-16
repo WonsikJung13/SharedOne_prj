@@ -180,6 +180,7 @@
     <table class="table table-bordered">
       <tbody>
       <tr>
+        <input type="hidden" id="orderId" value="${orderHeader.m_order_id}">
         <td class="table-active">거래처</td>
         <td class="inputWidth inputLength" id="buyer">${orderHeader.m_buyer_id}</td>
         <td class="table-active">주소</td>
@@ -195,9 +196,10 @@
         <td class="table-active">통화</td>
         <td id="buyerCurrency" class="inputWidth">${orderHeader.m_order_buyerCurrency}</td>
         <td class="table-active">납품요청일</td>
-        <td colspan="3">
-          <input id="buyerInserted" class="form-control" type="date" placeholder="Default input"
-                 aria-label="default input example" onchange="itemList()">
+        <td colspan="3" id="buyerInserted" >
+<%--          <input id="buyerInserted" class="form-control" type="date" placeholder="Default input"--%>
+<%--                 aria-label="default input example" onchange="itemList()">--%>
+          ${orderHeader.m_order_inserted}
         </td>
       </tr>
       </tbody>
@@ -241,7 +243,7 @@
         <td class="table-active">주문수량</td>
         <td>
           <input id="orderCount" class="form-control" type="text" placeholder="수량을 입력하세요."
-                 aria-label="default input example" disabled>
+                 aria-label="default input example">
         </td>
       </tr>
       <tr>
@@ -268,11 +270,21 @@
           <th scope="col">판매가격</th>
           <th scope="col">주문수량</th>
           <th scope="col">총 금액</th>
-          <th scope="col"></th>
+          <th></th>
         </tr>
         </thead>
         <tbody id="itemBody">
-
+            <c:forEach items="${itemList}" var="itemList">
+              <tr>
+              <td class="orderAdd"> 111111</td>
+              <td class="orderAdd"> ${itemList.m_order_itemId} </td>
+              <td class="orderAdd"> ${itemList.m_order_itemName} </td>
+              <td class="orderAdd"> ${itemList.m_order_price} </td>
+              <td class="orderAdd"> ${itemList.m_order_count} </td>
+              <td class="orderAdd"> ${itemList.m_order_totalPrice} </td>
+              <td><button class="btn btn-secondary" data-value="${itemList.m_order_itemId}_${itemList.m_order_id}" onclick="clickDelete(this)">삭제</button></td>
+              </tr>
+            </c:forEach>
         </tbody>
       </table>
     </div>
@@ -288,6 +300,13 @@
 
       </tbody>
     </table>
+
+    <div class="commentStyle">
+      <h2>승인권자 메세지</h2>
+      <div>
+          <input id="memo"> ${orderHeader.m_order_memo}</input>
+      </div>
+    </div>
 
     <div class="commentStyle">
       <h2>승인 요청 메세지</h2>
@@ -310,32 +329,15 @@
   const ctx = "${pageContext.request.contextPath}";
   let m_order_sumPrice = 0;
 
-  // buyerView()
-  // // buyer 데이터 가져오기
-  // function buyerView() {
-  //   const buyer = document.querySelector('#buyer').innerText;
-  //   // const selected = buyer.value.split('_').at(0);
-  //
-  //   fetch(ctx + "/order/buyerList/" + selected)
-  //           .then(res => res.json())
-  //           .then(data => {
-  //             document.querySelector("#buyerAddress").innerHTML = data.m_buyer_address;
-  //             document.querySelector("#buyerRegion").innerHTML = data.m_buyer_region;
-  //             document.querySelector("#buyerNumber").innerHTML = data.m_buyer_number;
-  //             document.querySelector("#buyerCurrency").innerHTML = data.m_buyer_currency;
-  //           })
-  // }
-
 
   // 아이템 데이터 가져오기
   function itemView() {
     const item = document.querySelector('#orderItems') // 아이템 선택 input
     const selectedItem = item.value.split('_').at(0);
-    const requestDate = document.querySelector("#buyerInserted").value; //바이어날짜
+    const requestDate = document.querySelector("#buyerInserted").innerText; //바이어날짜
     const selectedBuyer = document.querySelector('#buyer').innerText;
     // const selectedBuyer = buyer.value.split('_').at(0); //바이어 코드
     const data = {requestDate, selectedItem, selectedBuyer}
-    console.log(data);
     fetch(`\${ctx}/order/itemList`, {
       method: "POST",
       headers: {
@@ -345,7 +347,6 @@
     })
             .then(res => res.json())
             .then(data => {
-              console.log(data);
               document.querySelector(".itemName").innerHTML = data.m_item_name;
               document.querySelector(".itemGroup").innerHTML = data.m_item_group;
               document.querySelector(".manufacturer").innerHTML = data.m_item_manufacturer;
@@ -367,17 +368,18 @@
 
 
 
-    document.querySelector("#buyerInserted").readOnly = true;
-    $('#buyerInserted').css("background", "#b2babb");
-    document.querySelector("#orderCount").removeAttribute("disabled");
+    // document.querySelector("#buyerInserted").readOnly = true;
+    // $('#buyerInserted').css("background", "#b2babb");
+    // document.querySelector("#orderCount").removeAttribute("disabled");
    }
 
 
   // 아이템 선택 후 데이터 끌고오기
+  itemList()
   function itemList() {
     // document.querySelector("#buyer").readOnly = true;
     // $('#buyer').css("background", "#b2babb");
-    const requestDate = document.querySelector("#buyerInserted").value;
+    const requestDate = document.querySelector("#buyerInserted").innerText;
     const selected = document.querySelector('#buyer').innerText;
     // const selected = buyer.value.split('_').at(0);
     const data = {requestDate, selected}
@@ -415,6 +417,9 @@
 
   // 장바구니 보여주기
   let addData = [];
+<%--for(int i= 0; i < 3, i++){--%>
+<%--  addData.push(${orderList.}(i))--%>
+<%--  }--%>
   document.querySelector(".addBtn").addEventListener("click", function () {
     // const buyer = document.querySelector("#buyer").value.split("_");
     const buyer = document.querySelector("#buyer").innerText;
@@ -424,7 +429,7 @@
     const m_order_buyerRegion = document.querySelector("#buyerRegion").innerText;
     const m_order_buyerNumber = document.querySelector("#buyerNumber").innerText;
     const m_order_buyerCurrency = document.querySelector("#buyerCurrency").innerText;
-    const m_order_inserted = document.querySelector("#buyerInserted").value;
+    const m_order_inserted = document.querySelector("#buyerInserted").innerText;
 
     const m_order_comment = document.querySelector("#comment").value;
     const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
@@ -490,24 +495,22 @@
   // 오더 업데이트
   document.querySelector(".submitBtn").addEventListener("click", function () {
     const m_order_comment = document.getElementById('comment').value;
+    const m_order_totalPrice = document.getElementById('orderTotalPrice').innerText;
+    const orderId = document.getElementById('orderId').value;
+    data = {m_order_comment, m_order_totalPrice};
 
-    for (let i = 0; i < addData.length; i++) {
-      addData.at(i).m_order_comment = m_order_comment;
-      addData.at(i).m_order_sumPrice = m_order_sumPrice;
-    }
-
-    fetch(`\${ctx}/order/update`, {
+    fetch(`\${ctx}/order/update/` + orderId, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(addData)
+      body: JSON.stringify(data)
     })
 
-    const orderList = ctx + '/order/adminList';
-    setTimeout(function (){
-      location.href = orderList;
-    },300)
+    // const orderList = ctx + '/order/adminList';
+    // setTimeout(function (){
+    //   location.href = orderList;
+    // },300)
 
   })
 
@@ -553,6 +556,21 @@
 
     let Currency = document.querySelector("#buyerCurrency").innerHTML;
     document.querySelector("#orderTotalPrice").innerHTML = Currency + " " + m_order_sumPrice;
+
+  }
+
+  // 기존 오더 장바구니 삭제
+  function clickDelete(target) {
+
+    const order = target.dataset.value;
+    fetch(`\${ctx}/order/deleteList/` + order,{
+      method : "delete"
+    })
+            const orderList = ctx + '/order/modify';
+            setTimeout(function (){
+              location.href = orderList;
+            },300)
+
 
   }
 
