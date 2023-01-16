@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("report")
@@ -24,6 +25,10 @@ public class ReportController {
 //        List<ReportHeaderDto> report = reportService.getOrderHeader();
         List<ReportHeaderDto> report = reportService.reportList();
         model.addAttribute("report", report);
+
+        List<Map<String, String>> sortedReport = reportService.sortedReport();
+        System.out.println(sortedReport);
+        model.addAttribute("sortedReport", sortedReport);
     }
 
     @RequestMapping("orderReport/{m_order_id}")

@@ -3,6 +3,7 @@ package com.soprj.sharedone_prj.mapper.report;
 import com.soprj.sharedone_prj.domain.report.ReportHeaderDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReportMapper {
 //    List<ReportHeaderDto> getOrderHeader();
@@ -10,6 +11,8 @@ public interface ReportMapper {
     List<ReportHeaderDto> reportList();
 
     ReportHeaderDto reportDetail(int mOrderId);
+
+    List<Map<String, String>> sortedReport();
 
 //    void getOrderItem();
 }
