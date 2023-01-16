@@ -96,4 +96,8 @@ public class MemberService {
 
         return memberMapper.checkPassword(m_member_email);
     }
+
+    public MemberDto getMemberEmail(String m_member_email) {
+        return memberMapper.getMemberEmail(m_member_email);
+    }
 }

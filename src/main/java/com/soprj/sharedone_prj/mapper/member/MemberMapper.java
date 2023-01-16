@@ -33,4 +33,6 @@ public interface MemberMapper {
     List<MemberDto> getMemberList(int offset, int records);
 
     MemberDto checkPassword(String m_member_email);
+
+    MemberDto getMemberEmail(String m_member_email);
 }

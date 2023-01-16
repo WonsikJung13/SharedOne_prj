@@ -140,4 +140,21 @@ public class MemberController {
         }
         return map;
     }
+
+    @GetMapping("checkEmail/{m_member_email}")
+    @ResponseBody
+    public Map<String, Object> checkEmail(@PathVariable String m_member_email) {
+        Map<String, Object> map = new HashMap<>();
+
+        MemberDto memberDto = memberService.getMemberEmail(m_member_email);
+
+        if (memberDto == null) {
+            map.put("statusNum", "not exist");
+            map.put("message", "사용 가능합니다");
+        } else {
+            map.put("statusNum", "exist");
+            map.put("message", "중복합니다");
+        }
+        return map;
+    }
 }

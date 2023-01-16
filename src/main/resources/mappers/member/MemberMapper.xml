@@ -145,4 +145,12 @@
         WHERE
         m_member_email = #{m_member_email}
     </select>
+    <select id="getMemberEmail" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
+        SELECT
+        *
+        FROM
+        m_member
+        WHERE
+        m_member_email = #{m_member_email}
+    </select>
 </mapper>
