@@ -222,7 +222,7 @@
 
                         <td>
                             <c:url value="/member/resetPassword" var="modifyLink">
-                                <c:param value="${member.m_member_id }" name="m_member_id"/>
+                                <c:param value="${member.m_member_email }" name="m_member_email"/>
                             </c:url>
                             <a href="${modifyLink}" style="color: white">
                                 <button class="btn btn-primary">초기화</button>

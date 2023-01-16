@@ -250,7 +250,7 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                 <div style="width: auto">
                     <c:url value="/member/modify" var="modifyLink">
-                        <c:param value="${username}" name="m_member_id"/>
+                        <c:param value="${username}" name="m_member_email"/>
                     </c:url>
                     <a href="${modifyLink}" style="color: white">
                         정보수정

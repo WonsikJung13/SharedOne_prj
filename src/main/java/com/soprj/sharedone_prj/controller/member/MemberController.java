@@ -54,14 +54,11 @@ public class MemberController {
                          String m_member_password, String m_member_email, RedirectAttributes rttr) {
 
 
-        String password = memberService.getPassword(m_member_id);
+        String password = memberService.getPassword(m_member_email);
         if (oldPassword != null) {
             if (passwordEncoder.matches(oldPassword, password)) {
-                int cnt = memberService.updatePasswordd(m_member_id, m_member_password);
+                int cnt = memberService.updatePasswordd(m_member_email, m_member_password);
             }
-        }
-        if (m_member_email != memberService.getEmail(m_member_id) && m_member_email != null) {
-            int cnt = memberService.updateEmail(m_member_id, m_member_email);
         }
 
         rttr.addAttribute("id", m_member_id);
@@ -70,8 +67,8 @@ public class MemberController {
     }
 
     @GetMapping("modify")
-    public void modify(String m_member_id, Model model) {
-        MemberDto member = memberService.get(m_member_id);
+    public void modify(String m_member_email, Model model) {
+        MemberDto member = memberService.get(m_member_email);
 
         model.addAttribute("member", member);
     }

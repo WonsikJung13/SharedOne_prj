@@ -118,8 +118,8 @@
 
             <form id="registerForm" action="/member/login" method="post">
                 <div class="input-group mb-3">
-                    <span class="input-group-text">사원이름</span>
-                    <input type="text" name="username" class="form-control" placeholder="이름">
+                    <span class="input-group-text">사원이메일</span>
+                    <input type="text" name="username" class="form-control" placeholder="이메일">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">비밀번호</span>

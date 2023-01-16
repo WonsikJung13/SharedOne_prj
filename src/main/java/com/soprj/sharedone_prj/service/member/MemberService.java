@@ -20,26 +20,22 @@ public class MemberService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public int updateEmail(String m_member_id, String m_member_email) {
-        return memberMapper.updateMemberEmail(m_member_id, m_member_email);
-    }
-
     public int register(MemberDto member) {
         int cnt = memberMapper.insert(member);
         return cnt;
     }
 
-    public int remove(String m_member_id) {
-        return memberMapper.removeById(m_member_id);
+    public int remove(String m_member_email) {
+        return memberMapper.removeById(m_member_email);
     }
 
-    public MemberDto get(String m_member_id) {
-        return memberMapper.select(m_member_id);
+    public MemberDto get(String m_member_email) {
+        return memberMapper.select(m_member_email);
     }
 
-    public int updatePasswordd(String m_member_id, String password) {
+    public int updatePasswordd(String m_member_email, String password) {
         String m_member_password = passwordEncoder.encode(password);
-        return memberMapper.updatePasswordd(m_member_id, m_member_password);
+        return memberMapper.updatePasswordd(m_member_email, m_member_password);
     }
 
     public List<MemberDto> selectAuthority() {
@@ -50,18 +46,18 @@ public class MemberService {
         return memberMapper.updateGrade(member);
     }
 
-    public int resetPassword(String m_member_id) {
+    public int resetPassword(String m_member_email) {
         String pw = emailService.ePw;
         String m_member_password = passwordEncoder.encode(pw);
-        return memberMapper.resetPassword(m_member_id, m_member_password);
+        return memberMapper.resetPassword(m_member_email, m_member_password);
     }
 
     public String getEmail(String m_member_id) {
         return memberMapper.getEmail(m_member_id);
     }
 
-    public String getPassword(String m_member_id) {
-        return memberMapper.getPassword(m_member_id);
+    public String getPassword(String m_member_email) {
+        return memberMapper.getPassword(m_member_email);
     }
 
     public List<MemberDto> getMemberList(int page, MemberDto memberDto) {
@@ -96,8 +92,8 @@ public class MemberService {
         return memberMapper.getMemberList(offset, records);
     }
 
-    public MemberDto checkPassword(String m_member_id) {
+    public MemberDto checkPassword(String m_member_email) {
 
-        return memberMapper.checkPassword(m_member_id);
+        return memberMapper.checkPassword(m_member_email);
     }
 }
