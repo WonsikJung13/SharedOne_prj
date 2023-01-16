@@ -64,7 +64,7 @@
             font-size: 16px;
             font-weight: bold;
             width: 1000px;
-
+            padding: 6px;
         }
 
         .tableList {
@@ -83,7 +83,7 @@
             background-color: #757575;
             color: #fff;
             /*border-radius: 0;*/
-            width: 100px;
+            width: 60px;
             --bs-btn-font-weight: 600;
             border: none;
         }
@@ -142,6 +142,10 @@
             background-color: #658e99;
             border: none;
         }
+        th {
+            width: 12%;
+        }
+
     </style>
 </head>
 <body>
@@ -199,8 +203,8 @@
             <form id="removeForm" action="${removeLink }" method="post">
                 <input type="hidden" id="removeInput" name="m_price_id" value="">
             </form>
-            <button class="btn btn-danger" style="margin-left: auto;margin-bottom: 10px;" data-bs-toggle="modal"
-                    data-bs-target="#removeModal" value="삭제">선택삭제
+            <button class="btn btn-danger" id="checkRemove" style="margin-left: auto;margin-bottom: 10px;" data-bs-toggle="modal"
+                    data-bs-target="#removeModal" value="삭제" disabled="disabled">선택삭제
             </button>
         </div>
         <div class="tableList">
@@ -208,16 +212,18 @@
             <table class="table addList">
                 <thead style="width: auto">
                 <tr>
-                    <th></th>
+                    <th style="width: 7px; padding-left: 10px">
+                        <input type='checkbox' name='allPriceBox' onclick='selectAll(this)'/>
+                    </th>
                     <th>제품코드</th>
                     <th>제품명</th>
                     <th>거래처코드</th>
                     <th>거래처명</th>
                     <th>시작일</th>
                     <th>종료일</th>
-                    <th>통화</th>
-                    <th>할인율</th>
-                    <th>금액</th>
+                    <th style="width: 10px">통화</th>
+                    <th style="width: 7%">할인율</th>
+                    <th style="width: 7px">금액</th>
                     <th>최종금액</th>
                     <th></th>
                 </tr>
@@ -226,7 +232,9 @@
                 <c:forEach items="${priceList }" var="priceList">
                     <div>
                         <tr>
-                            <td><input id="priceBox" name="priceBox" type="checkbox" value="${priceList.m_price_id}"></td>
+                            <td style="padding-left: 10px">
+                                <input name="priceBox" type="checkbox" onclick="checkSelectAll()" value="${priceList.m_price_id}">
+                            </td>
                             <td>${priceList.m_item_id }</td>
                             <td>${priceList.m_item_name }</td>
                             <td>${priceList.m_buyer_id }</td>
@@ -364,6 +372,7 @@
 </script>
 <script>
 
+    // 체크박스 선택 삭제
     function remove() {
         var length = document.getElementsByName("priceBox").length;
         var removeIdList = [];
@@ -379,6 +388,50 @@
     }
 
     document.querySelector("#removeButton").addEventListener("click", remove);
+
+    // 체크 박스 하나라도 체크 해제시 전체 선택 해제
+    function checkSelectAll()  {
+        // 전체 체크박스
+        const checkboxes
+            = document.querySelectorAll('input[name="priceBox"]');
+        // 선택된 체크박스
+        const checked
+            = document.querySelectorAll('input[name="priceBox"]:checked');
+        // select all 체크박스
+        const selectAll
+            = document.querySelector('input[name="allPriceBox"]');
+
+        // 체크박스 선택 시 삭제버튼 활성화
+        if (checked.length > 0) {
+            document.querySelector("#checkRemove").disabled = false;
+        } else {
+            document.querySelector("#checkRemove").disabled = true;
+        }
+
+        if(checkboxes.length === checked.length)  {
+            selectAll.checked = true;
+        }else {
+            selectAll.checked = false;
+        }
+
+    }
+
+    // 체크박스 전체 선택
+    function selectAll(selectAll)  {
+        const checkboxes = document.getElementsByName('priceBox');
+        const checked = document.querySelectorAll('input[name="priceBox"]:checked');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+
+        // 전체 체크박스 선택 시 삭제버튼 활성화
+        if (checkboxes.length === 10 && checked.length === 10) {
+            document.querySelector("#checkRemove").disabled = true;
+        } else {
+            document.querySelector("#checkRemove").disabled = false;
+        }
+    }
 
 
 </script>
