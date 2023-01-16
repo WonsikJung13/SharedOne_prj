@@ -203,8 +203,8 @@
             <form id="removeForm" action="${removeLink }" method="post">
                 <input type="hidden" id="removeInput" name="m_price_id" value="">
             </form>
-            <button class="btn btn-danger" style="margin-left: auto;margin-bottom: 10px;" data-bs-toggle="modal"
-                    data-bs-target="#removeModal" value="삭제">선택삭제
+            <button class="btn btn-danger" id="checkRemove" style="margin-left: auto;margin-bottom: 10px;" data-bs-toggle="modal"
+                    data-bs-target="#removeModal" value="삭제" disabled="disabled">선택삭제
             </button>
         </div>
         <div class="tableList">
@@ -389,16 +389,6 @@
 
     document.querySelector("#removeButton").addEventListener("click", remove);
 
-    // 체크박스 전체 선택
-    function selectAll(selectAll)  {
-        const checkboxes
-            = document.getElementsByName('priceBox');
-
-        checkboxes.forEach((checkbox) => {
-            checkbox.checked = selectAll.checked;
-        })
-    }
-
     // 체크 박스 하나라도 체크 해제시 전체 선택 해제
     function checkSelectAll()  {
         // 전체 체크박스
@@ -410,7 +400,14 @@
         // select all 체크박스
         const selectAll
             = document.querySelector('input[name="allPriceBox"]');
-f
+
+        // 체크박스 선택 시 삭제버튼 활성화
+        if (checked.length > 0) {
+            document.querySelector("#checkRemove").disabled = false;
+        } else {
+            document.querySelector("#checkRemove").disabled = true;
+        }
+
         if(checkboxes.length === checked.length)  {
             selectAll.checked = true;
         }else {
@@ -418,6 +415,24 @@ f
         }
 
     }
+
+    // 체크박스 전체 선택
+    function selectAll(selectAll)  {
+        const checkboxes = document.getElementsByName('priceBox');
+        const checked = document.querySelectorAll('input[name="priceBox"]:checked');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+
+        // 전체 체크박스 선택 시 삭제버튼 활성화
+        if (checkboxes.length === 10 && checked.length === 10) {
+            document.querySelector("#checkRemove").disabled = true;
+        } else {
+            document.querySelector("#checkRemove").disabled = false;
+        }
+    }
+
 
 </script>
 
