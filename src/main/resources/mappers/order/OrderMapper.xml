@@ -6,9 +6,8 @@
 <mapper namespace="com.soprj.sharedone_prj.mapper.order.OrderMapper">
 
     <select id="buyerSelect" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
-        SELECT m_buyer_id,
-        m_buyer_name
-        FROM m_buyer
+        SELECT DISTINCT p.m_buyer_id,b.m_buyer_name
+        FROM  m_price p LEFT JOIN m_buyer b ON b.m_buyer_id = p.m_buyer_id;
     </select>
     <select id="buyerList" resultType="com.soprj.sharedone_prj.domain.buyer.BuyerDto">
         SELECT m_buyer_region,
