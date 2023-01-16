@@ -74,4 +74,16 @@ public class OrderService {
     public void storageItemAdd(Map<String, Object> stringObjectMap) {
         mapper.storageItemAdd(stringObjectMap);
     }
+
+    public OrderHeaderDTO orderHeader(int mOrderId) {
+        return mapper.orderHeader(mOrderId);
+    }
+
+    public int updateHeader(Map<String, Object> map) {
+        return mapper.updateHeader(map);
+    }
+
+    public int updateItem(Map<String, Object> map) {
+        return  mapper.updateItem(map);
+    }
 }
