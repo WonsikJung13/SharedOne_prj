@@ -321,7 +321,7 @@
                             <input name="itemBox" type="checkbox" value="${itemList.m_item_id}"
                                    onclick='checkSelectAll(); activeBtn()' style="position: relative;top: 10px">
                         </td>
-                        <td>
+                        <td class="selectItemId">
                                 ${itemList.m_item_id}
                         </td>
                         <td>
@@ -525,14 +525,16 @@
     function remove() {
         const length = document.getElementsByName("itemBox").length;
         const removeIdList = [];
-        for (let i = 1; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             const checkedBox = document.getElementsByName("itemBox")[i].checked;
+            console.log(checkedBox)
             if (checkedBox) {
-
                 const selectId = document.getElementsByName("itemBox")[i].value;
+                console.log("selectId: " + selectId);
                 removeIdList.push(selectId);
             }
         }
+        console.log(removeIdList)
         document.querySelector("#removeInput").value = removeIdList;
         console.log(document.querySelector("#removeInput").value);
         document.getElementById('removeForm').submit();
