@@ -209,10 +209,10 @@
         </div>
         <div class="tableList">
 
-            <table class="table addList">
+            <table style="table-layout: fixed;" class="table addList">
                 <thead style="width: auto">
                 <tr>
-                    <th style="width: 7px; padding-left: 10px">
+                    <th style="width: 6%; padding-left: 10px">
                         <input type='checkbox' name='allPriceBox' onclick='selectAll(this)'/>
                     </th>
                     <th>제품코드</th>
@@ -221,9 +221,9 @@
                     <th>거래처명</th>
                     <th>시작일</th>
                     <th>종료일</th>
-                    <th style="width: 10px">통화</th>
-                    <th style="width: 7%">할인율</th>
-                    <th style="width: 7px">금액</th>
+                    <th style="width: 7%">통화</th>
+                    <th style="width: 8%">할인율</th>
+                    <th>금액</th>
                     <th>최종금액</th>
                     <th></th>
                 </tr>
