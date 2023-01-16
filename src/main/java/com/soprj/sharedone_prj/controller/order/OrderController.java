@@ -100,8 +100,12 @@ public class OrderController {
 
     // 주문 관리 리스트 보여주기
     @GetMapping("list")
-    public void list(Model model) {
-        List<OrderDto> list = orderService.orderList();
+    public void list(@RequestParam(name = "page", defaultValue = "1") int page,
+                     @RequestParam(name = "t", defaultValue = "all") String type,
+                     @RequestParam(name = "q", defaultValue = "") String keyword,
+                     OrderDto orderDto,
+                     Model model) {
+        List<OrderDto> list = orderService.orderList(page, type, keyword, orderDto);
         model.addAttribute("orderList", list);
     }
 
@@ -154,12 +158,14 @@ public class OrderController {
     }
 
 
-
-
     // 관리자 리스트
     @GetMapping("adminList")
-    public void adminList(Model model){
-        List<OrderDto> list = orderService.orderList();
+    public void adminList(@RequestParam(name = "page", defaultValue = "1") int page,
+                          @RequestParam(name = "t", defaultValue = "all") String type,
+                          @RequestParam(name = "q", defaultValue = "") String keyword,
+                          OrderDto orderDto,
+                          Model model){
+        List<OrderDto> list = orderService.orderList(page, type, keyword, orderDto);
         model.addAttribute("orderList", list);
     }
 
