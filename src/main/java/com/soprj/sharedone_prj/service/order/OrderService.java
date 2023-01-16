@@ -1,9 +1,9 @@
 package com.soprj.sharedone_prj.service.order;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
-import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.domain.order.*;
 import com.soprj.sharedone_prj.mapper.order.OrderMapper;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Service
 public class OrderService {
-    @Autowired
+    @Setter(onMethod_ = @Autowired)
     private OrderMapper mapper;
 
     public List<BuyerDto> buyerList() {
@@ -46,8 +46,37 @@ public class OrderService {
         return mapper.addDataItem(stringObjectMap);
     }
 
-    public  List<OrderDto> orderList() {
-        return mapper.orderList();
+    public List<OrderDto> orderList(int page, String type, String keyword, OrderDto orderDto) {
+        int records = 10;
+        int offset = (page - 1) * records;
+
+        int countAll = mapper.countAll(type, "%"+keyword+"%");
+        System.out.println(countAll);
+        int lastPage = (countAll - 1) / records + 1;
+
+        int leftPageNumber = (page -1) / 10 * 10 + 1;
+        int rightPageNumber = leftPageNumber + 9;
+        rightPageNumber = Math.min(rightPageNumber, lastPage);
+
+        // 이전버튼 유무
+        boolean hasPrevButton = page > 10;
+        // 다음버튼 유무
+        boolean hasNextButton = page <= ((lastPage - 1) / 10 * 10);
+
+        // 이전버튼 눌렀을 때 가는 페이지 번호
+        int jumpPrevPageNumber = (page - 1) / 10 * 10 - 9;
+        int jumpNextPageNumber = (page - 1) / 10 * 10 + 11;
+
+        orderDto.setHasPrevButton(hasPrevButton);
+        orderDto.setHasNextButton(hasNextButton);
+        orderDto.setJumpPrevPageNumber(jumpPrevPageNumber);
+        orderDto.setJumpNextPageNumber(jumpNextPageNumber);
+        orderDto.setCurrentPageNumber(page);
+        orderDto.setLeftPageNumber(leftPageNumber);
+        orderDto.setRightPageNumber(rightPageNumber);
+        orderDto.setLastPageNumber(lastPage);
+
+        return mapper.orderList(offset, records, type, "%"+keyword+"%");
     }
 
 //    public List<OrderItemDTO> orderDetail(int m_order_id) {

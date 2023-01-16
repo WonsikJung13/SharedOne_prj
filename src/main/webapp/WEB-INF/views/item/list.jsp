@@ -151,6 +151,7 @@
             border: none;
         }
 
+        /*페이지네이션*/
         .pagination {
             position: relative;
             justify-content: center;

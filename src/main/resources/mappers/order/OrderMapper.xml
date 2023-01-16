@@ -152,7 +152,40 @@
             m_order_buyerCurrency,
             m_order_memo
         FROM m_order_header
+        WHERE
+        <trim prefixOverrides="OR">
+            <if test="type == 'all' or type == 'orderId'">
+                OR m_order_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'buyerId'">
+                OR m_buyer_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'orderStatus'">
+                OR m_order_status LIKE #{keyword}
+            </if>
+        </trim>
         ORDER BY m_order_id DESC
+        LIMIT #{offset}, #{records}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM m_order_header
+        WHERE
+        <trim prefixOverrides="OR">
+            <if test="type == 'all' or type == 'orderId'">
+                OR m_order_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'buyerId'">
+                OR m_buyer_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'orderStatus'">
+                OR m_order_status LIKE #{keyword}
+            </if>
+        </trim>
     </select>
 
     <select id="orderDetail" resultMap="order">

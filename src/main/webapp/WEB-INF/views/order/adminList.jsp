@@ -21,6 +21,9 @@
     <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap"
             rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
     <style>
         .row {
             --bs-gutter-x: 0;
@@ -82,7 +85,7 @@
             background-color: #fff;
             height: 672px;
             width: 1000px;
-            margin-bottom: 100px;
+            /*margin-bottom: 100px;*/
         }
 
         td a {
@@ -200,6 +203,64 @@
         .itemBox {
             line-height: 55px;
         }
+
+        .pagination {
+            position: relative;
+            justify-content: center;
+            height: 50px;
+            /*right: 10%;*/
+        }
+
+        .pagination a {
+            z-index: 2;
+            position: relative;
+            display: inline-block;
+            color: #2c3e50;
+            text-decoration: none;
+            /*font-size: 1.2rem;*/
+            padding: 9px 15px 4px;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .pagination a:before {
+            z-index: -1;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            content: "";
+            top: 0;
+            left: 0;
+            background-color: #2c3e50;
+            border-radius: 24px;
+            transform: scale(0);
+            transition: all 0.2s;
+        }
+
+        .pagination a:hover,
+        .pagination a .pagination-active {
+            color: #fff;
+        }
+
+        .pagination a:hover:before,
+        .pagination a .pagination-active:before {
+            transform: scale(1);
+        }
+
+        .pagination .pagination-active {
+            color: #fff;
+        }
+
+        .pagination .pagination-active:before {
+            transform: scale(1);
+        }
+
+        .pagination-newer, .pagination-older {
+            border-style: solid;
+            border-width: 0;
+            border-radius: 20px;
+            padding: 9px 10px !important;
+            margin-bottom: 13px;
+        }
     </style>
 </head>
 <body>
@@ -218,37 +279,47 @@
                 </button>
             </div>
         </div>
-        <c:url value="/item/list" var="listLink"></c:url>
-        <form action="${listLink}" role="search">
-            <div class="searchBox ">
-                <div class="row justify-content-start">
-                    <div class="col-4">
-                        <label>제품코드</label>
-                        <input class="form-select" type="text" list="itemList" style="width: 210px;"
-                               autocomplete="off"/>
-                        <datalist id="itemList">
-                            <c:forEach items="${itemList}" var="itemList">
-                                <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
-                    <div class="col-4">
-                        <label>거래처코드</label>
-                        <input class="form-select" type="text" list="buyerList" style="width: 210px;"
-                               autocomplete="off"/>
-                        <datalist id="buyerList">
-                            <c:forEach items="${buyerList}" var="buyerList">
-                                <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
-                </div>
+
+        <div class="searchBox">
+        <c:url value="/order/list" var="listLink"></c:url>
+<%--        <form action="${listLink}" role="search">--%>
+<%--            <div class="searchBox ">--%>
+<%--                <div class="row justify-content-start">--%>
+<%--                    <div class="col-4">--%>
+<%--                        <label>제품코드</label>--%>
+<%--                        <input class="form-select" type="text" list="itemList" style="width: 210px;"--%>
+<%--                               autocomplete="off"/>--%>
+<%--                        <datalist id="itemList">--%>
+<%--                            <c:forEach items="${itemList}" var="itemList">--%>
+<%--                                <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>--%>
+<%--                            </c:forEach>--%>
+<%--                        </datalist>--%>
+<%--                    </div>--%>
+<%--                    <div class="col-4">--%>
+<%--                        <label>거래처코드</label>--%>
+<%--                        <input class="form-select" type="text" list="buyerList" style="width: 210px;"--%>
+<%--                               autocomplete="off"/>--%>
+<%--                        <datalist id="buyerList">--%>
+<%--                            <c:forEach items="${buyerList}" var="buyerList">--%>
+<%--                                <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>--%>
+<%--                            </c:forEach>--%>
+<%--                        </datalist>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+            <form action="${listLink}" class="d-flex" role="search">
                 <div class="input-group" style="float: none">
-                    <input type="text" class="form-control">
-                    <button class="btn btn-secondary searchBtn" type="submit">검색</button>
+                    <select name="t" class="form-select">
+                        <option value="all">전체</option>
+                        <option value="orderId" ${param.t == 'orderId' ? 'selected' : '' }>주문번호</option>
+                        <option value="buyerId" ${param.t == 'buyerId' ? 'selected' : '' }>거래처번호</option>
+                        <option value="orderStatus" ${param.t == 'orderStatus' ? 'selected' : '' }>발주상태</option>
+                    </select>
+                    <input value="${param.q}" type="search" class="form-control" placeholder="Search"
+                           aria-label="Search" name="q" style="width:450px">
+                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
 
         <%--   삭제 버튼    --%>
         <div class="row justify-content-end" style="width: 1000px">
@@ -263,7 +334,9 @@
             <table class="table table-hover addList">
                 <thead style="width: auto">
                 <tr>
-                    <th></th>
+                    <th><input name="selectAll" type="checkbox" value="selectAll"
+                               onclick=""
+                               style="position: relative;top: -14px;background-color: transparent;"></th>
                     <th>주문번호</th>
                     <th>거래처코드</th>
                     <th>거래처명</th>
@@ -276,7 +349,7 @@
                 <c:forEach items="${orderList }" var="orderList">
                     <tr>
                         <td>
-                            <input class="itemBox" name="itemBox" type="checkbox" value="${orderList.m_order_id}">
+                            <input class="itemBox" name="itemBox" type="checkbox" onclick="" value="${orderList.m_order_id}">
                         </td>
                         <td onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
                             data-bs-target="#orderConfirm" class="orderDetailBtn">${orderList.m_order_id}</td>
@@ -301,6 +374,76 @@
                 </tbody>
             </table>
         </div>
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
+                        <div class="pagination">
+
+                            <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
+                            <c:if test="${orderDto.currentPageNumber ne 1 }">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param name="page" value="1"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </c:if>
+
+                            <%-- 이전 버튼--%>
+                            <c:if test="${orderDto.hasPrevButton }">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param name="page" value="${orderDto.jumpPrevPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </c:if>
+
+                            <c:forEach begin="${orderDto.leftPageNumber}" end="${orderDto.rightPageNumber}"
+                                       var="pageNumber">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param name="page" value="${pageNumber }"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <span class="pagination-inner">
+                              <%-- 현재페이지에 active 클래스 추가 --%>
+                                <a class="${orderDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}"
+                                   href="${listLink}">${pageNumber}</a>
+                        </span>
+                            </c:forEach>
+
+                            <%-- 다음 버튼 --%>
+                            <c:if test="${orderDto.hasNextButton }">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param name="page" value="${orderDto.jumpNextPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </c:if>
+
+                            <%-- 맨뒤 버튼 --%>
+                            <c:if test="${orderDto.currentPageNumber ne orderDto.lastPageNumber }">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param value="${orderDto.lastPageNumber }" name="page"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </c:if>
+                        </div>
+                    </nav>
+                </div>
+            </div>
 
         <%--오더리스트 삭제하기--%>
         <c:url value="/order/remove" var="removeLink"/>
@@ -506,5 +649,17 @@
     // document.querySelector("#removeButton").addEventListener("click", remove);
 
 </script>
+<%--<script>--%>
+<%--    function activeBtn() {--%>
+
+<%--        const checked = document.querySelectorAll('input[name="itemBox"]:checked');--%>
+<%--        console.log(checked.length);--%>
+<%--        if (checked.length == 0) {--%>
+<%--            document.querySelector(".removeBtn").disabled = true;--%>
+<%--        } else {--%>
+<%--            document.querySelector(".removeBtn").disabled = false;--%>
+<%--        }--%>
+<%--    }--%>
+<%--</script>--%>
 </body>
 </html>

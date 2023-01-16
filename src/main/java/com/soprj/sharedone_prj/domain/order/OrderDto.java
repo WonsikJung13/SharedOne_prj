@@ -2,8 +2,6 @@ package com.soprj.sharedone_prj.domain.order;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class OrderDto {
 //    order header
@@ -36,6 +34,15 @@ public class OrderDto {
     private String m_order_itemGroup;
     private String m_order_itemManufacturer;
     private String m_order_memo;
+
+    public int lastPageNumber;
+    public int leftPageNumber;
+    public int rightPageNumber;
+    public int currentPageNumber;
+    private boolean hasPrevButton;
+    private boolean hasNextButton;
+    private int jumpPrevPageNumber;
+    private int jumpNextPageNumber;
 
 
 

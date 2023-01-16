@@ -21,8 +21,11 @@
     <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap"
             rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
     <style>
-        .row{
+        .row {
             --bs-gutter-x: 0;
         }
 
@@ -82,7 +85,7 @@
             background-color: #fff;
             height: 672px;
             width: 1000px;
-            margin-bottom: 100px;
+            /*margin-bottom: 100px;*/
         }
 
         td a {
@@ -188,98 +191,240 @@
             background-color: #fff;
             border-color: #dee2e6;
         }
+
+        .pagination {
+            position: relative;
+            justify-content: center;
+            height: 50px;
+            /*right: 10%;*/
+        }
+
+        .pagination a {
+            z-index: 2;
+            position: relative;
+            display: inline-block;
+            color: #2c3e50;
+            text-decoration: none;
+            /*font-size: 1.2rem;*/
+            padding: 9px 15px 4px;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .pagination a:before {
+            z-index: -1;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            content: "";
+            top: 0;
+            left: 0;
+            background-color: #2c3e50;
+            border-radius: 24px;
+            transform: scale(0);
+            transition: all 0.2s;
+        }
+
+        .pagination a:hover,
+        .pagination a .pagination-active {
+            color: #fff;
+        }
+
+        .pagination a:hover:before,
+        .pagination a .pagination-active:before {
+            transform: scale(1);
+        }
+
+        .pagination .pagination-active {
+            color: #fff;
+        }
+
+        .pagination .pagination-active:before {
+            transform: scale(1);
+        }
+
+        .pagination-newer, .pagination-older {
+            border-style: solid;
+            border-width: 0;
+            border-radius: 20px;
+            padding: 9px 10px !important;
+            margin-bottom: 13px;
+        }
     </style>
 </head>
 <body>
-        <div class="row">
-            <div class="col-3">
-                <my:header></my:header>
+<div class="row">
+    <div class="col-3">
+        <my:header></my:header>
+    </div>
+    <div class="col">
+        <div style="display: flex;justify-content: space-between;width: 1000px;">
+            <div id="itemListTitle">
+                <h1 id="header">주문 관리 및 등록</h1>
             </div>
-            <div class="col">
-                        <div style="display: flex;justify-content: space-between;width: 1000px;">
-                            <div id="itemListTitle">
-                                <h1 id="header">주문 관리 및 등록</h1>
-                            </div>
-                            <div class="itemRegisterBtn">
-                                <c:url value="/order/register" var="registerLink"></c:url>
-                                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">주문 작성
-                                </button>
-                            </div>
-                        </div>
-                        <c:url value="/item/list" var="listLink"></c:url>
-                        <form action="${listLink}" role="search">
-                            <div class="searchBox ">
-                                    <div class="row justify-content-start">
-                                        <div class="col-4">
-                                            <label>제품코드</label>
-                                            <input class="form-select" type="text" list="itemList" style="width: 210px;"
-                                                   autocomplete="off"/>
-                                            <datalist id="itemList">
-                                                <c:forEach items="${itemList}" var="itemList">
-                                                    <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>
-                                                </c:forEach>
-                                            </datalist>
-                                        </div>
-                                        <div class="col-4">
-                                            <label>거래처코드</label>
-                                            <input class="form-select" type="text" list="buyerList" style="width: 210px;"
-                                                   autocomplete="off"/>
-                                            <datalist id="buyerList">
-                                                <c:forEach items="${buyerList}" var="buyerList">
-                                                    <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                                                </c:forEach>
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="input-group" style="float: none">
-                                        <input type="text" class="form-control">
-                                        <button class="btn btn-secondary searchBtn" type="submit">검색</button>
-                                    </div>
-                            </div>
-                        </form>
+            <div class="itemRegisterBtn">
+                <c:url value="/order/register" var="registerLink"></c:url>
+                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">주문 작성
+                </button>
+            </div>
+        </div>
 
-                <div class="tableList">
-                    <table class="table table-hover addList">
-                        <thead style="width: auto">
-                        <tr>
-                            <th>주문번호</th>
-                            <th>거래처코드</th>
-                            <th>거래처명</th>
-                            <th>전체금액</th>
-                            <th>발주상태</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${orderList }" var="orderList">
-                                <tr onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
-                                    data-bs-target="#orderConfirm" value="" style="cursor: pointer;">
-                                    <td>${orderList.m_order_id}</td>
-                                    <td>${orderList.m_buyer_id}</td>
-                                    <td>${orderList.m_order_buyerName}</td>
-                                    <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>
-                                    <td>${orderList.m_order_status}</td>
-                                </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+        <div class="searchBox">
+            <c:url value="/order/list" var="listLink"></c:url>
+            <%--        <form action="${listLink}" role="search">--%>
+            <%--            <div class="searchBox ">--%>
+            <%--                <div class="row justify-content-start">--%>
+            <%--                    <div class="col-4">--%>
+            <%--                        <label>제품코드</label>--%>
+            <%--                        <input class="form-select" type="text" list="itemList" style="width: 210px;"--%>
+            <%--                               autocomplete="off"/>--%>
+            <%--                        <datalist id="itemList">--%>
+            <%--                            <c:forEach items="${itemList}" var="itemList">--%>
+            <%--                                <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>--%>
+            <%--                            </c:forEach>--%>
+            <%--                        </datalist>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="col-4">--%>
+            <%--                        <label>거래처코드</label>--%>
+            <%--                        <input class="form-select" type="text" list="buyerList" style="width: 210px;"--%>
+            <%--                               autocomplete="off"/>--%>
+            <%--                        <datalist id="buyerList">--%>
+            <%--                            <c:forEach items="${buyerList}" var="buyerList">--%>
+            <%--                                <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>--%>
+            <%--                            </c:forEach>--%>
+            <%--                        </datalist>--%>
+            <%--                    </div>--%>
+            <%--                </div>--%>
+            <form action="${listLink}" class="d-flex" role="search">
+                <div class="input-group" style="float: none">
+                    <select name="t" class="form-select">
+                        <option value="all">전체</option>
+                        <option value="orderId" ${param.t == 'orderId' ? 'selected' : '' }>주문번호</option>
+                        <option value="buyerId" ${param.t == 'buyerId' ? 'selected' : '' }>거래처번호</option>
+                        <option value="orderStatus" ${param.t == 'orderStatus' ? 'selected' : '' }>발주상태</option>
+                    </select>
+                    <input value="${param.q}" type="search" class="form-control" placeholder="Search"
+                           aria-label="Search" name="q" style="width:450px">
+                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
                 </div>
+            </form>
+        </div>
+
+        <div class="tableList">
+            <table class="table table-hover addList">
+                <thead style="width: auto">
+                <tr>
+                    <th>주문번호</th>
+                    <th>거래처코드</th>
+                    <th>거래처명</th>
+                    <th>전체금액</th>
+                    <th>발주상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${orderList }" var="orderList">
+                    <tr onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
+                        data-bs-target="#orderConfirm" value="" style="cursor: pointer;">
+                        <td>${orderList.m_order_id}</td>
+                        <td>${orderList.m_buyer_id}</td>
+                        <td>${orderList.m_order_buyerName}</td>
+                        <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>
+                        <td>${orderList.m_order_status}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="pagination-container" style="width: 1000px; background-color:#fff">
+                        <div class="pagination">
+
+                            <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
+                            <c:if test="${orderDto.currentPageNumber ne 1 }">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param name="page" value="1"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </c:if>
+
+                            <%-- 이전 버튼--%>
+                            <c:if test="${orderDto.hasPrevButton }">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param name="page" value="${OrderDto.jumpPrevPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </c:if>
+
+                            <c:forEach begin="${orderDto.leftPageNumber}" end="${orderDto.rightPageNumber}"
+                                       var="pageNumber">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param name="page" value="${pageNumber }"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <span class="pagination-inner">
+                              <%-- 현재페이지에 active 클래스 추가 --%>
+                                <a class="${orderDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}"
+                                   href="${listLink}">${pageNumber}</a>
+                        </span>
+                            </c:forEach>
+
+                            <%-- 다음 버튼 --%>
+                            <c:if test="${orderDto.hasNextButton }">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param name="page" value="${OrderDto.jumpNextPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </c:if>
+
+                            <%-- 맨뒤 버튼 --%>
+                            <c:if test="${orderDto.currentPageNumber ne orderDto.lastPageNumber }">
+                                <c:url value="/order/list" var="listLink">
+                                    <c:param value="${orderDto.lastPageNumber }" name="page"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </c:if>
+                        </div>
+                    </nav>
+                </div>
+            </div>
 
         <form id="removeForm" action="${removeLink }" method="post">
             <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">
         </form>
 
-            <%--주문서 확인하기--%>
-            <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="orderConfirmLabel">주문서 확인</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" id="orderForm" method="post">
-                                <input type="hidden" name="m_order_id" id="m_order_id" >
-                                <input type="hidden" name="m_order_status" id="m_order_status" >
+
+        </div>
+    </div>
+</div>
+        <%--주문서 확인하기--%>
+        <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="orderConfirmLabel">주문서 확인</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" id="orderForm" method="post">
+                            <input type="hidden" name="m_order_id" id="m_order_id">
+                            <input type="hidden" name="m_order_status" id="m_order_status">
 
                             <h2>거래처</h2>
                             <table class="table table-bordered orderModal">
@@ -355,20 +500,17 @@
                             </div>
                     </div>
 
-                        <div class="modal-footer">
-                            <button id="orderReturnButton" class="btn btn-secondary">
-                                승인반려
-                            </button>
-                            <button id="orderConfirmButton" class="btn btn-danger">
-                                승인확인
-                            </button>
-                        </div>
+                    <div class="modal-footer">
+                        <button id="orderReturnButton" class="btn btn-secondary">
+                            승인반려
+                        </button>
+                        <button id="orderConfirmButton" class="btn btn-danger">
+                            승인확인
+                        </button>
                     </div>
-                    </form>
                 </div>
+                </form>
             </div>
-            </div>
-        </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -419,41 +561,54 @@
                         let itemTD7 = document.createElement("td");
                         itemTD7.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_totalPrice + ""));
 
-                            itemTR.appendChild(itemTD1);
-                            itemTR.appendChild(itemTD2);
-                            itemTR.appendChild(itemTD3);
-                            itemTR.appendChild(itemTD4);
-                            itemTR.appendChild(itemTD5);
-                            itemTR.appendChild(itemTD6);
-                            itemTR.appendChild(itemTD7);
-                            itemBody.appendChild(itemTR);
+                        itemTR.appendChild(itemTD1);
+                        itemTR.appendChild(itemTD2);
+                        itemTR.appendChild(itemTD3);
+                        itemTR.appendChild(itemTD4);
+                        itemTR.appendChild(itemTD5);
+                        itemTR.appendChild(itemTD6);
+                        itemTR.appendChild(itemTD7);
+                        itemBody.appendChild(itemTR);
                     }
 
 
                 }
             })
     }
-            // 승인 확인 버튼
-            document.querySelector("#orderConfirmButton").addEventListener("click",function(){
-                const orderId = document.querySelector(".orderId").innerText;
-                document.querySelector("#m_order_id").value = orderId;
-                document.querySelector("#m_order_status").value = "승인완료";
 
-                document.querySelector("#orderForm").submit();
-            })
-            // 승인 반려 버튼
-            document.querySelector("#orderReturnButton").addEventListener("click",function(){
-                const orderId = document.querySelector(".orderId").innerText;
-                document.querySelector("#m_order_id").value = orderId;
+    // 승인 확인 버튼
+    document.querySelector("#orderConfirmButton").addEventListener("click", function () {
+        const orderId = document.querySelector(".orderId").innerText;
+        document.querySelector("#m_order_id").value = orderId;
+        document.querySelector("#m_order_status").value = "승인완료";
 
-                //오더 상태 input value
-                document.querySelector("#m_order_status").value = "승인반려";
-                console.log( document.querySelector("#m_order_status").value );
+        document.querySelector("#orderForm").submit();
+    })
+    // 승인 반려 버튼
+    document.querySelector("#orderReturnButton").addEventListener("click", function () {
+        const orderId = document.querySelector(".orderId").innerText;
+        document.querySelector("#m_order_id").value = orderId;
 
-                document.querySelector("#orderForm").submit();
-            })
+        //오더 상태 input value
+        document.querySelector("#m_order_status").value = "승인반려";
+        console.log(document.querySelector("#m_order_status").value);
+
+        document.querySelector("#orderForm").submit();
+    })
 
 
-        </script>
+</script>
+<script>
+    function activeBtn() {
+
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+        console.log(checked.length);
+        if (checked.length == 0) {
+            document.querySelector(".removeBtn").disabled = true;
+        } else {
+            document.querySelector(".removeBtn").disabled = false;
+        }
+    }
+</script>
 </body>
 </html>

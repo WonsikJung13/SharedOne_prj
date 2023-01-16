@@ -1,7 +1,6 @@
 package com.soprj.sharedone_prj.mapper.order;
 
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
-import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.domain.order.*;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public interface OrderMapper {
 
   int addDataItem(Map<String, Object> stringObjectMap);
 
-  List<OrderDto> orderList();
+  List<OrderDto> orderList(int offset, int records, String type, String keyword);
 
 //  List<OrderItemDTO> orderDetail(int m_order_id);
 
@@ -50,5 +49,8 @@ public interface OrderMapper {
   void updateItem(Map<String, Object> map);
 
     int orderListDelete(String m_order_itemId, String m_order_id);
+
+    int countAll(String type, String keyword);
+
 
 }
