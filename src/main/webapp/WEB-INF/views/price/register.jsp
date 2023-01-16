@@ -37,7 +37,7 @@
         <my:header></my:header>
     </div>
     <div class="col">
-        <h1>판매가격 작성</h1>
+        <h1 style="margin-top: 20px">판매가격 작성</h1>
         <form action="" method="post" id="formId">
         <table class="table table-bordered">
 
@@ -149,7 +149,7 @@
             </table>
         </div>
 
-        <button class="btn btn-secondary" id="priceSubmitButton">등록</button>
+        <button style="margin-bottom: 20px" class="btn btn-secondary" id="priceSubmitButton">등록</button>
     </div>
 </div>
 
@@ -264,7 +264,6 @@
                                     arr.push(addDatas[i].m_price_startPeriod)
                                 }
                             }
-
                         }
                     }
                     let minDate = arr.reduce((prev, curr) => {

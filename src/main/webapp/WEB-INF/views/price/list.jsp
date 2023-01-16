@@ -145,6 +145,11 @@
         th {
             width: 12%;
         }
+        .pagination {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
 
     </style>
 </head>
