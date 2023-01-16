@@ -136,7 +136,6 @@ public class PriceController {
             priceService.addPriceData(map);
             cnt += 1;
         }
-        System.out.println("몇개?"+cnt);
         return cnt;
     }
 
