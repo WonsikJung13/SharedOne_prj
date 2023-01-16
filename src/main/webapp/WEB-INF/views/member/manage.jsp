@@ -188,7 +188,7 @@
                         </td>
                         <td style="margin-right: 0%">
                             <form id="selectForm${status.index}" method="post">
-                                <input type="hidden" name="m_member_id" value="${member.m_member_id}">
+                                <input type="hidden" name="m_member_email" value="${member.m_member_email}">
                                 <input type="hidden" name="m_authority_id" id="authId${status.index}"
                                        value="${member.m_authority_id}">
                                 <select class="form-select" id="inputGroupSelect${status.index}">
@@ -230,12 +230,12 @@
                         </td>
                         <td>
                             <c:url value="/member/remove" var="removeLink">
-                                <c:param value="${member.m_member_id }" name=""/>
+                                <c:param value="${member.m_member_email }" name="m_member_email"/>
                             </c:url>
                             <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
                                    data-bs-target="#removeModal${member.m_member_id }">
                             <form id="removeForm${member.m_member_id }" action="${removeLink }" method="post">
-                                <input type="hidden" name="m_member_id" value="${member.m_member_id }">
+                                <input type="hidden" name="m_member_email" value="${member.m_member_email }">
                             </form>
                         </td>
                     </tr>

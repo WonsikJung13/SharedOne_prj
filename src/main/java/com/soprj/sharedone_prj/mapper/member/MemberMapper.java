@@ -10,7 +10,7 @@ public interface MemberMapper {
 
     MemberLoginDto getMemberLogin(String m_member_email);
 
-    int insert(MemberDto member);
+    int insert(String m_member_id, String m_member_email, String m_member_password);
 
     int removeById(String m_member_email);
 

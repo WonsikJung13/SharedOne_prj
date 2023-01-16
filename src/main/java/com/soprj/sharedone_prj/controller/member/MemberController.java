@@ -39,12 +39,10 @@ public class MemberController {
     @PostMapping("register")
     public String register(MemberDto member,
                            RedirectAttributes rttr) throws Exception {
-
         String cnttt = emailService.sendSimpleMessage(member.getM_member_email());
         String password = passwordEncoder.encode(emailService.ePw);
-        member.setM_member_password(password);
 
-        int cnt = memberService.register(member);
+        int cnt = memberService.register(member.getM_member_id(), member.getM_member_email(), password);
 
         return "redirect:/member/manage";
     }
@@ -74,9 +72,10 @@ public class MemberController {
     }
 
     @PostMapping("remove")
-    public String remove(String m_member_id, RedirectAttributes rttr) {
+    public String remove(String m_member_email, RedirectAttributes rttr) {
+        String[] email = m_member_email.split(",");
 
-        int cnt = memberService.remove(m_member_id);
+        int cnt = memberService.remove(email[0]);
 
         return "redirect:/member/manage";
     }
@@ -112,11 +111,10 @@ public class MemberController {
     }
 
     @GetMapping("resetPassword")
-    public String resetPassword(@RequestParam(name = "m_member_id") String m_member_id, RedirectAttributes rttr) throws Exception {
+    public String resetPassword(@RequestParam(name = "m_member_email") String m_member_email, RedirectAttributes rttr) throws Exception {
 
-        int cnt = memberService.resetPassword(m_member_id);
-        String email = memberService.getEmail(m_member_id);
-        String cnttt = emailService.sendSimpleMessage(email);
+        int cnt = memberService.resetPassword(m_member_email);
+        String cnttt = emailService.sendSimpleMessage(m_member_email);
 
         return "redirect:/member/manage";
     }

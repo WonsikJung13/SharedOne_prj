@@ -20,8 +20,8 @@ public class MemberService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public int register(MemberDto member) {
-        int cnt = memberMapper.insert(member);
+    public int register(String m_member_id, String m_member_email, String m_member_password) {
+        int cnt = memberMapper.insert(m_member_id, m_member_email, m_member_password);
         return cnt;
     }
 
