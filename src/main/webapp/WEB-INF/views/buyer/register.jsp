@@ -235,7 +235,7 @@
     const ctx = "${pageContext.request.contextPath}";
 
 
-    document.querySelector("#buyerIdInput").addEventListener("blur", function () {
+    document.querySelector("#buyerIdInput").addEventListener("keyup", function () {
         const insertBuyerNum = document.querySelector("#buyerIdInput").value;
 
         fetch(ctx + "/buyer/checkNum/" + insertBuyerNum)
