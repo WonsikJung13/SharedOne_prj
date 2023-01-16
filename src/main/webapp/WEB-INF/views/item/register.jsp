@@ -25,10 +25,13 @@
 
     <style>
         /* 테이블 */
-
-        * {
+        body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #eeeeee;
+        }
+
+        .row{
+            --bs-gutter-x: 0;
         }
 
         .table {
@@ -56,6 +59,10 @@
         h2 {
             font-size: 1.1em;
             margin: 20px 0 10px 0;
+        }
+
+        #itemBody input {
+            text-align: center;
         }
 
         .tableList {
@@ -145,7 +152,7 @@
             line-height: 30px;
         }
 
-        .groupEditOption, .ManufacturerEditOption {
+        .groupEditOption, .manufacturerEditOption {
             position: relative;
         }
 
@@ -179,8 +186,9 @@
                 <tr>
                     <td class="table-active">제품그룹</td>
                     <td id="itemGroup" style="">
-                        <select id="groupSelect" name="m_item_group" class="form-select">
-                            <option value="${getItem.m_item_group}">${getItem.m_item_group}</option>
+                        <select id="groupSelect" name="m_item_group" class="selectFrom form-select">
+                            <option class="" value="">=== 선택 ===</option>
+                            <option  id="modifyGroup" value="${getItem.m_item_group}">${getItem.m_item_group}</option>
                             <c:forEach items="${groupList}" var="groupList">
                                 <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>
                             </c:forEach>
@@ -193,7 +201,8 @@
                 <tr>
                     <td class="table-active">제조사</td>
                     <td id="itemManufacturer">
-                        <select id="manufacturerSelect" name="m_item_manufacturer" class="form-select">
+                        <select id="manufacturerSelect" name="m_item_manufacturer" class="selectFrom form-select" value="null">
+                            <option class="" value="">=== 선택 ===</option>
                             <option id="modifyManufacturer" value="${getItem.m_item_manufacturer}">${getItem.m_item_manufacturer}</option>
 <%--                            <c:forEach items="${manufacturerList}" var="manufacturerList">--%>
 <%--                                <option class="non"--%>
@@ -201,8 +210,7 @@
 <%--                            </c:forEach>--%>
                             <option class="manufacturerEditable" value="입력">입력</option>
                         </select>
-                        <input type="hidden" class="ManufacturerEditOption form-control" value="${getItem.m_item_manufacturer}"
-                               autocomplete='off'
+                        <input type="hidden" class="manufacturerEditOption form-control" value="${getItem.m_item_manufacturer}" autocomplete='off'
                                style="width: 210px;border-bottom-right-radius: 0;border-top-right-radius: 0;">
                     </td>
                 </tr>
@@ -258,12 +266,13 @@
 </div>
 </body>
 <script>
-    // 수정버튼
+    // 수정버튼--------------------------------------------------------
     document.querySelector("#modifyButton1").addEventListener("click", function () {
         document.querySelector("#itemRegisterForm").submit();
     })
 </script>
 <script>
+    // 수정창과 등록창 구분--------------------------------------------------------
     document.addEventListener("DOMContentLoaded", function () {
         const itemId = document.querySelector('#itemId input').value;
         if (itemId != 0) {
@@ -273,9 +282,13 @@
             document.getElementById("modifyButton1").style.display = "";
             document.getElementById("plusButton1").style.display = "none"
             document.getElementById("realInputItemId").type="text";
+            $("#manufacturerSelect").children('option:first').remove();
+            $("#groupSelect").children('option:first').remove();
         } else {
             document.getElementById("inputItemId").style.display = "none";
             document.getElementById("modifyButton1").style.display = "none";
+            document.getElementById("modifyGroup").style.display = "none";
+            document.getElementById("modifyManufacturer").style.display = "none";
 
         }
     });
@@ -283,10 +296,13 @@
 </script>
 
 <script>
-    // 제품그룹 select
+    // 제품그룹 select--------------------------------------------------------
     var initialText = $('.GroupEditable').val();    // 입력 옵션 value
 
     $('#groupSelect').change(function () {                            // groupSelect가 change될 때 실행
+        const manufacturerSelect = $("#manufacturerSelect");
+        manufacturerSelect.children('option:not(:last,:first)').remove();
+
         var selected = $('option:selected', this).attr('class');    // 선택된 클래스값 non
         var optionText = $('.GroupEditable').text();                // 입력 인풋 텍스트값
 
@@ -302,12 +318,13 @@
             });
 
         } else {
+            $('.groupEditOption').val(null);
             $('.groupEditOption').prop('type', "hidden");
 
             // $('.groupEditOption').hide();
         }
 
-        // 제조사 카테고리 선택
+        // 제조사 카테고리 선택--------------------------------------------------------
         const itemGroup = document.querySelector("#groupSelect");
         const m_item_group = itemGroup.options[itemGroup.selectedIndex].value;
 
@@ -320,49 +337,52 @@
             data : JSON.stringify(groupValue),
             contentType: 'application/json; charset=UTF-8',
             success: function(res) {
-                const modifyManufacturer = $("#modifyManufacturer");
+                const modifyManufacturer = $("#selectNon");
+                const manufacturerEditable = $(".manufacturerEditable");
+
+                // manufacturerSelect.children('option:not(:last)').remove();
 
                 let option = '';
                 $.each(res, function(i) {
                     option += '<option value="' + res[i] + '">' + res[i] + '</option>';
                 });
-                modifyManufacturer.after(option);
+                manufacturerEditable.before(option);
 
             }
         })
     });
 
 
-    // 제품 제조사 select
+    // 제품 제조사 select--------------------------------------------------------
     var initialText = $('.manufacturerEditable').val();
-    // $('.ManufacturerEditOption').val(initialText);
+    // $('.manufacturerEditOption').val(initialText);
 
     $('#manufacturerSelect').change(function () {
         var selected = $('option:selected', this).attr('class');
         var optionText = $('.manufacturerEditable').text();
         if (selected == "manufacturerEditable") {
             // $('.ManufacturerEditOption').show();
-            $('.ManufacturerEditOption').prop('type', "text");
-            $('.ManufacturerEditOption').focus();
+            $('.manufacturerEditOption').prop('type', "text");
+            $('.manufacturerEditOption').focus();
 
-            $('.ManufacturerEditOption').keyup(function () {
-                var editText = $('.ManufacturerEditOption').val();
+            $('.manufacturerEditOption').keyup(function () {
+                var editText = $('.manufacturerEditOption').val();
                 $('.manufacturerEditable').val(editText);
                 // $('.manufacturerEditable').html(editText);
             });
 
         } else {
-            $('.ManufacturerEditOption').prop('type', "hidden");
-            // $('.ManufacturerEditOption').hide();
+            $('.manufacturerEditOption').val(null);
+            $('.manufacturerEditOption').prop('type', "hidden");
         }
     });
 </script>
 
 <script>
-    // 추가버튼 클릭 시
+    // 추가버튼 클릭 시--------------------------------------------------------
     document.getElementById('plusButton1').addEventListener("click", function () {
 
-        let lastIndex = document.querySelector(".addList").tBodies[0].rows.length;
+        const lastIndex = document.querySelector(".addList").tBodies[0].rows.length;
 
         const itemGroup = document.querySelector("#groupSelect");
         const m_item_group = itemGroup.options[itemGroup.selectedIndex].value;
@@ -371,19 +391,25 @@
         const m_item_name = document.querySelector("input[name='m_item_name']").value;
         const m_item_unit = document.querySelector("input[name='m_item_unit']").value;
 
-        // 빈값 체크
-        var is_empty = false;
+        // 빈값 체크--------------------------------------------------------
+        var input_empty = false;
+        var select_empty = false;
         $('#itemRegisterForm').find('input[type!="hidden"]').each(function(){
             if(!$(this).val()) {
-                is_empty = true;
+                input_empty = true;
             }
         });
-        if(is_empty) {
-            alert('값을 전부 입력하세요');
+        $('.form-select option:selected').each(function(){
+            if(!$(this).val()) {
+                select_empty = true;
+            }
+        })
+        if(input_empty ==true || select_empty == true) {
+            alert('값을 전부 입력하세요.');
             document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
         }
 
-        // 테이블 추가
+        // 테이블 추가--------------------------------------------------------
         const tBody = document.getElementById('itemBody');
         const newRow = tBody.insertRow();
 
@@ -405,7 +431,8 @@
         newCell4.innerHTML = '<input type="text" name="m_item_unit_tb" value="' + m_item_unit + '"readonly style="width: 80px">';
         newCell5.innerHTML = '<button name="deleteBtn" class="btn btn-secondary deleteBtn" onclick="deleteBtn(this)">삭제</button>';
 
-        // 중복체크(db)
+
+        // 중복체크(db)--------------------------------------------------------
         const itemCompareList = {
             m_item_group,
             m_item_manufacturer,
@@ -425,35 +452,61 @@
                     alert("이미 등록 되어 있는 제품입니다.");
                     // check.abort();
                     document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
+
+                    return false;
                 } else {
-                    $('#resetBtn').trigger('click');
+                    if (lastIndex == 0) {
+                        $('#resetBtn').trigger('click');
+                        $('.groupEditOption').prop('type', "hidden");
+                        $('.manufacturerEditOption').prop('type', "hidden");
+                    }
                 }
             }
         });
 
-        // 중복체크(table)
+
+        // 중복체크(table)--------------------------------------------------------
         let data = {};
+        const dataList = [];
+        console.log(lastIndex)
+
+        for (let i = 0; i < lastIndex; i++) {
+            data = {
+                "m_item_group": $("input[name='m_item_group_tb']").eq(i).val(),
+                "m_item_manufacturer": $("input[name='m_item_manufacturer_tb']").eq(i).val(),
+                "m_item_name": $("input[name='m_item_name_tb']").eq(i).val(),
+                "m_item_unit": $("input[name='m_item_unit_tb']").eq(i).val()
+            };
+            dataList.push(data);
+        }
 
         if (lastIndex > 0) {
-            data = {
-                "m_item_group": $("input[name='m_item_group_tb']").eq(lastIndex-1).val(),
-                "m_item_manufacturer": $("input[name='m_item_manufacturer_tb']").eq(lastIndex-1).val(),
-                "m_item_name": $("input[name='m_item_name_tb']").eq(lastIndex-1).val(),
-                "m_item_unit": $("input[name='m_item_unit_tb']").eq(lastIndex-1).val()
-            };
-            let dataValue = Object.values(data);
             let CompareValue = Object.values(itemCompareList);
-            if (dataValue.every((value, idx) => value === CompareValue[idx])) {
-                alert("테이블에 중복된 제품이 있습니다.")
-                document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
-            } else {
-                $('#resetBtn').trigger('click');
+
+            for (let i = 0; i < dataList.length; i++) {
+                let dataValue = Object.values(dataList[i]);
+
+                if (dataValue.every((value, idx) => value === CompareValue[idx])) {
+                    alert("테이블에 중복된 제품이 있습니다.")
+                    document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
+
+                    return false;
+                } else {
+                    $('#resetBtn').trigger('click');
+                    $('.groupEditOption').prop('type', "hidden");
+                    $('.manufacturerEditOption').prop('type', "hidden");
+
+                    // 제조사 초기화
+                    const manufacturerSelect = $("#manufacturerSelect");
+                    manufacturerSelect.children('option:not(:last,:first)').remove();
+                }
             }
         }
     });
+
 </script>
 <script>
-    // 테이블 행 index 확인 및 삭제
+    // 테이블 행 index 확인 및 삭제--------------------------------------------------------
     function deleteBtn(obj) {
 
         var index = $(obj).parent().parent().index();
@@ -463,7 +516,7 @@
     }
 </script>
 <script>
-    // 테이블 값 서버로 전송
+    // 테이블 값 서버로 전송--------------------------------------------------------
     const ctx = "${pageContext.request.contextPath}";
     let table = document.querySelector(".addList");
 

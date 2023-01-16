@@ -79,7 +79,6 @@ public class ItemService {
     }
 
     public int itemCompare(ItemDto itemCompareList) {
-        System.out.println("service: " + itemCompareList);
         return itemMapper.itemCompare(itemCompareList);
     }
 }

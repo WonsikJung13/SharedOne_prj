@@ -39,7 +39,6 @@ public class ItemController {
             )
     {
         String m_item_group = (String) item_group.get("m_item_group");
-        System.out.println(m_item_group);
 
         List<String> manufacturerList = itemService.selectManufacturer(m_item_group);
 
@@ -72,7 +71,6 @@ public class ItemController {
             itemService.register(itemDto);
             cnt += 1;
         }
-            System.out.println("cnt: " + cnt);
             map.put("cnt", cnt);
         return map;
     }
