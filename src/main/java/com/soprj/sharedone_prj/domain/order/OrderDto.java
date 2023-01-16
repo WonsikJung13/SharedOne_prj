@@ -13,7 +13,7 @@ public class OrderDto {
     private String m_order_status;
 
     private String m_buyer_id;
-    private int m_member_id;
+    private String m_member_id;
     private String m_order_currency;
 //  order items
 

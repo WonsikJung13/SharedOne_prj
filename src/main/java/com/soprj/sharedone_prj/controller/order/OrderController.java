@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -23,13 +23,15 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("register")
-    private void register(Model model) {
+    private void register(Model model, Principal principal) {
 //    셀렉트 이름 가져오기
         List<BuyerDto> list = orderService.buyerList();
         model.addAttribute("buyerList", list);
 
         List<ItemDto> itemList = orderService.itemList();
         model.addAttribute("itemList", itemList);
+
+        model.addAttribute("name", principal.getName());
     }
 
 //  바이어 데이터 가져오기
@@ -65,7 +67,6 @@ public class OrderController {
     //  장바구니 오더 보내기
     @PostMapping("add")
     public String Add(@RequestBody List<Map<String, Object>> addData) {
-
         orderService.addDataHeader(addData.get(0));
         ObjectMapper mapper = new ObjectMapper();
         OrderDto orderDto = mapper.convertValue(addData.get(0), OrderDto.class);

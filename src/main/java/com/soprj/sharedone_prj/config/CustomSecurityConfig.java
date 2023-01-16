@@ -36,10 +36,17 @@ public class CustomSecurityConfig {
 
         log.info("-------------configure-------------");
 
+        http
+                .authorizeRequests()
+                .antMatchers("/member/login").anonymous()
+                .anyRequest().authenticated()
+                        .and()
+                .formLogin()
+                .loginPage("/member/login")
+                .defaultSuccessUrl("/report/orderReport", true);
         // 커스텀 로그인 페이지
         http.formLogin()
                 .loginPage("/member/login")
-//                .failureHandler(memberFailureHandler)
                 .defaultSuccessUrl("/report/orderReport", true);
         http.logout().logoutSuccessUrl("/member/login");
         // CSRF 토큰 비활성화

@@ -11,7 +11,7 @@ public class OrderHeaderDTO {
     private String m_order_date;
     private String m_order_inserted;
     private String m_order_status;
-    private int m_member_id;
+    private String m_member_id;
     private String m_order_buyerName;
     private String m_order_buyerAddress;
     private String m_order_buyerRegion;

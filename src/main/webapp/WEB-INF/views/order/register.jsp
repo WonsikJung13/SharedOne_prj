@@ -9,6 +9,7 @@
 <% request.setCharacterEncoding("utf-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -312,6 +313,10 @@
         </div>
     </div>
 </div>
+<input
+        value="${name}"
+        class="form-control" type="hidden" name="m_member_id" id="m_member_id">
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
@@ -432,6 +437,7 @@
         const m_order_buyerNumber = document.querySelector("#buyerNumber").innerText;
         const m_order_buyerCurrency = document.querySelector("#buyerCurrency").innerText;
         const m_order_inserted = document.querySelector("#buyerInserted").value;
+        const m_member_id = document.querySelector("#m_member_id").value;
 
         const m_order_comment = document.querySelector("#comment").value;
         const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
@@ -463,6 +469,7 @@
 
         const data = {
             m_buyer_id,
+            m_member_id,
             m_order_buyerName,
             m_order_buyerAddress,
             m_order_buyerRegion,
