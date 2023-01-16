@@ -2,7 +2,6 @@ package com.soprj.sharedone_prj.controller.order;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
-import com.soprj.sharedone_prj.domain.item.ItemDto;
 import com.soprj.sharedone_prj.domain.order.*;
 import com.soprj.sharedone_prj.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,8 @@ public class OrderController {
         List<BuyerDto> list = orderService.buyerList();
         model.addAttribute("buyerList", list);
 
-        List<ItemDto> itemList = orderService.itemList();
-        model.addAttribute("itemList", itemList);
+//        List<ItemDto> itemList = orderService.itemList();
+//        model.addAttribute("itemList", itemList);
 
         model.addAttribute("name", principal.getName());
     }
@@ -85,7 +84,7 @@ public class OrderController {
     //  장바구니 오더 임시저장
     @PostMapping("storageAdd")
     public String storageAdd(@RequestBody List<Map<String, Object>> addData) {
-
+        System.out.println("애드" + addData);
         orderService.storageHeaderAdd(addData.get(0));
         ObjectMapper mapper = new ObjectMapper();
         OrderDto orderDto = mapper.convertValue(addData.get(0), OrderDto.class);
