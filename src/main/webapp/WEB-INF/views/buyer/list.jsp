@@ -230,11 +230,9 @@
 <%--        </div>--%>
 <%--        <div style="display: flex; justify-content : center;">--%>
             <div class="searchBox">
-                <form action="" role="search" id="searchForm">
+                <form action="" class="d-flex" role="search" id="searchForm">
                     <div class="input-group" style="float: none">
-                        <%--                    <input class="form-select" name="m_buyer_region" type="text" list="groupList" id="regionInput"--%>
-                        <%--                           onchange="changeValue(this)" style="width: 210px"/>--%>
-                        <select class="selectBtn" id="groupList" name="searchNum" onchange="changeValue(this)">
+                        <select class="selectBtn form-select" id="groupList" name="searchNum" onchange="changeValue(this)" style="max-width: 200px">
                             <option class="non" name="m_buyer_id" value="all">전체</option>
                             <option class="non" name="m_buyer_id" value="m_buyer_id">거래처 번호</option>
                             <option class="non" name="m_buyer_name" value="m_buyer_name">거래처 명</option>
@@ -295,7 +293,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+<%--        </div>--%>
         <div class="row">
             <div class="col">
                 <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
@@ -303,7 +301,7 @@
 
                         <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
                         <c:if test="${buyerDto.currentPageNumber ne 1 }">
-                            <c:url value="/item/list" var="listLink">
+                            <c:url value="/buyer/list" var="listLink">
                                 <c:param name="page" value="1"/>
                                 <c:param name="q" value="${param.q }"/>
                                 <c:param name="t" value="${param.t }"/>
@@ -315,7 +313,7 @@
 
                         <%-- 이전 버튼--%>
                         <c:if test="${buyerDto.hasPrevButton }">
-                            <c:url value="/item/list" var="listLink">
+                            <c:url value="/buyer/list" var="listLink">
                                 <c:param name="page" value="${buyerDto.jumpPrevPageNumber }"></c:param>
                                 <c:param name="q" value="${param.q }"/>
                                 <c:param name="t" value="${param.t }"/>
@@ -326,7 +324,7 @@
                         </c:if>
 
                         <c:forEach begin="${buyerDto.leftPageNumber}" end="${buyerDto.rightPageNumber}" var="pageNumber">
-                            <c:url value="/item/list" var="listLink">
+                            <c:url value="/buyer/list" var="listLink">
                                 <c:param name="page" value="${pageNumber }"/>
                                 <c:param name="q" value="${param.q }"/>
                                 <c:param name="t" value="${param.t }"/>
@@ -339,7 +337,7 @@
 
                         <%-- 다음 버튼 --%>
                         <c:if test="${buyerDto.hasNextButton }">
-                            <c:url value="/item/list" var="listLink">
+                            <c:url value="/buyer/list" var="listLink">
                                 <c:param name="page" value="${buyerDto.jumpNextPageNumber }"></c:param>
                                 <c:param name="q" value="${param.q }"/>
                                 <c:param name="t" value="${param.t }"/>
@@ -351,7 +349,7 @@
 
                         <%-- 맨뒤 버튼 --%>
                         <c:if test="${buyerDto.currentPageNumber ne buyerDto.lastPageNumber }">
-                            <c:url value="/item/list" var="listLink">
+                            <c:url value="/buyer/list" var="listLink">
                                 <c:param value="${buyerDto.lastPageNumber }" name="page"/>
                                 <c:param name="q" value="${param.q }"/>
                                 <c:param name="t" value="${param.t }"/>
