@@ -43,6 +43,7 @@ public class OrderController {
     @RequestMapping("itemList")
     @ResponseBody
     public OrderPriceVO orderPrice(@RequestBody Map<String, Object> data) {
+        System.out.println(data);
         OrderPriceVO orderPrice = orderService.orderPrice(data.get("requestDate"), data.get("selectedItem"), data.get("selectedBuyer"));
         return orderPrice;
     }
@@ -120,9 +121,33 @@ public class OrderController {
     }
 
     @GetMapping("modify")
-    public void modify(){
+    public void modify(int m_order_id, Model model){
+        OrderHeaderDTO list  = orderService.orderHeader(m_order_id);
+        model.addAttribute("orderHeader", list);
+        System.out.println(m_order_id);
+
+
+        List<ItemDto> itemList = orderService.itemList();
+        model.addAttribute("itemList", itemList);
 
     }
+
+    @PostMapping("update")
+    public String update(@RequestBody List<Map<String, Object>> addData) {
+
+        orderService.updateHeader(addData.get(0));
+        ObjectMapper mapper = new ObjectMapper();
+        OrderDto orderDto = mapper.convertValue(addData.get(0), OrderDto.class);
+
+        int id = orderDto.getM_order_id();
+
+        for (int i = 0; i < addData.size(); i++) {
+            addData.get(i).put("m_order_id", id);
+            orderService.updateItem(addData.get(i));
+        }
+        return "redirect:/order/adminList";
+    }
+
 
 
     // 관리자 리스트
@@ -139,6 +164,9 @@ public class OrderController {
 
         return result;
     }
+
+
+
 
 //    삭제하기
     @PostMapping("remove")

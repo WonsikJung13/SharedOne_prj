@@ -285,12 +285,15 @@
                         <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>
                         <td>${orderList.m_order_status}</td>
                         <td>
-                            <c:url value="/order/modify" var="modifyLink">
-                                <c:param value="${orderList.m_order_id }" name="m_price_id"/>
+                            <c:url value="/order/modify" var="modifyLink" >
+                                <c:param value="${orderList.m_order_id }" name="m_order_id"/>
                             </c:url>
                             <c:if test="${orderList.m_order_status == '생성중' || orderList.m_order_status == '승인취소'
                             || orderList.m_order_status == '승인반려'}">
-                            <button class="btn" onclick="location.href='${modifyLink}'">수정</button>
+                            <button class="btn" onclick="location.href='${modifyLink}' ">수정</button>
+                            </c:if>
+                            <c:if test="${orderList.m_order_status == '승인완료' || orderList.m_order_status == '승인요청' }">
+                                <a class="btn btn-secondary disabled" role="button" aria-disabled="true">수정</a>
                             </c:if>
                         </td>
                     </tr>
