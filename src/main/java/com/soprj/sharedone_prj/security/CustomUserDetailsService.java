@@ -40,8 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             authorityList.add(new SimpleGrantedAuthority(memberLoginDto.getM_authority_grade()));
         }
 
-        User user = new User(memberDto.getM_member_id(), memberDto.getM_member_password(), authorityList);
-        System.out.println("authorityList :" + authorityList);
+        User user = new User(memberDto.getM_member_email(), memberDto.getM_member_password(), authorityList);
 
         return user;
 

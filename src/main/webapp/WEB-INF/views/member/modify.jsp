@@ -106,7 +106,7 @@
     </style>
 </head>
 <body>
-<input type="hidden" value="${member.m_member_id}" id="memberid">
+<input type="hidden" value="${member.m_member_email}" id="memberEmail">
 <div class="row">
     <div class="col-3">
         <my:header></my:header>
@@ -126,16 +126,7 @@
                     이메일
                 </td>
                 <td>
-                    <form method="post" id="modifyForm">
-                        <input type="text" value="${member.m_member_email }" name="m_member_email">
-                    </form>
-                </td>
-                <td>
-                    <button style="font-family: 'LINESeedKR-Bd'" type="submit" class="btn btn-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modifyModal">
-                        수정하기
-                    </button>
+                    ${member.m_member_email }
                 </td>
             </tr>
             <tr>
@@ -169,7 +160,7 @@
                             <input type="password" id="newPassword2" name="m_member_password">
                             <div style="color: red" id="newPassword2Text"></div>
                         </td>
-                        <td>
+                        <td style="background-color: #eeeeee; border-bottom: none">
                             <input type="submit" class="btn btn-primary" value="전송" disabled id="submitBtn">
                         </td>
                     </tr>
@@ -251,10 +242,10 @@
     document.querySelector("#oldPassword").addEventListener("blur", function () {
         checkedOldPassword = false;
 
-        const m_member_id = document.querySelector("#memberid").value;
+        const m_member_email = document.querySelector("#memberEmail").value;
         const m_member_password = document.querySelector("#oldPassword").value;
 
-        const member = {m_member_id, m_member_password};
+        const member = {m_member_email, m_member_password};
 
         fetch(`\${ctx}/member/checkPassword`, {
             method: "POST",

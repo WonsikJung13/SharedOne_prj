@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +23,15 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("register")
-    private void register(Model model) {
+    private void register(Model model, Principal principal) {
 //    셀렉트 이름 가져오기
         List<BuyerDto> list = orderService.buyerList();
         model.addAttribute("buyerList", list);
 
-//        List<ItemDto> itemList = orderService.itemList();
-//        model.addAttribute("itemList", itemList);
+        List<ItemDto> itemList = orderService.itemList();
+        model.addAttribute("itemList", itemList);
+
+        model.addAttribute("name", principal.getName());
     }
 
 //  바이어 데이터 가져오기

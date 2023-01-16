@@ -54,24 +54,21 @@ public class MemberController {
                          String m_member_password, String m_member_email, RedirectAttributes rttr) {
 
 
-        String password = memberService.getPassword(m_member_id);
+        String password = memberService.getPassword(m_member_email);
         if (oldPassword != null) {
             if (passwordEncoder.matches(oldPassword, password)) {
-                int cnt = memberService.updatePasswordd(m_member_id, m_member_password);
+                int cnt = memberService.updatePasswordd(m_member_email, m_member_password);
             }
         }
-        if (m_member_email != memberService.getEmail(m_member_id) && m_member_email != null) {
-            int cnt = memberService.updateEmail(m_member_id, m_member_email);
-        }
 
-        rttr.addAttribute("id", m_member_id);
+        rttr.addAttribute("email", m_member_email);
 
-        return "redirect:/member/modify?m_member_id={id}";
+        return "redirect:/member/modify?m_member_email={email}";
     }
 
     @GetMapping("modify")
-    public void modify(String m_member_id, Model model) {
-        MemberDto member = memberService.get(m_member_id);
+    public void modify(String m_member_email, Model model) {
+        MemberDto member = memberService.get(m_member_email);
 
         model.addAttribute("member", member);
     }
@@ -128,8 +125,8 @@ public class MemberController {
     @ResponseBody
     public Map<String, Object> checkId(@RequestBody Map<String, Object> member) {
 
-        String m_member_id = member.get("m_member_id").toString();
-        MemberDto memberDto = memberService.checkPassword(m_member_id);
+        String m_member_email = member.get("m_member_email").toString();
+        MemberDto memberDto = memberService.checkPassword(m_member_email);
 
         String m_member_password = member.get("m_member_password").toString();
         Map<String, Object> map = new HashMap<>();
@@ -140,6 +137,23 @@ public class MemberController {
         } else {
             map.put("statusNum", "exist");
             map.put("message", "일치하지 않습니다");
+        }
+        return map;
+    }
+
+    @GetMapping("checkEmail/{m_member_email}")
+    @ResponseBody
+    public Map<String, Object> checkEmail(@PathVariable String m_member_email) {
+        Map<String, Object> map = new HashMap<>();
+
+        MemberDto memberDto = memberService.getMemberEmail(m_member_email);
+
+        if (memberDto == null) {
+            map.put("statusNum", "not exist");
+            map.put("message", "사용 가능합니다");
+        } else {
+            map.put("statusNum", "exist");
+            map.put("message", "중복합니다");
         }
         return map;
     }

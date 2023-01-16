@@ -123,12 +123,13 @@
                 </tr>
                 <tr>
                     <th class="table-active">이메일</th>
-                    <th><input class="form-control form300" type="email" name="m_member_email"></th>
+                    <th><input class="form-control form300" type="email" name="m_member_email" id="emailInput">
+                    <p id="inputText" style="background-color: white"></p></th>
                 </tr>
             </form>
             </tbody>
         </table>
-        <button class="btn btn-primary" id="register">등록</button>
+        <button class="btn btn-primary" id="register" disabled>등록</button>
     </div>
 </div>
 
@@ -137,8 +138,30 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 <script>
+    const ctx = "${pageContext.request.contextPath}";
+
     document.querySelector("#register").addEventListener("click",function (){
         document.querySelector("#registerForm").submit();
+    })
+
+    document.querySelector("#emailInput").addEventListener("blur", function () {
+        const m_member_email = document.querySelector("#emailInput").value;
+
+        fetch(ctx + "/member/checkEmail/" + m_member_email)
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector("#inputText").innerText = data.message;
+                $(function () {
+                    $('#inputText').css("color", "red");
+                })
+
+                if (data.statusNum === 'not exist') {
+                    $(function () {
+                        $('#inputText').css("color", "black");
+                    })
+                    document.querySelector("#register").removeAttribute("disabled");
+                }
+            })
     })
 </script>
 </body>

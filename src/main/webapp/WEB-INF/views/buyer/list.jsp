@@ -22,6 +22,10 @@
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
+        .row {
+            --bs-gutter-x: 0;
+        }
+
         .itemRegisterBtn {
             position: relative;
         }
@@ -36,7 +40,7 @@
             --bs-table-bg: #fff;
         }
 
-        .table.addList {
+        .table.addList, label {
             --bs-table-bg: #5f7175;
             --bs-table-color: #fff;
             text-align: center;
@@ -70,7 +74,7 @@
 
         .tableList {
             background-color: #fff;
-            /*height: 672px;*/
+            height: 672px;
             width: 1000px;
         }
 
@@ -92,11 +96,11 @@
         .searchBox {
             background-color: white;
             width: 1000px;
-            padding: 20px 80px 10px 80px;
+            padding: 20px 80px 5px 80px;
             color: #212529;
             font-size: 16px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         form > * {
@@ -142,20 +146,64 @@
             border: none;
         }
 
-        .selectBtn {
-            width: 100px;
-            height: 40px;
-            margin: 5px 0px 5px 0px;
-            --bs-btn-font-weight: 600;
-            /*background-color: #658e99;*/
-            border: none;
-            border-top-left-radius: 0.375rem;
-            border-bottom-left-radius: 0.375rem;
+        .pagination {
+            position: relative;
+            justify-content: center;
+            height: 50px;
+            /*right: 10%;*/
         }
 
-        .page-item {
-            background-color: #eeeeee;
+        .pagination a {
+            z-index: 2;
+            position: relative;
+            display: inline-block;
+            color: #2c3e50;
+            text-decoration: none;
+            /*font-size: 1.2rem;*/
+            padding: 9px 15px 4px;
+            font-family: 'Open Sans', sans-serif;
         }
+
+        .pagination a:before {
+            z-index: -1;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            content: "";
+            top: 0;
+            left: 0;
+            background-color: #2c3e50;
+            border-radius: 24px;
+            transform: scale(0);
+            transition: all 0.2s;
+        }
+
+        .pagination a:hover,
+        .pagination a .pagination-active {
+            color: #fff;
+        }
+
+        .pagination a:hover:before,
+        .pagination a .pagination-active:before {
+            transform: scale(1);
+        }
+
+        .pagination .pagination-active {
+            color: #fff;
+        }
+
+        .pagination .pagination-active:before {
+            transform: scale(1);
+        }
+
+        .pagination-newer, .pagination-older {
+            border-style: solid;
+            border-width: 0;
+            border-radius: 20px;
+            padding: 9px 10px !important;
+            margin-bottom: 13px;
+        }
+
     </style>
 
 
@@ -168,7 +216,7 @@
     </div>
     <div class="col">
 
-        <div style="display: flex; justify-content : center;">
+<%--        <div style="display: flex; justify-content : center;">--%>
             <div style="display: flex;justify-content: space-between;width: 900px;">
                 <div id="itemListTitle">
                     <h1 id="header">거래처 관리 및 등록</h1>
@@ -179,8 +227,8 @@
                     </button>
                 </div>
             </div>
-        </div>
-        <div style="display: flex; justify-content : center;">
+<%--        </div>--%>
+<%--        <div style="display: flex; justify-content : center;">--%>
             <div class="searchBox">
                 <form action="" role="search" id="searchForm">
                     <div class="input-group" style="float: none">
@@ -200,9 +248,9 @@
                     </div>
                 </form>
             </div>
-        </div>
+<%--        </div>--%>
 
-        <div style="display: flex; justify-content : center;">
+<%--        <div style="display: flex; justify-content : center;">--%>
             <div class="tableList">
                 <table class="table addList">
                     <tbody>
@@ -240,47 +288,9 @@
                                 <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>
 
                                 <c:url value="/buyer/remove" var="removeLink">
-<%--                                    <c:param value="${buyer.m_buyer_id }" name="m_buyer_id"/>--%>
                                 </c:url>
-<%--                                <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"--%>
-<%--                                       data-bs-target="#removeModal${buyer.m_buyer_name }">--%>
                             </td>
                         </tr>
-<%--                        <form id="removeForm${buyer.m_buyer_name }" action="${removeLink }" method="post">--%>
-<%--                            <input type="hidden" name="replyName" value="${Buyer.m_buyer_id }">--%>
-<%--                        </form>--%>
-<%--                        --%>
-<%--                        <div class="modal fade" id="removeModal${buyer.m_buyer_name }" tabindex="-1"--%>
-<%--                             aria-labelledby="exampleModalLabel" aria-hidden="true">--%>
-<%--                            <div class="modal-dialog">--%>
-<%--                                <div class="modal-content">--%>
-<%--                                    <div class="modal-header">--%>
-<%--                                        <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5"--%>
-<%--                                            id="exampleModalLabel">삭제 확인</h1>--%>
-<%--                                        <button type="button" class="btn-close" data-bs-dismiss="modal"--%>
-<%--                                                aria-label="Close"></button>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="modal-body">--%>
-<%--                                        삭제하시겠습니까?--%>
-<%--                                    </div>--%>
-<%--                                    <div class="modal-footer">--%>
-<%--                                        <button style="font-family: 'LINESeedKR-Bd'" type="button"--%>
-<%--                                                class="btn btn-secondary"--%>
-<%--                                                data-bs-dismiss="modal">취소--%>
-<%--                                        </button>--%>
-<%--                                        <button style="font-family: 'LINESeedKR-Bd'"--%>
-<%--                                                id="removeConfirmButton${buyer.m_buyer_name }" type="button"--%>
-<%--                                                class="btn btn-danger">확인--%>
-<%--                                        </button>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <script>--%>
-<%--                            document.querySelector("#removeConfirmButton${buyer.m_buyer_name }").addEventListener("click", function () {--%>
-<%--                                document.querySelector("#removeForm${buyer.m_buyer_name }").submit();--%>
-<%--                            })--%>
-<%--                        </script>--%>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -288,79 +298,80 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="position-relative">
-                    <nav aria-label="Page navigation example"
-                         class="position-absolute top-100 start-50 translate-middle">
-                        <ul class="pagination">
+                <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
+                    <div class="pagination">
 
-                            <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
-                            <c:if test="${buyerDto.currentPageNumber ne 1 }">
-                                <c:url value="/buyer/list" var="listLink">
-                                    <c:param name="page" value="1"/>
-                                </c:url>
-                                <%-- 맨앞 버튼 --%>
-                                <li class="page-item">
-                                    <a href="${listLink }" class="page-link">
-                                        <i class="fa-solid fa-angles-left"></i>
-                                    </a>
-                                </li>
-                            </c:if>
+                        <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
+                        <c:if test="${buyerDto.currentPageNumber ne 1 }">
+                            <c:url value="/item/list" var="listLink">
+                                <c:param name="page" value="1"/>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <a href="${listLink }" class="pagination-newer">
+                                <i class="bi bi-chevron-double-left"></i>
+                            </a>
+                        </c:if>
 
-                            <c:if test="${buyerDto.hasPrevButton }">
-                                <c:url value="/buyer/list" var="listLink">
-                                    <c:param name="page" value="${buyerDto.jumpPrevPageNumber }"></c:param>
-                                </c:url>
-                                <li class="page-item">
-                                    <a href="${listLink }" class="page-link">
-                                        <i class="fa-solid fa-angle-left"></i>
-                                    </a>
-                                </li>
-                            </c:if>
+                        <%-- 이전 버튼--%>
+                        <c:if test="${buyerDto.hasPrevButton }">
+                            <c:url value="/item/list" var="listLink">
+                                <c:param name="page" value="${buyerDto.jumpPrevPageNumber }"></c:param>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <a href="${listLink }" class="pagination-newer">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </c:if>
 
-                            <c:forEach begin="${buyerDto.leftPageNumber}" end="${buyerDto.rightPageNumber}"
-                                       var="pageNumber">
-                                <c:url value="/buyer/list" var="listLink">
-                                    <c:param name="page" value="${pageNumber }"/>
-                                </c:url>
-                                <li class="page-item
+                        <c:forEach begin="${buyerDto.leftPageNumber}" end="${buyerDto.rightPageNumber}" var="pageNumber">
+                            <c:url value="/item/list" var="listLink">
+                                <c:param name="page" value="${pageNumber }"/>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <span class="pagination-inner">
+                              <%-- 현재페이지에 active 클래스 추가 --%>
+                                <a class="${buyerDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}" href="${listLink}">${pageNumber}</a>
+                        </span>
+                        </c:forEach>
 
-                  <%-- 현재페이지에 active 클래스 추가 --%>
-                  ${buyerDto.currentPageNumber eq pageNumber ? 'active' : ''} }
+                        <%-- 다음 버튼 --%>
+                        <c:if test="${buyerDto.hasNextButton }">
+                            <c:url value="/item/list" var="listLink">
+                                <c:param name="page" value="${buyerDto.jumpNextPageNumber }"></c:param>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <a href="${listLink }" class="pagination-older">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </c:if>
 
-                  "><a style="height: 30px" class="page-link" href="${listLink}">${pageNumber}</a>
-                                </li>
-                            </c:forEach>
-
-                            <%-- 다음 버튼 --%>
-                            <c:if test="${buyerDto.hasNextButton }">
-                                <c:url value="/buyer/list" var="listLink">
-                                    <c:param name="page" value="${buyerDto.jumpNextPageNumber }"></c:param>
-                                </c:url>
-                                <li class="page-item">
-                                    <a href="${listLink }" class="page-link">
-                                        <i class="fa-solid fa-angle-right"></i>
-                                    </a>
-                                </li>
-                            </c:if>
-
-                            <%-- 맨뒤 버튼 --%>
-                            <c:if test="${buyerDto.currentPageNumber ne buyerDto.lastPageNumber }">
-                                <c:url value="/buyer/list" var="listLink">
-                                    <c:param value="${buyerDto.lastPageNumber }" name="page"/>
-                                </c:url>
-                                <li class="page-item">
-                                    <a href="${listLink }" class="page-link">
-                                        <i class="fa-solid fa-angles-right"></i>
-                                    </a>
-                                </li>
-                            </c:if>
-                        </ul>
-                    </nav>
-                </div>
+                        <%-- 맨뒤 버튼 --%>
+                        <c:if test="${buyerDto.currentPageNumber ne buyerDto.lastPageNumber }">
+                            <c:url value="/item/list" var="listLink">
+                                <c:param value="${buyerDto.lastPageNumber }" name="page"/>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <a href="${listLink }" class="pagination-older">
+                                <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                        </c:if>
+                    </div>
+                </nav>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $('.pagination-inner a').on('click', function () {
+        $(this).siblings().removeClass('pagination-active');
+        $(this).addClass('pagination-active');
+    })
+</script>
 
 <div class="modal fade" id="removeModal" tabindex="-1"
      aria-labelledby="exampleModalLabel" aria-hidden="true">

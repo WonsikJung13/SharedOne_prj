@@ -14,7 +14,7 @@
         FROM
         m_member m LEFT JOIN m_authority ma ON m.m_authority_id = ma.m_authority_id
         WHERE
-        m_member_id = #{m_member_id}
+        m_member_email = #{m_member_email}
     </select>
 
     <select id="getMemberLogin" resultType="com.soprj.sharedone_prj.domain.member.MemberLoginDto">
@@ -27,7 +27,7 @@
         FROM
         m_member m LEFT JOIN m_authority ma ON m.m_authority_id = ma.m_authority_id
         WHERE
-        m_member_id = #{m_member_id}
+        m_member_email = #{m_member_email}
     </select>
 
     <select id="select" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
@@ -40,7 +40,7 @@
         FROM
         m_member m LEFT JOIN m_authority ma ON m.m_authority_id = ma.m_authority_id
         WHERE
-        m_member_id = #{m_member_id}
+        m_member_email = #{m_member_email}
     </select>
 
     <select id="selectAuthority" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
@@ -66,7 +66,7 @@
         FROM
         m_member
         WHERE
-        m_member_id = #{m_member_id}
+        m_member_email = #{m_member_email}
     </select>
 
     <insert id="insert">
@@ -84,22 +84,13 @@
         )
     </insert>
 
-    <update id="updateMemberEmail">
-        UPDATE
-        m_member
-        SET
-        m_member_email = #{m_member_email}
-        WHERE
-        m_member_id = #{m_member_id}
-    </update>
-
     <update id="updatePasswordd">
         UPDATE
         m_member
         SET
         m_member_password = #{m_member_password}
         WHERE
-        m_member_id = #{m_member_id}
+        m_member_email = #{m_member_email}
     </update>
 
     <update id="updateGrade">
@@ -108,7 +99,7 @@
         SET
         m_authority_id = #{m_authority_id}
         WHERE
-        m_member_id = #{m_member_id}
+        m_member_email = #{m_member_email}
     </update>
 
     <update id="resetPassword">
@@ -117,14 +108,14 @@
         SET
         m_member_password = #{m_member_password}
         WHERE
-        m_member_id = #{m_member_id}
+        m_member_email = #{m_member_email}
     </update>
 
     <delete id="removeById">
         DELETE FROM
         m_member
         WHERE
-        m_member_id = #{m_member_id}
+        m_member_email = #{m_member_email}
     </delete>
 
     <select id="getMemberList" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
@@ -152,6 +143,14 @@
         FROM
         m_member
         WHERE
-        m_member_id = #{m_member_id}
+        m_member_email = #{m_member_email}
+    </select>
+    <select id="getMemberEmail" resultType="com.soprj.sharedone_prj.domain.member.MemberDto">
+        SELECT
+        *
+        FROM
+        m_member
+        WHERE
+        m_member_email = #{m_member_email}
     </select>
 </mapper>
