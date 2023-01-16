@@ -177,6 +177,9 @@
 
         <div class="searchBox">
             <c:url value="/item/list" var="listLink"></c:url>
+
+<%--            검색박스 예정--%>
+
             <%--      <form action="${listLink}" role="search">--%>
 <%--            <div style="display: flex;justify-content: space-between;">--%>
 <%--                <div>--%>
@@ -227,8 +230,8 @@
             <form id="removeForm" action="${removeLink }" method="post">
                 <input type="hidden" id="removeInput" name="m_item_id" value="">
             </form>
-            <button class="btn btn-danger" style="margin-left: auto;margin-bottom: 10px;" data-bs-toggle="modal"
-                    data-bs-target="#removeModal" value="삭제">선택삭제
+            <button class="btn btn-danger removeBtn" style="margin-left: auto;margin-bottom: 10px;" data-bs-toggle="modal"
+                    data-bs-target="#removeModal" value="삭제" disabled>선택삭제
             </button>
         </div>
 
@@ -236,7 +239,7 @@
             <table class="table addList">
                 <thead>
                 <tr>
-                    <th style="width: 50px"><input name="itemBox" type="checkbox" value="selectAll" onclick="selectAll(this)"> </th>
+                    <th style="width: 50px"><input name="selectAll" type="checkbox" value="selectAll" onclick="selectAll(this)"> </th>
                     <th style="width: 200px">제품코드</th>
                     <th style="width: 200px">제품그룹</th>
                     <th style="width: 200px">제조사</th>
@@ -249,7 +252,7 @@
                 <c:forEach items="${itemList}" var="itemList">
                         <tr>
                             <td>
-                                <input id="itemBox" name="itemBox" type="checkbox" value="${itemList.m_item_id}">
+                                <input name="itemBox" type="checkbox" value="${itemList.m_item_id}" onclick='checkSelectAll(); activeBtn()'>
                             </td>
                             <td>
                                     ${itemList.m_item_id}
@@ -434,14 +437,37 @@
 
 </script>
 <script>
+    // 전체선택 풀기
+    function checkSelectAll() {
+        const selectAll = document.querySelector('input[name="selectAll"]');
+        const checkboxes = document.querySelectorAll('input[name="itemBox"]');
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+        if (checkboxes.length === checked.length) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
+        }
+    }
+
+    // 전체선택 하기
+    function selectAll(selectAll)  {
+        const checkboxes = document.getElementsByName('itemBox');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked
+        })
+    }
+</script>
+<script>
     // 삭제 진행
     function remove() {
-        var length = document.getElementsByName("itemBox").length;
-        var removeIdList = [];
-        for (var i = 1; i < length; i++) {
-            var checkedBox = document.getElementsByName("itemBox")[i].checked
+        const length = document.getElementsByName("itemBox").length;
+        const removeIdList = [];
+        for (let i = 1; i < length; i++) {
+            const checkedBox = document.getElementsByName("itemBox")[i].checked;
             if (checkedBox) {
-                var selectId = document.getElementsByName("itemBox")[i].value;
+
+                const selectId = document.getElementsByName("itemBox")[i].value;
                 removeIdList.push(selectId);
             }
         }
@@ -455,13 +481,15 @@
     document.querySelector("#removeButton").addEventListener("click", remove);
 </script>
 <script>
-    function selectAll(selectAll)  {
-        const checkboxes
-            = document.getElementsByName('itemBox');
+    function activeBtn () {
 
-        checkboxes.forEach((checkbox) => {
-            checkbox.checked = selectAll.checked;
-        })
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+        console.log(checked.length);
+        if(checked.length == 0){
+            document.querySelector(".removeBtn").disabled = true;
+        } else {
+            document.querySelector(".removeBtn").disabled = false;
+        }
     }
 </script>
 
