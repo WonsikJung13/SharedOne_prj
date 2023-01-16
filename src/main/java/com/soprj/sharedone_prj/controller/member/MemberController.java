@@ -127,7 +127,6 @@ public class MemberController {
 
         String m_member_email = member.get("m_member_email").toString();
         MemberDto memberDto = memberService.checkPassword(m_member_email);
-        System.out.println(memberDto);
 
         String m_member_password = member.get("m_member_password").toString();
         Map<String, Object> map = new HashMap<>();
