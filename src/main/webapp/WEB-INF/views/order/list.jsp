@@ -259,12 +259,7 @@
     <div class="col">
         <div style="display: flex;justify-content: space-between;width: 1000px;">
             <div id="itemListTitle">
-                <h1 id="header">주문 관리 및 등록</h1>
-            </div>
-            <div class="itemRegisterBtn">
-                <c:url value="/order/register" var="registerLink"></c:url>
-                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">주문 작성
-                </button>
+                <h1 id="header">주문 관리 및 승인</h1>
             </div>
         </div>
 
@@ -469,7 +464,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="commentStyle">
+                        <div class="commentStyle requestBtn">
                             <h2>메세지</h2>
                             <div>
                                 <textarea id="message" name="m_order_memo"></textarea>
@@ -478,7 +473,7 @@
                     </form>
                 </div>
 
-                <div class="modal-footer">
+                <div class="modal-footer requestBtn">
                     <button id="orderReturnButton" class="btn btn-secondary">
                         승인반려
                     </button>
@@ -598,6 +593,16 @@
                 document.querySelector(".removeBtn").disabled = false;
             }
         }
+        // doDisplay();
+        // // 승인 요청일때 메세지 작성, 승인완료반려 버튼 보여줌
+        // function doDisplay(){
+        //     var con =  document.querySelector(".requestBtn");
+        //     if(m_order_status == '승인완료'){
+        //         con.style.display = 'none';
+        //     }else{
+        //         con.style.display = 'block';
+        //     }
+        // }
     </script>
 </body>
 </html>

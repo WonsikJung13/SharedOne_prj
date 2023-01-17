@@ -346,7 +346,7 @@
 <script>
 
     const ctx = "${pageContext.request.contextPath}";
-    let m_order_sumPrice = 0;
+    let sumPrice = 0;
 
 
     // 아이템 데이터 가져오기
@@ -454,7 +454,7 @@
         const m_order_buyerCurrency = document.querySelector("#buyerCurrency").innerText;
         const m_order_inserted = document.querySelector("#buyerInserted").innerText;
 
-        const m_order_comment = document.querySelector("#comment").value;
+
         const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
 
         // 추가된 제품 총 금액으로 오더 총 금액 구하기
@@ -464,7 +464,7 @@
         console.log(a + parseInt(totalPrice));
         let total = a + parseInt(totalPrice);
 
-        m_order_sumPrice = m_order_sumPrice + parseInt(m_order_totalPrice);
+        sumPrice = sumPrice + parseInt(m_order_totalPrice);
         document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + total;
 
         const itemId = document.querySelector("#orderItems").value.split("_");
@@ -475,6 +475,9 @@
         const m_order_price = document.querySelector(".listPrice").value;
         const m_order_count = document.querySelector("#orderCount").value;
         const m_order_id = document.querySelector("#orderId").value;
+        // const m_order_sumPrice = document.querySelector("#orderTotalPrice").innerText;
+        const m_order_sumPrice = total;
+
 
 
         const orderAdd = `
@@ -490,13 +493,6 @@
         itemBody.insertAdjacentHTML("beforeend", orderAdd);
 
         const data = {
-            // m_buyer_id,
-            // m_order_buyerName,
-            // m_order_buyerAddress,
-            // m_order_buyerRegion,
-            // m_order_buyerNumber,
-            // m_order_buyerCurrency,
-            // m_order_inserted,
             m_order_id,
             m_order_totalPrice,
             m_order_itemId,
@@ -504,9 +500,10 @@
             m_order_itemGroup,
             m_order_itemManufacturer,
             m_order_price,
-            m_order_count
+            m_order_count,
+            m_order_sumPrice
         }
-
+        console.log(data);
         addData.push(data);
 
         // 제품 추가 눌렀을때 제품 데이터 사라짐
@@ -525,6 +522,11 @@
 
     // 오더추가
     document.querySelector(".submitBtn").addEventListener("click", function () {
+
+        const m_order_comment = document.querySelector("#comment").value;
+        addData.at(0).m_order_comment = m_order_comment;
+        console.log(m_order_comment);
+        console.log(addData);
 
         fetch(`\${ctx}/order/ModifyAdd`, {
             method: "POST",
@@ -593,7 +595,7 @@
 
     // 오더 장바구니 삭제하기
     function clickRemove(target) {
-        m_order_sumPrice = 0;
+        sumPrice = 0;
         const remove1 = document.querySelector("#removeId");
         remove1.remove();
 
@@ -604,11 +606,12 @@
         })
 
         for (const x in addData) {
-            m_order_sumPrice = m_order_sumPrice + parseInt(addData.at(x).m_order_totalPrice)
+            sumPrice = sumPrice + parseInt(addData.at(x).m_order_totalPrice)
         }
 
         let Currency = document.querySelector("#buyerCurrency").innerHTML;
-        document.querySelector("#orderTotalPrice").innerHTML = Currency + " " + m_order_sumPrice;
+        document.querySelector("#orderTotalPrice").innerHTML = Currency + " " + sumPrice;
+        document.querySelector("#orderTotalPrice").value = sumPrice;
 
     }
 
