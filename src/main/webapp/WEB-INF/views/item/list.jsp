@@ -505,6 +505,7 @@
         const selectAll = document.querySelector('input[name="selectAll"]');
         const checkboxes = document.querySelectorAll('input[name="itemBox"]');
         const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+
         if (checkboxes.length === checked.length) {
             selectAll.checked = true;
         } else {
@@ -515,20 +516,37 @@
     // 전체선택 하기
     function selectAll(selectAll) {
         const checkboxes = document.getElementsByName('itemBox');
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
 
         checkboxes.forEach((checkbox) => {
             checkbox.checked = selectAll.checked
         })
+        // 전체선택 시 삭제버튼 활성화
+        if (checkboxes.length === 10 && checked.length === 10) {
+            document.querySelector(".removeBtn").disabled = true;
+        } else {
+            document.querySelector(".removeBtn").disabled = false;
+        }
     }
-</script>
-<script>
+
+    // 삭제버튼 활성화
+    function activeBtn() {
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+        console.log(checked.length);
+        if (checked.length > 0) {
+            document.querySelector(".removeBtn").disabled = false;
+        } else {
+            document.querySelector(".removeBtn").disabled = true;
+        }
+    }
+
     // 삭제 진행
     function remove() {
         const length = document.getElementsByName("itemBox").length;
         const removeIdList = [];
         for (let i = 0; i < length; i++) {
             const checkedBox = document.getElementsByName("itemBox")[i].checked;
-            console.log(checkedBox)
+
             if (checkedBox) {
                 const selectId = document.getElementsByName("itemBox")[i].value;
                 console.log("selectId: " + selectId);
@@ -539,23 +557,10 @@
         document.querySelector("#removeInput").value = removeIdList;
         console.log(document.querySelector("#removeInput").value);
         document.getElementById('removeForm').submit();
-        <%--const ctx = "${pageContext.request.contextPath}";--%>
-        <%--document.location.href = ctx + "/item/list";--%>
     }
 
+    // 삭제버튼 클릭 시
     document.querySelector("#removeButton").addEventListener("click", remove);
-</script>
-<script>
-    function activeBtn() {
-
-        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
-        console.log(checked.length);
-        if (checked.length == 0) {
-            document.querySelector(".removeBtn").disabled = true;
-        } else {
-            document.querySelector(".removeBtn").disabled = false;
-        }
-    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
