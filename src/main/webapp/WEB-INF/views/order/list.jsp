@@ -269,31 +269,7 @@
         </div>
 
         <div class="searchBox">
-            <c:url value="/order/adminList" var="listLink"></c:url>
-            <%--        <form action="${listLink}" role="search">--%>
-            <%--            <div class="searchBox ">--%>
-            <%--                <div class="row justify-content-start">--%>
-            <%--                    <div class="col-4">--%>
-            <%--                        <label>제품코드</label>--%>
-            <%--                        <input class="form-select" type="text" list="itemList" style="width: 210px;"--%>
-            <%--                               autocomplete="off"/>--%>
-            <%--                        <datalist id="itemList">--%>
-            <%--                            <c:forEach items="${itemList}" var="itemList">--%>
-            <%--                                <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>--%>
-            <%--                            </c:forEach>--%>
-            <%--                        </datalist>--%>
-            <%--                    </div>--%>
-            <%--                    <div class="col-4">--%>
-            <%--                        <label>거래처코드</label>--%>
-            <%--                        <input class="form-select" type="text" list="buyerList" style="width: 210px;"--%>
-            <%--                               autocomplete="off"/>--%>
-            <%--                        <datalist id="buyerList">--%>
-            <%--                            <c:forEach items="${buyerList}" var="buyerList">--%>
-            <%--                                <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>--%>
-            <%--                            </c:forEach>--%>
-            <%--                        </datalist>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
+            <c:url value="/order/list" var="listLink"></c:url>
             <form action="${listLink}" class="d-flex" role="search">
                 <div class="input-group" style="float: none">
                     <select name="t" class="form-select">
