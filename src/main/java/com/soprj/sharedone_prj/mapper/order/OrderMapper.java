@@ -27,6 +27,9 @@ public interface OrderMapper {
   int addDataItem(Map<String, Object> stringObjectMap);
 
   List<OrderDto> orderList(int offset, int records, String type, String keyword);
+  List<OrderDto> adminOrderList(int offset, int records, String type, String keyword);
+  int countAll(String type, String keyword);
+  int adminCountAll(String type, String keyword);
 
 //  List<OrderItemDTO> orderDetail(int m_order_id);
 
@@ -49,8 +52,6 @@ public interface OrderMapper {
   void updateItem(Map<String, Object> map);
 
     int orderListDelete(String m_order_itemId, String m_order_id);
-
-    int countAll(String type, String keyword);
 
 
 }
