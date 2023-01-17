@@ -154,16 +154,18 @@ public class OrderController {
     @PostMapping("ModifyAdd")
     public void ModifyAdd(@RequestBody List<Map<String, Object>> addData) {
 
-        for (int i = 0; i < addData.size(); i++) {
-            orderService.addDataItem(addData.get(i));
+//        System.out.println(addData.get("addData);
+
+//        for (int i = 0; i < addData.size(); i++) {
+//            orderService.addDataItem(addData.get(i));
         }
         // 오더 수정하기 > m_order_header 업데이트
 //        addData.get(0).get("m_order_id")
-        orderService.addModifyHeader(addData.get(0));
+//        orderService.addModifyHeader(addData.get(0));
 
 //        return "redirect:/order/list";
 
-    }
+//    }
 
 
     @DeleteMapping("deleteList/{order}")
@@ -212,5 +214,19 @@ public class OrderController {
 
 
 
+    @RequestMapping("items/{m_order_id}")
+    @ResponseBody
+    public List<OrderItemDTO> itemss(@PathVariable int m_order_id) {
+        System.out.println("왓다");
+        return orderService.itemList(m_order_id);
+    }
 
+    @PostMapping("modify")
+    public List<OrderItemDTO> itemz(@RequestBody List<List<Map<String, Object>>> data){
+        System.out.println("오긴와?");
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println(data.get(i).get(0));
+        }
+        return null;
+    }
 }
