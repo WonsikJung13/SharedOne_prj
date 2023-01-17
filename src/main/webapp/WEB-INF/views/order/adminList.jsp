@@ -379,8 +379,9 @@
                                 </a>
                             </c:if>
 
-                            <c:forEach begin="${orderDto.leftPageNumber}" end="${orderDto.rightPageNumber}"
-                                       var="pageNumber">
+
+                            <c:forEach begin="${orderDto.leftPageNumber}" end="${orderDto.rightPageNumber}" var="pageNumber">
+
                                 <c:url value="/order/adminList" var="listLink">
                                     <c:param name="page" value="${pageNumber }"/>
                                     <c:param name="q" value="${param.q }"/>
@@ -388,9 +389,9 @@
                                 </c:url>
                                 <span class="pagination-inner">
                               <%-- 현재페이지에 active 클래스 추가 --%>
-                                <a class="${orderDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}"
-                                   href="${listLink}">${pageNumber}</a>
-                        </span>
+                                    <a class="${orderDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}"
+                                       href="${listLink}">${pageNumber}</a>
+                                </span>
                             </c:forEach>
 
                             <%-- 다음 버튼 --%>

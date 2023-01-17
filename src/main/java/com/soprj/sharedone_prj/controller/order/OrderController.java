@@ -109,7 +109,6 @@ public class OrderController {
         model.addAttribute("orderList", list);
     }
 
-
     @RequestMapping("list/{m_order_id}")
     @ResponseBody
     public OrderHeaderDTO orderDetail(@PathVariable int m_order_id) {
@@ -186,7 +185,7 @@ public class OrderController {
                           @RequestParam(name = "q", defaultValue = "") String keyword,
                           OrderDto orderDto,
                           Model model){
-        List<OrderDto> list = orderService.orderList(page, type, keyword, orderDto);
+        List<OrderDto> list = orderService.adminOrderList(page, type, keyword, orderDto);
         model.addAttribute("orderList", list);
     }
 

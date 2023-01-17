@@ -79,6 +79,39 @@ public class OrderService {
         return mapper.orderList(offset, records, type, "%"+keyword+"%");
     }
 
+    public List<OrderDto> adminOrderList(int page, String type, String keyword, OrderDto orderDto) {
+        int records = 10;
+        int offset = (page - 1) * records;
+
+        int countAll = mapper.adminCountAll(type, "%"+keyword+"%");
+        System.out.println(countAll);
+        int lastPage = (countAll - 1) / records + 1;
+
+        int leftPageNumber = (page -1) / 10 * 10 + 1;
+        int rightPageNumber = leftPageNumber + 9;
+        rightPageNumber = Math.min(rightPageNumber, lastPage);
+
+        // 이전버튼 유무
+        boolean hasPrevButton = page > 10;
+        // 다음버튼 유무
+        boolean hasNextButton = page <= ((lastPage - 1) / 10 * 10);
+
+        // 이전버튼 눌렀을 때 가는 페이지 번호
+        int jumpPrevPageNumber = (page - 1) / 10 * 10 - 9;
+        int jumpNextPageNumber = (page - 1) / 10 * 10 + 11;
+
+        orderDto.setHasPrevButton(hasPrevButton);
+        orderDto.setHasNextButton(hasNextButton);
+        orderDto.setJumpPrevPageNumber(jumpPrevPageNumber);
+        orderDto.setJumpNextPageNumber(jumpNextPageNumber);
+        orderDto.setCurrentPageNumber(page);
+        orderDto.setLeftPageNumber(leftPageNumber);
+        orderDto.setRightPageNumber(rightPageNumber);
+        orderDto.setLastPageNumber(lastPage);
+
+        return mapper.adminOrderList(offset, records, type, "%"+keyword+"%");
+    }
+
 //    public List<OrderItemDTO> orderDetail(int m_order_id) {
 //        return mapper.orderDetail(m_order_id);
 //    }
