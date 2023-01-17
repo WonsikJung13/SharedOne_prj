@@ -349,7 +349,7 @@
                 <c:forEach items="${orderList }" var="orderList">
                     <tr>
                         <td>
-                            <input class="itemBox" name="itemBox" type="checkbox" onclick="" value="${orderList.m_order_id}">
+                            <input class="itemBox" name="itemBox" type="checkbox" value="${orderList.m_order_id}">
                         </td>
                         <td onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
                             data-bs-target="#orderConfirm" class="orderDetailBtn">${orderList.m_order_id}</td>
@@ -444,6 +444,7 @@
                     </nav>
                 </div>
             </div>
+    </div>
 
         <%--오더리스트 삭제하기--%>
         <c:url value="/order/remove" var="removeLink"/>
@@ -552,7 +553,7 @@
                                 </tbody>
                             </table>
                             <table class="table table-bordered orderModal">
-                                <tbody>
+                                <tbody id="requestMessage">
                                 <tr>
                                     <th class="tablePrice">승인 요청 메세지</th>
                                     <td class="comment"></td>
@@ -585,6 +586,7 @@
         })
             .then(res => res.json())
             .then(data => {
+
                 document.querySelector(".buyerName").innerHTML = data.m_order_buyerName;
                 document.querySelector(".buyerAddress").innerHTML = data.m_order_buyerAddress;
                 document.querySelector(".buyerRegion").innerHTML = data.m_order_buyerRegion;
@@ -596,10 +598,20 @@
                 document.querySelector(".orderId").innerHTML = data.m_order_id;
                 document.querySelector(".orderDate").innerHTML = data.m_order_date;
 
+                // 승인권자 메세지 보여주기
+                const memo = data.m_order_memo;
+                if(data.m_order_status === '승인반려' || data.m_order_status === '승인완료'){
+                    const i = `     <tr class="orderMemo">
+                                        <th class="tablePrice">승인권자 메세지</th>
+                                        <td class="memo">\${memo}</td>
+                                    </tr>`
+                    document.querySelector("#requestMessage").insertAdjacentHTML("beforeend", i);
+                }
+
                 if (document.getElementById('itemBody').childElementCount == 0) {
-                    for (i = 0; i < data.orderItemDTOList.length; i++) {
+                    for (let i = 0; i < data.orderItemDTOList.length; i++) {
                         let itemTR = document.createElement("tr")
-                        itemTR.setAttribute("class", "orderItemList")
+                        itemTR.setAttribute("class", "orderItemLists")
                         let itemTD1 = document.createElement("td");
                         itemTD1.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemId + ""));
                         let itemTD2 = document.createElement("td");
@@ -607,11 +619,11 @@
                         let itemTD3 = document.createElement("td");
                         itemTD3.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemGroup + ""));
                         let itemTD4 = document.createElement("td");
-                        itemTD4.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_count + ""));
+                        itemTD4.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemManufacturer + ""));
                         let itemTD5 = document.createElement("td");
-                        itemTD5.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemManufacturer + ""));
+                        itemTD5.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_price + ""));
                         let itemTD6 = document.createElement("td");
-                        itemTD6.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_price + ""));
+                        itemTD6.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_count + ""));
                         let itemTD7 = document.createElement("td");
                         itemTD7.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_totalPrice + ""));
 
@@ -625,6 +637,8 @@
                         itemBody.appendChild(itemTR);
                     }
                 }
+
+
             })
     }
 
@@ -648,6 +662,29 @@
 
     // document.querySelector("#removeButton").addEventListener("click", remove);
 
+    // 모달창 열기전에 오더 제품리스트 데이터 삭제
+    $(document).ready(function(){
+        $('#orderConfirm').on('hidden.bs.modal', function () {
+            let a = document.querySelectorAll(".orderItemLists");
+
+            for (let i = 0; i < a.length; i++) {
+                const item = a.item(i)
+                item.remove();
+
+            }
+        });
+
+    });
+
+    $(document).ready(function(){
+        $('#orderConfirm').on('hidden.bs.modal', function () {
+            let a = document.querySelector(".orderMemo");
+
+                a.remove();
+
+        });
+
+    });
 </script>
 <%--<script>--%>
 <%--    function activeBtn() {--%>

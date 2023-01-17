@@ -185,7 +185,7 @@
                 <td class="inputWidth">
                     <div class="inputLength">
                         <input onchange="buyerView()" class="form-select" aria-label="Default select example"
-                               type="text" list="list" id="buyer" placeholder="거래처를 선택해주세요"/>
+                               type="text" list="list" id="buyer" placeholder="거래처를 선택해주세요" autocomplete="off" />
                         <datalist id="list">
                             <c:forEach items="${buyerList}" var="buyer">
                                 <option value="${buyer.m_buyer_id}_${buyer.m_buyer_name}"></option>
@@ -222,7 +222,7 @@
                 <td class="inputWidth">
                     <div class="inputLength">
                         <input onchange="itemView()" class="form-select" aria-label="Default select example" type="text"
-                               list="lists" id="orderItems" placeholder="제품를 선택해주세요"/>
+                               list="lists" id="orderItems" placeholder="제품를 선택해주세요" autocomplete="off"/>
                         <datalist id="lists">
                         </datalist>
                     </div>
@@ -273,7 +273,6 @@
             <table class="table addList">
                 <thead>
                 <tr>
-                    <th scope="col">납품요청일</th>
                     <th scope="col">제품코드</th>
                     <th scope="col">제품명</th>
                     <th scope="col">판매가격</th>
@@ -456,7 +455,6 @@
 
         const orderAdd = `
             <tr id="removeId" >
-                 <td class="orderAdd"> \${m_order_inserted} </td>
                  <td class="orderAdd"> \${m_order_itemId} </td>
                  <td class="orderAdd"> \${m_order_itemName} </td>
                  <td class="orderAdd"> \${m_order_price} </td>
@@ -518,7 +516,7 @@
             body: JSON.stringify(addData)
         })
 
-        const orderList = ctx + '/order/list';
+        const orderList = ctx + '/order/adminList';
         setTimeout(function (){
             location.href = orderList;
         },300)
@@ -542,7 +540,7 @@
             body: JSON.stringify(addData)
         })
 
-        const orderList = ctx + '/order/list';
+        const orderList = ctx + '/order/adminList';
         setTimeout(function (){
             location.href = orderList;
         },300)
