@@ -135,17 +135,16 @@
     const priceInput = document.querySelector("#priceInput");
     const lastPrice = document.querySelector("#lastPrice");
 
-    document.querySelector("#priceInput").addEventListener("keyup", function () {
+    function discount() {
         const discount = discountInput.value;
         const price = priceInput.value;
         const lastprice = price - ((price * discount) / 100);
 
         lastPrice.value = lastprice;
-    })
+    }
 
-    document.querySelector("#discountInput").addEventListener("keyup", function () {
-        priceInput.value = " ";
-    })
+    document.querySelector("#priceInput").addEventListener("keyup", discount)
+    document.querySelector("#discountInput").addEventListener("keyup", discount)
 
     // buyer 이름 가져오기
     function buyerView() {
