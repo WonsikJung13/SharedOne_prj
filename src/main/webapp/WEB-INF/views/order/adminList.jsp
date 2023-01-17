@@ -381,7 +381,7 @@
 
                             <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
                             <c:if test="${orderDto.currentPageNumber ne 1 }">
-                                <c:url value="/order/list" var="listLink">
+                                <c:url value="/order/adminList" var="listLink">
                                     <c:param name="page" value="1"/>
                                     <c:param name="q" value="${param.q }"/>
                                     <c:param name="t" value="${param.t }"/>
@@ -393,7 +393,7 @@
 
                             <%-- 이전 버튼--%>
                             <c:if test="${orderDto.hasPrevButton }">
-                                <c:url value="/order/list" var="listLink">
+                                <c:url value="/order/adminList" var="listLink">
                                     <c:param name="page" value="${orderDto.jumpPrevPageNumber }"></c:param>
                                     <c:param name="q" value="${param.q }"/>
                                     <c:param name="t" value="${param.t }"/>
@@ -403,23 +403,22 @@
                                 </a>
                             </c:if>
 
-                            <c:forEach begin="${orderDto.leftPageNumber}" end="${orderDto.rightPageNumber}"
-                                       var="pageNumber">
-                                <c:url value="/order/list" var="listLink">
+                            <c:forEach begin="${orderDto.leftPageNumber}" end="${orderDto.rightPageNumber}" var="pageNumber">
+                                <c:url value="/order/adminList" var="listLink">
                                     <c:param name="page" value="${pageNumber }"/>
                                     <c:param name="q" value="${param.q }"/>
                                     <c:param name="t" value="${param.t }"/>
                                 </c:url>
                                 <span class="pagination-inner">
                               <%-- 현재페이지에 active 클래스 추가 --%>
-                                <a class="${orderDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}"
-                                   href="${listLink}">${pageNumber}</a>
-                        </span>
+                                    <a class="${orderDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}"
+                                       href="${listLink}">${pageNumber}</a>
+                                </span>
                             </c:forEach>
 
                             <%-- 다음 버튼 --%>
                             <c:if test="${orderDto.hasNextButton }">
-                                <c:url value="/order/list" var="listLink">
+                                <c:url value="/order/adminList" var="listLink">
                                     <c:param name="page" value="${orderDto.jumpNextPageNumber }"></c:param>
                                     <c:param name="q" value="${param.q }"/>
                                     <c:param name="t" value="${param.t }"/>
@@ -431,7 +430,7 @@
 
                             <%-- 맨뒤 버튼 --%>
                             <c:if test="${orderDto.currentPageNumber ne orderDto.lastPageNumber }">
-                                <c:url value="/order/list" var="listLink">
+                                <c:url value="/order/adminList" var="listLink">
                                     <c:param value="${orderDto.lastPageNumber }" name="page"/>
                                     <c:param name="q" value="${param.q }"/>
                                     <c:param name="t" value="${param.t }"/>

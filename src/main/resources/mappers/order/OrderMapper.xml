@@ -152,6 +152,37 @@
             m_order_buyerCurrency,
             m_order_memo
         FROM m_order_header
+        WHERE (
+        <trim prefixOverrides="OR">
+            <if test="type == 'all' or type == 'orderId'">
+                OR m_order_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'buyerId'">
+                OR m_buyer_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'orderStatus'">
+                OR m_order_status LIKE #{keyword}
+            </if>
+        </trim>
+            )
+        AND m_order_status REGEXP '승인요청|승인완료'
+        ORDER BY m_order_id DESC
+        LIMIT #{offset}, #{records}
+    </select>
+
+    <select id="adminOrderList" resultType="com.soprj.sharedone_prj.domain.order.OrderDto">
+        SELECT
+        m_order_id,
+        m_buyer_id,
+        m_order_buyerName,
+        m_order_sumPrice,
+        m_order_status,
+        m_order_comment,
+        m_order_buyerCurrency,
+        m_order_memo
+        FROM m_order_header
         WHERE
         <trim prefixOverrides="OR">
             <if test="type == 'all' or type == 'orderId'">
@@ -171,6 +202,26 @@
     </select>
 
     <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM m_order_header
+        WHERE (
+        <trim prefixOverrides="OR">
+            <if test="type == 'all' or type == 'orderId'">
+                OR m_order_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'buyerId'">
+                OR m_buyer_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'orderStatus'">
+                OR m_order_status LIKE #{keyword}
+            </if>
+        </trim>
+            )
+        AND m_order_status REGEXP '승인요청|승인완료'
+    </select>
+
+    <select id="adminCountAll" resultType="int">
         SELECT COUNT(*) FROM m_order_header
         WHERE
         <trim prefixOverrides="OR">
