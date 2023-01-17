@@ -206,6 +206,7 @@
         <result property="m_order_buyerNumber" column="m_order_buyerNumber"/>
         <result property="m_order_buyerCurrency" column="m_order_buyerCurrency"/>
         <result property="m_order_comment" column="m_order_comment"/>
+        <result property="m_order_memo" column="m_order_memo"/>
         <result property="m_order_sumPrice" column="m_order_sumPrice"/>
 
         <collection property="orderItemDTOList" ofType="com.soprj.sharedone_prj.domain.order.OrderItemDTO">
