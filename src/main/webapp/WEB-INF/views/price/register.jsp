@@ -171,20 +171,19 @@
     // 할인율 계산하기
     const discountInput = document.querySelector("#discountInput");
     const priceInput = document.querySelector("#priceInput");
-
     const lastPrice = document.querySelector("#lastPrice");
 
-    document.querySelector("#priceInput").addEventListener("keyup", function () {
+    function discount() {
         const discount = discountInput.value;
         const price = priceInput.value;
         const lastprice = price - ((price * discount) / 100);
 
         lastPrice.value = lastprice;
-    })
+    }
 
-    document.querySelector("#discountInput").addEventListener("keyup", function () {
-        lastPrice.value = " ";
-    })
+    document.querySelector("#priceInput").addEventListener("keyup", discount)
+    document.querySelector("#discountInput").addEventListener("keyup", discount)
+
 
     // buyer 이름, 통화 가져오기
     function buyerView() {
@@ -240,6 +239,7 @@
     var m_price_lastPeriod = document.getElementById('m_price_lastPeriod');
 
 
+    // 날짜 중복확인
     m_price_startPeriod.addEventListener('change', function () {
         m_price_startPeriod.max = null;
         if (m_price_startPeriod.value)
@@ -251,7 +251,6 @@
     }, false);
 
     let addDatas = [];
-    // 날짜 중복확인
     document.querySelector("#m_price_startPeriod").addEventListener("change", function () {
 
         document.querySelector("#m_price_lastPeriod").disabled = false;
