@@ -159,4 +159,8 @@ public class OrderService {
     public void addModifyHeader(Map<String, Object> map) {
         mapper.addModifyHeader(map);
     }
+
+    public void addModifyItem(Map<String, Object> stringObjectMap) {
+        mapper.addModifyItem(stringObjectMap);
+    }
 }

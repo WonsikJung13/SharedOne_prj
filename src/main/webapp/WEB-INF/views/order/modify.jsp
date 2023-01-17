@@ -280,25 +280,25 @@
                 </tr>
                 </thead>
                 <tbody id="itemBody">
-<%--                <c:forEach items="${itemList}" var="itemList">--%>
-<%--                    <tr>--%>
-<%--                        <td class="orderAdd"> ${itemList.m_order_itemId} </td>--%>
-<%--                        <td class="orderAdd"> ${itemList.m_order_itemName} </td>--%>
-<%--                        <td class="orderAdd"> ${itemList.m_order_price} </td>--%>
-<%--                        <td class="orderAdd"> ${itemList.m_order_count} </td>--%>
-<%--                        <td class="orderAdd totalPrice"> ${itemList.m_order_totalPrice} </td>--%>
-<%--                        <td>--%>
-<%--                            <button class="btn btn-secondary"--%>
-<%--                                    data-value="${itemList.m_order_itemId}_${itemList.m_order_id}"--%>
-<%--                                    onclick="clickDelete(this)">삭제--%>
-<%--                            </button>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
-<%--                    <script>--%>
-<%--                        a = a + parseInt(${itemList.m_order_totalPrice})--%>
-<%--                        arry.push(${itemList.m_order_totalPrice})--%>
-<%--                    </script>--%>
-<%--                </c:forEach>--%>
+                <%--                <c:forEach items="${itemList}" var="itemList">--%>
+                <%--                    <tr>--%>
+                <%--                        <td class="orderAdd"> ${itemList.m_order_itemId} </td>--%>
+                <%--                        <td class="orderAdd"> ${itemList.m_order_itemName} </td>--%>
+                <%--                        <td class="orderAdd"> ${itemList.m_order_price} </td>--%>
+                <%--                        <td class="orderAdd"> ${itemList.m_order_count} </td>--%>
+                <%--                        <td class="orderAdd totalPrice"> ${itemList.m_order_totalPrice} </td>--%>
+                <%--                        <td>--%>
+                <%--                            <button class="btn btn-secondary"--%>
+                <%--                                    data-value="${itemList.m_order_itemId}_${itemList.m_order_id}"--%>
+                <%--                                    onclick="clickDelete(this)">삭제--%>
+                <%--                            </button>--%>
+                <%--                        </td>--%>
+                <%--                    </tr>--%>
+                <%--                    <script>--%>
+                <%--                        a = a + parseInt(${itemList.m_order_totalPrice})--%>
+                <%--                        arry.push(${itemList.m_order_totalPrice})--%>
+                <%--                    </script>--%>
+                <%--                </c:forEach>--%>
                 </tbody>
             </table>
         </div>
@@ -345,30 +345,29 @@
         crossorigin="anonymous"></script>
 <script>
 
-  const ctx = "${pageContext.request.contextPath}";
-  let sumPrice = 0;
-  items();
-  let listo = [];
-  let del = [];
+    const ctx = "${pageContext.request.contextPath}";
+    let sumPrice = 0;
+    items();
+    let listo = [];
+    let del = [];
 
-  function items() {
-    const data = [];
-    const del = [];
-    const id = document.querySelector("#orderId").value;
-    fetch(`\${ctx}/order/items/\${id}`)
+    function items() {
+        const data = [];
+        const id = document.querySelector("#orderId").value;
+        fetch(`\${ctx}/order/items/\${id}`)
             .then(res => res.json())
             .then(data => {
-              // console.log(data)
+                // console.log(data)
 
-              for (let x in data) {
-                // console.log(data[x])
+                for (let x in data) {
+                    // console.log(data[x])
 
-                const m_order_itemId = data[x].m_order_itemId
-                const m_order_itemName = data[x].m_order_itemName
-                const m_order_price = data[x].m_order_price
-                const m_order_count = data[x].m_order_count
-                const m_order_totalPrice = data[x].m_order_totalPrice
-                const itemz = `
+                    const m_order_itemId = data[x].m_order_itemId
+                    const m_order_itemName = data[x].m_order_itemName
+                    const m_order_price = data[x].m_order_price
+                    const m_order_count = data[x].m_order_count
+                    const m_order_totalPrice = data[x].m_order_totalPrice
+                    const itemz = `
             <tr id="\${m_order_itemId}">
                  <td class="orderAdd" style="background-color: aqua"> \${m_order_itemId} </td>
                  <td class="orderAdd"> \${m_order_itemName} </td>
@@ -378,35 +377,30 @@
                 <td><button class="btn btn-secondary" data-value="\${m_order_itemId}" onclick="rmv(this)">삭제</button></td>
             </tr>
         `
-                itemBody.insertAdjacentHTML("beforeend", itemz);
-                const dat = {
-                  m_order_itemId,
-                  m_order_itemName,
-                  m_order_price,
-                  m_order_count,
-                  m_order_totalPrice
+                    itemBody.insertAdjacentHTML("beforeend", itemz);
+                    const dat = {
+                        m_order_itemId,
+                        m_order_itemName,
+                        m_order_price,
+                        m_order_count,
+                        m_order_totalPrice
+                    }
+
+                    listo.push(dat);
                 }
-
-                listo.push(dat);
-              }
             })
-  }
+    }
 
 
-  function rmv(target) {
-    const removeId = target.dataset.value;
-    const remove1 = document.getElementById(removeId);
-    remove1.remove();
+    function rmv(target) {
+        const removeId = target.dataset.value;
+        const remove1 = document.getElementById(removeId);
+        remove1.remove();
 
-      del.push(listo.filter((item) => {
-          return (item["m_order_itemId"] == removeId)
-      }))
-    // del = listo.filter((item) => {
-    //   return (item["m_order_itemId"] == removeId)
-    // })
-    //   console.log(del)
-
-  }
+        del.push(listo.filter((item) => {
+            return (item["m_order_itemId"] == removeId)
+        }))
+    }
 
     // 아이템 데이터 가져오기
     function itemView() {
@@ -520,7 +514,6 @@
         // const totalPrice = document.querySelector(".totalPrice").innerText;
         // console.log(totalPrice);
         const totalPrice = document.querySelector("#totalPrice").innerText;
-        console.log(a + parseInt(totalPrice));
         let total = a + parseInt(totalPrice);
 
         sumPrice = sumPrice + parseInt(m_order_totalPrice);
@@ -536,7 +529,6 @@
         const m_order_id = document.querySelector("#orderId").value;
         // const m_order_sumPrice = document.querySelector("#orderTotalPrice").innerText;
         const m_order_sumPrice = total;
-
 
 
         const orderAdd = `
@@ -562,7 +554,6 @@
             m_order_count,
             m_order_sumPrice
         }
-        console.log(data);
         addData.push(data);
 
         // 제품 추가 눌렀을때 제품 데이터 사라짐
@@ -586,11 +577,8 @@
         const orderTotal = document.querySelector('#orderTotalPrice').innerHTML;
         const m_order_id = document.querySelector("#orderId").value;
 
+        const fetching = {m_order_comment, orderTotal, m_order_id}
 
-        // addData.at(0).m_order_comment = m_order_comment;
-        // console.log(m_order_comment);
-        // console.log(addData);
-        const fetching = {addData, m_order_comment, orderTotal, m_order_id}
 
         fetch(`\${ctx}/order/ModifyAdd`, {
             method: "POST",
@@ -600,6 +588,7 @@
             body: JSON.stringify(fetching)
         })
 
+
         fetch(`\${ctx}/order/modify`, {
             method: "POST",
             headers: {
@@ -608,10 +597,15 @@
             body: JSON.stringify(del)
         })
 
-        // const orderList = ctx + '/order/adminList';
-        // setTimeout(function (){
-        //     location.href = orderList;
-        // },300)
+        if (addData.length > 0) {
+            fetch(`\${ctx}/order/ModifyAddItem`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(addData)
+            })
+        }
 
     })
 
@@ -696,7 +690,7 @@
         })
 
         const b = document.querySelector("#orderId").value;
-        const orderList = ctx + '/order/modify?m_order_id=' + b ;
+        const orderList = ctx + '/order/modify?m_order_id=' + b;
         // setTimeout(function () {
         //     location.href = orderList;
         // }, 300)

@@ -33,7 +33,7 @@ public class OrderController {
         model.addAttribute("name", principal.getName());
     }
 
-//  바이어 데이터 가져오기
+    //  바이어 데이터 가져오기
     @GetMapping("buyerList/{selected}")
     @ResponseBody
     public BuyerDto buyerList(@PathVariable String selected) {
@@ -118,7 +118,7 @@ public class OrderController {
     }
 
     @PostMapping("list")
-    public String orderAccept(OrderDto orderDto, String m_order_status){
+    public String orderAccept(OrderDto orderDto, String m_order_status) {
 
         orderService.orderAccept(orderDto);
 
@@ -126,8 +126,8 @@ public class OrderController {
     }
 
     @GetMapping("modify")
-    public void modify(int m_order_id, Model model){
-        OrderHeaderDTO list  = orderService.orderHeader(m_order_id);
+    public void modify(int m_order_id, Model model) {
+        OrderHeaderDTO list = orderService.orderHeader(m_order_id);
         model.addAttribute("orderHeader", list);
 
 
@@ -150,30 +150,28 @@ public class OrderController {
 
     }
 
-//    수정 등록
+    // 오더 헤더 부분 update 쿼리
     @PostMapping("ModifyAdd")
-    public void ModifyAdd(@RequestBody List<Map<String, Object>> addData) {
+    public void ModifyAdd(@RequestBody Map<String, Object> headerItem) {
+        orderService.updateHeader(headerItem);
+    }
 
-//        System.out.println(addData.get("addData);
-
-//        for (int i = 0; i < addData.size(); i++) {
-//            orderService.addDataItem(addData.get(i));
+    // 오더 아이템 부분 update 쿼리
+    @RequestMapping("ModifyAddItem")
+    public void ModifyAddItem(@RequestBody List<Map<String, Object>> addItem) {
+        if (addItem.size() > 0) {
+            for (int i = 0; i < addItem.size(); i++) {
+                orderService.addModifyItem(addItem.get(i));
+            }
         }
-        // 오더 수정하기 > m_order_header 업데이트
-//        addData.get(0).get("m_order_id")
-//        orderService.addModifyHeader(addData.get(0));
-
-//        return "redirect:/order/list";
-
-//    }
-
+    }
 
     @DeleteMapping("deleteList/{order}")
-    public void deleteList(@PathVariable String order){
+    public void deleteList(@PathVariable String order) {
         String[] itemId = order.split("_");
         String m_order_itemId = itemId[0];
         String m_order_id = itemId[1];
-        orderService.orderListDelete(m_order_itemId, m_order_id );
+        orderService.orderListDelete(m_order_itemId, m_order_id);
 
 
     }
@@ -185,7 +183,7 @@ public class OrderController {
                           @RequestParam(name = "t", defaultValue = "all") String type,
                           @RequestParam(name = "q", defaultValue = "") String keyword,
                           OrderDto orderDto,
-                          Model model){
+                          Model model) {
         List<OrderDto> list = orderService.adminOrderList(page, type, keyword, orderDto);
         model.addAttribute("orderList", list);
     }
@@ -199,33 +197,27 @@ public class OrderController {
     }
 
 
-
-
-//    삭제하기
+    //    삭제하기
     @PostMapping("remove")
-    public String remove(String m_order_id ){
+    public String remove(String m_order_id) {
         String[] order = m_order_id.split(",");
-        for (int i = 0; i < order.length; i++){
+        for (int i = 0; i < order.length; i++) {
             orderService.orderRemove(Integer.parseInt(order[i]));
         }
         return "redirect:/order/adminList";
     }
 
 
-
-
     @RequestMapping("items/{m_order_id}")
     @ResponseBody
     public List<OrderItemDTO> itemss(@PathVariable int m_order_id) {
-        System.out.println("왓다");
         return orderService.itemList(m_order_id);
     }
 
     @PostMapping("modify")
-    public List<OrderItemDTO> itemz(@RequestBody List<List<Map<String, Object>>> data){
-        System.out.println("오긴와?");
+    public List<OrderItemDTO> itemz(@RequestBody List<Map<String, Object>> data) {
         for (int i = 0; i < data.size(); i++) {
-            System.out.println(data.get(i).get(0));
+            System.out.println(data.get(i));
         }
         return null;
     }

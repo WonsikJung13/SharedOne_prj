@@ -55,4 +55,7 @@ public interface OrderMapper {
 
 
     void addModifyHeader(Map<String, Object> map);
+
+    void addModifyItem(Map<String , Object> stringObjectMap);
+
 }

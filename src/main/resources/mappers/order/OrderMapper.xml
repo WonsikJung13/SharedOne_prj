@@ -138,6 +138,27 @@
         #{m_order_itemManufacturer},
         #{m_order_totalPrice} )
     </insert>
+    <insert id="addModifyItem">
+        INSERT INTO
+        m_order_item (
+        m_order_id,
+        m_order_count,
+        m_order_price,
+        m_order_itemId,
+        m_order_itemName,
+        m_order_itemGroup,
+        m_order_itemManufacturer,
+        m_order_totalPrice )
+        VALUES (
+        #{m_order_id},
+        #{m_order_count},
+        #{m_order_price},
+        #{m_order_itemId},
+        #{m_order_itemName},
+        #{m_order_itemGroup},
+        #{m_order_itemManufacturer},
+        #{m_order_totalPrice} )
+    </insert>
     <update id="addModifyHeader">
         UPDATE m_order_header SET
         m_order_comment = #{m_order_comment},
@@ -309,7 +330,6 @@
 
     <update id="updateHeader">
     UPDATE m_order_header SET
-    m_order_inserted = #{m_order_inserted},
     m_order_comment = #{m_order_comment},
     m_order_sumPrice = #{m_order_sumPrice},
     m_order_status = #{m_order_status}
