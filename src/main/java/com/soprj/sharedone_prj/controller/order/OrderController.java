@@ -153,14 +153,13 @@ public class OrderController {
 //    수정 등록
     @PostMapping("ModifyAdd")
     public void ModifyAdd(@RequestBody List<Map<String, Object>> addData) {
-        System.out.println("11");
-        System.out.println(addData.get(0));
-        System.out.println(addData.get(0).get("m_order_Id"));
 
         for (int i = 0; i < addData.size(); i++) {
-//            addData.get(i).put("m_order_id", 78);
             orderService.addDataItem(addData.get(i));
         }
+        // 오더 수정하기 > m_order_header 업데이트
+//        addData.get(0).get("m_order_id")
+        orderService.addModifyHeader(addData.get(0));
 
 //        return "redirect:/order/list";
 

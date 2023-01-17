@@ -138,7 +138,12 @@
         #{m_order_itemManufacturer},
         #{m_order_totalPrice} )
     </insert>
-
+    <update id="addModifyHeader">
+        UPDATE m_order_header SET
+        m_order_comment = #{m_order_comment},
+        m_order_sumPrice = #{m_order_sumPrice}
+        WHERE m_order_id = #{m_order_id}
+    </update>
 
     <!--주문관리 리스트 보여주기-->
     <select id="orderList" resultType="com.soprj.sharedone_prj.domain.order.OrderDto">
