@@ -29,6 +29,12 @@
         tr {
             height: 55px;
         }
+
+        .table-active{
+            width: 40%;
+            line-height: 35px;
+        }
+
     </style>
 </head>
 <body>
@@ -39,90 +45,90 @@
     <div class="col">
         <h1 style="margin-top: 20px">판매가격 작성</h1>
         <form action="" method="post" id="formId">
-        <table class="table table-bordered">
+            <table class="table table-bordered">
 
-            <tbody>
-                <tr>
-                    <td class="table-active">제품코드</td>
-                    <td>
-                        <input class="form-select" id="itemId" type="text" name="m_item_id" list="itemList"
-                                placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()">
-                            <datalist id="itemList">
-                                <c:forEach items="${itemList}" var="itemList">
-                                    <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>
+                <tbody>
+                    <tr>
+                        <td class="table-active">제품코드</td>
+                        <td>
+                            <input class="form-select" id="itemId" type="text" name="m_item_id" list="itemList"
+                                    placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()">
+                                <datalist id="itemList">
+                                    <c:forEach items="${itemList}" var="itemList">
+                                        <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>
+                                    </c:forEach>
+                                </datalist>
+                            </input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">제품명</td>
+                        <td>
+                            <input class="form-control" id="itemName" readonly></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">거래처 코드</td>
+                        <td>
+                            <input class="form-select" id="buyerId" type="text" name="m_buyer_id" list="buyerList"
+                                   placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()" disabled>
+                            <datalist id="buyerList">
+                                <c:forEach items="${buyerList}" var="buyerList" >
+                                    <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
                                 </c:forEach>
                             </datalist>
-                        </input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">제품명</td>
-                    <td>
-                        <input class="form-control" id="itemName" readonly></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">거래처 코드</td>
-                    <td>
-                        <input class="form-select" id="buyerId" type="text" name="m_buyer_id" list="buyerList"
-                               placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()">
-                        <datalist id="buyerList">
-                            <c:forEach items="${buyerList}" var="buyerList" >
-                                <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                            </c:forEach>
-                        </datalist>
-                        </input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">거래처명</td>
-                    <td>
-                        <input class="form-control" id="buyerName" readonly></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">통화</td>
-                    <td>
-                        <input class="form-control" id="buyerCurrency" name="m_price_currency" readonly></input>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td class="table-active">시작일</td>
-                    <td>
-                        <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod"></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">종료일</td>
-                    <td>
-                        <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod" disabled></input>
-                    </td>
-                </tr>
+                            </input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">거래처명</td>
+                        <td>
+                            <input class="form-control" id="buyerName" readonly disabled></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">통화</td>
+                        <td>
+                            <input class="form-control" id="buyerCurrency" name="m_price_currency" readonly disabled></input>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="inputId" class="table table-bordered">
+                <tbody style="width: 20%">
+                    <tr>
+                        <td class="table-active">시작일</td>
+                        <td>
+                            <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">종료일</td>
+                        <td>
+                            <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod" disabled></input>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td class="table-active">할인율</td>
-                    <td>
-                        <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="0"></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">판매가격(단가)</td>
-                    <td>
-                        <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price"></input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-active">최종 단가</td>
-                    <td>
-                        <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    <tr>
+                        <td class="table-active">할인율</td>
+                        <td>
+                            <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="0"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">판매가격(단가)</td>
+                        <td>
+                            <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price"></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-active">최종 단가</td>
+                        <td>
+                            <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <button class="btn btn-secondary" type="button" id="priceButton">판매가 추가</button>
             <div style="display:none"><button id="resetBtn" type="reset"></button> </div>
         </form>
@@ -182,6 +188,10 @@
         const buyerId = document.querySelector('#buyerId')
         const selected = buyerId.value;
 
+        if (selected) {
+            $("#inputId").css("display","table")
+        }
+
         fetch(ctx + "/price/buyerList/" + selected)
             .then(res => res.json())
             .then(data => {
@@ -195,12 +205,19 @@
         const itemId = document.querySelector('#itemId')
         const selected = itemId.value;
 
+        if (selected) {
+            document.querySelector("#buyerId").disabled = false;
+            document.querySelector("#buyerName").disabled = false;
+            document.querySelector("#buyerCurrency").disabled = false;
+        }
+
         fetch(ctx + "/price/itemList/" + selected)
             .then(res => res.json())
             .then(data => {
                 document.querySelector("#itemName").value = data.m_item_name;
             })
     }
+
 
     // 오늘 날짜 이전 막기
     var now_utc = Date.now() // 지금 날짜를 밀리초로
@@ -375,6 +392,10 @@
         if(input_empty == false) {
             // 초기화
             $('#resetBtn').trigger('click');
+            $("#inputId").css("display","none")
+            document.querySelector("#buyerId").disabled = true;
+            document.querySelector("#buyerName").disabled = true;
+            document.querySelector("#buyerCurrency").disabled = true;
         }
 
     });
@@ -409,6 +430,7 @@
         addDatas.splice(listIndex, 1)
     }
 
+    $("#inputId").css("display","none")
 
 
 
