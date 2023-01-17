@@ -99,14 +99,14 @@
                 <tr>
                     <td class="table-active">종료일</td>
                     <td>
-                        <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod"></input>
+                        <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod" disabled></input>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="table-active">할인율</td>
                     <td>
-                        <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount"></input>
+                        <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="0"></input>
                     </td>
                 </tr>
                 <tr>
@@ -228,6 +228,10 @@
     let addDatas = [];
     // 날짜 중복확인
     document.querySelector("#m_price_startPeriod").addEventListener("change", function () {
+
+        document.querySelector("#m_price_lastPeriod").disabled = false;
+        $("input[name='m_price_lastPeriod'],textarea").val('');
+
         const m_item_id = document.querySelector("#itemId").value;
         const m_buyer_id = document.querySelector("#buyerId").value;
         const m_price_startPeriod = document.querySelector("#m_price_startPeriod").value;
@@ -313,6 +317,7 @@
        const m_price_discount = document.querySelector("#discountInput").value;
        const m_price_price = document.querySelector("#priceInput").value;
        const m_price_lastPrice = document.querySelector("#lastPrice").value;
+
 
 
        // for (let i = 0; i <addData.length; i++) {
