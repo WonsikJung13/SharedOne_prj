@@ -113,6 +113,7 @@ public class OrderController {
     @ResponseBody
     public OrderHeaderDTO orderDetail(@PathVariable int m_order_id) {
         OrderHeaderDTO result = orderService.orderDetail(m_order_id);
+        System.out.println(result);
         return result;
     }
 
@@ -135,9 +136,12 @@ public class OrderController {
 
     }
 
-    @PostMapping("update/{orderId}")
-    public void update(@RequestBody List<Map<String, Object>> data, int orderId) {
-        orderService.updateHeader(data.get(0));
+    @PostMapping("update")
+    @ResponseBody
+    public void update(@RequestBody Map<String, Object> data) {
+//        orderService.updateHeader(data.get(0));
+        System.out.println("11");
+        System.out.println(data);
 
 //        for (int i = 0; i < data.size(); i++) {
 //            data.get(i).put("m_order_id", m_order_id);
@@ -145,6 +149,23 @@ public class OrderController {
 //        }
 
     }
+
+//    수정 등록
+    @PostMapping("ModifyAdd")
+    public void ModifyAdd(@RequestBody List<Map<String, Object>> addData) {
+        System.out.println("11");
+        System.out.println(addData.get(0));
+        System.out.println(addData.get(0).get("m_order_Id"));
+
+        for (int i = 0; i < addData.size(); i++) {
+//            addData.get(i).put("m_order_id", 78);
+            orderService.addDataItem(addData.get(i));
+        }
+
+//        return "redirect:/order/list";
+
+    }
+
 
     @DeleteMapping("deleteList/{order}")
     public void deleteList(@PathVariable String order){

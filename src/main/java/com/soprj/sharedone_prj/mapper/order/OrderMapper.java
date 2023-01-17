@@ -24,7 +24,7 @@ public interface OrderMapper {
 
     int addDataHeader(Map<String, Object> stringObjectMap);
 
-  int addDataItem(Map<String, Object> stringObjectMap);
+    int addDataItem(Map<String, Object> stringObjectMap);
 
   List<OrderDto> orderList(int offset, int records, String type, String keyword);
   List<OrderDto> adminOrderList(int offset, int records, String type, String keyword);
@@ -33,23 +33,23 @@ public interface OrderMapper {
 
 //  List<OrderItemDTO> orderDetail(int m_order_id);
 
-  OrderHeaderDTO orderDetail(int m_order_id);
+    OrderHeaderDTO orderDetail(int m_order_id);
 
-  int orderAccept(OrderDto orderDto);
+    int orderAccept(OrderDto orderDto);
 
-  void orderHeaderRemove(int mOrderId);
+    void orderHeaderRemove(int mOrderId);
 
-  void orderItemRemove(int mOrderId);
+    void orderItemRemove(int mOrderId);
 
-  void storageHeaderAdd(Map<String, Object> stringObjectMap);
+    void storageHeaderAdd(Map<String, Object> stringObjectMap);
 
-  void storageItemAdd(Map<String, Object> stringObjectMap);
+    void storageItemAdd(Map<String, Object> stringObjectMap);
 
     OrderHeaderDTO orderHeader(int mOrderId);
 
-  void updateHeader(Map<String, Object> map);
+    void updateHeader(Map<String, Object> map);
 
-  void updateItem(Map<String, Object> map);
+    void updateItem(Map<String, Object> map);
 
     int orderListDelete(String m_order_itemId, String m_order_id);
 
