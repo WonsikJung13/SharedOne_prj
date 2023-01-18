@@ -14,5 +14,7 @@ public interface ReportMapper {
 
     List<Map<String, String>> sortedReport();
 
+    List<Map<String, String>> buyerReport();
+
 //    void getOrderItem();
 }

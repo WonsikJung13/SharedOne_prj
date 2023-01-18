@@ -27,8 +27,10 @@ public class ReportController {
         model.addAttribute("report", report);
 
         List<Map<String, String>> sortedReport = reportService.sortedReport();
-        System.out.println(sortedReport);
         model.addAttribute("sortedReport", sortedReport);
+
+        List<Map<String, String>> buyerReport = reportService.buyerReport();
+        model.addAttribute("buyerReport", buyerReport);
     }
 
     @RequestMapping("orderReport/{m_order_id}")

@@ -238,8 +238,7 @@
                 <thead style="width: auto">
                 <tr>
                     <th>월별</th>
-                    <th>주문수</th>
-                    <th>주문 총 금액</th>
+                    <th>총 주문수</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -247,7 +246,25 @@
                     <tr>
                         <td>${sortedReport.inserted}</td>
                         <td>${sortedReport.od_count}</td>
-                        <td>${sortedReport.sum}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tableList">
+            <table class="table addList">
+                <thead style="width: auto">
+                <tr>
+                    <th>거래처별</th>
+                    <th>총 주문수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${buyerReport }" var="buyerReport">
+                    <tr>
+                        <td>${buyerReport.m_order_buyerName}</td>
+                        <td>${buyerReport.m_order_id}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -287,7 +304,7 @@
                         <td>${reportHeader.m_order_buyerAddress}</td>
                         <td>${reportHeader.m_order_buyerNumber}</td>
                         <td>${reportHeader.m_order_buyerCurrency}</td>
-                        <td>${reportHeader.m_order_sumPrice}</td>
+                        <td>${reportHeader.decimal}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

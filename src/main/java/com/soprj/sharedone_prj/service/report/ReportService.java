@@ -27,4 +27,8 @@ public class ReportService {
     public List<Map<String, String>> sortedReport() {
         return reportMapper.sortedReport();
     }
+
+    public List<Map<String, String>> buyerReport() {
+        return reportMapper.buyerReport();
+    }
 }

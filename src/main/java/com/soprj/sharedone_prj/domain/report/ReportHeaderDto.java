@@ -3,6 +3,7 @@ package com.soprj.sharedone_prj.domain.report;
 import com.soprj.sharedone_prj.domain.order.OrderItemDTO;
 import lombok.Data;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,4 +25,13 @@ public class ReportHeaderDto {
     private String m_order_memo;
 
     private List<OrderItemDTO> orderItemDTOList;
+
+    public String getDecimal() {
+        DecimalFormat df = new DecimalFormat ("###,###");
+        // df.format() 괄호 안에 본인 데이터 중 천원 단위 필요한 프로퍼티 넣기
+        // 이후 jsp에서 decimal 로 호출하면 됨
+        String result = df.format(m_order_sumPrice);
+
+        return result;
+    }
 }
