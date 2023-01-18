@@ -169,7 +169,7 @@
                 <button type="button" onclick="location.href='${itemList}'" class="accordion-button">제품 등록 관리</button>
             </div>
             <div>
-                <button onclick="location.href='${buyerList}'" class="accordion-button">바이어 등록
+                <button onclick="location.href='${buyerList}'" class="accordion-button">거래처 등록
                     관리
                 </button>
             </div>
@@ -249,7 +249,7 @@
                     <ul class="btn-toggle-nav pb-1 small navbg">
                         <li><a href="${itemList}" class="navbg d-inline-flex text-decoration-none rounded">제품 등록 관리</a>
                         </li>
-                        <li><a href="${buyerList}" class="navbg d-inline-flex text-decoration-none rounded">바이어 등록
+                        <li><a href="${buyerList}" class="navbg d-inline-flex text-decoration-none rounded">거래처 등록
                             관리</a>
                         </li>
                         <li><a href="${priceList}" class="navbg d-inline-flex text-decoration-none rounded">판매가 등록

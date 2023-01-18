@@ -209,7 +209,7 @@
 
 </head>
 <body>
-
+<c:url value="/buyer/remove" var="removeLink"/>
 <div class="row">
     <div class="col-3">
         <my:header></my:header>
@@ -225,6 +225,9 @@
                     <c:url value="/buyer/register" var="registerLink"></c:url>
                     <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">거래처 등록
                     </button>
+                    <form id="removeForm" action="${removeLink }" method="post">
+                        <input type="hidden" id="removeInput" name="m_buyer_id" value="">
+                    </form>
                 </div>
             </div>
 <%--        </div>--%>
@@ -249,27 +252,35 @@
 <%--        </div>--%>
 
 <%--        <div style="display: flex; justify-content : center;">--%>
+    <div style="display: flex;background-color: transparent;width:1000px">
+
+
+        <button class="btn btn-danger removeBtn" style="margin-left: auto;margin-bottom: 10px;"
+                data-bs-toggle="modal"
+                data-bs-target="#removeModal" value="삭제" disabled>선택삭제
+        </button>
+    </div>
             <div class="tableList">
                 <table class="table addList">
                     <tbody>
                     <tr style="font-family: 'LINESeedKR-Bd'">
-                        <th></th>
+                        <th style="width: 50px"><input name="selectAll" type="checkbox" value="selectAll"
+                                                       onclick="selectAll(this)"
+                                                       style="position: relative;top: 14px;background-color: transparent;">
+                        </th>
                         <th>거래처 번호</th>
                         <th>거래처명</th>
                         <th>거래처 나라</th>
                         <th>거래처 주소</th>
                         <th>사업자 번호</th>
                         <th>통화</th>
-                        <th>
-                            <input class="btn btn-danger" type="submit" value="삭제하기" data-bs-toggle="modal"
-                                   data-bs-target="#removeModal">
-                        </th>
+                        <th></th>
                     </tr>
                     <c:forEach items="${buyerList }" var="buyer">
                         <tr>
                             <td>
-                                <input class="itemBox" name="buyerBox" type="checkbox"
-                                       data-m_buyer_id="${buyer.m_buyer_id}" value="${buyer.m_buyer_id}">
+                                <input name="itemBox" type="checkbox" value="${buyer.m_buyer_id}"
+                                       onclick='checkSelectAll(); activeBtn()' style="position: relative;top: 10px">
                             </td>
                             <td id="id">
                                     ${buyer.m_buyer_id  }
@@ -285,8 +296,7 @@
                                 </c:url>
                                 <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>
 
-                                <c:url value="/buyer/remove" var="removeLink">
-                                </c:url>
+
                             </td>
                         </tr>
                     </c:forEach>
@@ -371,26 +381,22 @@
     })
 </script>
 
-<div class="modal fade" id="removeModal" tabindex="-1"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5"
-                    id="exampleModalLabel">삭제 확인</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
+                    확인</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                삭제하시겠습니까?
+                삭제하시겠습니까? 복구할 수 없습니다.
             </div>
             <div class="modal-footer">
-                <button style="font-family: 'LINESeedKR-Bd'" type="button"
-                        class="btn btn-secondary"
+                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
                         data-bs-dismiss="modal">취소
                 </button>
-                <button style="font-family: 'LINESeedKR-Bd'"
-                        id="removeConfirmButton" type="button"
+                <button style="font-family: 'LINESeedKR-Bd'" id="removeButton" type="submit"
                         class="btn btn-danger">확인
                 </button>
             </div>
@@ -398,9 +404,7 @@
     </div>
 </div>
 
-<div style="display: none">
-    <form action="${removeLink}" id="deleteForm" method="post"></form>
-</div>
+
 
 <c:url value="/buyer/register" var="registerLink">
 </c:url>
@@ -419,19 +423,63 @@
         document.querySelector("#searchForm").submit();
     })
 
-    document.querySelector("#removeConfirmButton").addEventListener("click", function () {
-        const buyerSelect = document.querySelectorAll("input[name='buyerBox']:checked");
-        const form = document.forms.deleteForm;
+    // 전체선택 풀기
+    function checkSelectAll() {
+        const selectAll = document.querySelector('input[name="selectAll"]');
+        const checkboxes = document.querySelectorAll('input[name="itemBox"]');
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
 
-        for (const select of buyerSelect){
-            const buyerId = select.dataset.m_buyer_id;
-
-            const buyerIdInput = '<input name="m_buyer_id" value="'+buyerId+'" />'
-
-            form.insertAdjacentHTML('beforeend', buyerIdInput);
+        if (checkboxes.length === checked.length) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
         }
-        form.submit();
-    })
+    }
+
+    // 전체선택 하기
+    function selectAll(selectAll) {
+        const checkboxes = document.getElementsByName('itemBox');
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked
+        })
+        // 전체선택 시 삭제버튼 활성화
+        if (checkboxes.length === 10 && checked.length === 10) {
+            document.querySelector(".removeBtn").disabled = true;
+        } else {
+            document.querySelector(".removeBtn").disabled = false;
+        }
+    }
+
+    // 삭제버튼 활성화
+    function activeBtn() {
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+        if (checked.length > 0) {
+            document.querySelector(".removeBtn").disabled = false;
+        } else {
+            document.querySelector(".removeBtn").disabled = true;
+        }
+    }
+
+    // 삭제 진행
+    function remove() {
+        const length = document.getElementsByName("itemBox").length;
+        const removeIdList = [];
+        for (let i = 0; i < length; i++) {
+            const checkedBox = document.getElementsByName("itemBox")[i].checked;
+
+            if (checkedBox) {
+                const selectId = document.getElementsByName("itemBox")[i].value;
+                removeIdList.push(selectId);
+            }
+        }
+        document.querySelector("#removeInput").value = removeIdList;
+        document.getElementById('removeForm').submit();
+    }
+
+    // 삭제버튼 클릭 시
+    document.querySelector("#removeButton").addEventListener("click", remove);
 
     setTimeout(function (){
         history.go(1)

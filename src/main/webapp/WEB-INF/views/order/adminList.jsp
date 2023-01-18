@@ -333,7 +333,8 @@
         <div class="row justify-content-end">
             <input style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal" type="button"
                    id="removeButton"
-                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger">
+                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger removeBtn" disabled>삭제
+            </button>
         </div>
 
 
@@ -343,7 +344,7 @@
                 <thead style="width: auto">
                 <tr>
                     <th><input name="selectAll" type="checkbox" value="selectAll"
-                               onclick=""
+                               onclick="selectAll(this)"
                                style="position: relative;top: -14px;background-color: transparent;"></th>
                     <th>주문번호</th>
                     <th>거래처코드</th>
@@ -357,13 +358,14 @@
                 <c:forEach items="${orderList }" var="orderList">
                     <tr>
                         <td>
-                            <input class="itemBox" name="itemBox" type="checkbox" value="${orderList.m_order_id}">
+                            <input class="itemBox" name="itemBox" type="checkbox" onclick="checkSelectAll(); activeBtn()" value="${orderList.m_order_id}" style="position: relative;top: 10px">
                         </td>
                         <td onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
                             data-bs-target="#orderConfirm" class="orderDetailBtn">${orderList.m_order_id}</td>
                         <td>${orderList.m_buyer_id}</td>
                         <td>${orderList.m_order_buyerName}</td>
-                        <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>
+<%--                        <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>--%>
+                        <td id="${orderList.m_order_id}">${orderList.m_order_buyerCurrency}&nbsp;</td>
                         <td>${orderList.m_order_status}</td>
                         <td>
                             <c:url value="/order/modify" var="modifyLink" >
@@ -378,6 +380,9 @@
                             </c:if>
                         </td>
                     </tr>
+                    <script>
+                        document.getElementById(${orderList.m_order_id}).innerText += new Intl.NumberFormat().format(${orderList.m_order_sumPrice});
+                    </script>
                 </c:forEach>
                 </tbody>
             </table>
@@ -599,10 +604,14 @@
                 document.querySelector(".buyerCurrency").innerHTML = data.m_order_buyerCurrency;
                 document.querySelector(".buyerNumber").innerHTML = data.m_order_buyerNumber;
                 document.querySelector(".inserted").innerHTML = data.m_order_inserted;
-                document.querySelector(".sumPrice").innerHTML = data.m_order_sumPrice;
+                // document.querySelector(".sumPrice").innerHTML = data.m_order_sumPrice;
                 document.querySelector(".comment").innerHTML = data.m_order_comment;
                 document.querySelector(".orderId").innerHTML = data.m_order_id;
                 document.querySelector(".orderDate").innerHTML = data.m_order_date;
+
+                let currency = data.m_order_buyerCurrency
+                let sum = new Intl.NumberFormat().format(data.m_order_sumPrice);
+                document.querySelector(".sumPrice").innerHTML = currency + " " + sum;
 
                 // 승인권자 메세지 보여주기
                 const memo = data.m_order_memo;
@@ -616,6 +625,10 @@
 
                 if (document.getElementById('itemBody').childElementCount == 0) {
                     for (let i = 0; i < data.orderItemDTOList.length; i++) {
+                        data.orderItemDTOList.at(i).m_order_price
+                        let price = new Intl.NumberFormat().format(data.orderItemDTOList.at(i).m_order_price)
+                        let totalPrice = new Intl.NumberFormat().format(data.orderItemDTOList.at(i).m_order_totalPrice)
+
                         let itemTR = document.createElement("tr")
                         itemTR.setAttribute("class", "orderItemLists")
                         let itemTD1 = document.createElement("td");
@@ -627,11 +640,11 @@
                         let itemTD4 = document.createElement("td");
                         itemTD4.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemManufacturer + ""));
                         let itemTD5 = document.createElement("td");
-                        itemTD5.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_price + ""));
+                        itemTD5.appendChild(document.createTextNode(price + ""));
                         let itemTD6 = document.createElement("td");
                         itemTD6.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_count + ""));
                         let itemTD7 = document.createElement("td");
-                        itemTD7.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_totalPrice + ""));
+                        itemTD7.appendChild(document.createTextNode(totalPrice + ""));
 
                         itemTR.appendChild(itemTD1);
                         itemTR.appendChild(itemTD2);
@@ -648,23 +661,6 @@
             })
     }
 
-    document.querySelector("#removeConfirmButton").addEventListener("click", function () {
-        remove();
-        document.getElementById('removeForm').submit();
-    })
-
-    function remove() {
-        var length = document.getElementsByName("itemBox").length;
-        var removeIdList = [];
-        for (var i = 0; i < length; i++) {
-            var checkedBox = document.getElementsByName("itemBox")[i].checked
-            if (checkedBox) {
-                var selectId = document.getElementsByName("itemBox")[i].value;
-                removeIdList.push(selectId);
-            }
-        }
-        document.querySelector("#removeInput").value = removeIdList;
-    }
 
     // document.querySelector("#removeButton").addEventListener("click", remove);
 
@@ -691,18 +687,88 @@
         });
 
     });
-</script>
-<%--<script>--%>
-<%--    function activeBtn() {--%>
 
-<%--        const checked = document.querySelectorAll('input[name="itemBox"]:checked');--%>
-<%--        console.log(checked.length);--%>
-<%--        if (checked.length == 0) {--%>
-<%--            document.querySelector(".removeBtn").disabled = true;--%>
-<%--        } else {--%>
-<%--            document.querySelector(".removeBtn").disabled = false;--%>
-<%--        }--%>
-<%--    }--%>
-<%--</script>--%>
+    // 삭제버튼 클릭
+    document.querySelector("#removeConfirmButton").addEventListener("click", function () {
+        remove();
+        document.getElementById('removeForm').submit();
+    })
+
+    // 삭제 진행
+    function remove() {
+        var length = document.getElementsByName("itemBox").length;
+        var removeIdList = [];
+        for (var i = 0; i < length; i++) {
+            var checkedBox = document.getElementsByName("itemBox")[i].checked
+            if (checkedBox) {
+                var selectId = document.getElementsByName("itemBox")[i].value;
+                removeIdList.push(selectId);
+            }
+        }
+        document.querySelector("#removeInput").value = removeIdList;
+    }
+
+    // 전체선택 풀기
+    function checkSelectAll() {
+        const selectAll = document.querySelector('input[name="selectAll"]');
+        const checkboxes = document.querySelectorAll('input[name="itemBox"]');
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+
+        if (checkboxes.length === checked.length) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
+        }
+    }
+
+    // 전체선택 하기
+    function selectAll(selectAll) {
+        const checkboxes = document.getElementsByName('itemBox');
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked
+        })
+        // 전체선택 시 삭제버튼 활성화
+        if (checkboxes.length === 10 && checked.length === 10) {
+            document.querySelector(".removeBtn").disabled = true;
+        } else {
+            document.querySelector(".removeBtn").disabled = false;
+        }
+    }
+
+    // 삭제버튼 활성화
+    function activeBtn() {
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+        console.log(checked.length);
+        if (checked.length > 0) {
+            document.querySelector(".removeBtn").disabled = false;
+        } else {
+            document.querySelector(".removeBtn").disabled = true;
+        }
+    }
+
+    // 삭제 진행
+    function remove() {
+        const length = document.getElementsByName("itemBox").length;
+        const removeIdList = [];
+        for (let i = 0; i < length; i++) {
+            const checkedBox = document.getElementsByName("itemBox")[i].checked;
+
+            if (checkedBox) {
+                const selectId = document.getElementsByName("itemBox")[i].value;
+                console.log("selectId: " + selectId);
+                removeIdList.push(selectId);
+            }
+        }
+        console.log(removeIdList)
+        document.querySelector("#removeInput").value = removeIdList;
+        console.log(document.querySelector("#removeInput").value);
+        document.getElementById('removeForm').submit();
+    }
+</script>
+<script>
+
+</script>
 </body>
 </html>

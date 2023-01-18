@@ -4,9 +4,29 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.report.ReportMapper">
+
     <select id="reportList" resultType="com.soprj.sharedone_prj.domain.report.TotalReportDto">
-        select *
-        from m_order_header h LEFT JOIN m_order_item i ON h.m_order_id = i.m_order_id
+        SELECT *
+        FROM m_order_header h LEFT JOIN m_order_item i ON h.m_order_id = i.m_order_id
+        WHERE
+        <trim prefixOverrides="OR">
+            <if test="type == 'all' or type == 'itemId'">
+                OR i.m_order_itemId LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'buyerId'">
+                OR h.m_buyer_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'memberId'">
+                OR h.m_member_id LIKE #{keyword}
+            </if>
+
+            <if test="type == 'all' or type == 'status'">
+                OR h.m_order_status LIKE #{keyword}
+            </if>
+        </trim>
+
     </select>
 
     <select id="reportDetail" resultMap="order">
@@ -55,6 +75,12 @@
     <select id="buyerReport" resultType="java.util.Map">
         SELECT m_order_buyerName, count(m_order_id) AS m_order_id
         FROM m_order_header
-        GROUP BY m_order_buyerName;
+        GROUP BY m_order_buyerName
+        ORDER BY count(m_order_id) DESC LIMIT 3;
+    </select>
+    <select id="memberReport" resultType="java.util.Map">
+        SELECT m_member_id, count(m_order_id) as count
+        FROM m_order_header
+        GROUP BY m_member_id;
     </select>
 </mapper>

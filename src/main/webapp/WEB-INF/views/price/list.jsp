@@ -145,6 +145,7 @@
             background-color: #658e99;
             border: none;
         }
+
         th {
             width: 12%;
         }
@@ -292,7 +293,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${priceList }" var="priceList">
+                <c:forEach items="${priceList }" var="priceList" varStatus="status">
                     <tr>
                         <td style="padding-left: 10px">
                             <input name="priceBox" type="checkbox" onclick="checkSelectAll()" value="${priceList.m_price_id}">
@@ -304,9 +305,11 @@
                         <td>${priceList.m_price_startPeriod }</td>
                         <td>${priceList.m_price_lastPeriod }</td>
                         <td>${priceList.m_price_currency }</td>
-                        <td>${priceList.m_price_discount }</td>
-                        <td>${priceList.m_price_price }</td>
-                        <td>${priceList.m_price_lastPrice }</td>
+                        <td>${priceList.m_price_discount }%</td>
+<%--                        <td>${priceList.m_price_price }</td>--%>
+<%--                        <td>${priceList.m_price_lastPrice }</td>--%>
+                        <td id="${status.index}price"></td>
+                        <td id="${status.index}last"></td>
                         <td>
                             <c:url value="/price/modify" var="modifyLink">
                                 <c:param value="${priceList.m_price_id }" name="m_price_id"/>
@@ -314,78 +317,85 @@
                             <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>
                         </td>
                     </tr>
+                    <script>
+                        var pric = new Intl.NumberFormat().format(${priceList.m_price_price })
+                        var lastpric = new Intl.NumberFormat().format(${priceList.m_price_lastPrice })
+                        document.getElementById('${status.index}price').innerText = pric;
+                        document.getElementById('${status.index}last').innerText = lastpric;
+                    </script>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
 
 
-        <div class="row">
-            <div class="col">
-                <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
-                    <div class="pagination">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="pagination-container" style="width: 1000px; background-color: #eee">
+                        <div class="pagination">
 
-                        <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
-                        <c:if test="${priceDto.currentPageNumber ne 1 }">
-                            <c:url value="/price/list" var="listLink">
-                                <c:param name="page" value="1"/>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-newer">
-                                <i class="bi bi-chevron-double-left"></i>
-                            </a>
-                        </c:if>
+                            <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
+                            <c:if test="${priceDto.currentPageNumber ne 1 }">
+                                <c:url value="/price/list" var="listLink">
+                                    <c:param name="page" value="1"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </c:if>
 
-                        <%-- 이전 버튼--%>
-                        <c:if test="${priceDto.hasPrevButton }">
-                            <c:url value="/price/list" var="listLink">
-                                <c:param name="page" value="${priceDto.jumpPrevPageNumber }"></c:param>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-newer">
-                                <i class="bi bi-chevron-left"></i>
-                            </a>
-                        </c:if>
+                            <%-- 이전 버튼--%>
+                            <c:if test="${priceDto.hasPrevButton }">
+                                <c:url value="/price/list" var="listLink">
+                                    <c:param name="page" value="${priceDto.jumpPrevPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </c:if>
 
-                        <c:forEach begin="${priceDto.leftPageNumber}" end="${priceDto.rightPageNumber}" var="pageNumber">
-                            <c:url value="/price/list" var="listLink">
-                                <c:param name="page" value="${pageNumber }"/>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <span class="pagination-inner">
-                                <%-- 현재페이지에 active 클래스 추가 --%>
-                                <a class="${priceDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''} }" href="${listLink}">${pageNumber}</a>
-                            </span>
-                        </c:forEach>
+                            <c:forEach begin="${priceDto.leftPageNumber}" end="${priceDto.rightPageNumber}" var="pageNumber">
+                                <c:url value="/price/list" var="listLink">
+                                    <c:param name="page" value="${pageNumber }"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <span class="pagination-inner">
+                                    <%-- 현재페이지에 active 클래스 추가 --%>
+                                    <a class="${priceDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''} }" href="${listLink}">${pageNumber}</a>
+                                </span>
+                            </c:forEach>
 
-                        <%-- 다음 버튼 --%>
-                        <c:if test="${priceDto.hasNextButton }">
-                            <c:url value="/price/list" var="listLink">
-                                <c:param name="page" value="${priceDto.jumpNextPageNumber }"></c:param>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-older">
-                                <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </c:if>
+                            <%-- 다음 버튼 --%>
+                            <c:if test="${priceDto.hasNextButton }">
+                                <c:url value="/price/list" var="listLink">
+                                    <c:param name="page" value="${priceDto.jumpNextPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </c:if>
 
-                        <%-- 맨뒤 버튼 --%>
-                        <c:if test="${priceDto.currentPageNumber ne priceDto.lastPageNumber }">
-                            <c:url value="/price/list" var="listLink">
-                                <c:param value="${priceDto.lastPageNumber }" name="page"/>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-older">
-                                <i class="bi bi-chevron-double-right"></i>
-                            </a>
-                        </c:if>
-                    </div>
-                </nav>
+                            <%-- 맨뒤 버튼 --%>
+                            <c:if test="${priceDto.currentPageNumber ne priceDto.lastPageNumber }">
+                                <c:url value="/price/list" var="listLink">
+                                    <c:param value="${priceDto.lastPageNumber }" name="page"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </c:if>
+                        </div>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
