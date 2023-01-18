@@ -228,8 +228,8 @@
             .then(data => {
                 if (data.message == null) {
                     m_price_lastPeriod.max = data.maxDate;
-                    console.log(m_price_lastPeriod.max)
                 } else {
+                    console.log(m_price_lastPeriod.max)
                     alert(data.message)
                     $("input[type='date'],textarea").val('');
                     document.querySelector("#m_price_lastPeriod").disabled = true;
