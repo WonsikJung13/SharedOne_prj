@@ -245,12 +245,12 @@
                 <td class="table-active">판매가격</td>
                 <td>
                     <input class="form-control listPrice" type="text" placeholder="판매가격"
-                           aria-label="default input example">
+                           aria-label="default input example" onkeypress='return checkNumber(event)'>
                 </td>
                 <td class="table-active">주문수량</td>
                 <td>
                     <input id="orderCount" class="form-control" type="text" placeholder="수량을 입력하세요."
-                           aria-label="default input example">
+                           aria-label="default input example" onkeypress='return checkNumber(event)'>
                 </td>
             </tr>
             <tr>
@@ -703,6 +703,16 @@
             document.querySelector('.addBtn').removeAttribute("disabled")
         }
     })
+
+    function checkNumber(event) {
+        if(event.key === '.'
+            || event.key === '-'
+            || event.key >= 0 && event.key <= 9) {
+            return true;
+        }
+
+        return false;
+    }
 
 </script>
 </body>
