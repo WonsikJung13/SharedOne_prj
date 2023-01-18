@@ -21,6 +21,11 @@
         tr {
             height: 55px;
         }
+
+        .table-active{
+            width: 40%;
+            line-height: 35px;
+        }
     </style>
 </head>
 <body>
@@ -29,7 +34,7 @@
         <my:header></my:header>
     </div>
         <div class="col">
-            <h1>판매가격 수정하기</h1>
+            <h1 style="margin-top: 20px">판매가격 수정하기</h1>
 
             <form action="" method="post" enctype="multipart/form-data" id="formId">
                 <table class="table table-bordered">
@@ -37,33 +42,33 @@
                         <tr>
                             <td class="table-active">제품코드</td>
                             <td>
-                                <input class="form-select" id="itemId" type="text" name="m_item_id" list="itemList" value="${price.m_item_id}"
-                                       placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()">
-                                    <datalist id="itemList">
-                                        <c:forEach items="${itemList}" var="itemList">
-                                            <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>
-                                        </c:forEach>
+                                <input class="form-control" id="itemId" type="text" name="m_item_id" value="${price.m_item_id}"
+                                       placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()" readonly>
+<%--                                    <datalist id="itemList">--%>
+<%--                                        <c:forEach items="${itemList}" var="itemList">--%>
+<%--                                            <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>--%>
+<%--                                        </c:forEach>--%>
 
-                                    </datalist>
+<%--                                    </datalist>--%>
                                 </input>
                             </td>
                         </tr>
                         <tr>
                             <td class="table-active">제품명</td>
                             <td>
-                                <input class="form-control" id="itemName" value="${price.m_item_name}"></input>
+                                <input class="form-control" id="itemName" value="${price.m_item_name}" readonly></input>
                             </td>
                         </tr>
                         <tr>
                             <td class="table-active">거래처 코드</td>
                             <td>
-                                <input class="form-select" id="buyerId" type="text" name="m_buyer_id" list="buyerList" value="${price.m_buyer_id}"
-                                       placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()">
-                                    <datalist id="buyerList">
-                                        <c:forEach items="${buyerList}" var="buyerList" >
-                                            <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                                        </c:forEach>
-                                    </datalist>
+                                <input class="form-control" id="buyerId" type="text" name="m_buyer_id" value="${price.m_buyer_id}"
+                                       placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()" readonly>
+<%--                                    <datalist id="buyerList">--%>
+<%--                                        <c:forEach items="${buyerList}" var="buyerList" >--%>
+<%--                                            <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>--%>
+<%--                                        </c:forEach>--%>
+<%--                                    </datalist>--%>
                                 </input>
                             </td>
                         </tr>
@@ -87,13 +92,13 @@
                     <tr>
                         <td class="table-active">시작일</td>
                         <td>
-                            <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod" value="${price.m_price_startPeriod}"></input>
+                            <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod" value="${price.m_price_startPeriod}" readonly></input>
                         </td>
                     </tr>
                     <tr>
                         <td class="table-active">종료일</td>
                         <td>
-                            <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod" value="${price.m_price_lastPeriod}" disabled></input>
+                            <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod" value="${price.m_price_lastPeriod}" readonly></input>
                         </td>
                     </tr>
 
@@ -117,7 +122,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-secondary" id="priceSubmitButton">판매가 수정</button>
+                <button class="btn btn-secondary" id="priceSubmitButton" type="button">판매가 수정</button>
             </form>
         </div>
     </div>
@@ -223,6 +228,7 @@
                 } else {
                     alert(data.message)
                     $("input[type='date'],textarea").val('');
+                    document.querySelector("#m_price_lastPeriod").disabled = true;
                 }
             })
     })
@@ -239,6 +245,7 @@
             e.preventDefault();
         }
         if(input_empty == false) {
+            alert("판매가 수정이 완료되었습니다.")
             document.querySelector("#formId").submit();
         }
     });
