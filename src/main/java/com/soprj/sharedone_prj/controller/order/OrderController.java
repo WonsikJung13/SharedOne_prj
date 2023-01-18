@@ -160,20 +160,19 @@ public class OrderController {
     // 오더 아이템 부분 update 쿼리
     @PostMapping("ModifyAdd")
     public void ModifyAddItem(@RequestBody List<Map<String, Object>> addItem) {
-        if (addItem.size() > 0) {
-            for (int i = 0; i < addItem.size(); i++) {
-                orderService.addModifyItem(addItem.get(i));
-                System.out.println(addItem.get(i));
-            }
-        }
+//        if (addItem.size() > 0) {
+//            for (int i = 0; i < addItem.size(); i++) {
+//                orderService.addModifyItem(addItem.get(i));
+//                System.out.println(addItem.get(i));
+//            }
+//        }
         System.out.println("additem");
-        System.out.println(addItem.get(0));
     }
 
     @PostMapping("ModifyHeader")
     public void ModifyHeader(@RequestBody Map<String, Object> header) {
         System.out.println("Header");
-        orderService.updateHeader(header);
+//        orderService.updateHeader(header);
         System.out.println(header);
     }
 
@@ -182,6 +181,7 @@ public class OrderController {
         System.out.println("오긴와?");
         for (int i = 0; i < data.size(); i++) {
             System.out.println(data.get(i).get(0));
+            orderService.deleteItem(data.get(i).get(0));
         }
         return null;
     }

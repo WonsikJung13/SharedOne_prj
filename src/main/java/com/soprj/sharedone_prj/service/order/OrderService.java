@@ -163,4 +163,8 @@ public class OrderService {
     public void addModifyItem(Map<String, Object> stringObjectMap) {
         mapper.addModifyItem(stringObjectMap);
     }
+
+    public void deleteItem(Map<String, Object> stringObjectMap) {
+        mapper.deleteItem(stringObjectMap);
+    }
 }

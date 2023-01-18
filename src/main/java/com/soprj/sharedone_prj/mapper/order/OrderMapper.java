@@ -58,4 +58,5 @@ public interface OrderMapper {
 
     void addModifyItem(Map<String , Object> stringObjectMap);
 
+    void deleteItem(Map<String, Object> stringObjectMap);
 }
