@@ -300,7 +300,7 @@
                             <td>${orderList.m_buyer_id}</td>
                             <td>${orderList.m_order_buyerName}</td>
                             <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>
-                            <td>${orderList.m_order_status}</td>
+                            <td class="orderStatusValue">${orderList.m_order_status}</td>
                         </tr>
                     </c:if>
                 </c:forEach>
@@ -464,7 +464,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="commentStyle requestBtn">
+                        <div class="commentStyle orderView">
                             <h2>메세지</h2>
                             <div>
                                 <textarea id="message" name="m_order_memo"></textarea>
@@ -473,7 +473,7 @@
                     </form>
                 </div>
 
-                <div class="modal-footer requestBtn">
+                <div class="modal-footer statusBtn">
                     <button id="orderReturnButton" class="btn btn-secondary">
                         승인반려
                     </button>
@@ -494,13 +494,11 @@
 
         function orderDetail(target) {
             const m_order_id = target.dataset.value;
-            const data = {m_order_id}
             fetch(`\${ctx}/order/list/` + m_order_id, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 }
-                // body : JSON.stringify(data)
             })
                 .then(res => res.json())
                 .then(data => {
@@ -543,10 +541,21 @@
                             itemTR.appendChild(itemTD7);
                             itemBody.appendChild(itemTR);
                         }
-
-
+                    }
+                    const status = data.m_order_status;
+                    console.log(status);
+                    if( data.m_order_status  === '승인완료'){
+                        document.querySelector(".orderView").style.display = 'none';
+                        document.querySelector(".statusBtn").style.display = 'none';
+                    } else {
+                        document.querySelector(".orderView").style.display = 'block';
+                        document.querySelector(".statusBtn").style.display = 'block';
                     }
                 })
+
+            // const a =document.querySelector(".orderStatusValue").innerText;
+            // console.log(a);
+
         }
 
         // 승인 확인 버튼
@@ -603,6 +612,8 @@
         //         con.style.display = 'block';
         //     }
         // }
+
+
     </script>
 </body>
 </html>
