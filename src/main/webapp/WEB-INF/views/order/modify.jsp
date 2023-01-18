@@ -311,16 +311,18 @@
             </tbody>
         </table>
 
-        <table class="table table-bordered orderTotalPrice">
-            <tbody>
-            <tr>
-                <td class="table-active">승인권자 메세지</td>
-                <td colspan="3" class="inputWidth" id="memo">
-                    ${orderHeader.m_order_memo}
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <c:if test="${orderHeader.m_order_status == '승인반려'}">
+            <table class="table table-bordered ">
+                <tbody>
+                <tr>
+                    <td class="table-active">승인권자 메세지</td>
+                    <td colspan="3" class="inputWidth" id="memo">
+                            ${orderHeader.m_order_memo}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </c:if>
 
 
         <div class="commentStyle">
@@ -330,12 +332,14 @@
             </div>
         </div>
 
+
         <div class="statusBtn">
             <button class="btn btn-secondary storageBtn">취소</button>
             <button class="btn btn-secondary submitBtn">재승인</button>
         </div>
     </div>
 </div>
+인
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
@@ -408,7 +412,6 @@
         }))
 
 
-
         equal = equal.filter((item) => {
             return !(item["m_order_itemId"] == removeId)
         })
@@ -459,8 +462,8 @@
             }
         }, 100)
         setTimeout(function () {
-            for (const a in listo) {
-                if (listo[a].m_order_itemId === selectedItem) {
+            for (const a in equal) {
+                if (equal[a].m_order_itemId === selectedItem) {
                     document.querySelector("#orderItems").value = null;
                     document.querySelector(".itemName").innerHTML = "";
                     document.querySelector(".itemGroup").innerHTML = "";
@@ -544,13 +547,7 @@
 
         const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
 
-        // 추가된 제품 총 금액으로 오더 총 금액 구하기
-        // const totalPrice = document.querySelector(".totalPrice").innerText;
-        // console.log(totalPrice);
         const totalPrice = document.querySelector("#totalPrice").innerText;
-        // console.log(a + parseInt(totalPrice));
-        // let total = a + parseInt(totalPrice);
-
 
         // sumPrice = sumPrice + parseInt(m_order_totalPrice);
         // document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + total;
@@ -610,10 +607,8 @@
 
     })
 
-    // 오더추가
+    // 오더 수정 추가 > 재승인 버튼 클릭
     document.querySelector(".submitBtn").addEventListener("click", function () {
-
-        // const orderTotal = document.querySelector('#orderTotalPrice').innerHTML;
         const m_order_id = document.querySelector("#orderId").value;
         const m_order_comment = document.querySelector("#comment").value;
         const m_order_sumPrice = sumPrice;
@@ -621,13 +616,6 @@
 
         // 헤더 정보
         const header = {m_order_id, m_order_comment, m_order_sumPrice};
-
-        // addData.at(0).m_order_comment = m_order_comment;
-        // console.log(m_order_comment);
-        // console.log(addData);
-
-        // const fetching = {addData, header}
-        // console.log(fetching)
 
         fetch(`\${ctx}/order/ModifyAdd`, {
             method: "POST",
@@ -653,62 +641,18 @@
             body: JSON.stringify(del)
         })
 
-        // const orderList = ctx + '/order/adminList';
-        // setTimeout(function (){
-        //     location.href = orderList;
-        // },300)
+        const orderList = ctx + '/order/adminList';
+        setTimeout(function () {
+            location.href = orderList;
+        }, 300)
 
     })
 
-    // 오더 업데이트, 추가
-    // document.querySelector(".submitBtn").addEventListener("click", function () {
-    //     const m_order_comment = document.getElementById('comment').value;
-    //     const m_order_totalPrice = document.getElementById('orderTotalPrice').innerText;
-    //     const orderId = document.getElementById('orderId').value;
-    //     data = {m_order_comment, m_order_totalPrice, orderId};
-    //
-    //     for(int i = 0; i < orderId.length(); i){
-    //
-    //     }
-    //
-    //     fetch(`\${ctx}/order/update`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify(data)
-    //     })
-    //
-    //     // const orderList = ctx + '/order/adminList';
-    //     // setTimeout(function (){
-    //     //   location.href = orderList;
-    //     // },300)
-    //
-    // })
-
-    // 임시저장
-    // document.querySelector(".storageBtn").addEventListener("click", function () {
-    //   const m_order_comment = document.getElementById('comment').value;
-    //
-    //   for (let i = 0; i < addData.length; i++) {
-    //     addData.at(i).m_order_comment = m_order_comment;
-    //     addData.at(i).m_order_sumPrice = m_order_sumPrice;
-    //   }
-    //
-    //   fetch(`\${ctx}/order/storageAdd`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(addData)
-    //   })
-    //
-    //   const orderList = ctx + '/order/list';
-    //   setTimeout(function (){
-    //     location.href = orderList;
-    //   },300)
-    //
-    // })
+    // 수정 취소 버튼 > 리스트로 이동
+    document.querySelector(".storageBtn").addEventListener("click", function () {
+        const orderList = ctx + '/order/adminList';
+        location.href = orderList;
+    })
 
     // 오더 장바구니 삭제하기
     function clickRemove(target) {
