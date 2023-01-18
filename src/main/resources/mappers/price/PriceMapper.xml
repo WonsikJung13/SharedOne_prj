@@ -229,11 +229,36 @@
 
     </select>
 
+    <select id="getPriceModifyPeriod" resultType="com.soprj.sharedone_prj.domain.price.PriceDto">
+        SELECT
+            m_price_startPeriod,
+            m_price_lastPeriod
+        FROM
+            m_price
+        WHERE m_price_id NOT IN (#{m_price_id})
+            AND m_item_id = #{m_item_id}
+            AND m_buyer_id = #{m_buyer_id}
+            AND m_price_active = 1
+            AND #{m_price_startPeriod} BETWEEN m_price_startPeriod AND m_price_lastPeriod
+    </select>
+
     <select id="getAfterStartPeriod" resultType="java.time.LocalDate">
         <![CDATA[
         SELECT MIN(m_price_startPeriod) maxDate
         FROM m_price
         WHERE m_buyer_id = #{m_buyer_id}
+        AND m_item_id = #{m_item_id}
+        AND m_price_active = 1
+        AND #{m_price_startPeriod} < m_price_startPeriod
+        ]]>
+    </select>
+
+    <select id="getAfterStartModifyPeriod" resultType="java.time.LocalDate">
+        <![CDATA[
+        SELECT MIN(m_price_startPeriod) maxDate
+        FROM m_price
+        WHERE m_price_id NOT IN (#{m_price_id})
+        AND m_buyer_id = #{m_buyer_id}
         AND m_item_id = #{m_item_id}
         AND m_price_active = 1
         AND #{m_price_startPeriod} < m_price_startPeriod

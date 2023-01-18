@@ -4,12 +4,14 @@ import com.soprj.sharedone_prj.domain.price.PriceDto;
 import com.soprj.sharedone_prj.mapper.price.PriceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 public class PriceService {
 
     @Autowired
@@ -95,4 +97,11 @@ public class PriceService {
         return priceMapper.addPriceData(stringObjectMap);
     }
 
+    public List<PriceDto> getPriceModifyPeriod(PriceDto priceDto) {
+        return priceMapper.getPriceModifyPeriod(priceDto);
+    }
+
+    public LocalDate getAfterStartModifyPeriod(PriceDto priceDto) {
+        return priceMapper.getAfterStartModifyPeriod(priceDto);
+    }
 }
