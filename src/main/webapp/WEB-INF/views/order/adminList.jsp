@@ -333,7 +333,7 @@
         <div class="row justify-content-end">
             <input style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal" type="button"
                    id="removeButton"
-                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger removeBtn" disabled>삭제
+                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger removeBtn" disabled>
             </button>
         </div>
 
@@ -675,7 +675,7 @@
 
             }
         });
-
+제
     });
 
     $(document).ready(function(){
@@ -740,7 +740,6 @@
     // 삭제버튼 활성화
     function activeBtn() {
         const checked = document.querySelectorAll('input[name="itemBox"]:checked');
-        console.log(checked.length);
         if (checked.length > 0) {
             document.querySelector(".removeBtn").disabled = false;
         } else {
@@ -757,13 +756,10 @@
 
             if (checkedBox) {
                 const selectId = document.getElementsByName("itemBox")[i].value;
-                console.log("selectId: " + selectId);
                 removeIdList.push(selectId);
             }
         }
-        console.log(removeIdList)
         document.querySelector("#removeInput").value = removeIdList;
-        console.log(document.querySelector("#removeInput").value);
         document.getElementById('removeForm').submit();
     }
 </script>
