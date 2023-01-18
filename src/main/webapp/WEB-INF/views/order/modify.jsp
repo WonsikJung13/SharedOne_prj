@@ -346,6 +346,7 @@
     items();
     let listo = [];
     let del = [];
+    const currency = document.getElementById('buyerCurrency').innerText;
 
     function items() {
         const data = [];
@@ -385,13 +386,15 @@
                     }
 
                     listo.push(dat);
+                    equal.push(dat);
 
                     sumPrice += parseInt(m_order_totalPrice)
-                    document.querySelector("#orderTotalPrice").innerText = sumPrice;
+                    document.querySelector("#orderTotalPrice").innerText = currency + " " + sumPrice;
                 }
             })
     }
 
+    let equal = [];
 
     function rmv(target) {
         const removeId = target.dataset.value;
@@ -403,12 +406,19 @@
         del.push(listo.filter((item) => {
             return (item["m_order_itemId"] == removeId)
         }))
+
+
+
+        equal = equal.filter((item) => {
+            return !(item["m_order_itemId"] == removeId)
+        })
+
         // del = listo.filter((item) => {
         //   return (item["m_order_itemId"] == removeId)
         // })
         //   console.log(del)
         sumPrice -= parseInt(price)
-        document.querySelector("#orderTotalPrice").innerText = sumPrice;
+        document.querySelector("#orderTotalPrice").innerText = currency + " " + sumPrice;
 
     }
 
@@ -437,6 +447,21 @@
         setTimeout(function () {
             for (const a in addData) {
                 if (addData[a].m_order_itemId === selectedItem) {
+                    document.querySelector("#orderItems").value = null;
+                    document.querySelector(".itemName").innerHTML = "";
+                    document.querySelector(".itemGroup").innerHTML = "";
+                    document.querySelector(".manufacturer").innerHTML = "";
+                    document.querySelector("#orderCount").value = null;
+                    document.querySelector("#totalPrice").innerHTML = "";
+                    document.querySelector(".listPrice").value = null;
+                    document.querySelector("#orderCount").setAttribute("disabled", "");
+                }
+            }
+        }, 100)
+        console.log(equal)
+        setTimeout(function () {
+            for (const a in equal) {
+                if (equal[a].m_order_itemId === selectedItem) {
                     document.querySelector("#orderItems").value = null;
                     document.querySelector(".itemName").innerHTML = "";
                     document.querySelector(".itemGroup").innerHTML = "";
@@ -532,7 +557,7 @@
         // document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + total;
 
         sumPrice += parseInt(totalPrice)
-        document.querySelector("#orderTotalPrice").innerText = sumPrice;
+        document.querySelector("#orderTotalPrice").innerText = currency + " " + sumPrice;
 
         const itemId = document.querySelector("#orderItems").value.split("_");
         const m_order_itemId = itemId.at(0);
@@ -694,8 +719,13 @@
 
         const price = target.dataset.price;
 
+        addData = addData.filter((item) => {
+            return !(item["m_order_itemId"] == removeId)
+        })
+        console.log(addData)
+
         sumPrice -= parseInt(price)
-        document.querySelector("#orderTotalPrice").innerText = sumPrice;
+        document.querySelector("#orderTotalPrice").innerText = currency + " " + sumPrice;
 
     }
 
