@@ -33,4 +33,7 @@ public interface PriceMapper {
 
     int addPriceData(Map<String, Object> stringObjectMap);
 
+    List<PriceDto> getPriceModifyPeriod(PriceDto priceDto);
+
+    LocalDate getAfterStartModifyPeriod(PriceDto priceDto);
 }

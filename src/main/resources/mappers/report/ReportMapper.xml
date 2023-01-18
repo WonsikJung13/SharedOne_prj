@@ -4,24 +4,15 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.soprj.sharedone_prj.mapper.report.ReportMapper">
-    <select id="reportList" resultType="com.soprj.sharedone_prj.domain.report.ReportHeaderDto">
-        SELECT * FROM m_order_header
-        ORDER BY m_order_id DESC
+    <select id="reportList" resultType="com.soprj.sharedone_prj.domain.report.TotalReportDto">
+        select *
+        from m_order_header h LEFT JOIN m_order_item i ON h.m_order_id = i.m_order_id
     </select>
 
     <select id="reportDetail" resultMap="order">
         select *
         from m_order_header h LEFT JOIN m_order_item i ON h.m_order_id = i.m_order_id
         where h.m_order_id = #{m_order_id};
-    </select>
-
-    <select id="sortedReport" resultType="map">
-        SELECT SUBSTRING(m_order_inserted,1,7) AS inserted,
-        COUNT(m_order_id) AS od_count, SUM(m_order_sumPrice) sum
-        FROM m_order_header
-        WHERE m_order_inserted NOT LIKE '2022%'
-        GROUP BY SUBSTRING(m_order_inserted,1,7)
-        ORDER BY 1;
     </select>
 
     <resultMap id="order" type="com.soprj.sharedone_prj.domain.report.ReportHeaderDto">
@@ -53,4 +44,17 @@
         </collection>
     </resultMap>
 
+    <select id="sortedReport" resultType="map">
+        SELECT SUBSTRING(m_order_inserted,1,7) AS inserted,
+        COUNT(m_order_id) AS od_count
+        FROM m_order_header
+        WHERE m_order_inserted NOT LIKE '2022%'
+        GROUP BY SUBSTRING(m_order_inserted,1,7)
+        ORDER BY 1;
+    </select>
+    <select id="buyerReport" resultType="java.util.Map">
+        SELECT m_order_buyerName, count(m_order_id) AS m_order_id
+        FROM m_order_header
+        GROUP BY m_order_buyerName;
+    </select>
 </mapper>

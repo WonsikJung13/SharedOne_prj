@@ -1,14 +1,12 @@
 package com.soprj.sharedone_prj.domain.report;
 
-import com.soprj.sharedone_prj.domain.order.OrderItemDTO;
 import lombok.Data;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
-public class ReportHeaderDto {
+public class TotalReportDto {
     private int m_order_id;
     private String m_buyer_id;
     private String m_order_date;
@@ -24,7 +22,14 @@ public class ReportHeaderDto {
     private String m_order_comment;
     private String m_order_memo;
 
-    private List<OrderItemDTO> orderItemDTOList;
+    private int m_order_count;
+    private int m_price_id;
+    private int m_order_price;
+    private String m_order_itemId;
+    private String m_order_itemName;
+    private String m_order_itemGroup;
+    private String m_order_itemManufacturer;
+    private int m_order_totalPrice;
 
     public String getDecimal() {
         DecimalFormat df = new DecimalFormat ("###,###");

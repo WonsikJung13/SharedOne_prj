@@ -118,6 +118,26 @@
         </selectKey>
     </insert>
     <insert id="storageItemAdd">
+        INSERT INTO m_order_item (
+        m_order_id,
+        m_order_count,
+        m_order_price,
+        m_order_itemId,
+        m_order_itemName,
+        m_order_itemGroup,
+        m_order_itemManufacturer,
+        m_order_totalPrice )
+        VALUES (
+        #{m_order_id},
+        #{m_order_count},
+        #{m_order_price},
+        #{m_order_itemId},
+        #{m_order_itemName},
+        #{m_order_itemGroup},
+        #{m_order_itemManufacturer},
+        #{m_order_totalPrice} )
+    </insert>
+    <insert id="addModifyItem">
         INSERT INTO
         m_order_item (
         m_order_id,
@@ -138,7 +158,12 @@
         #{m_order_itemManufacturer},
         #{m_order_totalPrice} )
     </insert>
-
+    <update id="addModifyHeader">
+        UPDATE m_order_header SET
+        m_order_comment = #{m_order_comment},
+        m_order_sumPrice = #{m_order_sumPrice}
+        WHERE m_order_id = #{m_order_id}
+    </update>
 
     <!--주문관리 리스트 보여주기-->
     <select id="orderList" resultType="com.soprj.sharedone_prj.domain.order.OrderDto">
@@ -304,10 +329,9 @@
 
     <update id="updateHeader">
     UPDATE m_order_header SET
-    m_order_inserted = #{m_order_inserted},
     m_order_comment = #{m_order_comment},
     m_order_sumPrice = #{m_order_sumPrice},
-    m_order_status = #{m_order_status}
+    m_order_status = '승인요청'
     WHERE m_order_id = #{m_order_id}
     </update>
 
@@ -327,6 +351,15 @@
         DELETE FROM m_order_item
         WHERE m_order_itemId = #{m_order_itemId}
         AND m_order_id = #{m_order_id}
+    </delete>
+    <delete id="deleteItem">
+        DELETE FROM m_order_item
+        WHERE m_order_itemId = #{m_order_itemId}
+        AND m_order_id = #{m_order_id}
+        AND m_order_itemName = #{m_order_itemName}
+        AND m_order_price = #{m_order_price}
+        AND m_order_count = #{m_order_count}
+        AND m_order_totalPrice = #{m_order_totalPrice}
     </delete>
 
 </mapper>

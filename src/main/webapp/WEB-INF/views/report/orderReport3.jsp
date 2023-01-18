@@ -21,247 +21,186 @@
     <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap"
             rel="stylesheet">
-    <style>
-        .scrolltable {
-            table-layout: fixed;
-            border-collapse: collapse;
-            border: 1px solid #888;
-        }
+    <%--  <style>--%>
+    <%--    .row{--%>
+    <%--      --bs-gutter-x: 0;--%>
+    <%--    }--%>
 
-        .scrolltable thead {
-            background: #a88;
-            color: #fff;
-        }
+    <%--    .itemRegisterBtn {--%>
+    <%--      position: relative;--%>
+    <%--    }--%>
 
-        /* 행 장식 */
-        .scrolltable th, .scrolltable td {
-            padding: 10px;
-            text-align: left;
-            width: 100px;
-            text-align: center;
-            font-size: 0.875em;
-        }
+    <%--    body {--%>
+    <%--      font-family: 'Noto Sans KR', sans-serif;--%>
+    <%--      background-color: #eeeeee;--%>
+    <%--    }--%>
 
-        .scrolltable tbody tr:nth-child(2n+1) {
-            background-color: #f0f0f0;
-        }
+    <%--    .table {--%>
+    <%--      width: 1000px;--%>
+    <%--      --bs-table-bg: #fff;--%>
+    <%--    }--%>
 
-        .row {
-            --bs-gutter-x: 0;
-        }
+    <%--    .table.addList {--%>
+    <%--      --bs-table-bg: #5f7175;--%>
+    <%--      --bs-table-color: #fff;--%>
+    <%--      text-align: center;--%>
+    <%--      line-height: 39px;--%>
+    <%--      font-size: 16px;--%>
+    <%--      width: 1000px;--%>
 
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #eeeeee;
-        }
+    <%--    }--%>
 
-        .table {
-            /*width: 1000px;*/
-            --bs-table-bg: #fff;
-        }
+    <%--    tr {--%>
+    <%--      height: 55px;--%>
+    <%--      width: 1000px;--%>
 
-        .table.addList {
-            --bs-table-bg: #5f7175;
-            --bs-table-color: #fff;
-            text-align: center;
-            line-height: 39px;
-            font-size: 16px;
-            /*width: 1000px;*/
+    <%--    }--%>
 
-        }
+    <%--    h1 {--%>
+    <%--      font-size: 1.7em;--%>
+    <%--      margin: 30px 0;--%>
+    <%--    }--%>
 
-        .table tr {
-            height: 55px;
-            /*width: 1000px;*/
+    <%--    h2 {--%>
+    <%--      font-size: 1.1em;--%>
+    <%--      margin: 20px 0 10px 0;--%>
+    <%--    }--%>
 
-        }
+    <%--    .table td {--%>
+    <%--      /*--bs-table-bg: #fffff;*/--%>
+    <%--      background-color: #fff;--%>
+    <%--      color: #37393b;--%>
+    <%--      text-align: center;--%>
+    <%--      line-height: 39px;--%>
+    <%--      font-size: 16px;--%>
+    <%--      font-weight: bold;--%>
+    <%--      width: 1000px;--%>
 
-        h1 {
-            font-size: 1.7em;
-            margin: 30px 0;
-        }
+    <%--    }--%>
 
-        h2 {
-            font-size: 1.1em;
-            margin: 20px 0 10px 0;
-        }
+    <%--    .tableList {--%>
+    <%--      background-color: #fff;--%>
+    <%--      height: auto;--%>
+    <%--      width: 1000px;--%>
+    <%--      margin-bottom: 100px;--%>
+    <%--    }--%>
 
-        .table td {
-            /*--bs-table-bg: #fffff;*/
-            background-color: #fff;
-            color: #37393b;
-            text-align: center;
-            line-height: 39px;
-            font-size: 16px;
-            font-weight: bold;
-            /*width: 1000px;*/
+    <%--    td a {--%>
+    <%--      color: #37393b;--%>
+    <%--      background-color: #fff;--%>
+    <%--      text-decoration: none;--%>
+    <%--    }--%>
 
-        }
+    <%--    .table button {--%>
+    <%--      background-color: #757575;--%>
+    <%--      color: #fff;--%>
+    <%--      /*border-radius: 0;*/--%>
+    <%--      width: 100px;--%>
+    <%--      --bs-btn-font-weight: 600;--%>
+    <%--      border: none;--%>
+    <%--    }--%>
 
-        .tableList {
-            background-color: #fff;
-            height: auto;
-            width: 1000px;
-            margin-bottom: 50px;
-        }
+    <%--    .searchBox {--%>
+    <%--      background-color: white;--%>
+    <%--      width: 1000px;--%>
+    <%--      padding: 20px 80px 10px 80px;--%>
+    <%--      color: #212529;--%>
+    <%--      font-size: 16px;--%>
+    <%--      font-weight: bold;--%>
+    <%--      margin-bottom: 20px;--%>
+    <%--    }--%>
 
-        .table td a {
-            color: #37393b;
-            background-color: #fff;
-            text-decoration: none;
-        }
+    <%--    form > * {--%>
+    <%--      background-color: white;--%>
+    <%--      position: relative;--%>
+    <%--    }--%>
 
-        .table button {
-            background-color: #757575;
-            color: #fff;
-            /*border-radius: 0;*/
-            width: 100px;
-            --bs-btn-font-weight: 600;
-            border: none;
-        }
+    <%--    form .form-control, .form-select {--%>
+    <%--      height: 40px;--%>
+    <%--      margin: 5px 0 5px 0;--%>
+    <%--      width: 1000px;--%>
 
-        .searchBox {
-            background-color: white;
-            width: 1000px;
-            padding: 20px 80px 10px 80px;
-            color: #212529;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+    <%--    }--%>
 
-        form > * {
-            background-color: white;
-            position: relative;
-        }
+    <%--    .input-group {--%>
+    <%--      margin-bottom: 0;--%>
+    <%--    }--%>
 
-        form .form-control, .form-select {
-            height: 40px;
-            margin: 5px 0 5px 0;
-            width: 1000px;
+    <%--    .itemRegisterBtn {--%>
+    <%--      float: right;--%>
+    <%--      margin-top: 20px;--%>
+    <%--    }--%>
 
-        }
+    <%--    .itemRegisterBtn button {--%>
+    <%--      background-color: #658e99;--%>
+    <%--      text-align: center;--%>
+    <%--      width: 150px;--%>
+    <%--      height: 55px;--%>
+    <%--      color: #fff;--%>
+    <%--      line-height: 39px;--%>
+    <%--      --bs-btn-font-weight: 600;--%>
+    <%--      border: none;--%>
+    <%--    }--%>
 
-        .input-group {
-            margin-bottom: 0;
-        }
+    <%--    form div div, label {--%>
+    <%--      background-color: white;--%>
+    <%--    }--%>
 
-        .itemRegisterBtn {
-            float: right;
-            margin-top: 20px;
-        }
+    <%--    .searchBtn {--%>
+    <%--      width: 100px;--%>
+    <%--      height: 40px;--%>
+    <%--      margin: 5px 0px 5px 0px;--%>
+    <%--      --bs-btn-font-weight: 600;--%>
+    <%--      background-color: #658e99;--%>
+    <%--      border: none;--%>
+    <%--    }--%>
 
-        .itemRegisterBtn button {
-            background-color: #658e99;
-            text-align: center;
-            width: 150px;
-            height: 55px;
-            color: #fff;
-            line-height: 39px;
-            --bs-btn-font-weight: 600;
-            border: none;
-        }
+    <%--    .modal-content {--%>
+    <%--      width: 1000px;--%>
+    <%--    }--%>
 
-        form div div, label {
-            background-color: white;
-        }
+    <%--    .orderModal {--%>
+    <%--      width: 960px;--%>
+    <%--    }--%>
 
-        .searchBtn {
-            width: 100px;
-            height: 40px;
-            margin: 5px 0px 5px 0px;
-            --bs-btn-font-weight: 600;
-            background-color: #658e99;
-            border: none;
-        }
+    <%--    .orderItmeList {--%>
+    <%--      --bs-table-bg: #5f7175;--%>
+    <%--      --bs-table-color: #fff;--%>
+    <%--      text-align: center;--%>
+    <%--      line-height: 39px;--%>
+    <%--      font-size: 16px;--%>
+    <%--      width: 960px;--%>
+    <%--    }--%>
 
-        .modal-content {
-            width: 1000px;
-        }
+    <%--    .tablePrice {--%>
+    <%--      width: 400px;--%>
+    <%--      line-height: 50px;--%>
+    <%--      text-align: center;--%>
+    <%--      font-size: 20px;--%>
+    <%--      font-weight: unset;--%>
+    <%--      color: white;--%>
+    <%--      --bs-table-bg: #5f7175;--%>
+    <%--    }--%>
 
-        .orderModal {
-            width: 960px;
-        }
-
-        .orderItmeList {
-            --bs-table-bg: #5f7175;
-            --bs-table-color: #fff;
-            text-align: center;
-            line-height: 39px;
-            font-size: 16px;
-            width: 960px;
-        }
-
-        .tablePrice {
-            width: 400px;
-            line-height: 50px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: unset;
-            color: white;
-            --bs-table-bg: #5f7175;
-        }
-
-        textarea {
-            height: 140px;
-            width: 960px;
-            background-color: #fff;
-            border-color: #dee2e6;
-        }
-    </style>
+    <%--    textarea {--%>
+    <%--      height: 140px;--%>
+    <%--      width: 960px;--%>
+    <%--      background-color: #fff;--%>
+    <%--      border-color: #dee2e6;--%>
+    <%--    }--%>
+    <%--  </style>--%>
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
-        <my:header></my:header>
+    <div class="col-2">
+        <my:header/>
     </div>
-    <div class="col">
+    <div class="col-9">
         <div style="display: flex;justify-content: space-between;width: 1000px;">
             <div id="orderListTitle">
                 <h1 id="header">주문 현황</h1>
             </div>
         </div>
-
-        <h2>월별 요약</h2>
-        <div class="tableList">
-            <table class="table addList">
-                <thead style="width: auto">
-                <tr>
-                    <th style="width: 500px;">월별</th>
-                    <th style="width: 500px;">총 주문수</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${sortedReport }" var="sortedReport">
-                    <tr>
-                        <td style="width: 500px;">${sortedReport.inserted}</td>
-                        <td style="width: 500px;">${sortedReport.od_count}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-
-        <h2>거래처별 요약</h2>
-        <div class="tableList">
-            <table class="table addList">
-                <thead style="width: auto">
-                <tr>
-                    <th style="width: 500px;">거래처별</th>
-                    <th style="width: 500px;">총 주문수</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${buyerReport }" var="buyerReport">
-                    <tr>
-                        <td style="width: 500px;">${buyerReport.m_order_buyerName}</td>
-                        <td style="width: 500px;">${buyerReport.m_order_id}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-
         <c:url value="/order/list" var="listLink"/>
         <form action="${listLink}" role="search">
             <div class="searchBox ">
@@ -294,9 +233,53 @@
             </div>
         </form>
 
-        <div class="totalList" style="width:100%; height:1000px; overflow:auto">
+        <div>
+            <div class="tableList" style="float: left; width: 50%;">
+                <table class="table addList">
+                    <thead>
+                    <tr>
+                        <th>월별</th>
+                        <th>주문수</th>
+                        <th>주문 총 금액</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${sortedReport }" var="sortedReport">
+                        <tr>
+                            <td>${sortedReport.inserted}</td>
+                            <td>${sortedReport.od_count}</td>
+                            <td>${sortedReport.sum}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tableList" style="float: left; width: 50%;">
+                <table class="table addList">
+                    <thead>
+                    <tr>
+                        <th>월별</th>
+                        <th>주문수</th>
+                        <th>주문 총 금액</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${sortedReport }" var="sortedReport">
+                        <tr>
+                            <td>${sortedReport.inserted}</td>
+                            <td>${sortedReport.od_count}</td>
+                            <td>${sortedReport.sum}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tableList">
             <table class="table table-hover addList">
-                <thead>
+                <thead style="width: auto">
                 <tr>
                     <th>주문번호</th>
                     <th>승인요청일</th>
@@ -308,35 +291,26 @@
                     <th>거래처 국가</th>
                     <th>거래처 주소</th>
                     <th>사업자등록번호</th>
-                    <th>제품코드</th>
-                    <th>제품명</th>
-                    <th>제품그룹</th>
-                    <th>제조사</th>
                     <th>거래 통화</th>
                     <th>주문 총 금액</th>
                 </tr>
                 </thead>
-
                 <tbody>
-                <c:forEach items="${report}" var="list">
+                <c:forEach items="${report }" var="reportHeader">
                     <tr onclick="orderDetail(this)" data-value="${reportHeader.m_order_id}" data-bs-toggle="modal"
-                        data-bs-target="#orderConfirm">
-                        <td>${list.m_order_id}</td>
-                        <td>${list.m_order_date}</td>
-                        <td>${list.m_order_status}</td>
-                        <td>${list.m_member_id}</td>
-                        <td>${list.m_order_inserted}</td>
-                        <td>${list.m_buyer_id}</td>
-                        <td>${list.m_order_buyerName}</td>
-                        <td>${list.m_order_buyerRegion}</td>
-                        <td>${list.m_order_buyerAddress}</td>
-                        <td>${list.m_order_buyerNumber}</td>
-                        <td>${list.m_order_itemId}</td>
-                        <td>${list.m_order_itemName}</td>
-                        <td>${list.m_order_itemGroup}</td>
-                        <td>${list.m_order_itemManufacturer}</td>
-                        <td>${list.m_order_buyerCurrency}</td>
-                        <td>${list.decimal}</td>
+                        data-bs-target="#orderConfirm" value="">
+                        <td>${reportHeader.m_order_id}</td>
+                        <td>${reportHeader.m_order_date}</td>
+                        <td>${reportHeader.m_order_status}</td>
+                        <td>${reportHeader.m_member_id}</td>
+                        <td>${reportHeader.m_order_inserted}</td>
+                        <td>${reportHeader.m_buyer_id}</td>
+                        <td>${reportHeader.m_order_buyerName}</td>
+                        <td>${reportHeader.m_order_buyerRegion}</td>
+                        <td>${reportHeader.m_order_buyerAddress}</td>
+                        <td>${reportHeader.m_order_buyerNumber}</td>
+                        <td>${reportHeader.m_order_buyerCurrency}</td>
+                        <td>${reportHeader.m_order_sumPrice}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

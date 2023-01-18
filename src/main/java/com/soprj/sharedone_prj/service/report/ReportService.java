@@ -1,6 +1,7 @@
 package com.soprj.sharedone_prj.service.report;
 
 import com.soprj.sharedone_prj.domain.report.ReportHeaderDto;
+import com.soprj.sharedone_prj.domain.report.TotalReportDto;
 import com.soprj.sharedone_prj.mapper.report.ReportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class ReportService {
     @Autowired
     private ReportMapper reportMapper;
 
-    public List<ReportHeaderDto> reportList() {
+    public List<TotalReportDto> reportList() {
         return reportMapper.reportList();
     }
 
@@ -26,5 +27,9 @@ public class ReportService {
 
     public List<Map<String, String>> sortedReport() {
         return reportMapper.sortedReport();
+    }
+
+    public List<Map<String, String>> buyerReport() {
+        return reportMapper.buyerReport();
     }
 }

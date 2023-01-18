@@ -44,20 +44,23 @@
     </div>
     <div class="col">
         <h1 style="margin-top: 20px">판매가격 작성</h1>
-        <form action="" method="post" id="formId">
+        <div style="display:flex; width: 900px;">
+            <button style="margin-left: auto; margin-bottom: 10px;" id="resetBtn" class="btn btn-secondary" type="reset">초기화</button>
+        </div>
+        <form action="" method="post" id="formId" name="formId">
             <table class="table table-bordered">
 
                 <tbody>
                     <tr>
                         <td class="table-active">제품코드</td>
                         <td>
-                            <input class="form-select" id="itemId" type="text" name="m_item_id" list="itemList"
+                            <input class="form-control" id="itemId" type="text" name="m_item_id"
                                     placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()">
-                                <datalist id="itemList">
-                                    <c:forEach items="${itemList}" var="itemList">
-                                        <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>
-                                    </c:forEach>
-                                </datalist>
+<%--                                <datalist id="itemList">--%>
+<%--                                    <c:forEach items="${itemList}" var="itemList">--%>
+<%--                                        <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </datalist>--%>
                             </input>
                         </td>
                     </tr>
@@ -70,13 +73,13 @@
                     <tr>
                         <td class="table-active">거래처 코드</td>
                         <td>
-                            <input class="form-select" id="buyerId" type="text" name="m_buyer_id" list="buyerList"
+                            <input class="form-control" id="buyerId" type="text" name="m_buyer_id"
                                    placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()" disabled>
-                            <datalist id="buyerList">
-                                <c:forEach items="${buyerList}" var="buyerList" >
-                                    <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                                </c:forEach>
-                            </datalist>
+<%--                            <datalist id="buyerList">--%>
+<%--                                <c:forEach items="${buyerList}" var="buyerList" >--%>
+<%--                                    <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>--%>
+<%--                                </c:forEach>--%>
+<%--                            </datalist>--%>
                             </input>
                         </td>
                     </tr>
@@ -99,38 +102,38 @@
                     <tr>
                         <td class="table-active">시작일</td>
                         <td>
-                            <input class="form-control" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod"></input>
+                            <input class="form-control reset1" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod"></input>
                         </td>
                     </tr>
                     <tr>
                         <td class="table-active">종료일</td>
                         <td>
-                            <input class="form-control" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod" disabled></input>
+                            <input class="form-control reset1" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod" disabled></input>
                         </td>
                     </tr>
 
                     <tr>
                         <td class="table-active">할인율</td>
                         <td>
-                            <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="0"></input>
+                            <input class="form-control reset1" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="0"></input>
                         </td>
                     </tr>
                     <tr>
                         <td class="table-active">판매가격(단가)</td>
                         <td>
-                            <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price"></input>
+                            <input class="form-control reset1" autocomplete="off" id="priceInput" type="text" name="m_price_price"></input>
                         </td>
                     </tr>
                     <tr>
                         <td class="table-active">최종 단가</td>
                         <td>
-                            <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
+                            <input class="form-control reset1" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-secondary" type="button" id="priceButton">판매가 추가</button>
-            <div style="display:none"><button id="resetBtn" type="reset"></button> </div>
+            <input class="btn btn-secondary" type="button" id="priceButton" value="판매가 추가"></input>
+<%--            <div style="display:none"><button id="resetBtn" type="reset"></button> </div>--%>
         </form>
 
         <h2>추가된 가격</h2>
@@ -168,20 +171,19 @@
     // 할인율 계산하기
     const discountInput = document.querySelector("#discountInput");
     const priceInput = document.querySelector("#priceInput");
-
     const lastPrice = document.querySelector("#lastPrice");
 
-    document.querySelector("#priceInput").addEventListener("keyup", function () {
+    function discount() {
         const discount = discountInput.value;
         const price = priceInput.value;
         const lastprice = price - ((price * discount) / 100);
 
         lastPrice.value = lastprice;
-    })
+    }
 
-    document.querySelector("#discountInput").addEventListener("keyup", function () {
-        lastPrice.value = " ";
-    })
+    document.querySelector("#priceInput").addEventListener("keyup", discount)
+    document.querySelector("#discountInput").addEventListener("keyup", discount)
+
 
     // buyer 이름, 통화 가져오기
     function buyerView() {
@@ -190,6 +192,11 @@
 
         if (selected) {
             $("#inputId").css("display","table")
+            document.querySelector("#itemId").disabled = true;
+            document.querySelector("#itemName").disabled = true;
+            document.querySelector("#buyerId").disabled = true;
+            document.querySelector("#buyerName").disabled = true;
+            document.querySelector("#buyerCurrency").disabled = true;
         }
 
         fetch(ctx + "/price/buyerList/" + selected)
@@ -232,6 +239,7 @@
     var m_price_lastPeriod = document.getElementById('m_price_lastPeriod');
 
 
+    // 날짜 중복확인
     m_price_startPeriod.addEventListener('change', function () {
         m_price_startPeriod.max = null;
         if (m_price_startPeriod.value)
@@ -243,10 +251,10 @@
     }, false);
 
     let addDatas = [];
-    // 날짜 중복확인
     document.querySelector("#m_price_startPeriod").addEventListener("change", function () {
 
         document.querySelector("#m_price_lastPeriod").disabled = false;
+        document.querySelector("#m_price_lastPeriod").max = null;
         $("input[name='m_price_lastPeriod'],textarea").val('');
 
         const m_item_id = document.querySelector("#itemId").value;
@@ -261,7 +269,6 @@
             m_price_lastPeriod
         }
 
-        // addDatas.push(addData);
         fetch(ctx + "/price/checkPeriod", {
             method: "POST",
             headers: {
@@ -272,7 +279,10 @@
             .then(res => res.json())
             .then(data => {
                 if (data.message == null) {
-                    document.querySelector("#m_price_lastPeriod").max = data.maxDate;
+
+                    if (data.maxDate) {
+                        document.querySelector("#m_price_lastPeriod").max = data.maxDate;
+                    }
 
                     let arr = new Array();
                     for (let i = 0; i < addDatas.length; i++) {
@@ -280,9 +290,12 @@
                             if (addDatas.at(i).m_price_startPeriod <= m_price_startPeriod && m_price_startPeriod <= addDatas.at(i).m_price_lastPeriod) {
                                 alert("이미 추가된 판매가의 날짜가 겹칩니다. 다시 확인해주세요")
                                 $("input[type='date'],textarea").val('');
+                                document.querySelector("#m_price_lastPeriod").disabled = true;
                             } else {
                                 if (m_price_startPeriod < addDatas[i].m_price_startPeriod) {
                                     arr.push(addDatas[i].m_price_startPeriod)
+                                } else {
+                                    document.querySelector("#m_price_lastPeriod").max = null;
                                 }
                             }
                         }
@@ -298,10 +311,27 @@
                     let month   = ('0' + (a.getMonth() +  1 )).slice(-2);
                     let day     = ('0' + a.getDate()).slice(-2);
                     dt = year+"-"+month+"-"+day;
-                    document.querySelector("#m_price_lastPeriod").max = dt;
+
+
+                    if (data.maxDate && !dt) {
+                        document.querySelector("#m_price_lastPeriod").max = data.maxDate;
+                    }
+
+                    if (!data.maxDate && dt) {
+                        document.querySelector("#m_price_lastPeriod").max = dt;
+                    }
+
+                    if (data.maxDate < dt) {
+                        document.querySelector("#m_price_lastPeriod").max = data.maxDate;
+                    }
+                    if (dt < data.maxDate) {
+                        document.querySelector("#m_price_lastPeriod").max = dt;
+                    }
+
                 } else {
                     alert(data.message)
                     $("input[type='date'],textarea").val('');
+                    document.querySelector("#m_price_lastPeriod").disabled = true;
                 }
             })
 
@@ -309,6 +339,7 @@
 
     // 추가
     document.querySelector("#priceButton").addEventListener("click", function () {
+
 
         // 빈값 체크
         let emptyIndex = document.querySelector(".addList").tBodies[0].rows.length;
@@ -336,8 +367,7 @@
        const m_price_lastPrice = document.querySelector("#lastPrice").value;
 
 
-
-       // for (let i = 0; i <addData.length; i++) {
+        // for (let i = 0; i <addData.length; i++) {
        //     if (m_item_id == addData.at(i).m_item_id && m_buyer_id == addData.at(i).m_buyer_id) {
        //         // 겹칠 때 -> 바로 안됨
        //         if (addData.at(i).m_price_startPeriod <= m_price_startPeriod && m_price_lastPeriod <= addData.at(i).m_price_lastPeriod) {
@@ -390,12 +420,21 @@
         addDatas.push(data);
 
         if(input_empty == false) {
-            // 초기화
-            $('#resetBtn').trigger('click');
-            $("#inputId").css("display","none")
+            // 일부 초기화
+            $('#formId').find('.reset1').each(function(i){
+                $type = $(this).attr('type');
+                if($type === 'text' || $type === 'date') $(this).val('');
+
+
+            });
+            document.querySelector("#itemId").disabled = true;
+            document.querySelector("#itemName").disabled = true;
             document.querySelector("#buyerId").disabled = true;
             document.querySelector("#buyerName").disabled = true;
             document.querySelector("#buyerCurrency").disabled = true;
+            document.querySelector("#m_price_lastPeriod").disabled = true;
+            document.querySelector("#discountInput").value = 0;
+            document.querySelector("#m_price_startPeriod").max = null;
         }
 
     });
@@ -432,6 +471,15 @@
 
     $("#inputId").css("display","none")
 
+    // 전체 초기화
+    $('#resetBtn').click(function() {
+        $('form').each(function() {
+            this.reset();
+            $("#inputId").css("display","none")
+        });
+        document.querySelector("#itemId").disabled = false;
+        document.querySelector("#itemName").disabled = false;
+    })
 
 
 

@@ -108,6 +108,7 @@ public class PriceController {
         priceDto.setM_price_startPeriod(date);
 
         List<PriceDto> periodList = priceService.getPricePeriod(priceDto);
+
         Map<String, Object> map = new HashMap<>();
         if (periodList.size() == 0) {
             LocalDate result = priceService.getAfterStartPeriod(priceDto);
@@ -123,6 +124,37 @@ public class PriceController {
             // 선택이 불가하다고 전달!
             map.put("message" , "해당 날짜는 선택 불가합니다");
             return map;
+        }
+    }
+
+    @PostMapping("checkModifyPeriod")
+    @ResponseBody
+    public Map<String, Object> checkModifyPeriod(@RequestBody Map<String, Object> priceMap) {
+
+        LocalDate date = LocalDate.parse(priceMap.get("m_price_startPeriod").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        PriceDto priceDto = new PriceDto();
+        priceDto.setM_item_id(priceMap.get("m_item_id").toString());
+        priceDto.setM_buyer_id(priceMap.get("m_buyer_id").toString());
+        priceDto.setM_price_startPeriod(date);
+
+        List<PriceDto> periodList = priceService.getPriceModifyPeriod(priceDto);
+        System.out.println("와? "+periodList);
+        Map<String, Object> map = new HashMap<>();
+        if (periodList.size() == 0) {
+            LocalDate result = priceService.getAfterStartModifyPeriod(priceDto);
+            if (result != null) {
+                String yesterday = result.minusDays(1).toString();
+                map.put("maxDate" , yesterday);
+                return map;
+            } else {
+                map.put("maxDate", null);
+                return map;
+            }
+        } else {
+            // 선택이 불가하다고 전달!
+            map.put("message" , "해당 날짜는 선택 불가합니다");
+            return map;
+
         }
     }
 

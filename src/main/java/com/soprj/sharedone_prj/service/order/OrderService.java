@@ -155,6 +155,16 @@ public class OrderService {
         mapper.orderListDelete(m_order_itemId, m_order_id);
     }
 
+    // 오더 수정 > m_order_header 업데이트
+    public void addModifyHeader(Map<String, Object> map) {
+        mapper.addModifyHeader(map);
+    }
 
+    public void addModifyItem(Map<String, Object> stringObjectMap) {
+        mapper.addModifyItem(stringObjectMap);
+    }
 
+    public void deleteItem(Map<String, Object> stringObjectMap) {
+        mapper.deleteItem(stringObjectMap);
+    }
 }

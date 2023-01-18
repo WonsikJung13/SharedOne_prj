@@ -259,12 +259,7 @@
     <div class="col">
         <div style="display: flex;justify-content: space-between;width: 1000px;">
             <div id="itemListTitle">
-                <h1 id="header">주문 관리 및 등록</h1>
-            </div>
-            <div class="itemRegisterBtn">
-                <c:url value="/order/register" var="registerLink"></c:url>
-                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">주문 작성
-                </button>
+                <h1 id="header">주문 관리 및 승인</h1>
             </div>
         </div>
 
@@ -305,7 +300,7 @@
                             <td>${orderList.m_buyer_id}</td>
                             <td>${orderList.m_order_buyerName}</td>
                             <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>
-                            <td>${orderList.m_order_status}</td>
+                            <td class="orderStatusValue">${orderList.m_order_status}</td>
                         </tr>
                     </c:if>
                 </c:forEach>
@@ -469,7 +464,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="commentStyle">
+                        <div class="commentStyle orderView">
                             <h2>메세지</h2>
                             <div>
                                 <textarea id="message" name="m_order_memo"></textarea>
@@ -478,7 +473,7 @@
                     </form>
                 </div>
 
-                <div class="modal-footer">
+                <div class="modal-footer statusBtn">
                     <button id="orderReturnButton" class="btn btn-secondary">
                         승인반려
                     </button>
@@ -499,13 +494,11 @@
 
         function orderDetail(target) {
             const m_order_id = target.dataset.value;
-            const data = {m_order_id}
             fetch(`\${ctx}/order/list/` + m_order_id, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 }
-                // body : JSON.stringify(data)
             })
                 .then(res => res.json())
                 .then(data => {
@@ -548,10 +541,21 @@
                             itemTR.appendChild(itemTD7);
                             itemBody.appendChild(itemTR);
                         }
-
-
+                    }
+                    const status = data.m_order_status;
+                    console.log(status);
+                    if( data.m_order_status  === '승인완료'){
+                        document.querySelector(".orderView").style.display = 'none';
+                        document.querySelector(".statusBtn").style.display = 'none';
+                    } else {
+                        document.querySelector(".orderView").style.display = 'block';
+                        document.querySelector(".statusBtn").style.display = 'block';
                     }
                 })
+
+            // const a =document.querySelector(".orderStatusValue").innerText;
+            // console.log(a);
+
         }
 
         // 승인 확인 버튼
@@ -598,6 +602,18 @@
                 document.querySelector(".removeBtn").disabled = false;
             }
         }
+        // doDisplay();
+        // // 승인 요청일때 메세지 작성, 승인완료반려 버튼 보여줌
+        // function doDisplay(){
+        //     var con =  document.querySelector(".requestBtn");
+        //     if(m_order_status == '승인완료'){
+        //         con.style.display = 'none';
+        //     }else{
+        //         con.style.display = 'block';
+        //     }
+        // }
+
+
     </script>
 </body>
 </html>

@@ -281,7 +281,7 @@
         </div>
 
         <div class="searchBox">
-        <c:url value="/order/list" var="listLink"></c:url>
+        <c:url value="/order/adminList" var="listLink"></c:url>
             <form action="${listLink}" class="d-flex" role="search">
                 <div class="input-group" style="float: none">
                     <select name="t" class="form-select">
