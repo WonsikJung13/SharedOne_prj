@@ -72,7 +72,7 @@
 
         .tableList {
             background-color: #fff;
-            height: 950px;
+            height: 80%;
             width: 1000px;
         }
 
@@ -147,7 +147,7 @@
         }
 
         th {
-            width: 12%;
+            width: 13%;
         }
 
         /*페이지네이션*/
@@ -281,12 +281,12 @@
                     </th>
                     <th>제품코드</th>
                     <th>제품명</th>
-                    <th>거래처코드</th>
+                    <th style="width: 14%">거래처코드</th>
                     <th>거래처명</th>
-                    <th>시작일</th>
-                    <th>종료일</th>
+                    <th style="width: 16%">시작일</th>
+                    <th style="width: 16%">종료일</th>
                     <th style="width: 7%">통화</th>
-                    <th style="width: 8%">할인율</th>
+                    <th style="width: 10%">할인율</th>
                     <th>금액</th>
                     <th>최종금액</th>
                     <th></th>
@@ -331,7 +331,7 @@
 
             <div class="row">
                 <div class="col">
-                    <nav aria-label="pagination-container" style="width: 1000px; background-color: #eee">
+                    <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
                         <div class="pagination">
 
                             <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
