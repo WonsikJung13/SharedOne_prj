@@ -299,10 +299,14 @@
                             <td>${orderList.m_order_id}</td>
                             <td>${orderList.m_buyer_id}</td>
                             <td>${orderList.m_order_buyerName}</td>
-                            <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>
+<%--                            <td>${orderList.m_order_buyerCurrency}&nbsp;${orderList.m_order_sumPrice}</td>--%>
+                            <td id="${orderList.m_order_id}">${orderList.m_order_buyerCurrency}&nbsp;</td>
                             <td class="orderStatusValue">${orderList.m_order_status}</td>
                         </tr>
                     </c:if>
+                    <script>
+                        document.getElementById(${orderList.m_order_id}).innerText += new Intl.NumberFormat().format(${orderList.m_order_sumPrice});
+                    </script>
                 </c:forEach>
                 </tbody>
             </table>
@@ -508,13 +512,19 @@
                     document.querySelector(".buyerCurrency").innerHTML = data.m_order_buyerCurrency;
                     document.querySelector(".buyerNumber").innerHTML = data.m_order_buyerNumber;
                     document.querySelector(".inserted").innerHTML = data.m_order_inserted;
-                    document.querySelector(".sumPrice").innerHTML = data.m_order_sumPrice;
+                    let currency = data.m_order_buyerCurrency
+                    let sum = new Intl.NumberFormat().format(data.m_order_sumPrice);
+                    document.querySelector(".sumPrice").innerHTML = currency + " " + sum;
                     document.querySelector(".comment").innerHTML = data.m_order_comment;
                     document.querySelector(".orderId").innerHTML = data.m_order_id;
                     document.querySelector(".orderDate").innerHTML = data.m_order_date;
 
                     if (document.getElementById('itemBody').childElementCount == 0) {
                         for (let i = 0; i < data.orderItemDTOList.length; i++) {
+                            data.orderItemDTOList.at(i).m_order_price
+                            let price = new Intl.NumberFormat().format(data.orderItemDTOList.at(i).m_order_price)
+                            let totalPrice = new Intl.NumberFormat().format(data.orderItemDTOList.at(i).m_order_totalPrice)
+
                             let itemTR = document.createElement("tr")
                             itemTR.setAttribute("class", "orderItemLists")
                             let itemTD1 = document.createElement("td");
@@ -526,11 +536,11 @@
                             let itemTD4 = document.createElement("td");
                             itemTD4.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemManufacturer + ""));
                             let itemTD5 = document.createElement("td");
-                            itemTD5.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_price + ""));
+                            itemTD5.appendChild(document.createTextNode(price + ""));
                             let itemTD6 = document.createElement("td");
                             itemTD6.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_count + ""));
                             let itemTD7 = document.createElement("td");
-                            itemTD7.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_totalPrice + ""));
+                            itemTD7.appendChild(document.createTextNode(totalPrice + ""));
 
                             itemTR.appendChild(itemTD1);
                             itemTR.appendChild(itemTD2);

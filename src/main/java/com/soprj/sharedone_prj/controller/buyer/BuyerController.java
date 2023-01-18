@@ -63,8 +63,8 @@ public class BuyerController {
 
     @PostMapping("remove")
     public String remove(RedirectAttributes rttr,
-                         String m_buyer_id) {
-        String[] buyer = m_buyer_id.split(",");
+    @RequestParam Map<String,String> m_buyer_id) {
+        String[] buyer = m_buyer_id.get("m_buyer_id").split(",");
         for (int i = 0; i < buyer.length; i++){
             buyerService.remove(buyer[i]);
         }
