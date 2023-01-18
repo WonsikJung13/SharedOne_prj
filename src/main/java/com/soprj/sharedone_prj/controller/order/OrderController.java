@@ -69,7 +69,6 @@ public class OrderController {
     public String Add(@RequestBody List<Map<String, Object>> addData) {
 
         orderService.addDataHeader(addData.get(0));
-        System.out.println(addData);
 
         // id 값 추출 코드
         ObjectMapper mapper = new ObjectMapper();
@@ -87,7 +86,6 @@ public class OrderController {
     //  장바구니 오더 임시저장
     @PostMapping("storageAdd")
     public String storageAdd(@RequestBody List<Map<String, Object>> addData) {
-        System.out.println("애드" + addData);
         orderService.storageHeaderAdd(addData.get(0));
         ObjectMapper mapper = new ObjectMapper();
         OrderDto orderDto = mapper.convertValue(addData.get(0), OrderDto.class);
@@ -117,7 +115,6 @@ public class OrderController {
     @ResponseBody
     public OrderHeaderDTO orderDetail(@PathVariable int m_order_id) {
         OrderHeaderDTO result = orderService.orderDetail(m_order_id);
-        System.out.println(result);
         return result;
     }
 
@@ -141,20 +138,6 @@ public class OrderController {
 
     }
 
-    @PostMapping("update")
-    @ResponseBody
-    public void update(@RequestBody Map<String, Object> data) {
-//        orderService.updateHeader(data.get(0));
-        System.out.println("11");
-        System.out.println(data);
-
-//        for (int i = 0; i < data.size(); i++) {
-//            data.get(i).put("m_order_id", m_order_id);
-//            orderService.updateItem(data.get(i));
-//        }
-
-    }
-
 
     // 오더 아이템 부분 update 쿼리
     @PostMapping("ModifyAdd")
@@ -162,24 +145,18 @@ public class OrderController {
         if (addItem.size() > 0) {
             for (int i = 0; i < addItem.size(); i++) {
                 orderService.addModifyItem(addItem.get(i));
-                System.out.println(addItem.get(i));
             }
         }
-        System.out.println("additem");
     }
 
     @PostMapping("ModifyHeader")
     public void ModifyHeader(@RequestBody Map<String, Object> header) {
-        System.out.println("Header");
         orderService.updateHeader(header);
-        System.out.println(header);
     }
 
     @PostMapping("modify")
     public List<OrderItemDTO> itemz(@RequestBody List<List<Map<String, Object>>> data) {
-        System.out.println("오긴와?");
         for (int i = 0; i < data.size(); i++) {
-            System.out.println(data.get(i).get(0));
             orderService.deleteItem(data.get(i).get(0));
         }
         return null;

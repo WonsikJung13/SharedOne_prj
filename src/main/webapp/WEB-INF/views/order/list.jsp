@@ -562,7 +562,6 @@
                         }
                     }
                     const status = data.m_order_status;
-                    console.log(status);
                     if( data.m_order_status  === '승인완료'){
                         document.querySelector(".orderView").style.display = 'none';
                         document.querySelector(".statusBtn").style.display = 'none';
@@ -573,7 +572,6 @@
                 })
 
             // const a =document.querySelector(".orderStatusValue").innerText;
-            // console.log(a);
 
         }
 
@@ -592,7 +590,6 @@
 
             //오더 상태 input value
             document.querySelector("#m_order_status").value = "승인반려";
-            console.log(document.querySelector("#m_order_status").value);
 
             document.querySelector("#orderForm").submit();
         })
@@ -614,7 +611,6 @@
         function activeBtn() {
 
             const checked = document.querySelectorAll('input[name="itemBox"]:checked');
-            console.log(checked.length);
             if (checked.length == 0) {
                 document.querySelector(".removeBtn").disabled = true;
             } else {
