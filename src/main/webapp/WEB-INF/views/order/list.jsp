@@ -23,8 +23,15 @@
             rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
+
+        body {
+            font-family: 'Gothic A1', sans-serif;
+            font-weight: 200;
+        }
         .row {
             --bs-gutter-x: 0;
         }
@@ -257,7 +264,9 @@
         <my:header></my:header>
     </div>
     <div class="col">
-        <div style="display: flex;justify-content: space-between;width: 1000px;">
+<%--        <div class="d-flex justify-content-center">--%>
+<%--        <div style="display: flex;justify-content: space-between;width: 1000px;">--%>
+        <div>
             <div id="itemListTitle">
                 <h1 id="header">주문 관리 및 승인</h1>
             </div>

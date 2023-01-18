@@ -23,8 +23,15 @@
             rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
+
+        body {
+            font-family: 'Gothic A1', sans-serif;
+            font-weight: 200;
+        }
         .row {
             --bs-gutter-x: 0;
         }
@@ -39,7 +46,7 @@
         }
 
         .table {
-            width: 1000px;
+            /*width: 1000px;*/
             --bs-table-bg: #fff;
         }
 
@@ -49,13 +56,13 @@
             text-align: center;
             line-height: 39px;
             font-size: 16px;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
         tr {
             height: 55px;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
@@ -77,14 +84,14 @@
             line-height: 39px;
             font-size: 16px;
             font-weight: bold;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
         .tableList {
             background-color: #fff;
             height: 672px;
-            width: 1000px;
+            /*width: 1000px;*/
             /*margin-bottom: 100px;*/
         }
 
@@ -95,9 +102,7 @@
         }
 
         .table button {
-            background-color: #757575;
             color: #fff;
-            /*border-radius: 0;*/
             width: 100px;
             --bs-btn-font-weight: 600;
             border: none;
@@ -105,7 +110,7 @@
 
         .searchBox {
             background-color: white;
-            width: 1000px;
+            /*width: 1000px;*/
             padding: 20px 80px 10px 80px;
             color: #212529;
             font-size: 16px;
@@ -121,7 +126,7 @@
         form .form-control, .form-select {
             height: 40px;
             margin: 5px 0 5px 0;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
@@ -159,7 +164,7 @@
         }
 
         .orderPage {
-            width: 1000px;
+            /*width: 1000px;*/
         }
 
         .orderModal {
@@ -202,6 +207,7 @@
 
         .itemBox {
             line-height: 55px;
+            padding: 20px;
         }
 
         .pagination {
@@ -237,45 +243,71 @@
         }
 
         .pagination a:hover,
-        .pagination a .pagination-active {
+        .pagination,
+        .pagination-active {
             color: #fff;
         }
 
         .pagination a:hover:before,
-        .pagination a .pagination-active:before {
+        .pagination,
+        .pagination-active:before {
             transform: scale(1);
         }
 
-        .pagination .pagination-active {
+        .pagination,
+        .pagination-active {
             color: #fff;
         }
 
-        .pagination .pagination-active:before {
+        .pagination,
+        .pagination-active:before {
             transform: scale(1);
         }
 
-        .pagination-newer, .pagination-older {
+        .pagination-newer,
+        .pagination-older {
             border-style: solid;
             border-width: 0;
             border-radius: 20px;
             padding: 9px 10px !important;
             margin-bottom: 13px;
         }
+
+        .modifyBtn{
+            width: 100px;
+        }
+
+        .btnStyle{
+            background-color: #598f9b;
+        }
+
+        .btnStyle:hover{
+            background-color: #52727b;
+            color : white;
+        }
+        .container{
+            /*margin-left: 100px;*/
+            /*justify-content: center;*/
+        }
     </style>
 </head>
-<body>
+<div>
+
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
+
     <div class="col">
-        <div style="display: flex;justify-content: space-between;width: 1000px;">
-            <div id="itemListTitle">
-                <h1 id="header">주문 관리 및 등록</h1>
+        <div class="container">
+<%--        <div style="display: flex;justify-content: space-between;width: 1000px;">--%>
+        <div class="row justify-content-between">
+            <div class="col-4">
+                <h1>주문 관리 및 등록</h1>
             </div>
-            <div class="itemRegisterBtn">
+            <div class="itemRegisterBtn col-auto">
                 <c:url value="/order/register" var="registerLink"></c:url>
-                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">주문 작성
+                <button type="button" class="btn btn-secondary btnStyle" onclick="location.href='${registerLink}' ">주문 작성
                 </button>
             </div>
         </div>
@@ -292,14 +324,14 @@
                     </select>
                     <input value="${param.q}" type="search" class="form-control" placeholder="Search"
                            aria-label="Search" name="q" style="width:450px">
-                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
+                    <button class="btn btn-secondary searchBtn btnStyle" type="submit" value="검색">검색</button>
                 </div>
             </form>
         </div>
 
         <%--   삭제 버튼    --%>
-        <div class="row justify-content-end" style="width: 1000px">
-            <button style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal" type="button"
+        <div class="row justify-content-end">
+            <input style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal" type="button"
                    id="removeButton"
                    data-bs-target="#removeModal" value="삭제" class="btn btn-danger removeBtn" disabled>삭제
             </button>
@@ -341,10 +373,10 @@
                             </c:url>
                             <c:if test="${orderList.m_order_status == '생성중' || orderList.m_order_status == '승인취소'
                             || orderList.m_order_status == '승인반려'}">
-                            <button class="btn" onclick="location.href='${modifyLink}' ">수정</button>
+                            <button class="btn btnStyle" onclick="location.href='${modifyLink}' ">수정</button>
                             </c:if>
                             <c:if test="${orderList.m_order_status == '승인완료' || orderList.m_order_status == '승인요청' }">
-                                <a class="btn btn-secondary disabled" role="button" aria-disabled="true">수정</a>
+                                <a class="btn btn-secondary disabled modifyBtn" role="button" aria-disabled="true">수정</a>
                             </c:if>
                         </td>
                     </tr>
@@ -357,7 +389,7 @@
         </div>
             <div class="row">
                 <div class="col">
-                    <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
+                    <nav aria-label="pagination-container" style="background-color: #fff">
                         <div class="pagination">
 
                             <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
@@ -426,7 +458,7 @@
                     </nav>
                 </div>
             </div>
-    </div>
+
 
         <%--오더리스트 삭제하기--%>
         <c:url value="/order/remove" var="removeLink"/>
@@ -455,13 +487,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
 
         <%--주문서 확인하기--%>
         <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
@@ -548,7 +573,11 @@
             </div>
         </div>
     </div>
+
+    </div>
 </div>
+</div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

@@ -21,10 +21,14 @@
     <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap"
             rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Gothic A1', sans-serif;
+            font-weight: 200;
             background-color: #eeeeee;
         }
 
