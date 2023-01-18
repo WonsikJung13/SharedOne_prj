@@ -197,7 +197,7 @@
                 </tr>
                 <tr>
                     <th class="table-active">사업자번호</th>
-                    <th><input type="text" class="form-control form300" name="m_buyer_number" id="buyerIdInput">
+                    <th><input type="text" class="form-control form300" name="m_buyer_number" id="buyerIdInput" onkeypress='return checkNumber(event)'>
                         <p id="inputText" style="background-color: white"></p></th>
                 </tr>
             </form>
@@ -353,6 +353,16 @@
             location.href = buyerList;
         },300)
     })
+
+    function checkNumber(event) {
+        if(event.key === '.'
+            || event.key === '-'
+            || event.key >= 0 && event.key <= 9) {
+            return true;
+        }
+
+        return false;
+    }
 
 
 </script>
