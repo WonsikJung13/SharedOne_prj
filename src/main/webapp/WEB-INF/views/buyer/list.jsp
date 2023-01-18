@@ -433,9 +433,9 @@
         form.submit();
     })
 
-    // setTimeout(function (){
-    //     history.go(1)
-    // }, 4000)
+    setTimeout(function (){
+        history.go(1)
+    }, 4000)
 </script>
 
 </body>

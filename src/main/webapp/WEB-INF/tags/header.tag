@@ -10,9 +10,24 @@
 <c:url value="/order/list" var="orderList"></c:url>
 <c:url value="/order/adminList" var="adminList"></c:url>
 <c:url value="/report/orderReport" var="reportLink"></c:url>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
+
+    body {
+        font-family: 'Gothic A1', sans-serif;
+        font-weight: 200;
+    }
+
     a {
         color: white;
+        text-decoration: none;
+        margin-right: 10px;
+        font-weight: 400;
+        font-size: 14px;
+
+
     }
 
 
@@ -63,6 +78,32 @@
         background-color: #353535;
     }
 
+    .icons{
+        margin-right: 10px;
+    }
+    .mainicon{
+        margin: 0 5px 0 10px;
+    }
+    .userName{
+        font-size: 18px;
+        color: white;
+        font-weight: 500;
+        margin-bottom: 6px;
+    }
+    .userInfo{
+        color: black;
+        background-color: #fff;
+        text-decoration: none;
+        margin-right: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 7px 10px;
+        border-radius: 20px;
+    }
+    .userInfo:hover{
+        color: black;
+    }
+
     #myBtn {
         display: none; /* Hidden by default */
         position: fixed; /* Fixed/sticky position */
@@ -102,11 +143,11 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<button class="navbar-toggler sideBtn" type="button" aria-label="Toggle navigation" style="margin-left: 20px"
-        data-bs-toggle="collapse"
-        data-bs-target="#sideBar-collapse" aria-expanded="false">
-    <i class="fas fa-bars"></i>
-</button>
+<%--<button class="navbar-toggler sideBtn" type="button" aria-label="Toggle navigation" style="margin-left: 20px"--%>
+<%--        data-bs-toggle="collapse"--%>
+<%--        data-bs-target="#sideBar-collapse" aria-expanded="false">--%>
+<%--    <i class="fas fa-bars"></i>--%>
+<%--</button>--%>
 <div id="sideBar-collapse" class="sideBtn collapse" style="margin-left: 20px">
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
@@ -181,22 +222,27 @@
         </div>
     </div>
     <br>
-    <button onclick="location.href='${reportLink}'" class="accordion-button" type="button">리포트</button>
+    <button onclick="location.href='${reportLink}'" class="accordion-button" type="butto">
+        리포트
+    </button>
 
 </div>
 
-<div class="flex-shrink-0 p-3 navbg row" id="sideBar" style="width: 280px; height: 100%;position: fixed">
+<div class="flex-shrink-0 p-3 navbg row" id="sideBar" style="width: 300px; height: 100%; position: fixed">
 
     <div>
 
         <a href="${reportLink}" class=" navbg d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
-            <span class="navbg fs-5 fw-semibold">SharedFive</span>
+            <span class="navbg fs-5 fw-semibold">
+                <i class="fa-solid fa-dice-five mainicon"></i>
+                SharedFive</span>
         </a>
         <ul class="list-unstyled ps-0 navbg">
             <li class="mb-1 main-nav navbg">
                 <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed"
                         data-bs-toggle="collapse"
                         data-bs-target="#dashboard-collapse" aria-expanded="false">
+                    <i class="fa-regular fa-clone icons"></i>
                     마스터
                 </button>
                 <div class="collapse navbg " id="dashboard-collapse">
@@ -222,6 +268,7 @@
                 <button class="btn btn-toggle d-inline-flex align-items-center border-0 collapsed"
                         data-bs-toggle="collapse"
                         data-bs-target="#orders-collapse" aria-expanded="false">
+                    <i class="fa-solid fa-table icons"></i>
                     주문
                 </button>
                 <div class="collapse navbg" id="orders-collapse">
@@ -241,7 +288,9 @@
                 </div>
             </li>
             <li class="mb-1 main-nav">
-                <a href="${reportLink}" class="btn btn-toggle d-inline-flex align-items-center border-0">리포트</a>
+                <a href="${reportLink}" class="btn btn-toggle d-inline-flex align-items-center border-0">
+                    <i class="fa-solid fa-chart-column icons"></i>
+                    리포트</a>
             </li>
         </ul>
     </div>
@@ -249,7 +298,7 @@
     <div style="margin-bottom: 30px" class="col tm-mb-65 align-self-end">
         <div>
             <sec:authentication property="name" var="username"/>
-            <p style="color:white; margin-bottom: 0px; margin-top: 30px">
+            <p class="userName">
                 <i class="fa-regular fa-face-grin-wide"></i>
                 ${username}님
             </p>
@@ -258,11 +307,9 @@
                     <c:url value="/member/modify" var="modifyLink">
                         <c:param value="${username}" name="m_member_email"/>
                     </c:url>
-                    <a href="${modifyLink}" style="color: white">
-                        정보수정
-                    </a>
+                    <a href="${modifyLink}" class="userInfo">정보수정</a>
                     <c:url value="/logout" var="logoutLink"></c:url>
-                    <a style="color: white" href="${logoutLink}">로그아웃</a>
+                    <a href="${logoutLink}" class="userInfo">로그아웃</a>
                 </div>
             </div>
         </div>
