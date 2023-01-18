@@ -150,29 +150,23 @@ public class OrderController {
 
     }
 
-    //    수정 등록
-//    @PostMapping("ModifyAdd")
-//    public void ModifyAdd(@RequestBody Map<String, Object> headerItem) {
-//        System.out.println("asdaasdasd");
-////        orderService.updateHeader(headerItem);
-//    }
 
     // 오더 아이템 부분 update 쿼리
     @PostMapping("ModifyAdd")
     public void ModifyAddItem(@RequestBody List<Map<String, Object>> addItem) {
-//        if (addItem.size() > 0) {
-//            for (int i = 0; i < addItem.size(); i++) {
-//                orderService.addModifyItem(addItem.get(i));
-//                System.out.println(addItem.get(i));
-//            }
-//        }
+        if (addItem.size() > 0) {
+            for (int i = 0; i < addItem.size(); i++) {
+                orderService.addModifyItem(addItem.get(i));
+                System.out.println(addItem.get(i));
+            }
+        }
         System.out.println("additem");
     }
 
     @PostMapping("ModifyHeader")
     public void ModifyHeader(@RequestBody Map<String, Object> header) {
         System.out.println("Header");
-//        orderService.updateHeader(header);
+        orderService.updateHeader(header);
         System.out.println(header);
     }
 
