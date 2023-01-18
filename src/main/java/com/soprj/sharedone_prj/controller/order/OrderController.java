@@ -24,7 +24,7 @@ public class OrderController {
 
     @GetMapping("register")
     @PreAuthorize("hasAuthority('팀원')")
-    private void register(Model model, Principal principal) {
+    public void register(Model model, Principal principal) {
 //    셀렉트 이름 가져오기
         List<BuyerDto> list = orderService.buyerList();
         model.addAttribute("buyerList", list);
@@ -61,7 +61,7 @@ public class OrderController {
     @PostMapping("register")
     public String Register() {
         orderService.orderInsert();
-        return "redirect:/order/list";
+        return "redirect:/order/adminList";
     }
 
     //  장바구니 오더 보내기
@@ -69,6 +69,7 @@ public class OrderController {
     public String Add(@RequestBody List<Map<String, Object>> addData) {
 
         orderService.addDataHeader(addData.get(0));
+        System.out.println(addData);
 
         // id 값 추출 코드
         ObjectMapper mapper = new ObjectMapper();
@@ -80,7 +81,7 @@ public class OrderController {
             orderService.addDataItem(addData.get(i));
         }
 
-        return "redirect:/order/list";
+        return "redirect:/order/adminList";
     }
 
     //  장바구니 오더 임시저장
@@ -97,7 +98,7 @@ public class OrderController {
             addData.get(i).put("m_order_id", id);
             orderService.storageItemAdd(addData.get(i));
         }
-        return "redirect:/order/list";
+        return "redirect:/order/adminList";
     }
 
     // 주문 관리 리스트 보여주기
