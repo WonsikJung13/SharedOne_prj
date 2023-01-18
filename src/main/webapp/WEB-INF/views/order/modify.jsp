@@ -458,10 +458,9 @@
                 }
             }
         }, 100)
-        console.log(equal)
         setTimeout(function () {
-            for (const a in equal) {
-                if (equal[a].m_order_itemId === selectedItem) {
+            for (const a in listo) {
+                if (listo[a].m_order_itemId === selectedItem) {
                     document.querySelector("#orderItems").value = null;
                     document.querySelector(".itemName").innerHTML = "";
                     document.querySelector(".itemGroup").innerHTML = "";
