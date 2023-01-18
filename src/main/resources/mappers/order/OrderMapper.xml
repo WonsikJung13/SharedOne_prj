@@ -332,7 +332,7 @@
     UPDATE m_order_header SET
     m_order_comment = #{m_order_comment},
     m_order_sumPrice = #{m_order_sumPrice},
-    m_order_status = #{m_order_status}
+    m_order_status = '승인요청'
     WHERE m_order_id = #{m_order_id}
     </update>
 

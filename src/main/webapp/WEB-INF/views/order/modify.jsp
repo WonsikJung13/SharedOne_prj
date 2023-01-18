@@ -458,10 +458,9 @@
                 }
             }
         }, 100)
-        console.log(equal)
         setTimeout(function () {
-            for (const a in equal) {
-                if (equal[a].m_order_itemId === selectedItem) {
+            for (const a in listo) {
+                if (listo[a].m_order_itemId === selectedItem) {
                     document.querySelector("#orderItems").value = null;
                     document.querySelector(".itemName").innerHTML = "";
                     document.querySelector(".itemGroup").innerHTML = "";
@@ -617,11 +616,11 @@
         // const orderTotal = document.querySelector('#orderTotalPrice').innerHTML;
         const m_order_id = document.querySelector("#orderId").value;
         const m_order_comment = document.querySelector("#comment").value;
-        const orderTotal = sumPrice;
+        const m_order_sumPrice = sumPrice;
         console.log(m_order_id)
 
         // 헤더 정보
-        const header = {m_order_id, m_order_comment, orderTotal};
+        const header = {m_order_id, m_order_comment, m_order_sumPrice};
 
         // addData.at(0).m_order_comment = m_order_comment;
         // console.log(m_order_comment);
