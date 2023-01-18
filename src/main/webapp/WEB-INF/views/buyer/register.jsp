@@ -321,8 +321,6 @@
         document.querySelector("#buyerIdInput").value = null;
         document.querySelector("#addBtn").setAttribute("disabled", "");
         document.querySelector("#inputText").innerText = "";
-            console.log("addData")
-            console.log(addData)
         }
     })
 
@@ -336,8 +334,6 @@
             return !(item["m_buyer_number"] == removeNum)
         })
 
-        console.log("addData")
-        console.log(addData)
     }
 
     document.querySelector("#submitBtn").addEventListener("click", function () {
