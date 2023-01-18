@@ -5,6 +5,7 @@ import com.soprj.sharedone_prj.domain.buyer.BuyerDto;
 import com.soprj.sharedone_prj.domain.order.*;
 import com.soprj.sharedone_prj.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("register")
+    @PreAuthorize("hasAuthority('팀원')")
     private void register(Model model, Principal principal) {
 //    셀렉트 이름 가져오기
         List<BuyerDto> list = orderService.buyerList();
@@ -100,6 +102,7 @@ public class OrderController {
 
     // 주문 관리 리스트 보여주기
     @GetMapping("list")
+    @PreAuthorize("hasAuthority('팀장')")
     public void list(@RequestParam(name = "page", defaultValue = "1") int page,
                      @RequestParam(name = "t", defaultValue = "all") String type,
                      @RequestParam(name = "q", defaultValue = "") String keyword,
@@ -126,6 +129,7 @@ public class OrderController {
     }
 
     @GetMapping("modify")
+    @PreAuthorize("hasAuthority('팀원')")
     public void modify(int m_order_id, Model model) {
         OrderHeaderDTO list = orderService.orderHeader(m_order_id);
         model.addAttribute("orderHeader", list);
@@ -193,6 +197,7 @@ public class OrderController {
 
     // 관리자 리스트
     @GetMapping("adminList")
+    @PreAuthorize("hasAuthority('팀원')")
     public void adminList(@RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "t", defaultValue = "all") String type,
                           @RequestParam(name = "q", defaultValue = "") String keyword,

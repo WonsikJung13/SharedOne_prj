@@ -121,7 +121,8 @@
 
     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
          data-bs-parent="#accordionExample">
-        <div class="accordion-body" style="margin-left: 10px;margin-right: 3px;border-left-style: solid;border-left-width: 3px  ">
+        <div class="accordion-body"
+             style="margin-left: 10px;margin-right: 3px;border-left-style: solid;border-left-width: 3px  ">
             <div>
                 <br>
                 <button type="button" onclick="location.href='${itemList}'" class="accordion-button">제품 등록 관리</button>
@@ -158,22 +159,25 @@
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
          data-bs-parent="#accordionExample" style="margin-left: 10px">
         <div class="accordion-body" style="margin-right: 3px;border-left-style: solid;border-left-width: 3px  ">
-            <div>
-                <br>
-                <button onclick="location.href='${orderList}'" class="accordion-button">주문관리</button>
-            </div>
-            <div>
-                <button onclick="location.href='${orderLink}'" class="accordion-button">주문작성</button>
-            </div>
             <sec:authentication property="authorities" var="authorities"/>
             <c:if test="${authorities eq '[팀장]'}">
                 <div>
-                    <button onclick="location.href='${orderLink}'" class="accordion-button">승인관리</button>
+                    <br>
+                    <button onclick="location.href='${orderList}'" class="accordion-button">승인관리</button>
                 </div>
             </c:if>
-            <div>
-                <button onclick="location.href='${adminList}'" class="accordion-button">adminList</button>
-            </div>
+            <sec:authentication property="authorities" var="authorities"/>
+            <c:if test="${authorities eq '[팀원]'}">
+                <div>
+                    <button onclick="location.href='${orderLink}'" class="accordion-button">주문작성</button>
+                </div>
+            </c:if>
+            <sec:authentication property="authorities" var="authorities"/>
+            <c:if test="${authorities eq '[팀원]'}">
+                <div>
+                    <button onclick="location.href='${adminList}'" class="accordion-button">주문관리</button>
+                </div>
+            </c:if>
         </div>
     </div>
     <br>
@@ -222,15 +226,17 @@
                 </button>
                 <div class="collapse navbg" id="orders-collapse">
                     <ul class="navbg btn-toggle-nav  pb-1 small">
-                        <li><a href="${orderList}" class="navbg d-inline-flex text-decoration-none rounded">주문관리</a>
-                        </li>
-                        <li><a href="${orderLink}" class="navbg d-inline-flex text-decoration-none rounded">주문작성</a>
-                        </li>
+                        <sec:authentication property="authorities" var="authorities"/>
+                        <c:if test="${authorities eq '[팀원]'}">
+                            <li><a href="${adminList}" class="navbg d-inline-flex text-decoration-none rounded">주문관리</a>
+                            </li>
+                            <li><a href="${orderLink}" class="navbg d-inline-flex text-decoration-none rounded">주문작성</a>
+                            </li>
+                        </c:if>
                         <sec:authentication property="authorities" var="authorities"/>
                         <c:if test="${authorities eq '[팀장]'}">
-                            <li><a href="#" class="navbg d-inline-flex text-decoration-none rounded">승인관리</a></li>
+                            <li><a href="${orderList}" class="navbg d-inline-flex text-decoration-none rounded">승인관리</a></li>
                         </c:if>
-                        <li><a href="${adminList}" class="navbg d-inline-flex text-decoration-none rounded">adminList</a>
                     </ul>
                 </div>
             </li>
