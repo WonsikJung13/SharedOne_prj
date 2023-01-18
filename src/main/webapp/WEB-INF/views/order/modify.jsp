@@ -172,10 +172,6 @@
     </style>
 </head>
 <body>
-<script>
-    let a = 0;
-    let arry = [];
-</script>
 <div class="row">
     <div class="col-3">
         <my:header></my:header>
@@ -280,25 +276,25 @@
                 </tr>
                 </thead>
                 <tbody id="itemBody">
-                <%--                <c:forEach items="${itemList}" var="itemList">--%>
-                <%--                    <tr>--%>
-                <%--                        <td class="orderAdd"> ${itemList.m_order_itemId} </td>--%>
-                <%--                        <td class="orderAdd"> ${itemList.m_order_itemName} </td>--%>
-                <%--                        <td class="orderAdd"> ${itemList.m_order_price} </td>--%>
-                <%--                        <td class="orderAdd"> ${itemList.m_order_count} </td>--%>
-                <%--                        <td class="orderAdd totalPrice"> ${itemList.m_order_totalPrice} </td>--%>
-                <%--                        <td>--%>
-                <%--                            <button class="btn btn-secondary"--%>
-                <%--                                    data-value="${itemList.m_order_itemId}_${itemList.m_order_id}"--%>
-                <%--                                    onclick="clickDelete(this)">삭제--%>
-                <%--                            </button>--%>
-                <%--                        </td>--%>
-                <%--                    </tr>--%>
-                <%--                    <script>--%>
-                <%--                        a = a + parseInt(${itemList.m_order_totalPrice})--%>
-                <%--                        arry.push(${itemList.m_order_totalPrice})--%>
-                <%--                    </script>--%>
-                <%--                </c:forEach>--%>
+<%--                <c:forEach items="${itemList}" var="itemList">--%>
+<%--                    <tr>--%>
+<%--                        <td class="orderAdd"> ${itemList.m_order_itemId} </td>--%>
+<%--                        <td class="orderAdd"> ${itemList.m_order_itemName} </td>--%>
+<%--                        <td class="orderAdd"> ${itemList.m_order_price} </td>--%>
+<%--                        <td class="orderAdd"> ${itemList.m_order_count} </td>--%>
+<%--                        <td class="orderAdd totalPrice"> ${itemList.m_order_totalPrice} </td>--%>
+<%--                        <td>--%>
+<%--                            <button class="btn btn-secondary"--%>
+<%--                                    data-value="${itemList.m_order_itemId}_${itemList.m_order_id}"--%>
+<%--                                    onclick="clickDelete(this)">삭제--%>
+<%--                            </button>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                    <script>--%>
+<%--                        a = a + parseInt(${itemList.m_order_totalPrice})--%>
+<%--                        arry.push(${itemList.m_order_totalPrice})--%>
+<%--                    </script>--%>
+<%--                </c:forEach>--%>
                 </tbody>
             </table>
         </div>
@@ -319,7 +315,7 @@
             <tbody>
             <tr>
                 <td class="table-active">승인권자 메세지</td>
-                <td colspan="3" id="totalPrice" class="inputWidth" id="memo">
+                <td colspan="3" class="inputWidth" id="memo">
                     ${orderHeader.m_order_memo}
                 </td>
             </tr>
@@ -330,7 +326,7 @@
         <div class="commentStyle">
             <h2>승인 요청 메세지</h2>
             <div>
-                <textarea id="comment"></textarea>
+                <textarea id="comment">${orderHeader.m_order_comment}</textarea>
             </div>
         </div>
 
@@ -345,29 +341,30 @@
         crossorigin="anonymous"></script>
 <script>
 
-    const ctx = "${pageContext.request.contextPath}";
-    let sumPrice = 0;
-    items();
-    let listo = [];
-    let del = [];
+  const ctx = "${pageContext.request.contextPath}";
+  let sumPrice = 0;
+  items();
+  let listo = [];
+  let del = [];
 
     function items() {
         const data = [];
+        // const del = [];
         const id = document.querySelector("#orderId").value;
         fetch(`\${ctx}/order/items/\${id}`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data)
+              // console.log(data)
 
-                for (let x in data) {
-                    // console.log(data[x])
+              for (let x in data) {
+                // console.log(data[x])
 
-                    const m_order_itemId = data[x].m_order_itemId
-                    const m_order_itemName = data[x].m_order_itemName
-                    const m_order_price = data[x].m_order_price
-                    const m_order_count = data[x].m_order_count
-                    const m_order_totalPrice = data[x].m_order_totalPrice
-                    const itemz = `
+                const m_order_itemId = data[x].m_order_itemId
+                const m_order_itemName = data[x].m_order_itemName
+                const m_order_price = data[x].m_order_price
+                const m_order_count = data[x].m_order_count
+                const m_order_totalPrice = data[x].m_order_totalPrice
+                const itemz = `
             <tr id="\${m_order_itemId}">
                  <td class="orderAdd" style="background-color: aqua"> \${m_order_itemId} </td>
                  <td class="orderAdd"> \${m_order_itemName} </td>
@@ -377,29 +374,41 @@
                 <td><button class="btn btn-secondary" data-value="\${m_order_itemId}" onclick="rmv(this)">삭제</button></td>
             </tr>
         `
-                    itemBody.insertAdjacentHTML("beforeend", itemz);
-                    const dat = {
-                        m_order_itemId,
-                        m_order_itemName,
-                        m_order_price,
-                        m_order_count,
-                        m_order_totalPrice
-                    }
+                itemBody.insertAdjacentHTML("beforeend", itemz);
+                const dat = {
+                  m_order_itemId,
+                  m_order_itemName,
+                  m_order_price,
+                  m_order_count,
+                  m_order_totalPrice
+                }
 
                     listo.push(dat);
+
+                    sumPrice += parseInt(m_order_totalPrice)
+                    document.querySelector("#orderTotalPrice").innerText = sumPrice;
                 }
             })
-    }
+  }
 
 
     function rmv(target) {
         const removeId = target.dataset.value;
         const remove1 = document.getElementById(removeId);
+        const price = target.dataset.price;
+
         remove1.remove();
 
         del.push(listo.filter((item) => {
             return (item["m_order_itemId"] == removeId)
         }))
+        // del = listo.filter((item) => {
+        //   return (item["m_order_itemId"] == removeId)
+        // })
+        //   console.log(del)
+        sumPrice -= parseInt(price)
+        document.querySelector("#orderTotalPrice").innerText = sumPrice;
+
     }
 
     // 아이템 데이터 가져오기
@@ -477,7 +486,7 @@
                 }
             })
 
-        document.querySelector("#orderTotalPrice").innerHTML = a;
+        // document.querySelector("#orderTotalPrice").innerHTML = a;
         // console.log(arry)
     }
 
@@ -514,10 +523,15 @@
         // const totalPrice = document.querySelector(".totalPrice").innerText;
         // console.log(totalPrice);
         const totalPrice = document.querySelector("#totalPrice").innerText;
-        let total = a + parseInt(totalPrice);
+        // console.log(a + parseInt(totalPrice));
+        // let total = a + parseInt(totalPrice);
 
-        sumPrice = sumPrice + parseInt(m_order_totalPrice);
-        document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + total;
+
+        // sumPrice = sumPrice + parseInt(m_order_totalPrice);
+        // document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + total;
+
+        sumPrice += parseInt(totalPrice)
+        document.querySelector("#orderTotalPrice").innerText = sumPrice;
 
         const itemId = document.querySelector("#orderItems").value.split("_");
         const m_order_itemId = itemId.at(0);
@@ -528,17 +542,17 @@
         const m_order_count = document.querySelector("#orderCount").value;
         const m_order_id = document.querySelector("#orderId").value;
         // const m_order_sumPrice = document.querySelector("#orderTotalPrice").innerText;
-        const m_order_sumPrice = total;
+        const m_order_sumPrice = parseInt(totalPrice);
 
 
         const orderAdd = `
-            <tr id="removeId" >
+            <tr id="\${m_order_itemId}" >
                  <td class="orderAdd"> \${m_order_itemId} </td>
                  <td class="orderAdd"> \${m_order_itemName} </td>
                  <td class="orderAdd"> \${m_order_price} </td>
                  <td class="orderAdd"> \${m_order_count} </td>
                  <td class="orderAdd"> \${m_order_totalPrice} </td>
-                <td><button class="btn btn-secondary" data-value="\${m_order_itemId}" onclick="clickRemove(this)">삭제</button></td>
+                <td><button class="btn btn-secondary" data-value="\${m_order_itemId}" data-price="\${m_order_totalPrice}" onclick="clickRemove(this)">삭제</button></td>
             </tr>
         `
         itemBody.insertAdjacentHTML("beforeend", orderAdd);
@@ -554,6 +568,7 @@
             m_order_count,
             m_order_sumPrice
         }
+        console.log(data);
         addData.push(data);
 
         // 제품 추가 눌렀을때 제품 데이터 사라짐
@@ -573,21 +588,37 @@
     // 오더추가
     document.querySelector(".submitBtn").addEventListener("click", function () {
 
-        const m_order_comment = document.querySelector("#comment").value;
-        const orderTotal = document.querySelector('#orderTotalPrice').innerHTML;
+        // const orderTotal = document.querySelector('#orderTotalPrice').innerHTML;
         const m_order_id = document.querySelector("#orderId").value;
+        const m_order_comment = document.querySelector("#comment").value;
+        const orderTotal = sumPrice;
+        console.log(m_order_id)
 
-        const fetching = {m_order_comment, orderTotal, m_order_id}
+        // 헤더 정보
+        const header = {m_order_id, m_order_comment, orderTotal};
 
+        // addData.at(0).m_order_comment = m_order_comment;
+        // console.log(m_order_comment);
+        // console.log(addData);
+
+        // const fetching = {addData, header}
+        // console.log(fetching)
 
         fetch(`\${ctx}/order/ModifyAdd`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(fetching)
+            body: JSON.stringify(addData)
         })
 
+        fetch(`\${ctx}/order/ModifyHeader`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(header)
+        })
 
         fetch(`\${ctx}/order/modify`, {
             method: "POST",
@@ -597,15 +628,10 @@
             body: JSON.stringify(del)
         })
 
-        if (addData.length > 0) {
-            fetch(`\${ctx}/order/ModifyAddItem`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(addData)
-            })
-        }
+        // const orderList = ctx + '/order/adminList';
+        // setTimeout(function (){
+        //     location.href = orderList;
+        // },300)
 
     })
 
@@ -661,42 +687,33 @@
 
     // 오더 장바구니 삭제하기
     function clickRemove(target) {
-        sumPrice = 0;
-        const remove1 = document.querySelector("#removeId");
+        const removeId = target.dataset.value
+        const remove1 = document.getElementById(removeId);
         remove1.remove();
 
-        const removeId = target.dataset.value;
+        const price = target.dataset.price;
 
-        addData = addData.filter((item) => {
-            return !(item["m_order_itemId"] == removeId)
-        })
-
-        for (const x in addData) {
-            sumPrice = sumPrice + parseInt(addData.at(x).m_order_totalPrice)
-        }
-
-        let Currency = document.querySelector("#buyerCurrency").innerHTML;
-        document.querySelector("#orderTotalPrice").innerHTML = Currency + " " + sumPrice;
-        document.querySelector("#orderTotalPrice").value = sumPrice;
+        sumPrice -= parseInt(price)
+        document.querySelector("#orderTotalPrice").innerText = sumPrice;
 
     }
 
     // 기존 오더 장바구니 삭제
-    function clickDelete(target) {
-
-        const order = target.dataset.value;
-        fetch(`\${ctx}/order/deleteList/` + order, {
-            method: "delete"
-        })
-
-        const b = document.querySelector("#orderId").value;
-        const orderList = ctx + '/order/modify?m_order_id=' + b;
-        // setTimeout(function () {
-        //     location.href = orderList;
-        // }, 300)
-
-
-    }
+    // function clickDelete(target) {
+    //
+    //     const order = target.dataset.value;
+    //     fetch(`\${ctx}/order/deleteList/` + order, {
+    //         method: "delete"
+    //     })
+    //
+    //     const b = document.querySelector("#orderId").value;
+    //     const orderList = ctx + '/order/modify?m_order_id=' + b;
+    //     // setTimeout(function () {
+    //     //     location.href = orderList;
+    //     // }, 300)
+    //
+    //
+    // }
 
     // 주문 수량 입력 해야 제품 등록 버튼 뜨게하기
     document.querySelector("#orderCount").addEventListener("keyup", function () {
