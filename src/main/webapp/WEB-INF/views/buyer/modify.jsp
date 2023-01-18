@@ -140,7 +140,7 @@
                 </tr>
                 <tr>
                     <th class="table-active">사업자번호</th>
-                    <th><input type="text" class="form-control form300" name="m_buyer_number" id="buyerIdInput" value="${Buyer.m_buyer_number}" readonly>
+                    <th><input type="text" style="background-color: #e9ecef" class="form-control form300" name="m_buyer_number" id="buyerIdInput" value="${Buyer.m_buyer_number}" readonly>
                 </tr>
             </form>
             </tbody>
