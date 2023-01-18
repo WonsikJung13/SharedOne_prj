@@ -243,32 +243,32 @@
             <%--            검색박스 예정--%>
 
             <%--      <form action="${listLink}" role="search">--%>
-                        <div style="display: flex;justify-content: space-between;">
-                            <div>
-                                <label>제품코드</label>
-                                <input class="form-control" value="${param.m_item_id}" type="search" name="m_item_id"
-                                       placeholder="입력" autocomplete='off' style="width: 210px">
-                            </div>
-                            <div>
-                                <label>제품그룹</label>
-                                <input class="form-select" type="text" list="groupList" style="width: 210px"/>
-                                <datalist id="groupList">
-                                    <c:forEach items="${groupList}" var="groupList">
-                                        <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>
-                                    </c:forEach>
-                                </datalist>
-                            </div>
-                            <div style="float: right">
-                                <label>제조사</label>
-                                <input class="form-select" type="text" list="manufacturerList" style="width: 210px;"/>
-                                <datalist id="manufacturerList">
-                                    <c:forEach items="${manufacturerList}" var="manufacturerList">
-                                        <option class="non"
-                                                value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>
-                                    </c:forEach>
-                                </datalist>
-                            </div>
-                        </div>
+<%--                        <div style="display: flex;justify-content: space-between;">--%>
+<%--                            <div>--%>
+<%--                                <label>제품코드</label>--%>
+<%--                                <input class="form-control" value="${param.m_item_id}" type="search" name="m_item_id"--%>
+<%--                                       placeholder="입력" autocomplete='off' style="width: 210px">--%>
+<%--                            </div>--%>
+<%--                            <div>--%>
+<%--                                <label>제품그룹</label>--%>
+<%--                                <input class="form-select" type="text" list="groupList" style="width: 210px"/>--%>
+<%--                                <datalist id="groupList">--%>
+<%--                                    <c:forEach items="${groupList}" var="groupList">--%>
+<%--                                        <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </datalist>--%>
+<%--                            </div>--%>
+<%--                            <div style="float: right">--%>
+<%--                                <label>제조사</label>--%>
+<%--                                <input class="form-select" type="text" list="manufacturerList" style="width: 210px;"/>--%>
+<%--                                <datalist id="manufacturerList">--%>
+<%--                                    <c:forEach items="${manufacturerList}" var="manufacturerList">--%>
+<%--                                        <option class="non"--%>
+<%--                                                value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </datalist>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
             <form action="${listLink}" class="d-flex" role="search">
                 <div class="input-group" style="float: none">
@@ -532,7 +532,6 @@
     // 삭제버튼 활성화
     function activeBtn() {
         const checked = document.querySelectorAll('input[name="itemBox"]:checked');
-        console.log(checked.length);
         if (checked.length > 0) {
             document.querySelector(".removeBtn").disabled = false;
         } else {
@@ -549,7 +548,6 @@
 
             if (checkedBox) {
                 const selectId = document.getElementsByName("itemBox")[i].value;
-                console.log("selectId: " + selectId);
                 removeIdList.push(selectId);
             }
         }

@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("item")
@@ -99,10 +100,6 @@ public class ItemController {
                          RedirectAttributes rttr) {
         String[] removeList = removeIdList.get("m_item_id").split(",");
 
-        for (int i = 0; i < removeList.length; i++) {
-            System.out.println("???: " + removeList[i]);
-        }
-
         int cnt = 0;
         for (int i = 0; i < removeList.length; i++) {
             itemService.remove(removeList[i]);
@@ -122,10 +119,8 @@ public class ItemController {
     @ResponseBody
     public int itemCompare(@RequestBody ItemDto itemCompareList,
                            RedirectAttributes rttr) {
-        System.out.println("controller: " + itemCompareList);
 
         int cnt = itemService.itemCompare(itemCompareList);
-        System.out.println("cnt: "  + cnt);
 
         return cnt;
 
