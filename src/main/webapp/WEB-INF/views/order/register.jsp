@@ -374,7 +374,7 @@
                     document.querySelector(".listPrice").value = null;
                     document.querySelector("#orderCount").setAttribute("disabled", "");
                 }
-            }},100)
+            }},200)
 
 
 
@@ -502,10 +502,12 @@
     // 오더추가
     document.querySelector(".submitBtn").addEventListener("click", function () {
         const m_order_comment = document.getElementById('comment').value;
+        const m_member_id = document.getElementById('m_member_id').value;
 
         for (let i = 0; i < addData.length; i++) {
             addData.at(i).m_order_comment = m_order_comment;
             addData.at(i).m_order_sumPrice = m_order_sumPrice;
+            addData.at(i).m_member_id = m_member_id;
         }
 
         fetch(`\${ctx}/order/add`, {

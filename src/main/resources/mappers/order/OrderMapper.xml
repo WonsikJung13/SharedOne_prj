@@ -118,8 +118,7 @@
         </selectKey>
     </insert>
     <insert id="storageItemAdd">
-        INSERT INTO
-        m_order_item (
+        INSERT INTO m_order_item (
         m_order_id,
         m_order_count,
         m_order_price,
