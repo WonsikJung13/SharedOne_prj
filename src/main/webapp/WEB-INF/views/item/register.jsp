@@ -224,7 +224,7 @@
                 <tr>
                     <td class="table-active">단위</td>
                     <td id="itemUnit">
-                        <input type="text" name="m_item_unit" class="form-control" value="ea" autocomplete='off'>
+                        <input type="text" name="m_item_unit" class="form-control" value="EA" autocomplete='off'>
                     </td>
                 </tr>
                 </tbody>
