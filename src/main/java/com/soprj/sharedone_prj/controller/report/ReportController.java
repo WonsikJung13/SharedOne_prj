@@ -1,6 +1,7 @@
 package com.soprj.sharedone_prj.controller.report;
 
 import com.soprj.sharedone_prj.domain.report.ReportHeaderDto;
+import com.soprj.sharedone_prj.domain.report.TotalReportDto;
 import com.soprj.sharedone_prj.service.report.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ public class ReportController {
     @GetMapping("orderReport")
     public void report(Model model) {
 //        List<ReportHeaderDto> report = reportService.getOrderHeader();
-        List<ReportHeaderDto> report = reportService.reportList();
+        List<TotalReportDto> report = reportService.reportList();
         model.addAttribute("report", report);
 
         List<Map<String, String>> sortedReport = reportService.sortedReport();

@@ -22,12 +22,32 @@
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap"
             rel="stylesheet">
     <style>
-        .row{
-            --bs-gutter-x: 0;
+        .scrolltable {
+            table-layout: fixed;
+            border-collapse: collapse;
+            border: 1px solid #888;
         }
 
-        .itemRegisterBtn {
-            position: relative;
+        .scrolltable thead {
+            background: #a88;
+            color: #fff;
+        }
+
+        /* 행 장식 */
+        .scrolltable th, .scrolltable td {
+            padding: 10px;
+            text-align: left;
+            width: 100px;
+            text-align: center;
+            font-size: 0.875em;
+        }
+
+        .scrolltable tbody tr:nth-child(2n+1) {
+            background-color: #f0f0f0;
+        }
+
+        .row {
+            --bs-gutter-x: 0;
         }
 
         body {
@@ -36,7 +56,7 @@
         }
 
         .table {
-            width: 1000px;
+            /*width: 1000px;*/
             --bs-table-bg: #fff;
         }
 
@@ -46,13 +66,13 @@
             text-align: center;
             line-height: 39px;
             font-size: 16px;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
-        tr {
+        .table tr {
             height: 55px;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
@@ -74,7 +94,7 @@
             line-height: 39px;
             font-size: 16px;
             font-weight: bold;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
@@ -82,10 +102,10 @@
             background-color: #fff;
             height: auto;
             width: 1000px;
-            margin-bottom: 100px;
+            margin-bottom: 50px;
         }
 
-        td a {
+        .table td a {
             color: #37393b;
             background-color: #fff;
             text-decoration: none;
@@ -201,6 +221,47 @@
                 <h1 id="header">주문 현황</h1>
             </div>
         </div>
+
+        <h2>월별 요약</h2>
+        <div class="tableList">
+            <table class="table addList">
+                <thead style="width: auto">
+                <tr>
+                    <th style="width: 500px;">월별</th>
+                    <th style="width: 500px;">총 주문수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${sortedReport }" var="sortedReport">
+                    <tr>
+                        <td style="width: 500px;">${sortedReport.inserted}</td>
+                        <td style="width: 500px;">${sortedReport.od_count}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>거래처별 요약</h2>
+        <div class="tableList">
+            <table class="table addList">
+                <thead style="width: auto">
+                <tr>
+                    <th style="width: 500px;">거래처별</th>
+                    <th style="width: 500px;">총 주문수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${buyerReport }" var="buyerReport">
+                    <tr>
+                        <td style="width: 500px;">${buyerReport.m_order_buyerName}</td>
+                        <td style="width: 500px;">${buyerReport.m_order_id}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
         <c:url value="/order/list" var="listLink"/>
         <form action="${listLink}" role="search">
             <div class="searchBox ">
@@ -233,78 +294,50 @@
             </div>
         </form>
 
-        <div class="tableList">
-            <table class="table addList">
-                <thead style="width: auto">
-                <tr>
-                    <th>월별</th>
-                    <th>총 주문수</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${sortedReport }" var="sortedReport">
-                    <tr>
-                        <td>${sortedReport.inserted}</td>
-                        <td>${sortedReport.od_count}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="tableList">
-            <table class="table addList">
-                <thead style="width: auto">
-                <tr>
-                    <th>거래처별</th>
-                    <th>총 주문수</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${buyerReport }" var="buyerReport">
-                    <tr>
-                        <td>${buyerReport.m_order_buyerName}</td>
-                        <td>${buyerReport.m_order_id}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="tableList">
+        <div class="totalList" style="width:100%; height:1000px; overflow:auto">
             <table class="table table-hover addList">
-                <thead style="width: auto">
+                <thead>
                 <tr>
                     <th>주문번호</th>
                     <th>승인요청일</th>
                     <th>승인여부</th>
                     <th>담당자명</th>
                     <th>납품요청일</th>
+                    <th>납품요청일</th>
                     <th>거래처코드</th>
                     <th>거래처명</th>
                     <th>거래처 국가</th>
                     <th>거래처 주소</th>
                     <th>사업자등록번호</th>
+                    <th>제품코드</th>
+                    <th>제품명</th>
+                    <th>제품그룹</th>
+                    <th>제조사</th>
                     <th>거래 통화</th>
                     <th>주문 총 금액</th>
                 </tr>
                 </thead>
+
                 <tbody>
-                <c:forEach items="${report }" var="reportHeader">
+                <c:forEach items="${report}" var="list">
                     <tr onclick="orderDetail(this)" data-value="${reportHeader.m_order_id}" data-bs-toggle="modal"
-                        data-bs-target="#orderConfirm" value="">
-                        <td>${reportHeader.m_order_id}</td>
-                        <td>${reportHeader.m_order_date}</td>
-                        <td>${reportHeader.m_order_status}</td>
-                        <td>${reportHeader.m_member_id}</td>
-                        <td>${reportHeader.m_order_inserted}</td>
-                        <td>${reportHeader.m_buyer_id}</td>
-                        <td>${reportHeader.m_order_buyerName}</td>
-                        <td>${reportHeader.m_order_buyerRegion}</td>
-                        <td>${reportHeader.m_order_buyerAddress}</td>
-                        <td>${reportHeader.m_order_buyerNumber}</td>
-                        <td>${reportHeader.m_order_buyerCurrency}</td>
-                        <td>${reportHeader.decimal}</td>
+                        data-bs-target="#orderConfirm">
+                        <td>${list.m_order_id}</td>
+                        <td>${list.m_order_date}</td>
+                        <td>${list.m_order_status}</td>
+                        <td>${list.m_member_id}</td>
+                        <td>${list.m_order_inserted}</td>
+                        <td>${list.m_buyer_id}</td>
+                        <td>${list.m_order_buyerName}</td>
+                        <td>${list.m_order_buyerRegion}</td>
+                        <td>${list.m_order_buyerAddress}</td>
+                        <td>${list.m_order_buyerNumber}</td>
+                        <td>${list.m_order_itemId}</td>
+                        <td>${list.m_order_itemName}</td>
+                        <td>${list.m_order_itemGroup}</td>
+                        <td>${list.m_order_itemManufacturer}</td>
+                        <td>${list.m_order_buyerCurrency}</td>
+                        <td>${list.decimal}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -319,83 +352,83 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                            <input type="hidden" name="m_order_id" id="m_order_id" >
-                            <input type="hidden" name="m_order_status" id="m_order_status" >
+                        <input type="hidden" name="m_order_id" id="m_order_id">
+                        <input type="hidden" name="m_order_status" id="m_order_status">
 
-                            <h2>거래처</h2>
-                            <table class="table table-bordered orderModal">
-                                <tbody>
-                                <tr>
-                                    <td class="table-active">주문번호</td>
-                                    <td class="orderId"></td>
-                                    <td class="table-active">주문일</td>
-                                    <td class="orderDate"></td>
-                                </tr>
-                                <tr>
-                                    <td class="table-active">거래처</td>
-                                    <td class="buyerName"></td>
-                                    <td class="table-active">주소</td>
-                                    <td class="buyerAddress"></td>
-                                </tr>
-                                <tr>
-                                    <td class="table-active">국가</td>
-                                    <td class="buyerRegion"></td>
-                                    <td class="table-active">사업자등록번호</td>
-                                    <td class="buyerNumber"></td>
-                                </tr>
-                                <tr>
-                                    <td class="table-active">통화</td>
-                                    <td class="buyerCurrency"></td>
-                                    <td class="table-active">납품요청일</td>
-                                    <td colspan="3" class="inserted"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-
-                            <h2>주문 제품</h2>
-                            <table class="table orderItmeList">
-                                <thead>
-                                <tr>
-                                    <th scope="col">제품코드</th>
-                                    <th scope="col">제품명</th>
-                                    <th scope="col">제품품목</th>
-                                    <th scope="col">제조사</th>
-                                    <th scope="col">판매가격</th>
-                                    <th scope="col">주문수량</th>
-                                    <th scope="col">총 금액</th>
-                                </tr>
-                                </thead>
-                                <tbody id="itemBody">
-
-                                </tbody>
-                            </table>
+                        <h2>거래처</h2>
+                        <table class="table table-bordered orderModal">
+                            <tbody>
+                            <tr>
+                                <td class="table-active">주문번호</td>
+                                <td class="orderId"></td>
+                                <td class="table-active">주문일</td>
+                                <td class="orderDate"></td>
+                            </tr>
+                            <tr>
+                                <td class="table-active">거래처</td>
+                                <td class="buyerName"></td>
+                                <td class="table-active">주소</td>
+                                <td class="buyerAddress"></td>
+                            </tr>
+                            <tr>
+                                <td class="table-active">국가</td>
+                                <td class="buyerRegion"></td>
+                                <td class="table-active">사업자등록번호</td>
+                                <td class="buyerNumber"></td>
+                            </tr>
+                            <tr>
+                                <td class="table-active">통화</td>
+                                <td class="buyerCurrency"></td>
+                                <td class="table-active">납품요청일</td>
+                                <td colspan="3" class="inserted"></td>
+                            </tr>
+                            </tbody>
+                        </table>
 
 
-                            <table class="table table-bordered orderModal">
-                                <tbody>
-                                <tr>
-                                    <th class="tablePrice">주문 총 금액</th>
-                                    <td class="sumPrice"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table class="table table-bordered orderModal">
-                                <tbody>
-                                <tr>
-                                    <th class="tablePrice">승인요청자 메세지</th>
-                                    <td class="comment"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table class="table table-bordered orderModal">
-                                <tbody>
-                                <tr>
-                                    <th class="tablePrice">승인권자 메세지</th>
-                                    <td class="memo"></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <h2>주문 제품</h2>
+                        <table class="table orderItmeList">
+                            <thead>
+                            <tr>
+                                <th scope="col">제품코드</th>
+                                <th scope="col">제품명</th>
+                                <th scope="col">제품품목</th>
+                                <th scope="col">제조사</th>
+                                <th scope="col">판매가격</th>
+                                <th scope="col">주문수량</th>
+                                <th scope="col">총 금액</th>
+                            </tr>
+                            </thead>
+                            <tbody id="itemBody">
+
+                            </tbody>
+                        </table>
+
+
+                        <table class="table table-bordered orderModal">
+                            <tbody>
+                            <tr>
+                                <th class="tablePrice">주문 총 금액</th>
+                                <td class="sumPrice"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered orderModal">
+                            <tbody>
+                            <tr>
+                                <th class="tablePrice">승인요청자 메세지</th>
+                                <td class="comment"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered orderModal">
+                            <tbody>
+                            <tr>
+                                <th class="tablePrice">승인권자 메세지</th>
+                                <td class="memo"></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
