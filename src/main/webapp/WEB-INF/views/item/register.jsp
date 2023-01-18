@@ -448,7 +448,6 @@
             contentType: 'application/json; charset=UTF-8',
             success: function (cnt) {
                 if (cnt >= 1) {
-                    console.log(cnt)
                     alert("이미 등록 되어 있는 제품입니다.");
                     // check.abort();
                     document.querySelector(".addList").tBodies[0].deleteRow(lastIndex);
@@ -468,7 +467,6 @@
         // 중복체크(table)--------------------------------------------------------
         let data = {};
         const dataList = [];
-        console.log(lastIndex)
 
         for (let i = 0; i < lastIndex; i++) {
             data = {
@@ -510,7 +508,6 @@
     function deleteBtn(obj) {
 
         var index = $(obj).parent().parent().index();
-        console.log("index : "+ index);
 
         $(obj).parent().parent().remove();
     }

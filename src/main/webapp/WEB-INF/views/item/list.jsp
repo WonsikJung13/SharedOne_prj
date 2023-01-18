@@ -532,7 +532,6 @@
     // 삭제버튼 활성화
     function activeBtn() {
         const checked = document.querySelectorAll('input[name="itemBox"]:checked');
-        console.log(checked.length);
         if (checked.length > 0) {
             document.querySelector(".removeBtn").disabled = false;
         } else {
@@ -549,7 +548,6 @@
 
             if (checkedBox) {
                 const selectId = document.getElementsByName("itemBox")[i].value;
-                console.log("selectId: " + selectId);
                 removeIdList.push(selectId);
             }
         }
