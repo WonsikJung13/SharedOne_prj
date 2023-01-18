@@ -54,13 +54,13 @@
                     <tr>
                         <td class="table-active">제품코드</td>
                         <td>
-                            <input class="form-select" id="itemId" type="text" name="m_item_id" list="itemList"
+                            <input class="form-control" id="itemId" type="text" name="m_item_id"
                                     placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()">
-                                <datalist id="itemList">
-                                    <c:forEach items="${itemList}" var="itemList">
-                                        <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>
-                                    </c:forEach>
-                                </datalist>
+<%--                                <datalist id="itemList">--%>
+<%--                                    <c:forEach items="${itemList}" var="itemList">--%>
+<%--                                        <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </datalist>--%>
                             </input>
                         </td>
                     </tr>
@@ -73,13 +73,13 @@
                     <tr>
                         <td class="table-active">거래처 코드</td>
                         <td>
-                            <input class="form-select" id="buyerId" type="text" name="m_buyer_id" list="buyerList"
+                            <input class="form-control" id="buyerId" type="text" name="m_buyer_id"
                                    placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()" disabled>
-                            <datalist id="buyerList">
-                                <c:forEach items="${buyerList}" var="buyerList" >
-                                    <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                                </c:forEach>
-                            </datalist>
+<%--                            <datalist id="buyerList">--%>
+<%--                                <c:forEach items="${buyerList}" var="buyerList" >--%>
+<%--                                    <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>--%>
+<%--                                </c:forEach>--%>
+<%--                            </datalist>--%>
                             </input>
                         </td>
                     </tr>
