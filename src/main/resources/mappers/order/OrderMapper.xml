@@ -353,5 +353,14 @@
         WHERE m_order_itemId = #{m_order_itemId}
         AND m_order_id = #{m_order_id}
     </delete>
+    <delete id="deleteItem">
+        DELETE FROM m_order_item
+        WHERE m_order_itemId = #{m_order_itemId}
+        AND m_order_id = #{m_order_id}
+        AND m_order_itemName = #{m_order_itemName}
+        AND m_order_price = #{m_order_price}
+        AND m_order_count = #{m_order_count}
+        AND m_order_totalPrice = #{m_order_totalPrice}
+    </delete>
 
 </mapper>

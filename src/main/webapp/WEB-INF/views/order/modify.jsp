@@ -276,25 +276,25 @@
                 </tr>
                 </thead>
                 <tbody id="itemBody">
-<%--                <c:forEach items="${itemList}" var="itemList">--%>
-<%--                    <tr>--%>
-<%--                        <td class="orderAdd"> ${itemList.m_order_itemId} </td>--%>
-<%--                        <td class="orderAdd"> ${itemList.m_order_itemName} </td>--%>
-<%--                        <td class="orderAdd"> ${itemList.m_order_price} </td>--%>
-<%--                        <td class="orderAdd"> ${itemList.m_order_count} </td>--%>
-<%--                        <td class="orderAdd totalPrice"> ${itemList.m_order_totalPrice} </td>--%>
-<%--                        <td>--%>
-<%--                            <button class="btn btn-secondary"--%>
-<%--                                    data-value="${itemList.m_order_itemId}_${itemList.m_order_id}"--%>
-<%--                                    onclick="clickDelete(this)">삭제--%>
-<%--                            </button>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
-<%--                    <script>--%>
-<%--                        a = a + parseInt(${itemList.m_order_totalPrice})--%>
-<%--                        arry.push(${itemList.m_order_totalPrice})--%>
-<%--                    </script>--%>
-<%--                </c:forEach>--%>
+                <%--                <c:forEach items="${itemList}" var="itemList">--%>
+                <%--                    <tr>--%>
+                <%--                        <td class="orderAdd"> ${itemList.m_order_itemId} </td>--%>
+                <%--                        <td class="orderAdd"> ${itemList.m_order_itemName} </td>--%>
+                <%--                        <td class="orderAdd"> ${itemList.m_order_price} </td>--%>
+                <%--                        <td class="orderAdd"> ${itemList.m_order_count} </td>--%>
+                <%--                        <td class="orderAdd totalPrice"> ${itemList.m_order_totalPrice} </td>--%>
+                <%--                        <td>--%>
+                <%--                            <button class="btn btn-secondary"--%>
+                <%--                                    data-value="${itemList.m_order_itemId}_${itemList.m_order_id}"--%>
+                <%--                                    onclick="clickDelete(this)">삭제--%>
+                <%--                            </button>--%>
+                <%--                        </td>--%>
+                <%--                    </tr>--%>
+                <%--                    <script>--%>
+                <%--                        a = a + parseInt(${itemList.m_order_totalPrice})--%>
+                <%--                        arry.push(${itemList.m_order_totalPrice})--%>
+                <%--                    </script>--%>
+                <%--                </c:forEach>--%>
                 </tbody>
             </table>
         </div>
@@ -341,11 +341,11 @@
         crossorigin="anonymous"></script>
 <script>
 
-  const ctx = "${pageContext.request.contextPath}";
-  let sumPrice = 0;
-  items();
-  let listo = [];
-  let del = [];
+    const ctx = "${pageContext.request.contextPath}";
+    let sumPrice = 0;
+    items();
+    let listo = [];
+    let del = [];
 
     function items() {
         const data = [];
@@ -354,34 +354,35 @@
         fetch(`\${ctx}/order/items/\${id}`)
             .then(res => res.json())
             .then(data => {
-              // console.log(data)
+                // console.log(data)
 
-              for (let x in data) {
-                // console.log(data[x])
-
-                const m_order_itemId = data[x].m_order_itemId
-                const m_order_itemName = data[x].m_order_itemName
-                const m_order_price = data[x].m_order_price
-                const m_order_count = data[x].m_order_count
-                const m_order_totalPrice = data[x].m_order_totalPrice
-                const itemz = `
+                for (let x in data) {
+                    // console.log(data[x])
+                    const m_order_id = id;
+                    const m_order_itemId = data[x].m_order_itemId
+                    const m_order_itemName = data[x].m_order_itemName
+                    const m_order_price = data[x].m_order_price
+                    const m_order_count = data[x].m_order_count
+                    const m_order_totalPrice = data[x].m_order_totalPrice
+                    const itemz = `
             <tr id="\${m_order_itemId}">
                  <td class="orderAdd" style="background-color: aqua"> \${m_order_itemId} </td>
                  <td class="orderAdd"> \${m_order_itemName} </td>
                  <td class="orderAdd"> \${m_order_price} </td>
                  <td class="orderAdd"> \${m_order_count} </td>
                  <td class="orderAdd"> \${m_order_totalPrice} </td>
-                <td><button class="btn btn-secondary" data-value="\${m_order_itemId}" onclick="rmv(this)">삭제</button></td>
+                <td><button class="btn btn-secondary" data-value="\${m_order_itemId}" data-price="\${m_order_totalPrice}" onclick="rmv(this)">삭제</button></td>
             </tr>
         `
-                itemBody.insertAdjacentHTML("beforeend", itemz);
-                const dat = {
-                  m_order_itemId,
-                  m_order_itemName,
-                  m_order_price,
-                  m_order_count,
-                  m_order_totalPrice
-                }
+                    itemBody.insertAdjacentHTML("beforeend", itemz);
+                    const dat = {
+                        m_order_id,
+                        m_order_itemId,
+                        m_order_itemName,
+                        m_order_price,
+                        m_order_count,
+                        m_order_totalPrice
+                    }
 
                     listo.push(dat);
 
@@ -389,7 +390,7 @@
                     document.querySelector("#orderTotalPrice").innerText = sumPrice;
                 }
             })
-  }
+    }
 
 
     function rmv(target) {
