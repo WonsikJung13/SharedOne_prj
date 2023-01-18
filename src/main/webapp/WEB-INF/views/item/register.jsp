@@ -282,6 +282,9 @@
             document.getElementById("modifyButton1").style.display = "";
             document.getElementById("plusButton1").style.display = "none"
             document.getElementById("realInputItemId").type="text";
+            document.getElementById("groupSelect").disabled = true;
+            document.getElementById("manufacturerSelect").disabled = true;
+
             $("#manufacturerSelect").children('option:first').remove();
             $("#groupSelect").children('option:first').remove();
         } else {
