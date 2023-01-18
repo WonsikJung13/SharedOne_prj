@@ -363,10 +363,8 @@
         fetch(`\${ctx}/order/items/\${id}`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data)
 
                 for (let x in data) {
-                    // console.log(data[x])
                     const m_order_id = id;
                     const m_order_itemId = data[x].m_order_itemId
                     const m_order_itemName = data[x].m_order_itemName
@@ -423,7 +421,6 @@
         // del = listo.filter((item) => {
         //   return (item["m_order_itemId"] == removeId)
         // })
-        //   console.log(del)
         sumPrice -= parseInt(price)
         document.querySelector("#orderTotalPrice").innerText = currency + " " + sumPrice;
 
@@ -519,7 +516,6 @@
             })
 
         // document.querySelector("#orderTotalPrice").innerHTML = a;
-        // console.log(arry)
     }
 
     //  총 금액 계산 후 화면에 출력
@@ -594,7 +590,6 @@
             m_order_count,
             m_order_sumPrice
         }
-        console.log(data);
         addData.push(data);
 
         // 제품 추가 눌렀을때 제품 데이터 사라짐
@@ -616,7 +611,6 @@
         const m_order_id = document.querySelector("#orderId").value;
         const m_order_comment = document.querySelector("#comment").value;
         const m_order_sumPrice = sumPrice;
-        console.log(m_order_id)
 
         // 헤더 정보
         const header = {m_order_id, m_order_comment, m_order_sumPrice};
@@ -669,7 +663,6 @@
         addData = addData.filter((item) => {
             return !(item["m_order_itemId"] == removeId)
         })
-        console.log(addData)
 
         sumPrice -= parseInt(price)
         document.querySelector("#orderTotalPrice").innerText = currency + " " + sumPrice;
