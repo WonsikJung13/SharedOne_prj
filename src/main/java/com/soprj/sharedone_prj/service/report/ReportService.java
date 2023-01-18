@@ -17,8 +17,8 @@ public class ReportService {
     @Autowired
     private ReportMapper reportMapper;
 
-    public List<TotalReportDto> reportList() {
-        return reportMapper.reportList();
+    public List<TotalReportDto> reportList(String type, String keyword) {
+        return reportMapper.reportList(type, "%"+keyword+"%");
     }
 
     public ReportHeaderDto reportDetail(int m_order_id) {
@@ -31,5 +31,9 @@ public class ReportService {
 
     public List<Map<String, String>> buyerReport() {
         return reportMapper.buyerReport();
+    }
+
+    public List<Map<String, String>> memberReport() {
+        return reportMapper.memberReport();
     }
 }

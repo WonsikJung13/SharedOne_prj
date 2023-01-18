@@ -221,6 +221,73 @@
                 <h1 id="header">주문 현황</h1>
             </div>
         </div>
+        
+        <div class="searchBox">
+            <c:url value="/report/orderReport" var="listLink"/>
+            <form action="${listLink}" class="d-flex" role="search">
+                <div class="input-group" style="float: none">
+                    <select name="t" class="form-select">
+                        <option value="all">전체</option>
+                        <option value="itemId" ${param.t == 'itemId' ? 'selected' : '' }>제품코드</option>
+                        <option value="buyerId" ${param.t == 'buyerId' ? 'selected' : '' }>거래처코드</option>
+                        <option value="memberId" ${param.t == 'memberId' ? 'selected' : '' }>담당자명
+                        </option>
+                        <option value="status" ${param.t == 'status' ? 'selected' : '' }>승인여부</option>
+                    </select>
+                    <input value="${param.q}" type="search" class="form-control" placeholder="Search"
+                           aria-label="Search" name="q" style="width:450px">
+                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="totalList" style="overflow:auto; height: 500px; width: 1000px; margin-bottom: 50px">
+            <table class="table table-hover addList" style="width: 2000px">
+                <thead style="position: sticky; top: 0">
+                <tr>
+                    <th>주문번호</th>
+                    <th>승인요청일</th>
+                    <th>승인여부</th>
+                    <th>담당자명</th>
+                    <th>납품요청일</th>
+                    <th>거래처코드</th>
+                    <th>거래처명</th>
+                    <th>거래처 국가</th>
+                    <th>거래처 주소</th>
+                    <th>사업자등록번호</th>
+                    <th>제품코드</th>
+                    <th>제품명</th>
+                    <th>제품그룹</th>
+                    <th>제조사</th>
+                    <th>거래 통화</th>
+                    <th>주문 총 금액</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <c:forEach items="${report}" var="list">
+                    <tr>
+                        <td>${list.m_order_id}</td>
+                        <td>${list.m_order_date}</td>
+                        <td>${list.m_order_status}</td>
+                        <td>${list.m_member_id}</td>
+                        <td>${list.m_order_inserted}</td>
+                        <td>${list.m_buyer_id}</td>
+                        <td>${list.m_order_buyerName}</td>
+                        <td>${list.m_order_buyerRegion}</td>
+                        <td>${list.m_order_buyerAddress}</td>
+                        <td>${list.m_order_buyerNumber}</td>
+                        <td>${list.m_order_itemId}</td>
+                        <td>${list.m_order_itemName}</td>
+                        <td>${list.m_order_itemGroup}</td>
+                        <td>${list.m_order_itemManufacturer}</td>
+                        <td>${list.m_order_buyerCurrency}</td>
+                        <td>${list.decimal}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
         <h2>월별 요약</h2>
         <div class="tableList">
@@ -262,242 +329,33 @@
             </table>
         </div>
 
-        <c:url value="/order/list" var="listLink"/>
-        <form action="${listLink}" role="search">
-            <div class="searchBox ">
-                <div class="row justify-content-start">
-                    <div class="col-4">
-                        <label>제품코드</label>
-                        <input class="form-select" type="text" list="itemList" style="width: 210px;"
-                               autocomplete="off"/>
-                        <datalist id="itemList">
-                            <c:forEach items="${itemList}" var="itemList">
-                                <option class="non" value="${itemList.m_item_id}">${itemList.m_item_name}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
-                    <div class="col-4">
-                        <label>거래처코드</label>
-                        <input class="form-select" type="text" list="buyerList" style="width: 210px;"
-                               autocomplete="off"/>
-                        <datalist id="buyerList">
-                            <c:forEach items="${buyerList}" var="buyerList">
-                                <option class="non" value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>
-                            </c:forEach>
-                        </datalist>
-                    </div>
-                </div>
-                <div class="input-group" style="float: none">
-                    <input type="text" class="form-control">
-                    <button class="btn btn-secondary searchBtn" type="submit">검색</button>
-                </div>
-            </div>
-        </form>
-
-        <div class="totalList" style="width:100%; height:1000px; overflow:auto">
-            <table class="table table-hover addList">
-                <thead>
+        <h2>담당자별 요약</h2>
+        <div class="tableList">
+            <table class="table addList">
+                <thead style="width: auto">
                 <tr>
-                    <th>주문번호</th>
-                    <th>승인요청일</th>
-                    <th>승인여부</th>
-                    <th>담당자명</th>
-                    <th>납품요청일</th>
-                    <th>거래처코드</th>
-                    <th>거래처명</th>
-                    <th>거래처 국가</th>
-                    <th>거래처 주소</th>
-                    <th>사업자등록번호</th>
-                    <th>제품코드</th>
-                    <th>제품명</th>
-                    <th>제품그룹</th>
-                    <th>제조사</th>
-                    <th>거래 통화</th>
-                    <th>주문 총 금액</th>
+                    <th style="width: 500px;">담당자별</th>
+                    <th style="width: 500px;">총 주문수</th>
                 </tr>
                 </thead>
-
                 <tbody>
-                <c:forEach items="${report}" var="list">
-                    <tr onclick="orderDetail(this)" data-value="${reportHeader.m_order_id}" data-bs-toggle="modal"
-                        data-bs-target="#orderConfirm">
-                        <td>${list.m_order_id}</td>
-                        <td>${list.m_order_date}</td>
-                        <td>${list.m_order_status}</td>
-                        <td>${list.m_member_id}</td>
-                        <td>${list.m_order_inserted}</td>
-                        <td>${list.m_buyer_id}</td>
-                        <td>${list.m_order_buyerName}</td>
-                        <td>${list.m_order_buyerRegion}</td>
-                        <td>${list.m_order_buyerAddress}</td>
-                        <td>${list.m_order_buyerNumber}</td>
-                        <td>${list.m_order_itemId}</td>
-                        <td>${list.m_order_itemName}</td>
-                        <td>${list.m_order_itemGroup}</td>
-                        <td>${list.m_order_itemManufacturer}</td>
-                        <td>${list.m_order_buyerCurrency}</td>
-                        <td>${list.decimal}</td>
+                <c:forEach items="${memberReport }" var="memberReport">
+                    <tr>
+                        <td style="width: 500px;">${memberReport.m_member_id}</td>
+                        <td style="width: 500px;">${memberReport.count}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
-        <%--주문서 확인하기--%>
-        <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="orderConfirmLabel">주문서 확인</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="m_order_id" id="m_order_id">
-                        <input type="hidden" name="m_order_status" id="m_order_status">
-
-                        <h2>거래처</h2>
-                        <table class="table table-bordered orderModal">
-                            <tbody>
-                            <tr>
-                                <td class="table-active">주문번호</td>
-                                <td class="orderId"></td>
-                                <td class="table-active">주문일</td>
-                                <td class="orderDate"></td>
-                            </tr>
-                            <tr>
-                                <td class="table-active">거래처</td>
-                                <td class="buyerName"></td>
-                                <td class="table-active">주소</td>
-                                <td class="buyerAddress"></td>
-                            </tr>
-                            <tr>
-                                <td class="table-active">국가</td>
-                                <td class="buyerRegion"></td>
-                                <td class="table-active">사업자등록번호</td>
-                                <td class="buyerNumber"></td>
-                            </tr>
-                            <tr>
-                                <td class="table-active">통화</td>
-                                <td class="buyerCurrency"></td>
-                                <td class="table-active">납품요청일</td>
-                                <td colspan="3" class="inserted"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-
-                        <h2>주문 제품</h2>
-                        <table class="table orderItmeList">
-                            <thead>
-                            <tr>
-                                <th scope="col">제품코드</th>
-                                <th scope="col">제품명</th>
-                                <th scope="col">제품품목</th>
-                                <th scope="col">제조사</th>
-                                <th scope="col">판매가격</th>
-                                <th scope="col">주문수량</th>
-                                <th scope="col">총 금액</th>
-                            </tr>
-                            </thead>
-                            <tbody id="itemBody">
-
-                            </tbody>
-                        </table>
-
-
-                        <table class="table table-bordered orderModal">
-                            <tbody>
-                            <tr>
-                                <th class="tablePrice">주문 총 금액</th>
-                                <td class="sumPrice"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table class="table table-bordered orderModal">
-                            <tbody>
-                            <tr>
-                                <th class="tablePrice">승인요청자 메세지</th>
-                                <td class="comment"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table class="table table-bordered orderModal">
-                            <tbody>
-                            <tr>
-                                <th class="tablePrice">승인권자 메세지</th>
-                                <td class="memo"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 <script>
     const ctx = "${pageContext.request.contextPath}";
-
-    function orderDetail(target) {
-        const m_order_id = target.dataset.value;
-        const data = {m_order_id}
-        fetch(`\${ctx}/report/orderReport/` + m_order_id, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-            // body : JSON.stringify(data)
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                document.querySelector(".buyerName").innerHTML = data.m_order_buyerName;
-                document.querySelector(".buyerAddress").innerHTML = data.m_order_buyerAddress;
-                document.querySelector(".buyerRegion").innerHTML = data.m_order_buyerRegion;
-                document.querySelector(".buyerCurrency").innerHTML = data.m_order_buyerCurrency;
-                document.querySelector(".buyerNumber").innerHTML = data.m_order_buyerNumber;
-                document.querySelector(".inserted").innerHTML = data.m_order_inserted;
-                document.querySelector(".sumPrice").innerHTML = data.m_order_sumPrice;
-                document.querySelector(".comment").innerHTML = data.m_order_comment;
-                document.querySelector(".orderId").innerHTML = data.m_order_id;
-                document.querySelector(".orderDate").innerHTML = data.m_order_date;
-                document.querySelector(".memo").innerHTML = data.m_order_memo;
-
-                if (document.getElementById('itemBody').childElementCount == 0) {
-                    for (i = 0; i < data.orderItemDTOList.length; i++) {
-                        let itemTR = document.createElement("tr")
-                        itemTR.setAttribute("class", "orderItemList")
-                        let itemTD1 = document.createElement("td");
-                        itemTD1.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemId + ""));
-                        let itemTD2 = document.createElement("td");
-                        itemTD2.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemName + ""));
-                        let itemTD3 = document.createElement("td");
-                        itemTD3.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemGroup + ""));
-                        let itemTD4 = document.createElement("td");
-                        itemTD4.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_itemManufacturer + ""));
-                        let itemTD5 = document.createElement("td");
-                        itemTD5.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_price + ""));
-                        let itemTD6 = document.createElement("td");
-                        itemTD6.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_count + ""));
-                        let itemTD7 = document.createElement("td");
-                        itemTD7.appendChild(document.createTextNode(data.orderItemDTOList.at(i).m_order_totalPrice + ""));
-
-                        itemTR.appendChild(itemTD1);
-                        itemTR.appendChild(itemTD2);
-                        itemTR.appendChild(itemTD3);
-                        itemTR.appendChild(itemTD4);
-                        itemTR.appendChild(itemTD5);
-                        itemTR.appendChild(itemTD6);
-                        itemTR.appendChild(itemTD7);
-                        itemBody.appendChild(itemTR);
-                    }
-                }
-            })
-    }
 
 </script>
 </body>

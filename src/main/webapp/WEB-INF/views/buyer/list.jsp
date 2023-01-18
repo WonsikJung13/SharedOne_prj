@@ -481,9 +481,9 @@
     // 삭제버튼 클릭 시
     document.querySelector("#removeButton").addEventListener("click", remove);
 
-    // setTimeout(function (){
-    //     history.go(1)
-    // }, 4000)
+    setTimeout(function (){
+        history.go(1)
+    }, 4000)
 </script>
 
 </body>

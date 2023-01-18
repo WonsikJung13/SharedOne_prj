@@ -19,13 +19,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap"
-            rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Gothic A1', sans-serif;
+            font-weight: 200;
             background-color: #eeeeee;
         }
 
@@ -247,12 +248,12 @@
                 <td class="table-active">판매가격</td>
                 <td>
                     <input class="form-control listPrice" type="text" placeholder="판매가격"
-                           aria-label="default input example">
+                           aria-label="default input example" onkeypress='return checkNumber(event)'>
                 </td>
                 <td class="table-active">주문수량</td>
                 <td>
                     <input id="orderCount" class="form-control" type="text" placeholder="수량을 입력하세요."
-                           aria-label="default input example" disabled>
+                           aria-label="default input example" disabled onkeypress='return checkNumber(event)'>
                 </td>
             </tr>
             <tr>
@@ -580,6 +581,16 @@
             document.querySelector('.addBtn').removeAttribute("disabled")
         }
     })
+
+    function checkNumber(event) {
+        if(event.key === '.'
+            || event.key === '-'
+            || event.key >= 0 && event.key <= 9) {
+            return true;
+        }
+
+        return false;
+    }
 
 </script>
 </body>

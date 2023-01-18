@@ -9,13 +9,15 @@ import java.util.Map;
 public interface ReportMapper {
 //    List<ReportHeaderDto> getOrderHeader();
 
-    List<TotalReportDto> reportList();
+    List<TotalReportDto> reportList(String type, String keyword);
 
     ReportHeaderDto reportDetail(int mOrderId);
 
     List<Map<String, String>> sortedReport();
 
     List<Map<String, String>> buyerReport();
+
+    List<Map<String, String>> memberReport();
 
 //    void getOrderItem();
 }

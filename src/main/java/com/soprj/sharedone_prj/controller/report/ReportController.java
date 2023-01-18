@@ -6,10 +6,7 @@ import com.soprj.sharedone_prj.service.report.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,9 +19,10 @@ public class ReportController {
     private ReportService reportService;
 
     @GetMapping("orderReport")
-    public void report(Model model) {
+    public void report(Model model, @RequestParam(name = "t", defaultValue = "all") String type,
+                       @RequestParam(name = "q", defaultValue = "") String keyword) {
 //        List<ReportHeaderDto> report = reportService.getOrderHeader();
-        List<TotalReportDto> report = reportService.reportList();
+        List<TotalReportDto> report = reportService.reportList(type, keyword);
         model.addAttribute("report", report);
 
         List<Map<String, String>> sortedReport = reportService.sortedReport();
@@ -32,6 +30,9 @@ public class ReportController {
 
         List<Map<String, String>> buyerReport = reportService.buyerReport();
         model.addAttribute("buyerReport", buyerReport);
+
+        List<Map<String, String>> memberReport = reportService.memberReport();
+        model.addAttribute("memberReport", memberReport);
     }
 
     @RequestMapping("orderReport/{m_order_id}")
