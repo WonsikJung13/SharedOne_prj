@@ -299,9 +299,10 @@
 
         <%--   삭제 버튼    --%>
         <div class="row justify-content-end" style="width: 1000px">
-            <input style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal" type="button"
+            <button style="width: 100px; margin-bottom: 10px;" data-bs-toggle="modal" type="button"
                    id="removeButton"
-                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger">
+                   data-bs-target="#removeModal" value="삭제" class="btn btn-danger removeBtn" disabled>삭제
+            </button>
         </div>
 
 
@@ -311,7 +312,7 @@
                 <thead style="width: auto">
                 <tr>
                     <th><input name="selectAll" type="checkbox" value="selectAll"
-                               onclick=""
+                               onclick="selectAll(this)"
                                style="position: relative;top: -14px;background-color: transparent;"></th>
                     <th>주문번호</th>
                     <th>거래처코드</th>
@@ -325,7 +326,7 @@
                 <c:forEach items="${orderList }" var="orderList">
                     <tr>
                         <td>
-                            <input class="itemBox" name="itemBox" type="checkbox" value="${orderList.m_order_id}">
+                            <input class="itemBox" name="itemBox" type="checkbox" onclick="checkSelectAll(); activeBtn()" value="${orderList.m_order_id}" style="position: relative;top: 10px">
                         </td>
                         <td onclick="orderDetail(this)" data-value="${orderList.m_order_id}" data-bs-toggle="modal"
                             data-bs-target="#orderConfirm" class="orderDetailBtn">${orderList.m_order_id}</td>
@@ -631,23 +632,6 @@
             })
     }
 
-    document.querySelector("#removeConfirmButton").addEventListener("click", function () {
-        remove();
-        document.getElementById('removeForm').submit();
-    })
-
-    function remove() {
-        var length = document.getElementsByName("itemBox").length;
-        var removeIdList = [];
-        for (var i = 0; i < length; i++) {
-            var checkedBox = document.getElementsByName("itemBox")[i].checked
-            if (checkedBox) {
-                var selectId = document.getElementsByName("itemBox")[i].value;
-                removeIdList.push(selectId);
-            }
-        }
-        document.querySelector("#removeInput").value = removeIdList;
-    }
 
     // document.querySelector("#removeButton").addEventListener("click", remove);
 
@@ -674,18 +658,88 @@
         });
 
     });
-</script>
-<%--<script>--%>
-<%--    function activeBtn() {--%>
 
-<%--        const checked = document.querySelectorAll('input[name="itemBox"]:checked');--%>
-<%--        console.log(checked.length);--%>
-<%--        if (checked.length == 0) {--%>
-<%--            document.querySelector(".removeBtn").disabled = true;--%>
-<%--        } else {--%>
-<%--            document.querySelector(".removeBtn").disabled = false;--%>
-<%--        }--%>
-<%--    }--%>
-<%--</script>--%>
+    // 삭제버튼 클릭
+    document.querySelector("#removeConfirmButton").addEventListener("click", function () {
+        remove();
+        document.getElementById('removeForm').submit();
+    })
+
+    // 삭제 진행
+    function remove() {
+        var length = document.getElementsByName("itemBox").length;
+        var removeIdList = [];
+        for (var i = 0; i < length; i++) {
+            var checkedBox = document.getElementsByName("itemBox")[i].checked
+            if (checkedBox) {
+                var selectId = document.getElementsByName("itemBox")[i].value;
+                removeIdList.push(selectId);
+            }
+        }
+        document.querySelector("#removeInput").value = removeIdList;
+    }
+
+    // 전체선택 풀기
+    function checkSelectAll() {
+        const selectAll = document.querySelector('input[name="selectAll"]');
+        const checkboxes = document.querySelectorAll('input[name="itemBox"]');
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+
+        if (checkboxes.length === checked.length) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
+        }
+    }
+
+    // 전체선택 하기
+    function selectAll(selectAll) {
+        const checkboxes = document.getElementsByName('itemBox');
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked
+        })
+        // 전체선택 시 삭제버튼 활성화
+        if (checkboxes.length === 10 && checked.length === 10) {
+            document.querySelector(".removeBtn").disabled = true;
+        } else {
+            document.querySelector(".removeBtn").disabled = false;
+        }
+    }
+
+    // 삭제버튼 활성화
+    function activeBtn() {
+        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+        console.log(checked.length);
+        if (checked.length > 0) {
+            document.querySelector(".removeBtn").disabled = false;
+        } else {
+            document.querySelector(".removeBtn").disabled = true;
+        }
+    }
+
+    // 삭제 진행
+    function remove() {
+        const length = document.getElementsByName("itemBox").length;
+        const removeIdList = [];
+        for (let i = 0; i < length; i++) {
+            const checkedBox = document.getElementsByName("itemBox")[i].checked;
+
+            if (checkedBox) {
+                const selectId = document.getElementsByName("itemBox")[i].value;
+                console.log("selectId: " + selectId);
+                removeIdList.push(selectId);
+            }
+        }
+        console.log(removeIdList)
+        document.querySelector("#removeInput").value = removeIdList;
+        console.log(document.querySelector("#removeInput").value);
+        document.getElementById('removeForm').submit();
+    }
+</script>
+<script>
+
+</script>
 </body>
 </html>

@@ -553,9 +553,7 @@
                 removeIdList.push(selectId);
             }
         }
-        console.log(removeIdList)
         document.querySelector("#removeInput").value = removeIdList;
-        console.log(document.querySelector("#removeInput").value);
         document.getElementById('removeForm').submit();
     }
 
