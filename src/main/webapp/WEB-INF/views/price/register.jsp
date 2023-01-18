@@ -254,6 +254,7 @@
     document.querySelector("#m_price_startPeriod").addEventListener("change", function () {
 
         document.querySelector("#m_price_lastPeriod").disabled = false;
+        document.querySelector("#m_price_lastPeriod").max = null;
         $("input[name='m_price_lastPeriod'],textarea").val('');
 
         const m_item_id = document.querySelector("#itemId").value;
