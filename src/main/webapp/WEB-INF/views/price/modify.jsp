@@ -55,7 +55,7 @@
     </div>
     <div class="col">
         <div class="container">
-        <h1 style="margin-top: 20px">판매가격 수정하기</h1>
+        <h1 style="margin-top: 20px"><i class="fa-solid fa-pen-nib" style="margin-right: 10px;"></i>판매가격 수정하기</h1>
 
         <form action="" method="post" enctype="multipart/form-data" id="formId">
             <table class="table table-bordered">

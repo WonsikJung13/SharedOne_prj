@@ -176,7 +176,7 @@
     <div class="col">
         <div class="container">
         <div id="itemTitle">
-            <h1 id="header">제품 등록</h1>
+            <h1 id="header"><i class="fa-solid fa-pen-nib" style="margin-right: 10px;"></i>제품 등록</h1>
             <h2>제품 추가</h2>
         </div>
 
