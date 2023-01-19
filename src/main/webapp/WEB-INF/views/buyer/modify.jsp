@@ -145,7 +145,7 @@
             </form>
             </tbody>
         </table>
-        <button class="btn btn-secondary" id="modifyBtn">바이어 수정</button>
+        <button class="btn btn-secondary" id="modifyBtn">거래처 수정</button>
     </div>
 </div>
 

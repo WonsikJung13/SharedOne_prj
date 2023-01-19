@@ -195,8 +195,18 @@
             </div>
             <div class="searchBox">
                 <c:url value="/report/orderReport" var="listLink"/>
-                <form action="${listLink}" class="d-flex" role="search">
-                    <div class="input-group" style="float: none">
+                <form action="${listLink}" role="search">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div style="margin-right: 10px" class="col-auto">
+                            <label>시작일</label>
+                            <input class="form-control" name="sd" id="startDate" type="date" style="width: 210px">
+                        </div>
+                        <div class="col-auto">
+                            <label>종료일</label>
+                            <input class="form-control" name="ed" id="endDate" type="date" style="width: 210px">
+                        </div>
+                    </div>
+                    <div class="input-group" class="row">
                         <select name="t" class="form-select">
                             <option value="all">전체</option>
                             <option value="itemId" ${param.t == 'itemId' ? 'selected' : '' }>제품코드</option>
