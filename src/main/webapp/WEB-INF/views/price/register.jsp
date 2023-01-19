@@ -60,6 +60,47 @@
             line-height: 39px;
             font-size: 16px;
         }
+        .tableList {
+            background-color: #fff;
+            height: 444px;
+            /*overFlow: scroll;*/
+            overflow-x: hidden;
+            margin-bottom: 16px
+        }
+
+        .tableList td {
+            /*--bs-table-bg: #fffff;*/
+            background-color: #fff;
+            color: #37393b;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tableList thead th {
+            position: sticky;
+            top: 0;
+        }
+
+        .tableList input {
+            border: none;
+            background: transparent;
+        }
+        .addBtn {
+            background-color: #598f9b;
+            border-color:#598f9b;
+            padding: 10px 30px;
+        }
+
+        .addBtn:hover,
+        .addBtn:focus {
+            background-color: #52727b;
+            border-color: #52727b;
+        }
+
+
+
 
     </style>
 </head>
@@ -136,7 +177,7 @@
                     <tr>
                         <td class="table-active">할인율</td>
                         <td>
-                            <input class="form-control reset1" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="0" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input>
+                            <input class="form-control reset1" autocomplete="off" id="discountInput" type="text" maxlength='2' name="m_price_discount" value="0" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input>
                         </td>
                         <td class="table-active">판매가격(단가)</td>
                         <td>
@@ -146,12 +187,14 @@
                     <tr>
                         <td class="table-active">최종 단가</td>
                         <td colspan="3">
-                            <input class="form-control reset1" id="lastPrice" type="text" name="m_price_lastPrice" onkeyup="inputNumberFormat(this)" readonly></input>
+                            <input class="form-control reset1" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <input class="btn btn-secondary" type="button" id="priceButton" value="판매가 추가"></input>
+            <div class="row justify-content-center mt-4 mb-4">
+                <input class="btn btn-secondary addBtn col-auto" type="button" id="priceButton" value="판매가 추가"></input>
+            </div>
 <%--            <div style="display:none"><button id="resetBtn" type="reset"></button> </div>--%>
         </form>
 
@@ -176,8 +219,9 @@
                 </tbody>
             </table>
         </div>
-
-        <button style="margin-bottom: 20px" class="btn btn-secondary" id="priceSubmitButton">등록</button>
+        <div class="row justify-content-center mt-4 mb-4">
+            <button style="margin-bottom: 20px" class="btn btn-secondary addBtn col-auto" id="priceSubmitButton">등록</button>
+        </div>
     </div>
 </div>
 </div>
@@ -194,11 +238,11 @@
     const lastPrice = document.querySelector("#lastPrice");
 
     function discount() {
-        const discount = uncomma(discountInput.value)
+        const discount = discountInput.value
         const price = uncomma(priceInput.value)
 
         const lastprice = price - ((price * discount) / 100);
-        lastPrice.value = comma(uncomma(lastprice));
+        lastPrice.value = comma(Math.floor(lastprice));
 
     }
 
