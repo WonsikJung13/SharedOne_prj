@@ -39,6 +39,7 @@
         <form action="" method="post" enctype="multipart/form-data" id="formId">
             <table class="table table-bordered">
                 <tbody>
+                <input type="hidden" id="priceId" value="${price.m_price_id}"/>
                     <tr>
                         <td class="table-active">제품코드</td>
                         <td>
@@ -114,13 +115,13 @@
                 <tr>
                     <td class="table-active">판매가격(단가)</td>
                     <td>
-                        <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price" value="${price.m_price_price}"></input>
+                        <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price" value="" onkeyup="inputNumberFormat(this)"></input>
                     </td>
                 </tr>
                 <tr>
                     <td class="table-active">최종 단가</td>
                     <td>
-                        <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice" value="${price.m_price_lastPrice}" readonly></input>
+                        <input class="form-control" id="lastPrice" type="text" name="m_price_lastPrice" value="" onkeyup="inputNumberFormat(this)" readonly></input>
                     </td>
                 </tr>
                 </tbody>
@@ -137,17 +138,23 @@
 <script>
     const ctx = "${pageContext.request.contextPath}";
 
+    // 수정창 보여질때 천원 단위 절사
+    let commaPrice = comma(${price.m_price_price})
+    let commaLastPrice = comma(${price.m_price_lastPrice})
+    document.querySelector("#priceInput").value = commaPrice;
+    document.querySelector("#lastPrice").value = commaLastPrice;
+
     // 할인율 계산하기
     const discountInput = document.querySelector("#discountInput");
     const priceInput = document.querySelector("#priceInput");
     const lastPrice = document.querySelector("#lastPrice");
 
     function discount() {
-        const discount = discountInput.value;
-        const price = priceInput.value;
-        const lastprice = price - ((price * discount) / 100);
+        const discount = uncomma(discountInput.value)
+        const price = uncomma(priceInput.value)
 
-        lastPrice.value = lastprice;
+        const lastprice = price - ((price * discount) / 100);
+        lastPrice.value = comma(uncomma(lastprice));
     }
 
     document.querySelector("#priceInput").addEventListener("keyup", discount)
@@ -206,11 +213,13 @@
         document.querySelector("#m_price_lastPeriod").disabled = false;
         $("input[name='m_price_lastPeriod'],textarea").val('');
 
+        const m_price_id = document.querySelector("#priceId").value;
         const m_item_id = document.querySelector("#itemId").value;
         const m_buyer_id = document.querySelector("#buyerId").value;
         const m_price_startPeriod = document.querySelector("#m_price_startPeriod").value;
 
         const addData = {
+            m_price_id,
             m_item_id,
             m_buyer_id,
             m_price_startPeriod
@@ -237,6 +246,7 @@
             })
     })
 
+    // 등록
     document.querySelector("#priceSubmitButton").addEventListener("click", function (e) {
         var input_empty = false;
         $('#formId').find('input[type!="hidden"]').each(function(){
@@ -250,6 +260,9 @@
         }
         if(input_empty == false) {
             alert("판매가 수정이 완료되었습니다.")
+            document.querySelector("#priceInput").value = uncomma(document.querySelector("#priceInput").value);
+            document.querySelector("#lastPrice").value = uncomma(document.querySelector("#lastPrice").value);
+
             document.querySelector("#m_price_startPeriod").disabled = false;
             document.querySelector("#m_price_lastPeriod").disabled = false;
             document.querySelector("#itemId").disabled = false;
@@ -266,6 +279,23 @@
         $("input[type='date'],textarea").val('');
         e.preventDefault();
     })
+
+    // 천원 단위 절사
+    function inputNumberFormat(obj) {
+        obj.value = comma(uncomma(obj.value));
+    }
+
+    function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+    }
+
+
 
 </script>
 </body>
