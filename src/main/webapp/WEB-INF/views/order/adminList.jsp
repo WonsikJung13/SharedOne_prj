@@ -163,9 +163,9 @@
             border: none;
         }
 
-        .orderPage {
-            width: 1000px;
-        }
+        /*.orderPage {*/
+        /*    width: 1000px;*/
+        /*}*/
         .modal {
             --bs-modal-width: 50%;
         }
@@ -303,8 +303,6 @@
         }
     </style>
 </head>
-<div>
-
 <div class="row">
     <div class="col-6 col-sm-2">
         <my:header></my:header>

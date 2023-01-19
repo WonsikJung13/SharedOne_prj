@@ -35,7 +35,6 @@
         }
 
         .table {
-            width: 1000px;
             --bs-table-bg: #fff;
         }
 
@@ -70,43 +69,41 @@
             background-color: #598f9b;
             border-color:#598f9b;
             padding: 10px 30px;
-            font-size: 18px;
-            margin: 30px 0 30px 430px;
         }
 
         .addBtn:hover,
-        .addBtn:focus, .storageBtn:hover, .storageBtn.focus {
-            background-color: #505f62;
+        .addBtn:focus {
+            background-color: #52727b;
+            border-color: #52727b;
+        }
+        .storageBtn:hover,
+        .storageBtn:focus{
+            background-color: #4f5f63;
+            border-color: #4f5f63;
+        }
+        .submitBtn:hover,
+        .submitBtn:focus{
+            background-color: #52727b;
+            border-color: #52727b;
         }
 
         .storageBtn {
             background-color: #5f7175;
             padding: 10px 30px;
-            margin-left: 280px;
-            font-size: 18px;
+            margin-right: 4px;
         }
 
         .submitBtn {
             background-color: #598f9b;
             border-color:#598f9b;
             padding: 10px 30px;
-            font-size: 18px;
+            margin-left: 4px;
 
         }
-
-        .form-select {
-            width: 250px;
-        }
-
-        .inputLength {
-            width: 250px;
-        }
-
 
         .tableList {
             background-color: #fff;
             height: 444px;
-            width: 1000px;
             overFlow: scroll;
             overflow-x: hidden;
         }
@@ -134,9 +131,9 @@
 
         textarea {
             height: 140px;
-            width: 1000px;
             background-color: #fff;
             border-color:#dee2e6;
+            width:100%;
         }
 
         .table-active{
@@ -163,19 +160,17 @@
             width:300px;
             line-height: 35px;
         }
-        .statusBtn{
-            margin-top: 20px;
-            margin-bottom: 50px;
-        }
 
     </style>
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
+
     <div class="col">
+        <div class="container">
         <h1><i class="fa-solid fa-pen-nib" style="margin-right: 10px;"></i>주문 작성</h1>
 
         <h2>거래처 선택</h2>
@@ -246,12 +241,12 @@
             <tbody>
             <tr>
                 <td class="table-active">판매가격</td>
-                <td>
+                <td class="inputWidth">
                     <input class="form-control listPrice" type="text" placeholder="판매가격"
                            aria-label="default input example" onkeypress='return checkNumber(event)'>
                 </td>
                 <td class="table-active">주문수량</td>
-                <td>
+                <td class="inputWidth">
                     <input id="orderCount" class="form-control" type="text" placeholder="수량을 입력하세요."
                            aria-label="default input example" disabled onkeypress='return checkNumber(event)'>
                 </td>
@@ -265,8 +260,8 @@
 
             </tbody>
         </table>
-        <div class="btnWidth">
-            <button class="btn btn-secondary addBtn" disabled>제품추가</button>
+        <div class="row justify-content-center mt-4 mb-4">
+            <button class="btn btn-secondary addBtn col-auto" disabled>제품추가</button>
         </div>
 
         <h2>추가된 제품</h2>
@@ -307,15 +302,17 @@
             </div>
         </div>
 
-        <div class="statusBtn">
-            <button class="btn btn-secondary storageBtn">임시저장</button>
-            <button class="btn btn-secondary submitBtn">승인요청</button>
+        <div class="row justify-content-center mt-4 mb-4">
+            <button class="btn btn-secondary storageBtn col-auto">임시저장</button>
+            <button class="btn btn-secondary submitBtn col-auto">승인요청</button>
         </div>
     </div>
-</div>
-<input
+    </div>
+    <input
         value="${name}"
         class="form-control" type="hidden" name="m_member_id" id="m_member_id">
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"

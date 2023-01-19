@@ -46,7 +46,6 @@
         }
 
         .table {
-            width: 1000px;
             --bs-table-bg: #fff;
         }
 
@@ -56,13 +55,11 @@
             text-align: center;
             line-height: 39px;
             font-size: 16px;
-            width: 1000px;
 
         }
 
         tr {
             height: 55px;
-            width: 1000px;
 
         }
 
@@ -84,15 +81,11 @@
             line-height: 39px;
             font-size: 16px;
             font-weight: bold;
-            width: 1000px;
-
         }
 
         .tableList {
             background-color: #fff;
             height: 672px;
-            width: 1000px;
-            /*margin-bottom: 100px;*/
         }
 
         td a {
@@ -112,7 +105,6 @@
 
         .searchBox {
             background-color: white;
-            width: 1000px;
             padding: 20px 80px 10px 80px;
             color: #212529;
             font-size: 16px;
@@ -128,7 +120,6 @@
         form .form-control, .form-select {
             height: 40px;
             margin: 5px 0 5px 0;
-            width: 1000px;
 
         }
 
@@ -256,19 +247,34 @@
             padding: 9px 10px !important;
             margin-bottom: 13px;
         }
+
+        .modal {
+            --bs-modal-width: 50%;
+        }
+        .table-active{
+            width: 180px;
+        }
+        .tableTd{
+            width:299.5px;
+        }
+        .statusBtn{
+            margin: 0 auto;
+        }
+        .modal-footer{
+            border-top:none;
+        }
     </style>
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
     <div class="col">
-<%--        <div class="d-flex justify-content-center">--%>
-<%--        <div style="display: flex;justify-content: space-between;width: 1000px;">--%>
+        <div class="container">
         <div>
-            <div id="itemListTitle">
-                <h1 id="header">주문 관리 및 승인</h1>
+            <div>
+                <h1><i class="fa-solid fa-layer-group" style="margin-right: 10px;"></i>주문 관리 및 승인</h1>
             </div>
         </div>
 
@@ -324,7 +330,7 @@
         <%-- 페이지네이션   --%>
         <div class="row">
             <div class="col">
-                <nav aria-label="pagination-container" style="width: 1000px; background-color:#fff">
+                <nav aria-label="pagination-container" style="background-color:#fff">
                     <div class="pagination">
 
                         <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
@@ -401,9 +407,10 @@
     <%--주문서 확인하기--%>
     <div class="modal fade" id="orderConfirm" tabindex="-1" aria-labelledby="orderConfirmLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content orderPage">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="orderConfirmLabel">주문서 확인</h1>
+                    <h1 class="modal-title fs-5" id="orderConfirmLabel">
+                        <i class="fa-solid fa-square-check" style="margin-right: 6px; color: #505f62"></i>주문서 확인</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -416,25 +423,25 @@
                             <tbody>
                             <tr>
                                 <td class="table-active">주문번호</td>
-                                <td class="orderId"></td>
+                                <td class="orderId tableTd"></td>
                                 <td class="table-active">주문일</td>
-                                <td class="orderDate"></td>
+                                <td class="orderDate tableTd"></td>
                             </tr>
                             <tr>
                                 <td class="table-active">거래처</td>
-                                <td class="buyerName"></td>
+                                <td class="buyerName tableTd"></td>
                                 <td class="table-active">주소</td>
-                                <td class="buyerAddress"></td>
+                                <td class="buyerAddress tableTd"></td>
                             </tr>
                             <tr>
                                 <td class="table-active">국가</td>
-                                <td class="buyerRegion"></td>
+                                <td class="buyerRegion tableTd"></td>
                                 <td class="table-active">사업자등록번호</td>
-                                <td class="buyerNumber"></td>
+                                <td class="buyerNumber tableTd"></td>
                             </tr>
                             <tr>
                                 <td class="table-active">통화</td>
-                                <td class="buyerCurrency"></td>
+                                <td class="buyerCurrency tableTd"></td>
                                 <td class="table-active">납품요청일</td>
                                 <td colspan="3" class="inserted"></td>
                             </tr>
@@ -497,7 +504,7 @@
             </div>
         </div>
     </div>
-
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
