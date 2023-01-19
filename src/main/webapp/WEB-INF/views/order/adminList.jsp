@@ -164,7 +164,10 @@
         }
 
         .orderPage {
-            /*width: 1000px;*/
+            width: 1000px;
+        }
+        .modal {
+            --bs-modal-width: 50%;
         }
 
         .orderModal {
@@ -675,7 +678,6 @@
 
             }
         });
-제
     });
 
     $(document).ready(function(){

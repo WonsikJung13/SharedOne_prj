@@ -71,6 +71,7 @@
             width: 900px;
             /*overFlow: scroll;*/
             overflow-x: hidden;
+            margin-bottom: 16px
         }
 
         .tableList td {
