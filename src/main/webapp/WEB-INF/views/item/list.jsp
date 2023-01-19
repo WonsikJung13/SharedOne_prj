@@ -88,9 +88,7 @@
         }
 
         .table button {
-            background-color: #757575;
             color: #fff;
-            /*border-radius: 0;*/
             width: 100px;
             --bs-btn-font-weight: 600;
             border: none;
@@ -207,6 +205,10 @@
             margin-bottom: 13px;
         }
 
+        .btnStyle{
+            background-color: #598f9b;
+        }
+
     </style>
 </head>
 <body>
@@ -278,7 +280,7 @@
                         </select>
 
                         <input value="${param.q}" type="search" class="form-control" placeholder="Search"
-                               aria-label="Search" name="q" style="width:450px">
+                               aria-label="Search" name="q" style="width:600px">
                         <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
                     </div>
                 </form>
@@ -337,7 +339,7 @@
                                 <c:url value="/item/register" var="registerLink">
                                     <c:param name="m_item_id" value="${itemList.m_item_id}"></c:param>
                                 </c:url>
-                                <button type="button" class="btn btn-secondary"
+                                <button type="button" class="btn btnStyle"
                                         onclick="location.href='${registerLink}' ">수정
                                 </button>
                             </td>
