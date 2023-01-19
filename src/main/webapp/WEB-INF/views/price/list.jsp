@@ -72,7 +72,7 @@
 
         .tableList {
             background-color: #fff;
-            height: 80%;
+            height: 1000px;
             width: 1000px;
         }
 
@@ -147,7 +147,7 @@
         }
 
         th {
-            width: 13%;
+            width: 15%;
         }
 
         /*페이지네이션*/
@@ -281,12 +281,12 @@
                     </th>
                     <th>제품코드</th>
                     <th>제품명</th>
-                    <th style="width: 14%">거래처코드</th>
+                    <th style="width: 16%">거래처코드</th>
                     <th>거래처명</th>
-                    <th style="width: 16%">시작일</th>
-                    <th style="width: 16%">종료일</th>
-                    <th style="width: 7%">통화</th>
-                    <th style="width: 10%">할인율</th>
+                    <th style="width: 17%">시작일</th>
+                    <th style="width: 17%">종료일</th>
+                    <th style="width: 8%">통화</th>
+                    <th style="width: 11%">할인율</th>
                     <th>금액</th>
                     <th>최종금액</th>
                     <th></th>
@@ -329,73 +329,72 @@
         </div>
 
 
-            <div class="row">
-                <div class="col">
-                    <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
-                        <div class="pagination">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
+                    <div class="pagination">
 
-                            <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
-                            <c:if test="${priceDto.currentPageNumber ne 1 }">
-                                <c:url value="/price/list" var="listLink">
-                                    <c:param name="page" value="1"/>
-                                    <c:param name="q" value="${param.q }"/>
-                                    <c:param name="t" value="${param.t }"/>
-                                </c:url>
-                                <a href="${listLink }" class="pagination-newer">
-                                    <i class="bi bi-chevron-double-left"></i>
-                                </a>
-                            </c:if>
+                        <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
+                        <c:if test="${priceDto.currentPageNumber ne 1 }">
+                            <c:url value="/price/list" var="listLink">
+                                <c:param name="page" value="1"/>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <a href="${listLink }" class="pagination-newer">
+                                <i class="bi bi-chevron-double-left"></i>
+                            </a>
+                        </c:if>
 
-                            <%-- 이전 버튼--%>
-                            <c:if test="${priceDto.hasPrevButton }">
-                                <c:url value="/price/list" var="listLink">
-                                    <c:param name="page" value="${priceDto.jumpPrevPageNumber }"></c:param>
-                                    <c:param name="q" value="${param.q }"/>
-                                    <c:param name="t" value="${param.t }"/>
-                                </c:url>
-                                <a href="${listLink }" class="pagination-newer">
-                                    <i class="bi bi-chevron-left"></i>
-                                </a>
-                            </c:if>
+                        <%-- 이전 버튼--%>
+                        <c:if test="${priceDto.hasPrevButton }">
+                            <c:url value="/price/list" var="listLink">
+                                <c:param name="page" value="${priceDto.jumpPrevPageNumber }"></c:param>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <a href="${listLink }" class="pagination-newer">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </c:if>
 
-                            <c:forEach begin="${priceDto.leftPageNumber}" end="${priceDto.rightPageNumber}" var="pageNumber">
-                                <c:url value="/price/list" var="listLink">
-                                    <c:param name="page" value="${pageNumber }"/>
-                                    <c:param name="q" value="${param.q }"/>
-                                    <c:param name="t" value="${param.t }"/>
-                                </c:url>
-                                <span class="pagination-inner">
-                                    <%-- 현재페이지에 active 클래스 추가 --%>
-                                    <a class="${priceDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''} }" href="${listLink}">${pageNumber}</a>
-                                </span>
-                            </c:forEach>
+                        <c:forEach begin="${priceDto.leftPageNumber}" end="${priceDto.rightPageNumber}" var="pageNumber">
+                            <c:url value="/price/list" var="listLink">
+                                <c:param name="page" value="${pageNumber }"/>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <span class="pagination-inner">
+                                <%-- 현재페이지에 active 클래스 추가 --%>
+                                <a class="${priceDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''} }" href="${listLink}">${pageNumber}</a>
+                            </span>
+                        </c:forEach>
 
-                            <%-- 다음 버튼 --%>
-                            <c:if test="${priceDto.hasNextButton }">
-                                <c:url value="/price/list" var="listLink">
-                                    <c:param name="page" value="${priceDto.jumpNextPageNumber }"></c:param>
-                                    <c:param name="q" value="${param.q }"/>
-                                    <c:param name="t" value="${param.t }"/>
-                                </c:url>
-                                <a href="${listLink }" class="pagination-older">
-                                    <i class="bi bi-chevron-right"></i>
-                                </a>
-                            </c:if>
+                        <%-- 다음 버튼 --%>
+                        <c:if test="${priceDto.hasNextButton }">
+                            <c:url value="/price/list" var="listLink">
+                                <c:param name="page" value="${priceDto.jumpNextPageNumber }"></c:param>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <a href="${listLink }" class="pagination-older">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </c:if>
 
-                            <%-- 맨뒤 버튼 --%>
-                            <c:if test="${priceDto.currentPageNumber ne priceDto.lastPageNumber }">
-                                <c:url value="/price/list" var="listLink">
-                                    <c:param value="${priceDto.lastPageNumber }" name="page"/>
-                                    <c:param name="q" value="${param.q }"/>
-                                    <c:param name="t" value="${param.t }"/>
-                                </c:url>
-                                <a href="${listLink }" class="pagination-older">
-                                    <i class="bi bi-chevron-double-right"></i>
-                                </a>
-                            </c:if>
-                        </div>
-                    </nav>
-                </div>
+                        <%-- 맨뒤 버튼 --%>
+                        <c:if test="${priceDto.currentPageNumber ne priceDto.lastPageNumber }">
+                            <c:url value="/price/list" var="listLink">
+                                <c:param value="${priceDto.lastPageNumber }" name="page"/>
+                                <c:param name="q" value="${param.q }"/>
+                                <c:param name="t" value="${param.t }"/>
+                            </c:url>
+                            <a href="${listLink }" class="pagination-older">
+                                <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                        </c:if>
+                    </div>
+                </nav>
             </div>
         </div>
     </div>

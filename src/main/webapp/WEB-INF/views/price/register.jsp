@@ -55,7 +55,7 @@
                         <td class="table-active">제품코드</td>
                         <td>
                             <input class="form-control" id="itemId" type="text" name="m_item_id"
-                                    placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()">
+                                    placeholder="제품 코드를 입력해주세요" autocomplete="off" onchange="itemView()" onkeyup="noSpaceForm(this)">
 <%--                                <datalist id="itemList">--%>
 <%--                                    <c:forEach items="${itemList}" var="itemList">--%>
 <%--                                        <option value="${itemList.m_item_id}">${itemList.m_item_name}</option>--%>
@@ -74,7 +74,7 @@
                         <td class="table-active">거래처 코드</td>
                         <td>
                             <input class="form-control" id="buyerId" type="text" name="m_buyer_id"
-                                   placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()" disabled>
+                                   placeholder="거래처 코드를 입력해주세요" autocomplete="off" onchange="buyerView()" onkeyup="noSpaceForm(this)" disabled>
 <%--                            <datalist id="buyerList">--%>
 <%--                                <c:forEach items="${buyerList}" var="buyerList" >--%>
 <%--                                    <option value="${buyerList.m_buyer_id}">${buyerList.m_buyer_name}</option>--%>
@@ -115,13 +115,13 @@
                     <tr>
                         <td class="table-active">할인율</td>
                         <td>
-                            <input class="form-control reset1" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="0"></input>
+                            <input class="form-control reset1" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="0" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input>
                         </td>
                     </tr>
                     <tr>
                         <td class="table-active">판매가격(단가)</td>
                         <td>
-                            <input class="form-control reset1" autocomplete="off" id="priceInput" type="text" name="m_price_price" onkeyup="inputNumberFormat(this)"></input>
+                            <input class="form-control reset1" autocomplete="off" id="priceInput" type="text" name="m_price_price" onkeyup="inputNumberFormat(this)" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input>
                         </td>
                     </tr>
                     <tr>
@@ -499,6 +499,17 @@
     function uncomma(str) {
         str = String(str);
         return str.replace(/[^\d]+/g, '');
+    }
+
+    // 공백 사용 못하게
+    function noSpaceForm(obj) {
+        var str_space = /\s/;  // 공백체크
+        if (str_space.exec(obj.value)) { //공백 체크
+            //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
+            obj.focus();
+            obj.value = obj.value.replace(/\s| /gi, ''); // 공백제거
+            return false;
+        }
     }
 
 
