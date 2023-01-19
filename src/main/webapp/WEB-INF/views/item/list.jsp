@@ -227,7 +227,7 @@
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-4">
-                    <h1 id="header">제품 관리 및 등록</h1>
+                    <h1 id="header"><i class="fa-solid fa-layer-group" style="margin-right: 10px;"></i>제품 관리 및 등록</h1>
                 </div>
                 <div class="itemRegisterBtn col-auto">
                     <c:url value="/item/register" var="registerLink"></c:url>

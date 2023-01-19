@@ -237,7 +237,7 @@
             <tbody>
             <tr>
                 <td class="table-active">판매가격</td>
-                <td class="inputWidth">
+                    <td class="inputWidth">
                     <input class="form-control listPrice" type="text" placeholder="판매가격"
                            aria-label="default input example" onkeyup="inputNumberFormat(this)">
                 </td>

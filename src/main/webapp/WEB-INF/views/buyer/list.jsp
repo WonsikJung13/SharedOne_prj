@@ -218,7 +218,7 @@
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-4">
-                    <h1 id="header">거래처 관리 및 등록</h1>
+                    <h1 id="header"><i class="fa-solid fa-layer-group" style="margin-right: 10px;"></i>거래처 관리 및 등록</h1>
                 </div>
                 <div class="itemRegisterBtn col-auto">
                     <c:url value="/buyer/register" var="registerLink"></c:url>
@@ -232,7 +232,7 @@
             <div class="searchBox">
                 <form action="" class="d-flex" role="search" id="searchForm">
                     <div class="input-group" style="float: none">
-                        <select class="selectBtn form-select" id="groupList" name="searchNum"
+                        <select class="form-select" id="groupList" name="searchNum"
                                 onchange="changeValue(this)"
                                 style="max-width: 200px">
                             <option class="non" name="m_buyer_id" value="all">전체</option>

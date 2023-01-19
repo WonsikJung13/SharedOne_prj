@@ -9,8 +9,8 @@
         SELECT *
         FROM m_order_header h LEFT JOIN m_order_item i ON h.m_order_id = i.m_order_id
         WHERE
-        h.m_order_date BETWEEN #{sd} AND #{ed}
-        ANd (
+        DATE(h.m_order_date) BETWEEN #{sd} AND #{ed}
+        AND (
         <trim prefixOverrides="OR">
             <if test="type == 'all' or type == 'itemId'">
                 OR i.m_order_itemId LIKE #{keyword}
@@ -29,6 +29,7 @@
             </if>
         </trim>
         )
+        ORDER BY h.m_order_date DESC
     </select>
 
     <select id="reportDetail" resultMap="order">

@@ -21,14 +21,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
+
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Gothic A1', sans-serif;
+            font-weight: 200;
             background-color: #eeeeee;
         }
-
         .table {
-            width: 900px;
             --bs-table-bg: #fff;
         }
 
@@ -82,7 +85,7 @@
         }
 
         .form-control {
-            width: 250px;
+            width: 400px;
         }
 
         .inputLength {
@@ -107,14 +110,12 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
     <div class="col">
-
-        <h3 style="font-family: LINESeedKR-Bd">
-            ${Buyer.m_buyer_id}
-        </h3>
+        <div class="container">
+            <h1><i class="fa-solid fa-pen-nib" style="margin-right: 10px;"></i>${Buyer.m_buyer_id} 바이어 수정</h1>
 
         <table class="table table-bordered" id="aaa">
             <tbody>
@@ -147,6 +148,7 @@
         </table>
         <button class="btn btn-secondary" id="modifyBtn">거래처 수정</button>
     </div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

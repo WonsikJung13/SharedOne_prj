@@ -338,9 +338,6 @@
         crossorigin="anonymous"></script>
 <script>
     const ctx = "${pageContext.request.contextPath}";
-
-    document.getElementById('startDate').value = new Date().toISOString().substring(0, 10);
-    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);
 </script>
 </body>
 </html>
