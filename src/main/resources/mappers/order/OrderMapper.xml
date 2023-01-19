@@ -101,6 +101,7 @@
         m_order_buyerCurrency,
         m_order_comment,
         m_order_sumPrice,
+        m_member_id,
         m_order_status)
         VALUES(
         #{m_order_inserted},
@@ -112,6 +113,7 @@
         #{m_order_buyerCurrency},
         #{m_order_comment},
         #{m_order_sumPrice},
+        #{m_member_id},
         '생성중')
         <selectKey keyProperty="m_order_id" resultType="int" order="BEFORE">
             SELECT IFNULL(MAX(m_order_id+1), 1) FROM m_order_header

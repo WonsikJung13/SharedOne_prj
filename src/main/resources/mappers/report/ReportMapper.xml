@@ -83,6 +83,7 @@
     <select id="memberReport" resultType="java.util.Map">
         SELECT m_member_id, count(m_order_id) as count
         FROM m_order_header
-        GROUP BY m_member_id;
+        GROUP BY m_member_id
+        ORDER BY count DESC;
     </select>
 </mapper>
