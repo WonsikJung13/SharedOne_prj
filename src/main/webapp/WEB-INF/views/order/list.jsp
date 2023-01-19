@@ -58,6 +58,10 @@
 
         }
 
+        .orderPage {
+            width: 1000px;
+        }
+
         tr {
             height: 55px;
 

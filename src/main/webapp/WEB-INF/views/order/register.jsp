@@ -412,19 +412,20 @@
     //  수량 수정 시 총 금액 계산 후 화면에 출력
     document.querySelector("#orderCount").addEventListener("keyup", function () {
         let lastPrice = document.querySelector(".listPrice").value;
-        const orderCount = document.querySelector("#orderCount").value;
+        let orderCount = document.querySelector("#orderCount").value;
 
-        lastPrice = orderCount * parseInt(uncomma(lastPrice));
+        lastPrice = parseInt(uncomma(orderCount)) * parseInt(uncomma(lastPrice));
 
         document.querySelector("#totalPrice").innerHTML = lastPrice.toLocaleString();
 
     })
 
+    // 판매가 수정 시 총 금액 계산 후 화면에 출력
     document.querySelector(".listPrice").addEventListener("keyup", function () {
         let lastPrice = document.querySelector(".listPrice").value;
         const orderCount = document.querySelector("#orderCount").value;
 
-        lastPrice = orderCount * parseInt(uncomma(lastPrice));
+        lastPrice = parseInt(uncomma(orderCount)) * parseInt(uncomma(lastPrice));
 
         document.querySelector("#totalPrice").innerHTML = lastPrice.toLocaleString();
 
@@ -444,10 +445,10 @@
         const m_member_id = document.querySelector("#m_member_id").value;
 
         const m_order_comment = document.querySelector("#comment").value;
-        const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
+        const m_order_totalPriceText = document.querySelector("#totalPrice").innerText;
 
         // 추가된 제품 총 금액으로 오더 총 금액 구하기
-        m_order_sumPrice = m_order_sumPrice + parseInt(uncomma(m_order_totalPrice));
+        m_order_sumPrice = m_order_sumPrice + parseInt(uncomma(m_order_totalPriceText));
         document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + m_order_sumPrice.toLocaleString();
 
         const itemId = document.querySelector("#orderItems").value.split("_");
@@ -455,20 +456,24 @@
         const m_order_itemName = document.querySelector(".itemName").innerText;
         const m_order_itemGroup = document.querySelector(".itemGroup").innerText;
         const m_order_itemManufacturer = document.querySelector(".manufacturer").innerText;
-        let m_order_price = document.querySelector(".listPrice").value;
+        let m_order_priceText = document.querySelector(".listPrice").value;
         const m_order_count = document.querySelector("#orderCount").value;
 
         const orderAdd = `
             <tr id="removeId" >
                  <td class="orderAdd"> \${m_order_itemId} </td>
                  <td class="orderAdd"> \${m_order_itemName} </td>
-                 <td class="orderAdd"> \${m_order_price} </td>
+                 <td class="orderAdd"> \${m_order_priceText} </td>
                  <td class="orderAdd"> \${m_order_count} </td>
-                 <td class="orderAdd"> \${m_order_totalPrice} </td>
+                 <td class="orderAdd"> \${m_order_totalPriceText} </td>
                 <td><button class="btn btn-secondary" data-value="\${m_order_itemId}" onclick="clickRemove(this)">삭제</button></td>
             </tr>
         `
         itemBody.insertAdjacentHTML("beforeend", orderAdd);
+
+
+        const m_order_totalPrice = parseInt(uncomma(m_order_totalPriceText))
+        const m_order_price = parseInt(uncomma(m_order_priceText))
 
         const data = {
             m_buyer_id,
@@ -489,6 +494,7 @@
         }
 
         addData.push(data);
+        console.log(addData)
 
         // 제품 추가 눌렀을때 제품 데이터 사라짐
         document.querySelector("#orderItems").value = null;
@@ -558,7 +564,7 @@
     function clickRemove(target) {
         m_order_sumPrice = 0;
         const remove1 = document.querySelector("#removeId");
-        remove1.remove();
+        $(target).parent().parent().remove();
 
         const removeId = target.dataset.value;
 
@@ -567,11 +573,11 @@
         })
 
         for (const x in addData) {
-            m_order_sumPrice = m_order_sumPrice + parseInt(addData.at(x).m_order_totalPrice)
+            m_order_sumPrice = m_order_sumPrice + addData.at(x).m_order_totalPrice
         }
 
         let Currency = document.querySelector("#buyerCurrency").innerHTML;
-        document.querySelector("#orderTotalPrice").innerHTML = Currency + " " + m_order_sumPrice;
+        document.querySelector("#orderTotalPrice").innerHTML = Currency + " " + comma(m_order_sumPrice);
 
     }
 

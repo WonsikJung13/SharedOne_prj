@@ -163,9 +163,9 @@
             border: none;
         }
 
-        /*.orderPage {*/
-        /*    width: 1000px;*/
-        /*}*/
+        .orderPage {
+            width: 1000px;
+        }
         .modal {
             --bs-modal-width: 50%;
         }

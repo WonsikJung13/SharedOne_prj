@@ -51,7 +51,6 @@ public class OrderService {
         int offset = (page - 1) * records;
 
         int countAll = mapper.countAll(type, "%"+keyword+"%");
-        System.out.println(countAll);
         int lastPage = (countAll - 1) / records + 1;
 
         int leftPageNumber = (page -1) / 10 * 10 + 1;
@@ -84,7 +83,6 @@ public class OrderService {
         int offset = (page - 1) * records;
 
         int countAll = mapper.adminCountAll(type, "%"+keyword+"%");
-        System.out.println(countAll);
         int lastPage = (countAll - 1) / records + 1;
 
         int leftPageNumber = (page -1) / 10 * 10 + 1;
