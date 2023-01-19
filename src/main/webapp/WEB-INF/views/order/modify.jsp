@@ -37,7 +37,6 @@
         }
 
         .table {
-            width: 1000px;
             --bs-table-bg: #fff;
         }
 
@@ -66,49 +65,50 @@
         .orderTotalPrice {
             font-size: 1.1em;
             margin: 20px 0 10px 0;
+            background-color: #fff;
         }
+
 
         .addBtn {
             background-color: #598f9b;
-            border-color: #598f9b;
+            border-color:#598f9b;
             padding: 10px 30px;
-            font-size: 18px;
-            margin: 30px 0 30px 430px;
         }
 
         .addBtn:hover,
-        .addBtn:focus, .storageBtn:hover, .storageBtn.focus {
-            background-color: #505f62;
+        .addBtn:focus {
+            background-color: #52727b;
+            border-color: #52727b;
+        }
+        .storageBtn:hover,
+        .storageBtn:focus{
+            background-color: #4f5f63;
+            border-color: #4f5f63;
+        }
+        .submitBtn:hover,
+        .submitBtn:focus{
+            background-color: #52727b;
+            border-color: #52727b;
         }
 
         .storageBtn {
             background-color: #5f7175;
             padding: 10px 30px;
-            margin-left: 280px;
-            font-size: 18px;
+            margin-right: 4px;
         }
 
         .submitBtn {
             background-color: #598f9b;
-            border-color: #598f9b;
+            border-color:#598f9b;
             padding: 10px 30px;
-            font-size: 18px;
+            margin-left: 4px;
 
-        }
-
-        .form-select {
-            width: 250px;
-        }
-
-        .inputLength {
-            width: 250px;
         }
 
 
         .tableList {
             background-color: #fff;
             height: 444px;
-            width: 1000px;
             overFlow: scroll;
             overflow-x: hidden;
         }
@@ -136,7 +136,7 @@
 
         textarea {
             height: 140px;
-            width: 1000px;
+            width: 100%;
             background-color: #fff;
             border-color: #dee2e6;
         }
@@ -177,11 +177,12 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
     <div class="col">
-        <h1>주문 작성</h1>
+        <div class="container">
+            <h1><i class="fa-solid fa-pen-nib" style="margin-right: 10px;"></i>주문 수정</h1>
 
         <h2>거래처 선택</h2>
         <table class="table table-bordered">
@@ -218,12 +219,10 @@
             <tr>
                 <td class="table-active">제품코드</td>
                 <td class="inputWidth">
-                    <div class="inputLength">
                         <input onchange="itemView()" class="form-select" aria-label="Default select example" type="text"
                                list="lists" id="orderItems" placeholder="제품를 선택해주세요" autocomplete="off"/>
                         <datalist id="lists">
                         </datalist>
-                    </div>
                 </td>
                 <td class="table-active">제품이름</td>
                 <td class="itemName inputWidth">
@@ -243,12 +242,12 @@
             <tbody>
             <tr>
                 <td class="table-active">판매가격</td>
-                <td>
+                <td class="inputWidth">
                     <input class="form-control listPrice" type="text" placeholder="판매가격"
                            aria-label="default input example" onkeyup="inputNumberFormat(this)">
                 </td>
                 <td class="table-active">주문수량</td>
-                <td>
+                <td class="inputWidth">
                     <input id="orderCount" class="form-control" type="text" placeholder="수량을 입력하세요."
                            aria-label="default input example" onkeyup="inputNumberFormat(this)">
                 </td>
@@ -262,8 +261,8 @@
 
             </tbody>
         </table>
-        <div class="btnWidth">
-            <button class="btn btn-secondary addBtn" disabled>제품추가</button>
+            <div class="row justify-content-center mt-4 mb-4">
+                <button class="btn btn-secondary addBtn col-auto" disabled>제품추가</button>
         </div>
 
         <h2>추가된 제품</h2>
@@ -335,15 +334,15 @@
                 <textarea id="comment">${orderHeader.m_order_comment}</textarea>
             </div>
         </div>
-
-
-        <div class="statusBtn">
-            <button class="btn btn-secondary storageBtn">취소</button>
-            <button class="btn btn-secondary submitBtn">재승인</button>
+            <div class="row justify-content-center mt-4 mb-4">
+<%--        <div class="statusBtn">--%>
+            <button class="btn btn-secondary storageBtn col-auto">취소</button>
+            <button class="btn btn-secondary submitBtn col-auto">재승인</button>
         </div>
     </div>
 </div>
-인
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
