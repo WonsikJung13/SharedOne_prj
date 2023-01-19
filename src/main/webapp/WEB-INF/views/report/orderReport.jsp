@@ -193,7 +193,6 @@
             <div id="orderListTitle">
                 <h1 id="header">주문 현황</h1>
             </div>
-
             <div class="searchBox">
                 <c:url value="/report/orderReport" var="listLink"/>
                 <form action="${listLink}" class="d-flex" role="search">
@@ -330,6 +329,8 @@
 <script>
     const ctx = "${pageContext.request.contextPath}";
 
+    document.getElementById('startDate').value = new Date().toISOString().substring(0, 10);
+    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);
 </script>
 </body>
 </html>

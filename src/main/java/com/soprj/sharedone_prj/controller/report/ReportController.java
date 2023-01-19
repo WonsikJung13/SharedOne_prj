@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +21,10 @@ public class ReportController {
 
     @GetMapping("orderReport")
     public void report(Model model, @RequestParam(name = "t", defaultValue = "all") String type,
-                       @RequestParam(name = "q", defaultValue = "") String keyword) {
-//        List<ReportHeaderDto> report = reportService.getOrderHeader();
-        List<TotalReportDto> report = reportService.reportList(type, keyword);
+                       @RequestParam(name = "q", defaultValue = "") String keyword,
+                       @RequestParam(name = "sd", defaultValue = "#{T(java.time.LocalDate).now()}") Date sd, @RequestParam(name = "ed", defaultValue = "#{T(java.time.LocalDate).now()}") Date ed) {
+
+        List<TotalReportDto> report = reportService.reportList(type, keyword, sd, ed);
         model.addAttribute("report", report);
 
         List<Map<String, String>> sortedReport = reportService.sortedReport();

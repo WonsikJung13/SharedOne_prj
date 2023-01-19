@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,8 @@ public class ReportService {
     @Autowired
     private ReportMapper reportMapper;
 
-    public List<TotalReportDto> reportList(String type, String keyword) {
-        return reportMapper.reportList(type, "%"+keyword+"%");
+    public List<TotalReportDto> reportList(String type, String keyword, Date sd, Date ed) {
+        return reportMapper.reportList(type, "%"+keyword+"%", sd, ed);
     }
 
     public ReportHeaderDto reportDetail(int m_order_id) {
