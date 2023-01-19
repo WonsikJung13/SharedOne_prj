@@ -214,8 +214,8 @@
 <%--                            </c:forEach>--%>
                             <option class="manufacturerEditable" value="입력">입력</option>
                         </select>
-                        <input type="hidden" class="manufacturerEditOption form-control" value="${getItem.m_item_manufacturer}" autocomplete='off'
-                               style="width: 210px;border-bottom-right-radius: 0;border-top-right-radius: 0;">
+                        <input type="hidden" class="manufacturerEditOption form-control" value="${getItem.m_item_manufacturer}" autocomplete='off'  onkeydown="activeBtn()"
+                               style="width: 280px;border-bottom-right-radius: 0;border-top-right-radius: 0;">
                     </td>
                 </tr>
                 <tr>
