@@ -35,7 +35,6 @@
         }
 
         .table {
-            width: 900px;
             --bs-table-bg: #fff;
         }
 
@@ -68,7 +67,6 @@
         .tableList {
             background-color: #fff;
             height: 444px;
-            width: 900px;
             /*overFlow: scroll;*/
             overflow-x: hidden;
             margin-bottom: 16px
@@ -130,22 +128,28 @@
 
         }
 
-        .form-select {
-            width: 250px;
-        }
-
         .form-control {
-            width: 250px;
+            width: 320px;
         }
 
         .inputLength {
-            width: 250px;
+            width: 300px;
+            line-height: 35px;
+        }
+        .table-active{
+            width: 200px;
+            line-height: 35px;
+        }
+        .form-select{
+            width: 100%;
         }
 
 
         /*제품그룹 박스*/
         #groupSelect, #manufacturerSelect {
             position: absolute;
+            width: 320px;
+
         }
 
         option {
@@ -165,11 +169,12 @@
 
 </head>
 <body>
-<div class="row" style="height: 100%;">
-    <div class="col-3">
+<div class="row">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
     <div class="col">
+        <div class="container">
         <div id="itemTitle">
             <h1 id="header">제품 등록</h1>
             <h2>제품 추가</h2>
@@ -180,14 +185,14 @@
                 <tbody>
                 <tr id="inputItemId">
                     <td class="table-active">제품코드</td>
-                    <td id="itemId">
+                    <td id="itemId" colspan="3">
                         <input type="hidden" id="realInputItemId" class="form-control" name="" value="${getItem.m_item_id}" disabled>
                     </td>
                 </tr>
                 <tr>
                     <td class="table-active">제품그룹</td>
-                    <td id="itemGroup" style="">
-                        <select id="groupSelect" name="m_item_group" class="selectFrom form-select">
+                    <td id="itemGroup" class="inputLength" style="">
+                        <select id="groupSelect" name="m_item_group" class="form-select">
                             <option class="" value="">=== 선택 ===</option>
                             <option  id="modifyGroup" value="${getItem.m_item_group}">${getItem.m_item_group}</option>
                             <c:forEach items="${groupList}" var="groupList">
@@ -196,13 +201,11 @@
                             <option class="GroupEditable" value="입력">입력</option>
                         </select>
                         <input type="hidden" class="groupEditOption form-control" value="${getItem.m_item_group}" autocomplete='off'
-                               style="width: 210px;border-bottom-right-radius: 0;border-top-right-radius: 0;">
+                               style="width: 280px; border-bottom-right-radius: 0;border-top-right-radius: 0;">
                     </td>
-                </tr>
-                <tr>
                     <td class="table-active">제조사</td>
-                    <td id="itemManufacturer">
-                        <select id="manufacturerSelect" name="m_item_manufacturer" class="selectFrom form-select" value="null">
+                    <td id="itemManufacturer" class="inputLength">
+                        <select id="manufacturerSelect" name="m_item_manufacturer" class="form-select" value="null">
                             <option class="" value="">=== 선택 ===</option>
                             <option id="modifyManufacturer" value="${getItem.m_item_manufacturer}">${getItem.m_item_manufacturer}</option>
 <%--                            <c:forEach items="${manufacturerList}" var="manufacturerList">--%>
@@ -217,14 +220,12 @@
                 </tr>
                 <tr>
                     <td class="table-active">제품명</td>
-                    <td id="itemName">
+                    <td id="itemName" class="inputLength">
                         <input type="text" class="form-control" name="m_item_name" value="${getItem.m_item_name}"
                                autocomplete='off'>
                     </td>
-                </tr>
-                <tr>
                     <td class="table-active">단위</td>
-                    <td id="itemUnit">
+                    <td id="itemUnit" class="inputLength">
                         <input type="text" name="m_item_unit" class="form-control" value="EA" autocomplete='off'>
                     </td>
                 </tr>
@@ -233,9 +234,9 @@
             <div style="display:none"><button id="resetBtn" type="reset"></button> </div>
         </form>
 
-        <div>
-            <button class="btn btn-secondary" type="button" id="plusButton1">제품 추가</button>
-            <button class="btn btn-secondary" type="button" id="modifyButton1">제품 수정</button>
+        <div class="row justify-content-center">
+            <button class="btn btn-secondary col-auto" type="button" id="plusButton1">제품 추가</button>
+            <button class="btn btn-secondary col-auto" type="button" id="modifyButton1">제품 수정</button>
         </div>
 
         <div id="addList">
@@ -257,15 +258,17 @@
                     </tbody>
                 </table>
             </div>
-            <div>
-                <button class="btn btn-secondary" type="button" id="submitButton" onclick="itemRegister()">제품 등록
+            <div class="row justify-content-center">
+                <button class="btn btn-secondary col-auto" type="button" id="submitButton" onclick="itemRegister()">제품 등록
                 </button>
             </div>
 <%--        </form>--%>
         </div>
     </div>
 </div>
+</div>
 </body>
+
 <script>
     // 수정버튼--------------------------------------------------------
     document.querySelector("#modifyButton1").addEventListener("click", function () {
