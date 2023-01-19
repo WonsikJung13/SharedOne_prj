@@ -237,9 +237,9 @@
                     <div class="input-group" style="float: none">
                         <select class="selectBtn form-select" id="groupList" name="searchNum" onchange="changeValue(this)" style="max-width: 200px">
                             <option class="non" name="m_buyer_id" value="all">전체</option>
-                            <option class="non" name="m_buyer_id" value="m_buyer_id">거래처 번호</option>
+                            <option class="non" name="m_buyer_id" value="m_buyer_id">거래처 코드</option>
                             <option class="non" name="m_buyer_name" value="m_buyer_name">거래처 명</option>
-                            <option class="non" name="m_buyer_region" value="m_buyer_region">거래처 나라</option>
+                            <option class="non" name="m_buyer_region" value="m_buyer_region">거래처 국가</option>
                             <option class="non" name="m_buyer_address" value="m_buyer_address">거래처 주소</option>
                             <option class="non" name="m_buyer_number" value="m_buyer_number">사업자 번호</option>
                             <option class="non" name="m_buyer_currency" value="m_buyer_currency">통화</option>
@@ -481,9 +481,9 @@
     // 삭제버튼 클릭 시
     document.querySelector("#removeButton").addEventListener("click", remove);
 
-    setTimeout(function (){
-        history.go(1)
-    }, 4000)
+    // setTimeout(function (){
+    //     history.go(1)
+    // }, 4000)
 </script>
 
 </body>
