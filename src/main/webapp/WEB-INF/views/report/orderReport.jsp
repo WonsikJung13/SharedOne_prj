@@ -221,11 +221,22 @@
                 <h1 id="header">주문 현황</h1>
             </div>
         </div>
-        
+
         <div class="searchBox">
+
             <c:url value="/report/orderReport" var="listLink"/>
-            <form action="${listLink}" class="d-flex" role="search">
-                <div class="input-group" style="float: none">
+            <form action="${listLink}" class="" role="search">
+                <div style="display: flex">
+                    <div style="margin-right: 10px">
+                        <label>시작일</label>
+                        <input class="form-control" name="sd" id="startDate" type="date" style="width: 210px">
+                    </div>
+                    <div>
+                        <label>종료일</label>
+                        <input class="form-control" name="ed" id="endDate" type="date" style="width: 210px">
+                    </div>
+                </div>
+                <div class="input-group" style="float: none; display: flex">
                     <select name="t" class="form-select">
                         <option value="all">전체</option>
                         <option value="itemId" ${param.t == 'itemId' ? 'selected' : '' }>제품코드</option>
@@ -241,7 +252,7 @@
             </form>
         </div>
 
-        <div class="totalList" style="overflow:auto; height: 500px; width: 1000px; margin-bottom: 50px">
+        <div class="totalList" style="overflow:auto; width: 1000px; margin-bottom: 50px">
             <table class="table table-hover addList" style="width: 2000px">
                 <thead style="position: sticky; top: 0">
                 <tr>
@@ -357,6 +368,8 @@
 <script>
     const ctx = "${pageContext.request.contextPath}";
 
+    document.getElementById('startDate').value = new Date().toISOString().substring(0, 10);
+    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);
 </script>
 </body>
 </html>

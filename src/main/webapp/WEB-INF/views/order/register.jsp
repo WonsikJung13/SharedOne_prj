@@ -243,12 +243,12 @@
                 <td class="table-active">판매가격</td>
                 <td class="inputWidth">
                     <input class="form-control listPrice" type="text" placeholder="판매가격"
-                           aria-label="default input example" onkeypress='return checkNumber(event)'>
+                           aria-label="default input example" onkeyup="inputNumberFormat(this)">
                 </td>
                 <td class="table-active">주문수량</td>
                 <td class="inputWidth">
                     <input id="orderCount" class="form-control" type="text" placeholder="수량을 입력하세요."
-                           aria-label="default input example" disabled onkeypress='return checkNumber(event)'>
+                           aria-label="default input example" onkeyup="inputNumberFormat(this)">
                 </td>
             </tr>
             <tr>
@@ -358,7 +358,7 @@
                 document.querySelector(".itemName").innerHTML = data.m_item_name;
                 document.querySelector(".itemGroup").innerHTML = data.m_item_group;
                 document.querySelector(".manufacturer").innerHTML = data.m_item_manufacturer;
-                document.querySelector(".listPrice").value = data.m_price_lastPrice;
+                document.querySelector(".listPrice").value = data.m_price_lastPrice.toLocaleString();
             })
         setTimeout(function (){
             for(const a in addData){
@@ -413,14 +413,25 @@
             })
     }
 
-    //  총 금액 계산 후 화면에 출력
+    //  수량 수정 시 총 금액 계산 후 화면에 출력
     document.querySelector("#orderCount").addEventListener("keyup", function () {
         let lastPrice = document.querySelector(".listPrice").value;
         const orderCount = document.querySelector("#orderCount").value;
 
-        lastPrice = orderCount * lastPrice;
+        lastPrice = orderCount * parseInt(uncomma(lastPrice));
 
-        document.querySelector("#totalPrice").innerHTML = lastPrice;
+        document.querySelector("#totalPrice").innerHTML = lastPrice.toLocaleString();
+
+    })
+
+    document.querySelector(".listPrice").addEventListener("keyup", function () {
+        let lastPrice = document.querySelector(".listPrice").value;
+        const orderCount = document.querySelector("#orderCount").value;
+
+        lastPrice = orderCount * parseInt(uncomma(lastPrice));
+
+        document.querySelector("#totalPrice").innerHTML = lastPrice.toLocaleString();
+
     })
 
     // 장바구니 보여주기
@@ -440,15 +451,15 @@
         const m_order_totalPrice = document.querySelector("#totalPrice").innerText;
 
         // 추가된 제품 총 금액으로 오더 총 금액 구하기
-        m_order_sumPrice = m_order_sumPrice + parseInt(m_order_totalPrice);
-        document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + new Intl.NumberFormat().format(m_order_sumPrice);
+        m_order_sumPrice = m_order_sumPrice + parseInt(uncomma(m_order_totalPrice));
+        document.querySelector("#orderTotalPrice").innerHTML = m_order_buyerCurrency + " " + m_order_sumPrice.toLocaleString();
 
         const itemId = document.querySelector("#orderItems").value.split("_");
         const m_order_itemId = itemId.at(0);
         const m_order_itemName = document.querySelector(".itemName").innerText;
         const m_order_itemGroup = document.querySelector(".itemGroup").innerText;
         const m_order_itemManufacturer = document.querySelector(".manufacturer").innerText;
-        const m_order_price = document.querySelector(".listPrice").value;
+        let m_order_price = document.querySelector(".listPrice").value;
         const m_order_count = document.querySelector("#orderCount").value;
 
         const orderAdd = `
@@ -587,6 +598,21 @@
         }
 
         return false;
+    }
+
+    // 천원 단위 절사
+    function inputNumberFormat(obj) {
+        obj.value = comma(uncomma(obj.value));
+    }
+
+    function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
     }
 
 </script>
