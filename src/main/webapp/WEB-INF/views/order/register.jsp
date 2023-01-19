@@ -148,18 +148,18 @@
             padding-left: 20px;
         }
         .tablePrice{
-            width: 400px;
-            line-height: 50px;
-            text-align: center;
-            font-size: 20px;
-            font-weight:unset;
-            color: white;
-            --bs-table-bg: #5f7175;
-        }
-        .inputWidth{
-            width:300px;
-            line-height: 35px;
-        }
+                width: 400px;
+                line-height: 50px;
+                text-align: center;
+                font-size: 20px;
+                font-weight:unset;
+                color: white;
+                --bs-table-bg: #5f7175;
+            }
+            .inputWidth{
+                width:300px;
+                line-height: 35px;
+            }
 
     </style>
 </head>

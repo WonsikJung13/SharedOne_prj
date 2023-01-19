@@ -21,9 +21,27 @@
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
+
+        body {
+            font-family: 'Gothic A1', sans-serif;
+            font-weight: 200;
+            background-color: #eeeeee;
+        }
+        h1 {
+            font-size: 1.7em;
+            margin: 30px 0;
+        }
+
+        h2 {
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
         .table {
-            width: 900px;
         }
 
         tr {
@@ -31,20 +49,29 @@
         }
 
         .table-active{
-            width: 40%;
+            /*width: 40%;*/
             line-height: 35px;
+        }
+
+        .table.addList {
+            --bs-table-bg: #5f7175;
+            --bs-table-color: #fff;
+            text-align: center;
+            line-height: 39px;
+            font-size: 16px;
         }
 
     </style>
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
     <div class="col">
+        <div class="container">
         <h1 style="margin-top: 20px">판매가격 작성</h1>
-        <div style="display:flex; width: 900px;">
+        <div style="display:flex;">
             <button style="margin-left: auto; margin-bottom: 10px;" id="resetBtn" class="btn btn-secondary" type="reset">초기화</button>
         </div>
         <form action="" method="post" id="formId" name="formId">
@@ -63,8 +90,6 @@
 <%--                                </datalist>--%>
                             </input>
                         </td>
-                    </tr>
-                    <tr>
                         <td class="table-active">제품명</td>
                         <td>
                             <input class="form-control" id="itemName" readonly></input>
@@ -82,8 +107,6 @@
 <%--                            </datalist>--%>
                             </input>
                         </td>
-                    </tr>
-                    <tr>
                         <td class="table-active">거래처명</td>
                         <td>
                             <input class="form-control" id="buyerName" readonly disabled></input>
@@ -91,7 +114,7 @@
                     </tr>
                     <tr>
                         <td class="table-active">통화</td>
-                        <td>
+                        <td colspan="3">
                             <input class="form-control" id="buyerCurrency" name="m_price_currency" readonly disabled></input>
                         </td>
                     </tr>
@@ -104,8 +127,6 @@
                         <td>
                             <input class="form-control reset1" id="m_price_startPeriod" autocomplete="off" type="date" name="m_price_startPeriod"></input>
                         </td>
-                    </tr>
-                    <tr>
                         <td class="table-active">종료일</td>
                         <td>
                             <input class="form-control reset1" id="m_price_lastPeriod" autocomplete="off" type="date" name="m_price_lastPeriod" disabled></input>
@@ -117,8 +138,6 @@
                         <td>
                             <input class="form-control reset1" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="0" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input>
                         </td>
-                    </tr>
-                    <tr>
                         <td class="table-active">판매가격(단가)</td>
                         <td>
                             <input class="form-control reset1" autocomplete="off" id="priceInput" type="text" name="m_price_price" onkeyup="inputNumberFormat(this)" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input>
@@ -126,7 +145,7 @@
                     </tr>
                     <tr>
                         <td class="table-active">최종 단가</td>
-                        <td>
+                        <td colspan="3">
                             <input class="form-control reset1" id="lastPrice" type="text" name="m_price_lastPrice" onkeyup="inputNumberFormat(this)" readonly></input>
                         </td>
                     </tr>
@@ -160,6 +179,7 @@
 
         <button style="margin-bottom: 20px" class="btn btn-secondary" id="priceSubmitButton">등록</button>
     </div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

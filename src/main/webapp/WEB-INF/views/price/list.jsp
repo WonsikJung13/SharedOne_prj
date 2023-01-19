@@ -15,9 +15,15 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300">
-
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
+
+        body {
+            font-family: 'Gothic A1', sans-serif;
+            font-weight: 200;
+        }
         .itemRegisterBtn {
             position: relative;
         }
@@ -28,7 +34,7 @@
         }
 
         .table {
-            width: 1000px;
+            /*width: 1000px;*/
             --bs-table-bg: #fff;
         }
 
@@ -38,13 +44,13 @@
             text-align: center;
             line-height: 39px;
             font-size: 16px;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
         tr {
             height: 55px;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
@@ -66,14 +72,14 @@
             line-height: 39px;
             font-size: 16px;
             font-weight: bold;
-            width: 1000px;
+            /*width: 1000px;*/
             padding: 6px;
         }
 
         .tableList {
             background-color: #fff;
-            height: 1000px;
-            width: 1000px;
+            height: 672px;
+            /*width: 1000px;*/
         }
 
         td a {
@@ -93,12 +99,11 @@
 
         .searchBox {
             background-color: white;
-            width: 1000px;
-            padding: 20px 80px 10px 80px;
+            padding: 20px 80px 5px 80px;
             color: #212529;
             font-size: 16px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         form > * {
@@ -109,7 +114,7 @@
         form .form-control, .form-select {
             height: 40px;
             margin: 5px 0 5px 0;
-            width: 1000px;
+            /*width: 1000px;*/
 
         }
 
@@ -214,16 +219,17 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
     <div class="col">
-        <div style="display: flex;justify-content: space-between;width: 1000px;">
-            <div id="itemListTitle">
+        <div class="container">
+            <div class="row justify-content-between">
+            <div class="col-4">
                 <h1 id="header">판매가 관리 및 등록</h1>
                 <%--      <h2>제품 검색</h2>--%>
             </div>
-            <div class="itemRegisterBtn">
+            <div class="itemRegisterBtn col-auto">
                 <c:url value="/price/register" var="registerLink"></c:url>
                 <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">판매가 등록
                 </button>
@@ -232,7 +238,7 @@
 
         <div class="searchBox">
             <c:url value="/price/list" var="listLink"></c:url>
-            <form action="${listLink}" class="" role="search">
+            <form action="${listLink}" class="" role="search" style="margin-bottom: 16px;   ">
 <%--                조회 기간--%>
 <%--                <div class="input-group" style="float: none">--%>
 <%--                    <select name="t" class="form-select">--%>
@@ -262,7 +268,7 @@
                 </div>
             </form>
         </div>
-        <div style="display: flex;background-color: transparent;width:1000px">
+        <div style="display: flex;background-color: transparent;">
             <c:url value="/price/remove" var="removeLink"/>
             <form id="removeForm" action="${removeLink }" method="post">
                 <input type="hidden" id="removeInput" name="m_price_id" value="">
@@ -331,7 +337,7 @@
 
         <div class="row">
             <div class="col">
-                <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
+                <nav aria-label="pagination-container" style="background-color: #fff">
                     <div class="pagination">
 
                         <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
@@ -422,7 +428,7 @@
         </div>
     </div>
 </div>
-
+</div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
