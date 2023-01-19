@@ -109,13 +109,13 @@
                 <tr>
                     <td class="table-active">할인율</td>
                     <td>
-                        <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="${price.m_price_discount}"></input>
+                        <input class="form-control" autocomplete="off" id="discountInput" type="text" name="m_price_discount" value="${price.m_price_discount}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input>
                     </td>
                 </tr>
                 <tr>
                     <td class="table-active">판매가격(단가)</td>
                     <td>
-                        <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price" value="" onkeyup="inputNumberFormat(this)"></input>
+                        <input class="form-control" autocomplete="off" id="priceInput" type="text" name="m_price_price" value="" onkeyup="inputNumberFormat(this)" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input>
                     </td>
                 </tr>
                 <tr>
@@ -155,6 +155,7 @@
 
         const lastprice = price - ((price * discount) / 100);
         lastPrice.value = comma(uncomma(lastprice));
+        // console.log(Math.uncomma(lastprice))
     }
 
     document.querySelector("#priceInput").addEventListener("keyup", discount)
