@@ -13,9 +13,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
+
+        body {
+            font-family: 'Gothic A1', sans-serif;
+            font-weight: 200;
+            background-color: #eeeeee;
+        }
+
+        h1 {
+            font-size: 1.7em;
+            margin: 30px 0;
+        }
+
+        h2 {
+            font-size: 1.1em;
+            margin: 20px 0 10px 0;
+        }
+
         .table {
-            width: 900px;
+            /*width: 900px;*/
         }
 
         tr {
@@ -30,10 +50,11 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
     <div class="col">
+        <div class="container">
         <h1 style="margin-top: 20px">판매가격 수정하기</h1>
 
         <form action="" method="post" enctype="multipart/form-data" id="formId">
@@ -88,7 +109,7 @@
 
                 </tbody>
             </table>
-            <div style="display:flex; width: 900px;">
+            <div style="display:flex;">
                 <button style="margin-left: auto; margin-bottom: 10px;" class="btn btn-secondary" id="dateModifyButton">날짜 수정하기</button>
             </div>
             <table class="table table-bordered">
@@ -129,6 +150,7 @@
             <button class="btn btn-secondary" id="priceSubmitButton" type="button">판매가 수정</button>
         </form>
     </div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
