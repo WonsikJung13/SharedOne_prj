@@ -41,7 +41,6 @@
         }
 
         .table {
-            width: 1000px;
             --bs-table-bg: #fff;
         }
 
@@ -80,7 +79,6 @@
         .tableList {
             background-color: #fff;
             height: 672px;
-            width: 1000px;
         }
 
         td a {
@@ -100,7 +98,6 @@
 
         .searchBox {
             background-color: white;
-            width: 1000px;
             padding: 20px 80px 5px 80px;
             color: #212529;
             font-size: 16px;
@@ -220,231 +217,233 @@
         </script>
     </div>
 </c:if>
-<div class="row" style="height: 100%;">
-    <div class="col-3">
+<div class="row">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
     <div class="col ">
-        <div style="display: flex;justify-content: space-between;width: 1000px;">
-            <div id="itemListTitle">
-                <h1 id="header">제품 관리 및 등록</h1>
-                <h2>제품 검색</h2>
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-4">
+                    <h1 id="header">제품 관리 및 등록</h1>
+                </div>
+                <div class="itemRegisterBtn col-auto">
+                    <c:url value="/item/register" var="registerLink"></c:url>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">제품 등록
+                    </button>
+                </div>
             </div>
-            <div class="itemRegisterBtn">
-                <c:url value="/item/register" var="registerLink"></c:url>
-                <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">제품 등록
+            <div class="searchBox">
+                <c:url value="/item/list" var="listLink"></c:url>
+
+                <%--            검색박스 예정--%>
+
+                <%--      <form action="${listLink}" role="search">--%>
+                <%--                        <div style="display: flex;justify-content: space-between;">--%>
+                <%--                            <div>--%>
+                <%--                                <label>제품코드</label>--%>
+                <%--                                <input class="form-control" value="${param.m_item_id}" type="search" name="m_item_id"--%>
+                <%--                                       placeholder="입력" autocomplete='off' style="width: 210px">--%>
+                <%--                            </div>--%>
+                <%--                            <div>--%>
+                <%--                                <label>제품그룹</label>--%>
+                <%--                                <input class="form-select" type="text" list="groupList" style="width: 210px"/>--%>
+                <%--                                <datalist id="groupList">--%>
+                <%--                                    <c:forEach items="${groupList}" var="groupList">--%>
+                <%--                                        <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>--%>
+                <%--                                    </c:forEach>--%>
+                <%--                                </datalist>--%>
+                <%--                            </div>--%>
+                <%--                            <div style="float: right">--%>
+                <%--                                <label>제조사</label>--%>
+                <%--                                <input class="form-select" type="text" list="manufacturerList" style="width: 210px;"/>--%>
+                <%--                                <datalist id="manufacturerList">--%>
+                <%--                                    <c:forEach items="${manufacturerList}" var="manufacturerList">--%>
+                <%--                                        <option class="non"--%>
+                <%--                                                value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>--%>
+                <%--                                    </c:forEach>--%>
+                <%--                                </datalist>--%>
+                <%--                            </div>--%>
+                <%--                        </div>--%>
+
+                <form action="${listLink}" class="d-flex" role="search">
+                    <div class="input-group" style="float: none">
+                        <select name="t" class="form-select">
+                            <option value="all">전체</option>
+                            <option value="itemId" ${param.t == 'itemId' ? 'selected' : '' }>제품코드</option>
+                            <option value="itemGroup" ${param.t == 'itemGroup' ? 'selected' : '' }>제품그룹</option>
+                            <option value="itemManufacturer" ${param.t == 'itemManufacturer' ? 'selected' : '' }>제조사
+                            </option>
+                            <option value="itemName" ${param.t == 'itemName' ? 'selected' : '' }>제품명</option>
+                        </select>
+
+                        <input value="${param.q}" type="search" class="form-control" placeholder="Search"
+                               aria-label="Search" name="q" style="width:450px">
+                        <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: flex;background-color: transparent">
+                <c:url value="/item/remove" var="removeLink"/>
+                <form id="removeForm" action="${removeLink }" method="post">
+                    <input type="hidden" id="removeInput" name="m_item_id" value="">
+                </form>
+                <button class="btn btn-danger removeBtn" style="margin-left: auto;margin-bottom: 10px;"
+                        data-bs-toggle="modal"
+                        data-bs-target="#removeModal" value="삭제" disabled>선택삭제
                 </button>
             </div>
-        </div>
 
-        <div class="searchBox">
-            <c:url value="/item/list" var="listLink"></c:url>
-
-            <%--            검색박스 예정--%>
-
-            <%--      <form action="${listLink}" role="search">--%>
-<%--                        <div style="display: flex;justify-content: space-between;">--%>
-<%--                            <div>--%>
-<%--                                <label>제품코드</label>--%>
-<%--                                <input class="form-control" value="${param.m_item_id}" type="search" name="m_item_id"--%>
-<%--                                       placeholder="입력" autocomplete='off' style="width: 210px">--%>
-<%--                            </div>--%>
-<%--                            <div>--%>
-<%--                                <label>제품그룹</label>--%>
-<%--                                <input class="form-select" type="text" list="groupList" style="width: 210px"/>--%>
-<%--                                <datalist id="groupList">--%>
-<%--                                    <c:forEach items="${groupList}" var="groupList">--%>
-<%--                                        <option class="non" value="${groupList.m_item_group}">${groupList.m_item_group}</option>--%>
-<%--                                    </c:forEach>--%>
-<%--                                </datalist>--%>
-<%--                            </div>--%>
-<%--                            <div style="float: right">--%>
-<%--                                <label>제조사</label>--%>
-<%--                                <input class="form-select" type="text" list="manufacturerList" style="width: 210px;"/>--%>
-<%--                                <datalist id="manufacturerList">--%>
-<%--                                    <c:forEach items="${manufacturerList}" var="manufacturerList">--%>
-<%--                                        <option class="non"--%>
-<%--                                                value="${manufacturerList.m_item_manufacturer}">${manufacturerList.m_item_manufacturer}</option>--%>
-<%--                                    </c:forEach>--%>
-<%--                                </datalist>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-            <form action="${listLink}" class="d-flex" role="search">
-                <div class="input-group" style="float: none">
-                    <select name="t" class="form-select">
-                        <option value="all">전체</option>
-                        <option value="itemId" ${param.t == 'itemId' ? 'selected' : '' }>제품코드</option>
-                        <option value="itemGroup" ${param.t == 'itemGroup' ? 'selected' : '' }>제품그룹</option>
-                        <option value="itemManufacturer" ${param.t == 'itemManufacturer' ? 'selected' : '' }>제조사
-                        </option>
-                        <option value="itemName" ${param.t == 'itemName' ? 'selected' : '' }>제품명</option>
-                    </select>
-
-                    <input value="${param.q}" type="search" class="form-control" placeholder="Search"
-                           aria-label="Search" name="q" style="width:450px">
-                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>
-                </div>
-            </form>
-        </div>
-
-        <div style="display: flex;background-color: transparent;width:1000px">
-            <c:url value="/item/remove" var="removeLink"/>
-            <form id="removeForm" action="${removeLink }" method="post">
-                <input type="hidden" id="removeInput" name="m_item_id" value="">
-            </form>
-            <button class="btn btn-danger removeBtn" style="margin-left: auto;margin-bottom: 10px;"
-                    data-bs-toggle="modal"
-                    data-bs-target="#removeModal" value="삭제" disabled>선택삭제
-            </button>
-        </div>
-
-        <div class="tableList">
-            <table class="table addList">
-                <thead>
-                <tr>
-                    <th style="width: 50px"><input name="selectAll" type="checkbox" value="selectAll"
-                                                   onclick="selectAll(this)"
-                                                   style="position: relative;top: -14px;background-color: transparent;">
-                    </th>
-                    <th style="width: 200px">제품코드</th>
-                    <th style="width: 200px">제품그룹</th>
-                    <th style="width: 200px">제조사</th>
-                    <th style="width: 250px">제품명</th>
-                    <th style="width: 100px">단위</th>
-                    <th style="width: 100px"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${itemList}" var="itemList">
+            <div class="tableList">
+                <table class="table addList">
+                    <thead>
                     <tr>
-                        <td>
-                            <input name="itemBox" type="checkbox" value="${itemList.m_item_id}"
-                                   onclick='checkSelectAll(); activeBtn()' style="position: relative;top: 10px">
-                        </td>
-                        <td class="selectItemId">
-                                ${itemList.m_item_id}
-                        </td>
-                        <td>
-                                ${itemList.m_item_group}
-                        </td>
-                        <td>
-                                ${itemList.m_item_manufacturer}
-                        </td>
-                        <td>
-                                ${itemList.m_item_name}
-                        </td>
-                        <td>
-                                ${itemList.m_item_unit}
-                        </td>
-                        <td>
-                            <c:url value="/item/register" var="registerLink">
-                                <c:param name="m_item_id" value="${itemList.m_item_id}"></c:param>
-                            </c:url>
-                            <button type="button" class="btn btn-secondary"
-                                    onclick="location.href='${registerLink}' ">수정
-                            </button>
-                        </td>
+                        <th style="width: 50px"><input name="selectAll" type="checkbox" value="selectAll"
+                                                       onclick="selectAll(this)"
+                                                       style="position: relative;top: -14px;background-color: transparent;">
+                        </th>
+                        <th style="width: 200px">제품코드</th>
+                        <th style="width: 200px">제품그룹</th>
+                        <th style="width: 200px">제조사</th>
+                        <th style="width: 250px">제품명</th>
+                        <th style="width: 100px">단위</th>
+                        <th style="width: 100px"></th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <div class="row">
-            <div class="col">
-                <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
-                    <div class="pagination">
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${itemList}" var="itemList">
+                        <tr>
+                            <td>
+                                <input name="itemBox" type="checkbox" value="${itemList.m_item_id}"
+                                       onclick='checkSelectAll(); activeBtn()' style="position: relative;top: 10px">
+                            </td>
+                            <td class="selectItemId">
+                                    ${itemList.m_item_id}
+                            </td>
+                            <td>
+                                    ${itemList.m_item_group}
+                            </td>
+                            <td>
+                                    ${itemList.m_item_manufacturer}
+                            </td>
+                            <td>
+                                    ${itemList.m_item_name}
+                            </td>
+                            <td>
+                                    ${itemList.m_item_unit}
+                            </td>
+                            <td>
+                                <c:url value="/item/register" var="registerLink">
+                                    <c:param name="m_item_id" value="${itemList.m_item_id}"></c:param>
+                                </c:url>
+                                <button type="button" class="btn btn-secondary"
+                                        onclick="location.href='${registerLink}' ">수정
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="pagination-container" style=" background-color: #fff">
+                        <div class="pagination">
 
-                        <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
-                        <c:if test="${itemDto.currentPageNumber ne 1 }">
-                            <c:url value="/item/list" var="listLink">
-                                <c:param name="page" value="1"/>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-newer">
-                                <i class="bi bi-chevron-double-left"></i>
-                            </a>
-                        </c:if>
+                            <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
+                            <c:if test="${itemDto.currentPageNumber ne 1 }">
+                                <c:url value="/item/list" var="listLink">
+                                    <c:param name="page" value="1"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </c:if>
 
-                        <%-- 이전 버튼--%>
-                        <c:if test="${itemDto.hasPrevButton }">
-                            <c:url value="/item/list" var="listLink">
-                                <c:param name="page" value="${itemDto.jumpPrevPageNumber }"></c:param>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-newer">
-                                <i class="bi bi-chevron-left"></i>
-                            </a>
-                        </c:if>
+                            <%-- 이전 버튼--%>
+                            <c:if test="${itemDto.hasPrevButton }">
+                                <c:url value="/item/list" var="listLink">
+                                    <c:param name="page" value="${itemDto.jumpPrevPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </c:if>
 
-                        <c:forEach begin="${itemDto.leftPageNumber}" end="${itemDto.rightPageNumber}" var="pageNumber">
-                            <c:url value="/item/list" var="listLink">
-                                <c:param name="page" value="${pageNumber }"/>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                        <span class="pagination-inner">
+                            <c:forEach begin="${itemDto.leftPageNumber}" end="${itemDto.rightPageNumber}"
+                                       var="pageNumber">
+                                <c:url value="/item/list" var="listLink">
+                                    <c:param name="page" value="${pageNumber }"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <span class="pagination-inner">
                               <%-- 현재페이지에 active 클래스 추가 --%>
-                                <a class="${itemDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}" href="${listLink}">${pageNumber}</a>
+                                <a class="${itemDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}"
+                                   href="${listLink}">${pageNumber}</a>
                         </span>
-                        </c:forEach>
+                            </c:forEach>
 
-                        <%-- 다음 버튼 --%>
-                        <c:if test="${itemDto.hasNextButton }">
-                            <c:url value="/item/list" var="listLink">
-                                <c:param name="page" value="${itemDto.jumpNextPageNumber }"></c:param>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-older">
-                                <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </c:if>
+                            <%-- 다음 버튼 --%>
+                            <c:if test="${itemDto.hasNextButton }">
+                                <c:url value="/item/list" var="listLink">
+                                    <c:param name="page" value="${itemDto.jumpNextPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </c:if>
 
-                        <%-- 맨뒤 버튼 --%>
-                        <c:if test="${itemDto.currentPageNumber ne itemDto.lastPageNumber }">
-                            <c:url value="/item/list" var="listLink">
-                                <c:param value="${itemDto.lastPageNumber }" name="page"/>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-older">
-                                <i class="bi bi-chevron-double-right"></i>
-                            </a>
-                        </c:if>
-                    </div>
-                </nav>
+                            <%-- 맨뒤 버튼 --%>
+                            <c:if test="${itemDto.currentPageNumber ne itemDto.lastPageNumber }">
+                                <c:url value="/item/list" var="listLink">
+                                    <c:param value="${itemDto.lastPageNumber }" name="page"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </c:if>
+                        </div>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script>
-    $('.pagination-inner a').on('click', function () {
-        $(this).siblings().removeClass('pagination-active');
-        $(this).addClass('pagination-active');
-    })
-</script>
-<!-- remove Modal -->
-<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
-                    확인</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                삭제하시겠습니까? 복구할 수 없습니다.
-            </div>
-            <div class="modal-footer">
-                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">취소
-                </button>
-                <button style="font-family: 'LINESeedKR-Bd'" id="removeButton" type="submit"
-                        class="btn btn-danger">확인
-                </button>
+    <script>
+        $('.pagination-inner a').on('click', function () {
+            $(this).siblings().removeClass('pagination-active');
+            $(this).addClass('pagination-active');
+        })
+    </script>
+    <!-- remove Modal -->
+    <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
+                        확인</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    삭제하시겠습니까? 복구할 수 없습니다.
+                </div>
+                <div class="modal-footer">
+                    <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">취소
+                    </button>
+                    <button style="font-family: 'LINESeedKR-Bd'" id="removeButton" type="submit"
+                            class="btn btn-danger">확인
+                    </button>
+                </div>
             </div>
         </div>
     </div>

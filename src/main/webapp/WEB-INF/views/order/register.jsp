@@ -179,7 +179,6 @@
             <tr>
                 <td class="table-active">거래처</td>
                 <td class="inputWidth">
-                    <div class="inputLength">
                         <input onchange="buyerView()" class="form-select" aria-label="Default select example"
                                type="text" list="list" id="buyer" placeholder="거래처를 선택해주세요" autocomplete="off" />
                         <datalist id="list">
@@ -187,7 +186,6 @@
                                 <option value="${buyer.m_buyer_id}_${buyer.m_buyer_name}"></option>
                             </c:forEach>
                         </datalist>
-                    </div>
                 </td>
                 <td class="table-active">주소</td>
                 <td id="buyerAddress" class="inputWidth"></td>
@@ -216,12 +214,10 @@
             <tr>
                 <td class="table-active">제품코드</td>
                 <td class="inputWidth">
-                    <div class="inputLength">
                         <input onchange="itemView()" class="form-select" aria-label="Default select example" type="text"
                                list="lists" id="orderItems" placeholder="제품를 선택해주세요" autocomplete="off"/>
                         <datalist id="lists">
                         </datalist>
-                    </div>
                 </td>
                 <td class="table-active">제품이름</td>
                 <td class="itemName inputWidth">
