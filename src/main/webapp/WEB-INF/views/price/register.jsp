@@ -121,13 +121,13 @@
                     <tr>
                         <td class="table-active">판매가격(단가)</td>
                         <td>
-                            <input class="form-control reset1" autocomplete="off" id="priceInput" type="text" name="m_price_price"></input>
+                            <input class="form-control reset1" autocomplete="off" id="priceInput" type="text" name="m_price_price" onkeyup="inputNumberFormat(this)"></input>
                         </td>
                     </tr>
                     <tr>
                         <td class="table-active">최종 단가</td>
                         <td>
-                            <input class="form-control reset1" id="lastPrice" type="text" name="m_price_lastPrice" readonly></input>
+                            <input class="form-control reset1" id="lastPrice" type="text" name="m_price_lastPrice" onkeyup="inputNumberFormat(this)" readonly></input>
                         </td>
                     </tr>
                 </tbody>
@@ -174,11 +174,12 @@
     const lastPrice = document.querySelector("#lastPrice");
 
     function discount() {
-        const discount = discountInput.value;
-        const price = priceInput.value;
-        const lastprice = price - ((price * discount) / 100);
+        const discount = uncomma(discountInput.value)
+        const price = uncomma(priceInput.value)
 
-        lastPrice.value = lastprice;
+        const lastprice = price - ((price * discount) / 100);
+        lastPrice.value = comma(uncomma(lastprice));
+
     }
 
     document.querySelector("#priceInput").addEventListener("keyup", discount)
@@ -363,8 +364,8 @@
        const m_price_lastPeriod = document.querySelector("#m_price_lastPeriod").value;
        const m_price_currency = document.querySelector("#buyerCurrency").value;
        const m_price_discount = document.querySelector("#discountInput").value;
-       const m_price_price = document.querySelector("#priceInput").value;
-       const m_price_lastPrice = document.querySelector("#lastPrice").value;
+       let m_price_price = document.querySelector("#priceInput").value;
+       let m_price_lastPrice = document.querySelector("#lastPrice").value;
 
 
         // for (let i = 0; i <addData.length; i++) {
@@ -406,6 +407,9 @@
             </tr>
        `
         basketList.insertAdjacentHTML("beforeend", priceAdd);
+
+        m_price_price = uncomma(m_price_price);
+        m_price_lastPrice = uncomma(m_price_lastPrice);
 
        const data = {
            m_item_id,
@@ -451,6 +455,7 @@
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 if (data >= 1) {
                     alert(data + "개의 판매가 등록이 완료되었습니다.")
                     location.href = "/price/list";
@@ -480,6 +485,21 @@
         document.querySelector("#itemId").disabled = false;
         document.querySelector("#itemName").disabled = false;
     })
+
+    // 천원 단위 절사
+    function inputNumberFormat(obj) {
+        obj.value = comma(uncomma(obj.value));
+    }
+
+    function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+    }
 
 
 
