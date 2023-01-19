@@ -89,7 +89,6 @@
         }
 
         .table button {
-            background-color: #757575;
             color: #fff;
             /*border-radius: 0;*/
             width: 60px;
@@ -213,6 +212,14 @@
             padding: 9px 10px !important;
             margin-bottom: 13px;
         }
+        .btnStyle{
+            background-color: #598f9b;
+        }
+
+        .btnStyle:hover{
+            background-color: #52727b;
+            color : white;
+        }
 
 
     </style>
@@ -320,7 +327,7 @@
                             <c:url value="/price/modify" var="modifyLink">
                                 <c:param value="${priceList.m_price_id }" name="m_price_id"/>
                             </c:url>
-                            <button type="button" class="btn" onclick="location.href='${modifyLink}' ">수정</button>
+                            <button type="button" class="btn btnStyle" onclick="location.href='${modifyLink}' ">수정</button>
                         </td>
                     </tr>
                     <script>
