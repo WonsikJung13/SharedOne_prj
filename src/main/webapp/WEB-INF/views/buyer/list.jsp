@@ -36,7 +36,6 @@
         }
 
         .table {
-            width: 1000px;
             --bs-table-bg: #fff;
         }
 
@@ -75,7 +74,6 @@
         .tableList {
             background-color: #fff;
             height: 672px;
-            width: 1000px;
         }
 
         td a {
@@ -95,7 +93,6 @@
 
         .searchBox {
             background-color: white;
-            width: 1000px;
             padding: 20px 80px 5px 80px;
             color: #212529;
             font-size: 16px;
@@ -211,17 +208,17 @@
 <body>
 <c:url value="/buyer/remove" var="removeLink"/>
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
-    <div class="col">
 
-<%--        <div style="display: flex; justify-content : center;">--%>
-            <div style="display: flex;justify-content: space-between;width: 900px;">
-                <div id="itemListTitle">
+    <div class="col">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-4">
                     <h1 id="header">거래처 관리 및 등록</h1>
                 </div>
-                <div class="itemRegisterBtn">
+                <div class="itemRegisterBtn col-auto">
                     <c:url value="/buyer/register" var="registerLink"></c:url>
                     <button type="button" class="btn btn-secondary" onclick="location.href='${registerLink}' ">거래처 등록
                     </button>
@@ -230,12 +227,12 @@
                     </form>
                 </div>
             </div>
-<%--        </div>--%>
-<%--        <div style="display: flex; justify-content : center;">--%>
             <div class="searchBox">
                 <form action="" class="d-flex" role="search" id="searchForm">
                     <div class="input-group" style="float: none">
-                        <select class="selectBtn form-select" id="groupList" name="searchNum" onchange="changeValue(this)" style="max-width: 200px">
+                        <select class="selectBtn form-select" id="groupList" name="searchNum"
+                                onchange="changeValue(this)"
+                                style="max-width: 200px">
                             <option class="non" name="m_buyer_id" value="all">전체</option>
                             <option class="non" name="m_buyer_id" value="m_buyer_id">거래처 코드</option>
                             <option class="non" name="m_buyer_name" value="m_buyer_name">거래처 명</option>
@@ -249,17 +246,17 @@
                     </div>
                 </form>
             </div>
-<%--        </div>--%>
+            <%--        </div>--%>
 
-<%--        <div style="display: flex; justify-content : center;">--%>
-    <div style="display: flex;background-color: transparent;width:1000px">
+            <%--        <div style="display: flex; justify-content : center;">--%>
+            <div style="display: flex;background-color: transparent;">
 
 
-        <button class="btn btn-danger removeBtn" style="margin-left: auto;margin-bottom: 10px;"
-                data-bs-toggle="modal"
-                data-bs-target="#removeModal" value="삭제" disabled>선택삭제
-        </button>
-    </div>
+                <button class="btn btn-danger removeBtn" style="margin-left: auto;margin-bottom: 10px;"
+                        data-bs-toggle="modal"
+                        data-bs-target="#removeModal" value="삭제" disabled>선택삭제
+                </button>
+            </div>
             <div class="tableList">
                 <table class="table addList">
                     <tbody>
@@ -303,188 +300,189 @@
                     </tbody>
                 </table>
             </div>
-<%--        </div>--%>
-        <div class="row">
-            <div class="col">
-                <nav aria-label="pagination-container" style="width: 1000px; background-color: #fff">
-                    <div class="pagination">
+            <%--        </div>--%>
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="pagination-container" style="background-color: #fff">
+                        <div class="pagination">
 
-                        <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
-                        <c:if test="${buyerDto.currentPageNumber ne 1 }">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param name="page" value="1"/>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-newer">
-                                <i class="bi bi-chevron-double-left"></i>
-                            </a>
-                        </c:if>
+                            <%-- 맨앞 버튼( 1페이지가 아니면 생김) --%>
+                            <c:if test="${buyerDto.currentPageNumber ne 1 }">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param name="page" value="1"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </a>
+                            </c:if>
 
-                        <%-- 이전 버튼--%>
-                        <c:if test="${buyerDto.hasPrevButton }">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param name="page" value="${buyerDto.jumpPrevPageNumber }"></c:param>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-newer">
-                                <i class="bi bi-chevron-left"></i>
-                            </a>
-                        </c:if>
+                            <%-- 이전 버튼--%>
+                            <c:if test="${buyerDto.hasPrevButton }">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param name="page" value="${buyerDto.jumpPrevPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-newer">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </c:if>
 
-                        <c:forEach begin="${buyerDto.leftPageNumber}" end="${buyerDto.rightPageNumber}" var="pageNumber">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param name="page" value="${pageNumber }"/>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <span class="pagination-inner">
+                            <c:forEach begin="${buyerDto.leftPageNumber}" end="${buyerDto.rightPageNumber}"
+                                       var="pageNumber">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param name="page" value="${pageNumber }"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <span class="pagination-inner">
                               <%-- 현재페이지에 active 클래스 추가 --%>
-                                <a class="${buyerDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}" href="${listLink}">${pageNumber}</a>
+                                <a class="${buyerDto.currentPageNumber eq pageNumber ? 'pagination-active' : ''}"
+                                   href="${listLink}">${pageNumber}</a>
                         </span>
-                        </c:forEach>
+                            </c:forEach>
 
-                        <%-- 다음 버튼 --%>
-                        <c:if test="${buyerDto.hasNextButton }">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param name="page" value="${buyerDto.jumpNextPageNumber }"></c:param>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-older">
-                                <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </c:if>
+                            <%-- 다음 버튼 --%>
+                            <c:if test="${buyerDto.hasNextButton }">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param name="page" value="${buyerDto.jumpNextPageNumber }"></c:param>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </c:if>
 
-                        <%-- 맨뒤 버튼 --%>
-                        <c:if test="${buyerDto.currentPageNumber ne buyerDto.lastPageNumber }">
-                            <c:url value="/buyer/list" var="listLink">
-                                <c:param value="${buyerDto.lastPageNumber }" name="page"/>
-                                <c:param name="q" value="${param.q }"/>
-                                <c:param name="t" value="${param.t }"/>
-                            </c:url>
-                            <a href="${listLink }" class="pagination-older">
-                                <i class="bi bi-chevron-double-right"></i>
-                            </a>
-                        </c:if>
-                    </div>
-                </nav>
+                            <%-- 맨뒤 버튼 --%>
+                            <c:if test="${buyerDto.currentPageNumber ne buyerDto.lastPageNumber }">
+                                <c:url value="/buyer/list" var="listLink">
+                                    <c:param value="${buyerDto.lastPageNumber }" name="page"/>
+                                    <c:param name="q" value="${param.q }"/>
+                                    <c:param name="t" value="${param.t }"/>
+                                </c:url>
+                                <a href="${listLink }" class="pagination-older">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </c:if>
+                        </div>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script>
-    $('.pagination-inner a').on('click', function () {
-        $(this).siblings().removeClass('pagination-active');
-        $(this).addClass('pagination-active');
-    })
-</script>
-
-<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
-                    확인</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                삭제하시겠습니까? 복구할 수 없습니다.
-            </div>
-            <div class="modal-footer">
-                <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">취소
-                </button>
-                <button style="font-family: 'LINESeedKR-Bd'" id="removeButton" type="submit"
-                        class="btn btn-danger">확인
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<c:url value="/buyer/register" var="registerLink">
-</c:url>
-<a href="${registerLink }" class="listHref">
-    <i class="fa-sharp fa-solid fa-pen"></i>
-</a>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-
-<script>
-    const ctx = "${pageContext.request.contextPath}";
-
-    document.querySelector("#searchBtn").addEventListener("click", function () {
-        document.querySelector("#searchForm").submit();
-    })
-
-    // 전체선택 풀기
-    function checkSelectAll() {
-        const selectAll = document.querySelector('input[name="selectAll"]');
-        const checkboxes = document.querySelectorAll('input[name="itemBox"]');
-        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
-
-        if (checkboxes.length === checked.length) {
-            selectAll.checked = true;
-        } else {
-            selectAll.checked = false;
-        }
-    }
-
-    // 전체선택 하기
-    function selectAll(selectAll) {
-        const checkboxes = document.getElementsByName('itemBox');
-        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
-
-        checkboxes.forEach((checkbox) => {
-            checkbox.checked = selectAll.checked
+    <script>
+        $('.pagination-inner a').on('click', function () {
+            $(this).siblings().removeClass('pagination-active');
+            $(this).addClass('pagination-active');
         })
-        // 전체선택 시 삭제버튼 활성화
-        if (checkboxes.length === 10 && checked.length === 10) {
-            document.querySelector(".removeBtn").disabled = true;
-        } else {
-            document.querySelector(".removeBtn").disabled = false;
-        }
-    }
+    </script>
 
-    // 삭제버튼 활성화
-    function activeBtn() {
-        const checked = document.querySelectorAll('input[name="itemBox"]:checked');
-        if (checked.length > 0) {
-            document.querySelector(".removeBtn").disabled = false;
-        } else {
-            document.querySelector(".removeBtn").disabled = true;
-        }
-    }
+    <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 style="font-family: 'LINESeedKR-Bd'" class="modal-title fs-5" id="exampleModalLabel">삭제
+                        확인</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    삭제하시겠습니까? 복구할 수 없습니다.
+                </div>
+                <div class="modal-footer">
+                    <button style="font-family: 'LINESeedKR-Bd'" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">취소
+                    </button>
+                    <button style="font-family: 'LINESeedKR-Bd'" id="removeButton" type="submit"
+                            class="btn btn-danger">확인
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    // 삭제 진행
-    function remove() {
-        const length = document.getElementsByName("itemBox").length;
-        const removeIdList = [];
-        for (let i = 0; i < length; i++) {
-            const checkedBox = document.getElementsByName("itemBox")[i].checked;
 
-            if (checkedBox) {
-                const selectId = document.getElementsByName("itemBox")[i].value;
-                removeIdList.push(selectId);
+    <c:url value="/buyer/register" var="registerLink">
+    </c:url>
+    <a href="${registerLink }" class="listHref">
+        <i class="fa-sharp fa-solid fa-pen"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+
+    <script>
+        const ctx = "${pageContext.request.contextPath}";
+
+        document.querySelector("#searchBtn").addEventListener("click", function () {
+            document.querySelector("#searchForm").submit();
+        })
+
+        // 전체선택 풀기
+        function checkSelectAll() {
+            const selectAll = document.querySelector('input[name="selectAll"]');
+            const checkboxes = document.querySelectorAll('input[name="itemBox"]');
+            const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+
+            if (checkboxes.length === checked.length) {
+                selectAll.checked = true;
+            } else {
+                selectAll.checked = false;
             }
         }
-        document.querySelector("#removeInput").value = removeIdList;
-        document.getElementById('removeForm').submit();
-    }
 
-    // 삭제버튼 클릭 시
-    document.querySelector("#removeButton").addEventListener("click", remove);
+        // 전체선택 하기
+        function selectAll(selectAll) {
+            const checkboxes = document.getElementsByName('itemBox');
+            const checked = document.querySelectorAll('input[name="itemBox"]:checked');
 
-    // setTimeout(function (){
-    //     history.go(1)
-    // }, 4000)
-</script>
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked
+            })
+            // 전체선택 시 삭제버튼 활성화
+            if (checkboxes.length === 10 && checked.length === 10) {
+                document.querySelector(".removeBtn").disabled = true;
+            } else {
+                document.querySelector(".removeBtn").disabled = false;
+            }
+        }
 
+        // 삭제버튼 활성화
+        function activeBtn() {
+            const checked = document.querySelectorAll('input[name="itemBox"]:checked');
+            if (checked.length > 0) {
+                document.querySelector(".removeBtn").disabled = false;
+            } else {
+                document.querySelector(".removeBtn").disabled = true;
+            }
+        }
+
+        // 삭제 진행
+        function remove() {
+            const length = document.getElementsByName("itemBox").length;
+            const removeIdList = [];
+            for (let i = 0; i < length; i++) {
+                const checkedBox = document.getElementsByName("itemBox")[i].checked;
+
+                if (checkedBox) {
+                    const selectId = document.getElementsByName("itemBox")[i].value;
+                    removeIdList.push(selectId);
+                }
+            }
+            document.querySelector("#removeInput").value = removeIdList;
+            document.getElementById('removeForm').submit();
+        }
+
+        // 삭제버튼 클릭 시
+        document.querySelector("#removeButton").addEventListener("click", remove);
+
+        // setTimeout(function (){
+        //     history.go(1)
+        // }, 4000)
+    </script>
+</div>
 </body>
 </html>
