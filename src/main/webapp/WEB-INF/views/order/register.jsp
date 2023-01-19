@@ -494,7 +494,6 @@
         }
 
         addData.push(data);
-        console.log(addData)
 
         // 제품 추가 눌렀을때 제품 데이터 사라짐
         document.querySelector("#orderItems").value = null;
