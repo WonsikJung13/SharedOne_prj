@@ -21,7 +21,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
+
+        body {
+            font-family: 'Gothic A1', sans-serif;
+            font-weight: 200;
+            background-color: #eeeeee;
+        }
+
         .itemRegisterBtn {
             position: relative;
         }
@@ -32,7 +42,6 @@
         }
 
         .table {
-            width: 1000px;
             --bs-table-bg: #fff;
         }
 
@@ -71,7 +80,6 @@
         .tableList {
             background-color: #fff;
             /*height: 672px;*/
-            width: 1000px;
         }
 
         td a {
@@ -91,7 +99,6 @@
 
         .searchBox {
             background-color: white;
-            width: 1000px;
             padding: 20px 80px 10px 80px;
             color: #212529;
             font-size: 16px;
@@ -160,71 +167,71 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div class="col-6 col-sm-2">
         <my:header></my:header>
     </div>
+
     <div class="col">
-        <div style="display: flex;justify-content: space-between;width: 900px;">
+        <div class="container">
             <div id="itemListTitle">
                 <h1 id="header">거래처 등록</h1>
             </div>
             <div class="itemRegisterBtn">
             </div>
-        </div>
-        <h2>거래처 추가</h2>
 
-        <table class="table table-bordered" id="aaa">
-            <tbody>
-            <form action="" method="post" id="registerForm">
-                <tr>
-                    <th class="table-active">거래처 명</th>
-                    <th><input class="form-control form300" type="text" name="m_buyer_name" id="m_buyer_name" ></th>
-                </tr>
-                <tr>
-                    <th class="table-active">거래처 국가</th>
-                    <th><input class="form-control form300" type="text" name="m_buyer_region" id="m_buyer_region"></th>
-                </tr>
-                <tr>
-                    <th class="table-active">거래처 주소</th>
-                    <th><input type="text" class="form-control form300" name="m_buyer_address" id="m_buyer_address">
-                    </th>
-                </tr>
-                <tr>
-                    <th class="table-active">통화</th>
-                    <th id="ddd"><input type="text" class="form-control form300" name="m_buyer_currency"
-                                        id="m_buyer_currency">
-                    </th>
-                </tr>
-                <tr>
-                    <th class="table-active">사업자번호</th>
-                    <th><input type="text" class="form-control form300" name="m_buyer_number" id="buyerIdInput" onkeypress='return checkNumber(event)'>
-                        <p id="inputText" style="background-color: white"></p></th>
-                </tr>
-            </form>
-            </tbody>
-        </table>
-        <button disabled class="btn btn-secondary" id="addBtn">거래처 추가</button>
+            <h2>거래처 추가</h2>
 
-        <h2>추가된 거래처</h2>
-        <div class="tableList">
-
-            <table class="table addList">
-                <thead>
-                <tr>
-                    <th scope="col">거래처 명</th>
-                    <th scope="col">거래처 국가</th>
-                    <th scope="col">거래처 주소</th>
-                    <th scope="col">통화</th>
-                    <th scope="col">사업자번호</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody id="itemBody">
-
+            <table class="table table-bordered" id="aaa">
+                <tbody>
+                <form action="" method="post" id="registerForm">
+                    <tr>
+                        <th class="table-active">거래처 명</th>
+                        <th><input class="form-control form300" type="text" name="m_buyer_name" id="m_buyer_name"></th>
+                        <th class="table-active">거래처 국가</th>
+                        <th><input class="form-control form300" type="text" name="m_buyer_region" id="m_buyer_region">
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="table-active">거래처 주소</th>
+                        <th><input type="text" class="form-control form300" name="m_buyer_address" id="m_buyer_address">
+                        </th>
+                        <th class="table-active">통화</th>
+                        <th id="ddd"><input type="text" class="form-control form300" name="m_buyer_currency"
+                                            id="m_buyer_currency">
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="table-active">사업자번호</th>
+                        <th colspan="3"><input type="text" class="form-control form300" name="m_buyer_number"
+                                               id="buyerIdInput" onkeypress='return checkNumber(event)'>
+                            <p id="inputText" style="background-color: white"></p></th>
+                    </tr>
+                </form>
                 </tbody>
             </table>
+            <button disabled class="btn btn-secondary" id="addBtn">거래처 추가</button>
+
+            <h2>추가된 거래처</h2>
+            <div class="tableList">
+
+                <table class="table addList">
+                    <thead>
+                    <tr>
+                        <th scope="col">거래처 명</th>
+                        <th scope="col">거래처 국가</th>
+                        <th scope="col">거래처 주소</th>
+                        <th scope="col">통화</th>
+                        <th scope="col">사업자번호</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="itemBody">
+
+                    </tbody>
+                </table>
+            </div>
+            <button disabled class="btn btn-secondary" id="submitBtn">등록</button>
         </div>
-        <button disabled class="btn btn-secondary" id="submitBtn">등록</button>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -255,14 +262,15 @@
                 }
             })
 
-        setTimeout(function (){
-        for(const a in addData){
-            if(addData[a].m_buyer_number === insertBuyerNum){
-                document.querySelector("#addBtn").setAttribute("disabled", "");
-                document.querySelector("#inputText").innerText = "이미 등록되었습니다"
-                $('#inputText').css("color", "red");
+        setTimeout(function () {
+            for (const a in addData) {
+                if (addData[a].m_buyer_number === insertBuyerNum) {
+                    document.querySelector("#addBtn").setAttribute("disabled", "");
+                    document.querySelector("#inputText").innerText = "이미 등록되었습니다"
+                    $('#inputText').css("color", "red");
+                }
             }
-        }},100)
+        }, 100)
     })
 
     let addData = [];
@@ -276,33 +284,33 @@
         const m_buyer_address = document.querySelector("#m_buyer_address").value;
         const m_buyer_currency = document.querySelector("#m_buyer_currency").value;
         const m_buyer_number = document.querySelector("#buyerIdInput").value;
-        if(m_buyer_name == ""){
+        if (m_buyer_name == "") {
             document.querySelector("#m_buyer_name").focus();
-            $('#m_buyer_name').css('border-color','red');
-        }else if(m_buyer_region == "") {
+            $('#m_buyer_name').css('border-color', 'red');
+        } else if (m_buyer_region == "") {
             document.querySelector("#m_buyer_region").focus();
             $('#m_buyer_region').css('border-color', 'red');
-        }else if(m_buyer_address == "") {
+        } else if (m_buyer_address == "") {
             document.querySelector("#m_buyer_address").focus();
             $('#m_buyer_address').css('border-color', 'red');
-        }else if(m_buyer_currency == "") {
+        } else if (m_buyer_currency == "") {
             document.querySelector("#m_buyer_currency").focus();
             $('#m_buyer_currency').css('border-color', 'red');
-        }else if(m_buyer_number == "") {
+        } else if (m_buyer_number == "") {
             document.querySelector("#m_buyer_number").focus();
             $('#m_buyer_number').css('border-color', 'red');
-        }else{
-        // number.push(m_buyer_number);
+        } else {
+            // number.push(m_buyer_number);
 
-        const data = {
-            m_buyer_name,
-            m_buyer_region,
-            m_buyer_address,
-            m_buyer_currency,
-            m_buyer_number
-        }
-        addData.push(data)
-        const buyerAdd = `
+            const data = {
+                m_buyer_name,
+                m_buyer_region,
+                m_buyer_address,
+                m_buyer_currency,
+                m_buyer_number
+            }
+            addData.push(data)
+            const buyerAdd = `
             <tr id="\${m_buyer_number}">
                  <td class="buyerAdd"> \${m_buyer_name} </td>
                  <td class="buyerAdd"> \${m_buyer_region} </td>
@@ -312,15 +320,15 @@
                 <td><button class="btn btn-secondary" data-value="\${m_buyer_number}" onclick="clickRemove(this)">삭제</button></td>
             </tr>
         `;
-        itemBody.insertAdjacentHTML("beforeend", buyerAdd);
+            itemBody.insertAdjacentHTML("beforeend", buyerAdd);
 
-        document.querySelector("#m_buyer_name").value = null;
-        document.querySelector("#m_buyer_region").value = null;
-        document.querySelector("#m_buyer_address").value = null;
-        document.querySelector("#m_buyer_currency").value = null;
-        document.querySelector("#buyerIdInput").value = null;
-        document.querySelector("#addBtn").setAttribute("disabled", "");
-        document.querySelector("#inputText").innerText = "";
+            document.querySelector("#m_buyer_name").value = null;
+            document.querySelector("#m_buyer_region").value = null;
+            document.querySelector("#m_buyer_address").value = null;
+            document.querySelector("#m_buyer_currency").value = null;
+            document.querySelector("#buyerIdInput").value = null;
+            document.querySelector("#addBtn").setAttribute("disabled", "");
+            document.querySelector("#inputText").innerText = "";
         }
     })
 
@@ -348,14 +356,13 @@
             .then(res => res.json())
 
 
-
-        setTimeout(function (){
+        setTimeout(function () {
             location.href = buyerList;
-        },300)
+        }, 300)
     })
 
     function checkNumber(event) {
-        if(event.key === '.'
+        if (event.key === '.'
             || event.key === '-'
             || event.key >= 0 && event.key <= 9) {
             return true;
