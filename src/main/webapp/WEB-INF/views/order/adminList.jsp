@@ -292,6 +292,15 @@
             /*margin-left: 100px;*/
             /*justify-content: center;*/
         }
+        .table-active{
+            width: 180px;
+        }
+        .tableTd{
+            width:299.5px;
+        }
+        .modifyBtn{
+            margin-right: 0;
+        }
     </style>
 </head>
 <div>
@@ -306,7 +315,7 @@
 <%--        <div style="display: flex;justify-content: space-between;width: 1000px;">--%>
         <div class="row justify-content-between">
             <div class="col-4">
-                <h1>주문 관리 및 등록</h1>
+                <h1><i class="fa-solid fa-layer-group" style="margin-right: 10px;"></i>주문 관리 및 등록</h1>
             </div>
             <div class="itemRegisterBtn col-auto">
                 <c:url value="/order/register" var="registerLink"></c:url>
@@ -509,21 +518,21 @@
                                 <tbody>
                                 <tr>
                                     <td class="table-active">주문번호</td>
-                                    <td class="orderId"></td>
+                                    <td class="orderId tableTd"></td>
                                     <td class="table-active">주문일</td>
-                                    <td class="orderDate"></td>
+                                    <td class="orderDate tableTd"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-active">거래처</td>
-                                    <td class="buyerName"></td>
+                                    <td class="buyerName tableTd"></td>
                                     <td class="table-active">주소</td>
-                                    <td class="buyerAddress"></td>
+                                    <td class="buyerAddress tableTd"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-active">국가</td>
-                                    <td class="buyerRegion"></td>
+                                    <td class="buyerRegion tableTd"></td>
                                     <td class="table-active">사업자등록번호</td>
-                                    <td class="buyerNumber"></td>
+                                    <td class="buyerNumber tableTd"></td>
                                 </tr>
                                 <tr>
                                     <td class="table-active">통화</td>

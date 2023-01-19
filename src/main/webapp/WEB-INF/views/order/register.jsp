@@ -176,7 +176,7 @@
         <my:header></my:header>
     </div>
     <div class="col">
-        <h1>주문 작성</h1>
+        <h1><i class="fa-solid fa-pen-nib" style="margin-right: 10px;"></i>주문 작성</h1>
 
         <h2>거래처 선택</h2>
         <table class="table table-bordered">
