@@ -22,13 +22,15 @@
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
+        .sidebar {
+            z-index: 5;
+        }
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #eeeeee;
         }
 
         .table {
-            width: 900px;
             --bs-table-bg: #fff;
         }
 
@@ -108,11 +110,15 @@
 <body>
 <input type="hidden" value="${member.m_member_email}" id="memberEmail">
 <div class="row">
-    <div class="col-3">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
-    <div class="col">
-
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
+        <div style="display: flex;justify-content: space-between;width: 900px;">
+            <div id="itemListTitle">
+                <h1 id="header">회원 정보 수정</h1>
+            </div>
+        </div>
         <table class="table">
             <thead>
             <tr>
@@ -160,12 +166,13 @@
                             <input type="password" id="newPassword2" name="m_member_password">
                             <div style="color: red" id="newPassword2Text"></div>
                         </td>
+                    </tr>
+                    <tr>
                         <td style="background-color: #eeeeee; border-bottom: none">
                             <input type="submit" class="btn btn-primary" value="전송" disabled id="submitBtn">
                         </td>
                     </tr>
                 </div>
-
             </form>
             </tbody>
         </table>

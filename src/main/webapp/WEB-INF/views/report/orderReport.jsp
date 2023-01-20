@@ -26,6 +26,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
 
+        .sidebar {
+            z-index: 5;
+        }
         body {
             font-family: 'Gothic A1', sans-serif;
             font-weight: 200;
@@ -185,11 +188,11 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-6 col-sm-2">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
-    <div class="col">
-        <div class="container">
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
+        <div class="">
             <div id="orderListTitle">
                 <h1 id="header">주문 현황</h1>
             </div>
@@ -206,7 +209,7 @@
                             <input class="form-control" name="ed" id="endDate" type="date" style="width: 210px">
                         </div>
                     </div>
-                    <div class="input-group" class="row">
+                    <div class="input-group  flex-nowrap" class="row">
                         <select name="t" class="form-select">
                             <option value="all">전체</option>
                             <option value="itemId" ${param.t == 'itemId' ? 'selected' : '' }>제품코드</option>

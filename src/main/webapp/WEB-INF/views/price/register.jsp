@@ -26,6 +26,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
 
+        .sidebar {
+            z-index: 5;
+        }
         body {
             font-family: 'Gothic A1', sans-serif;
             font-weight: 200;
@@ -106,11 +109,11 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-6 col-sm-2">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
-    <div class="col">
-        <div class="container">
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
+        <div class="">
         <h1 style="margin-top: 20px">판매가격 작성</h1>
         <div style="display:flex;">
             <button style="margin-left: auto; margin-bottom: 10px;" id="resetBtn" class="btn btn-secondary" type="reset">초기화</button>

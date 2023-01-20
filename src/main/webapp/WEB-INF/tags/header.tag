@@ -124,18 +124,26 @@
         background-color: #555; /* Add a dark-grey background on hover */
     }
 
-    @media screen and (max-width: 1400px) {
-        #sideBar {
-            display: none;
-        }
-    }
+    /*@media screen and (max-width: 1400px) {*/
+    /*    #sideBar {*/
+    /*        display: none;*/
+    /*    }*/
+    /*}*/
 
-    @media screen and (min-width: 1400px) {
-        .sideBtn {
-            display: none;
-        }
+    /*@media screen and (min-width: 1400px) {*/
+    /*    .sideBtn {*/
+    /*        display: none;*/
+    /*    }*/
+    /*}*/
+    #sideBar {
+        width: 300px;
+        height: 100%;
+        position: fixed
     }
-
+    .navbar-toggler {
+        position: absolute;
+        z-index: 5;
+    }
 </style>
 
 <link rel="stylesheet"
@@ -143,11 +151,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<%--<button class="navbar-toggler sideBtn" type="button" aria-label="Toggle navigation" style="margin-left: 20px"--%>
-<%--        data-bs-toggle="collapse"--%>
-<%--        data-bs-target="#sideBar-collapse" aria-expanded="false">--%>
-<%--    <i class="fas fa-bars"></i>--%>
-<%--</button>--%>
+<button class="navbar-toggler sideBtn" type="button" aria-label="Toggle navigation"
+        style="color: white;background-color: #353535;top: 0;position:fixed;">
+    <i class="fas fa-bars"></i>
+</button>
 <div id="sideBar-collapse" class="sideBtn collapse" style="margin-left: 20px">
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
@@ -228,10 +235,8 @@
 
 </div>
 
-<div class="flex-shrink-0 p-3 navbg row" id="sideBar" style="width: 300px; height: 100%; position: fixed">
-
+<div class="flex-shrink-0 p-3 navbg row" id="sideBar" style="">
     <div>
-
         <a href="${reportLink}" class=" navbg d-flex align-items-center pb-3 mb-3 text-decoration-none border-bottom">
             <span class="navbg fs-5 fw-semibold">
                 <i class="fa-solid fa-dice-five mainicon"></i>
@@ -318,6 +323,47 @@
 
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 <script>
+    document.querySelector(".navbar-toggler").addEventListener('click', function () {
+        const sidebar = document.getElementById('sideBar');
+        if (sidebar.style.display == '') {
+            sidebar.style.display = 'none';
+        }
+        else if(sidebar.style.display == 'none') {
+            sidebar.style.display = '';
+        }
+    });
+    function widthResize() {
+        const sidebar = document.getElementById('sideBar');
+        const btnToggle = document.querySelectorAll('.btn-toggle');
+        var windowWidth = $(window).width();
+
+        console.log(windowWidth)
+
+        if(windowWidth < 1200) {
+            sidebar.style.width = '250px';
+            for (let i = 0; i < btnToggle.length; i++) {
+                const btn = btnToggle.item(i);
+                btn.style.width = '200px';
+            }
+        } else if (windowWidth > 1200) {
+            sidebar.style.width = '300px';
+            for (let i = 0; i < btnToggle.length; i++) {
+                const btn = btnToggle.item(i);
+                btn.style.width = '248px';
+            }
+        }
+
+        if (windowWidth < 800) {
+            sidebar.style.display = 'none';
+        } else
+        // else if (windowWidth > 1056){
+            sidebar.style.display = '';
+        // }
+    }
+    widthResize()
+    $(window).resize(function(){
+        widthResize()
+    })
     // Get the button:
     let mybutton = document.getElementById("myBtn");
 

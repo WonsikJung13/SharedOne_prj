@@ -26,6 +26,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
 
+        .sidebar {
+            z-index: 5;
+        }
         body {
             font-family: 'Gothic A1', sans-serif;
             font-weight: 200;
@@ -177,11 +180,11 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-6 col-sm-2">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
-    <div class="col">
-        <div class="container">
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
+        <div class="">
             <h1><i class="fa-solid fa-pen-nib" style="margin-right: 10px;"></i>주문 수정</h1>
 
         <h2>거래처 선택</h2>
