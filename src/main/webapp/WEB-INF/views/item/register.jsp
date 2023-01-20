@@ -272,6 +272,9 @@
 <script>
     // 수정버튼--------------------------------------------------------
     document.querySelector("#modifyButton1").addEventListener("click", function () {
+
+        document.getElementById("groupSelect").disabled = false;
+        document.getElementById("manufacturerSelect").disabled = false;
         document.querySelector("#itemRegisterForm").submit();
     })
 </script>
