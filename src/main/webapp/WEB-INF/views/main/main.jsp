@@ -51,7 +51,7 @@
             /*rgba(255, 255, 255, 1) 50%,*/
             /*rgba(255, 255, 255, 1) 75%,*/
             rgba(255, 255, 255, 1) 80%),
-            url(/static/img/nikola-RXqP3QMNTH8-unsplash.jpg);
+            url(/sharedFive/static/img/nikola-RXqP3QMNTH8-unsplash.jpg);
             background-repeat: no-repeat;
             background-size: cover;
             height: 100vh;

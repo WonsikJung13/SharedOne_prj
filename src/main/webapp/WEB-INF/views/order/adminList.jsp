@@ -28,6 +28,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
 
+        .sidebar {
+            z-index: 5;
+        }
         body {
             font-family: 'Gothic A1', sans-serif;
             font-weight: 200;
@@ -304,12 +307,12 @@
     </style>
 </head>
 <div class="row">
-    <div class="col-6 col-sm-2">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
 
-    <div class="col">
-        <div class="container">
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
+        <div class="">
 <%--        <div style="display: flex;justify-content: space-between;width: 1000px;">--%>
         <div class="row justify-content-between">
             <div class="col-4">
@@ -325,7 +328,7 @@
         <div class="searchBox">
         <c:url value="/order/adminList" var="listLink"></c:url>
             <form action="${listLink}" class="d-flex" role="search">
-                <div class="input-group" style="float: none">
+                <div class="input-group flex-nowrap" style="float: none">
                     <select name="t" class="form-select">
                         <option value="all">전체</option>
                         <option value="orderId" ${param.t == 'orderId' ? 'selected' : '' }>주문번호</option>

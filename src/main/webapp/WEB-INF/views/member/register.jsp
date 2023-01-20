@@ -19,13 +19,15 @@
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <style>
+        .sidebar {
+            z-index: 5;
+        }
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #eeeeee;
         }
 
         .table {
-            width: 900px;
             --bs-table-bg: #fff;
         }
 
@@ -104,10 +106,10 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-3">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
-    <div class="col">
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
         <div style="display: flex;justify-content: space-between;width: 900px;">
             <div id="itemListTitle">
                 <h1 id="header">회원 등록</h1>
@@ -129,7 +131,7 @@
             </form>
             </tbody>
         </table>
-        <button class="btn btn-primary" id="register" disabled>등록</button>
+        <button class="btn btn-secondary" id="register" disabled>등록</button>
     </div>
 </div>
 

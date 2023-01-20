@@ -24,6 +24,9 @@
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
+        .sidebar {
+            z-index: 5;
+        }
         .row {
             --bs-gutter-x: 0;
         }
@@ -210,12 +213,12 @@
 <body>
 <c:url value="/buyer/remove" var="removeLink"/>
 <div class="row">
-    <div class="col-6 col-sm-2">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
 
-    <div class="col">
-        <div class="container">
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
+        <div class="">
             <div class="row justify-content-between">
                 <div class="col-4">
                     <h1 id="header"><i class="fa-solid fa-layer-group" style="margin-right: 10px;"></i>거래처 관리 및 등록</h1>

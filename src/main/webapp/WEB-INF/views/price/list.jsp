@@ -20,6 +20,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
 
+        .sidebar {
+            z-index: 5;
+        }
         body {
             font-family: 'Gothic A1', sans-serif;
             font-weight: 200;
@@ -44,12 +47,13 @@
             text-align: center;
             line-height: 39px;
             font-size: 16px;
+            height: 616px;
             /*width: 1000px;*/
 
         }
 
         tr {
-            height: 55px;
+            max-height: 55px;
             /*width: 1000px;*/
 
         }
@@ -79,7 +83,7 @@
         .tableList {
             background-color: #fff;
             height: 672px;
-            /*width: 1000px;*/
+            overflow: auto;
         }
 
         td a {
@@ -226,11 +230,11 @@
 </head>
 <body>
 <div class="row">
-    <div class="col-6 col-sm-2">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
-    <div class="col">
-        <div class="container">
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
+        <div class="">
             <div class="row justify-content-between">
             <div class="col-4">
                 <h1 id="header"><i class="fa-solid fa-layer-group" style="margin-right: 10px;"></i>판매가 관리 및 등록</h1>
@@ -258,7 +262,7 @@
 <%--                           aria-label="Search" name="q" style="width:450px">--%>
 <%--                    <button class="btn btn-secondary searchBtn" type="submit" value="검색">검색</button>--%>
 <%--                </div>--%>
-                <div  class="input-group" style="float: none">
+                <div  class="input-group flex-nowrap" style="float: none">
                     <select name="t" class="form-select">
                         <option value="all">전체</option>
                         <option value="m_item_id" ${param.t == 'm_item_id' ? 'selected' : '' }>제품코드</option>
@@ -294,11 +298,11 @@
                     </th>
                     <th>제품코드</th>
                     <th>제품명</th>
-                    <th style="width: 16%">거래처코드</th>
+                    <th style="min-width:94px;width: 16%">거래처코드</th>
                     <th>거래처명</th>
-                    <th style="width: 17%">시작일</th>
+                    <th style="min-width:105px;width: 17%">시작일</th>
                     <th style="width: 17%">종료일</th>
-                    <th style="width: 8%">통화</th>
+                    <th style="min-width:40px;width: 8%">통화</th>
                     <th style="width: 11%">할인율</th>
                     <th>금액</th>
                     <th>최종금액</th>

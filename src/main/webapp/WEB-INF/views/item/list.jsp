@@ -27,6 +27,10 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300">
 
     <style>
+
+        .sidebar {
+            z-index: 5;
+        }
         .row {
             --bs-gutter-x: 0;
         }
@@ -220,13 +224,13 @@
     </div>
 </c:if>
 <div class="row">
-    <div class="col-6 col-sm-2">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
-    <div class="col ">
-        <div class="container">
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
+        <div class="">
             <div class="row justify-content-between">
-                <div class="col-4">
+                <div class="col">
                     <h1 id="header"><i class="fa-solid fa-layer-group" style="margin-right: 10px;"></i>제품 관리 및 등록</h1>
                 </div>
                 <div class="itemRegisterBtn col-auto">
@@ -269,7 +273,7 @@
                 <%--                        </div>--%>
 
                 <form action="${listLink}" class="d-flex" role="search">
-                    <div class="input-group" style="float: none">
+                    <div class="input-group flex-nowrap" style="float: none;">
                         <select name="t" class="form-select">
                             <option value="all">전체</option>
                             <option value="itemId" ${param.t == 'itemId' ? 'selected' : '' }>제품코드</option>
@@ -451,6 +455,21 @@
     </div>
 </div>
 </body>
+<script>
+    // function widthResize() {
+    //     var windowWidth = $(window).width();
+    //
+    //     console.log(windowWidth)
+    //
+    //     if(windowWidth < 1200) {
+    //
+    //     }
+    // }
+    // widthResize()
+    // $(window).resize(function(){
+    //     widthResize()
+    // })
+</script>
 
 <script>
     // 제품그룹 select

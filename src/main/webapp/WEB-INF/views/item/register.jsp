@@ -24,6 +24,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <style>
+        .sidebar {
+            z-index: 5;
+        }
         /* 테이블 */
         body {
             font-family: 'Noto Sans KR', sans-serif;
@@ -162,19 +165,15 @@
         }
 
     </style>
-    <style>
-
-
-    </style>
 
 </head>
 <body>
 <div class="row">
-    <div class="col-6 col-sm-2">
+    <div class= "col-3 sidebar" style="max-width: 300px">
         <my:header></my:header>
     </div>
-    <div class="col">
-        <div class="container">
+    <div class="col" style="margin: 0 auto;max-width:70%;min-width: 600px">
+        <div class="">
         <div id="itemTitle">
             <h1 id="header"><i class="fa-solid fa-pen-nib" style="margin-right: 10px;"></i>제품 등록</h1>
             <h2>제품 추가</h2>
