@@ -34,9 +34,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
         if(memberLoginDto.getM_authority_grade() != null){
-//            for(String auth : memberLoginDto.getM_authority_grade()){
-//                authorityList.add(new SimpleGrantedAuthority(auth));
-//            }
             authorityList.add(new SimpleGrantedAuthority(memberLoginDto.getM_authority_grade()));
         }
 

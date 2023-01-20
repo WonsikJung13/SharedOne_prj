@@ -44,10 +44,7 @@ public class CustomSecurityConfig {
                 .formLogin()
                 .loginPage("/member/login")
                 .defaultSuccessUrl("/main/main", true);
-        // 커스텀 로그인 페이지
-        http.formLogin()
-                .loginPage("/member/login")
-                .defaultSuccessUrl("/main/main", true);
+
         http.logout().logoutSuccessUrl("/member/login");
         // CSRF 토큰 비활성화
         http.csrf().disable();
